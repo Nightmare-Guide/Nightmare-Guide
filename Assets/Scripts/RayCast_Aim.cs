@@ -1,8 +1,12 @@
 using UnityEngine;
+using UnityStandardAssets.Characters.FirstPerson;
 
 public class RayCast_Aim : MonoBehaviour
 {
     public float maxRayDistance = 1.1f; // 레이 길이 설정
+
+    [Header("Locker")]
+    bool locker = true;
     private void Start()
     {
         // 커서를 화면 중앙에 고정
@@ -30,9 +34,7 @@ public class RayCast_Aim : MonoBehaviour
                 }
                 if (click_object.CompareTag("Locker"))
                 {
-                    Debug.Log("락커 인식");
-                    DoorCheck(click_object);
-                    Chapter1_Mgr.instance.aim_Obj.SetActive(true);
+                    Locker(click_object);
                 }
 
                 if (click_object.CompareTag("Door"))
@@ -54,6 +56,24 @@ public class RayCast_Aim : MonoBehaviour
             mazeButton.Select_Btn(); // 클릭한 오브젝트의 Select_Btn 호출
             Debug.Log(obj.name + "색상 변경");
         }
+    }
+    public void Locker(GameObject obj)
+    {
+        Debug.Log("락커 인식"+obj.name);
+        if (locker)
+        {
+            PlayerController.instance.Close_PlayerController();//플레이어 컨트롤 OFF
+            Locker lockerObj = obj.GetComponent<Locker>();
+            lockerObj.PlayerHide();
+            locker = false;
+        }else if (!locker)
+        {
+            PlayerController.instance.Open_PlayerController();//플레이어 컨트롤 ON
+            locker = true;
+            DoorCheck(obj);
+        }
+       
+     
     }
 
     public void DoorCheck(GameObject obj)
