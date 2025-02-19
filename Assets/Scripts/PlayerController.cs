@@ -46,8 +46,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private bool m_Jumping;
         private AudioSource m_AudioSource;
 
-        //캐비넷 숨기 상태
-        public bool isStop = true;
+        
 
         // Use this for initialization
         private void Start()
@@ -72,7 +71,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         // Update is called once per frame
         private void Update()
         {
-            RotateView(); // 기존 회전 함수가 있다면 여기에 포함
+            //RotateView(); // 기존 회전 함수가 있다면 여기에 포함
             HandleJump();
         
         }
@@ -117,7 +116,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         private void FixedUpdate()
         {
-            if (!isStop) { return; }//플레이어가 캐비넷안에 있을 경우 이동 안됨
+          
             float speed;
             GetInput(out speed);
             // always move along the camera forward as it is the direction that it being aimed at

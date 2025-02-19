@@ -35,11 +35,13 @@ public class Door : MonoBehaviour
         {
             endRotation = Quaternion.Euler(0, startRotation.eulerAngles.y+ 110 ,0);
             istrigger_on();
+            Debug.Log("πÆ¿Ã ø≠∏≤");
         }
         else if (!doorState)
         {
             endRotation = Quaternion.Euler(0, startRotation.eulerAngles.y - 110, 0);
             istrigger_on();
+            Debug.Log("πÆ¿Ã ¥›»˚");
         }
         while (startTime < endTime)
         {
