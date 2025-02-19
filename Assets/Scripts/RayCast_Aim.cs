@@ -64,10 +64,12 @@ public class RayCast_Aim : MonoBehaviour
         {
             
             PlayerController.instance.Close_PlayerController();//플레이어 컨트롤 OFF
+            Camera_Rt.instance.Close_Camera();
             Locker lockerObj = obj.GetComponent<Locker>();
             lockerObj.PlayerHide();
             locker = 1;
-    
+            lockerObj.avata(obj);
+
         }
         else if (locker==1)//플레이어 컨트롤러가 활성화되고 문이 열림
         {

@@ -4,13 +4,20 @@ using UnityEngine;
 using UnityStandardAssets.Characters.FirstPerson;
 public class Camera_Rt : MonoBehaviour
 {
+    public static Camera_Rt instance; 
+
     private Camera m_Camera;
     private MouseLook m_MouseLook = new MouseLook(); // 마우스 컨트롤용 객체
-
+    private Camera_Rt rt_Camera;
     private void Start()
     {
+        if (instance == null)
+        {
+            instance = this;
+        }
         m_Camera = Camera.main;
         m_MouseLook.Init(transform, m_Camera.transform); // 마우스 컨트롤 초기화
+        rt_Camera = GetComponent<Camera_Rt>();
     }
 
     private void Update()
@@ -22,7 +29,8 @@ public class Camera_Rt : MonoBehaviour
     {
         m_MouseLook.LookRotation(transform, m_Camera.transform);
     }
-
+    public void Open_Camera() => rt_Camera.enabled = true;
+    public void Close_Camera() => rt_Camera.enabled = false;
 
 
 
