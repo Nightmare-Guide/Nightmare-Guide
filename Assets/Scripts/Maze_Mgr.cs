@@ -166,7 +166,7 @@ public class Maze_Mgr : MonoBehaviour
         }
 
         Btn_Clear();
-        Make_Answer();
+  
      
     }
 
