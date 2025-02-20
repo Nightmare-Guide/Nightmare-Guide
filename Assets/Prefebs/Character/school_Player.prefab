@@ -584,6 +584,7 @@ GameObject:
   - component: {fileID: 7172746398900973553}
   - component: {fileID: 2139007686366711640}
   - component: {fileID: 5998101189420875569}
+  - component: {fileID: 3354090409721491199}
   m_Layer: 0
   m_Name: school_Player
   m_TagString: Player
@@ -882,6 +883,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &3354090409721491199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2150530462596424511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 908858834b49c6d47a2440f334be4022, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2164447522756949527
 GameObject:
   m_ObjectHideFlags: 0
@@ -1380,6 +1393,7 @@ GameObject:
   - component: {fileID: 6287006418717562586}
   - component: {fileID: 7651495389795246067}
   - component: {fileID: 7885026988839743255}
+  - component: {fileID: 5766366012513579858}
   m_Layer: 7
   m_Name: Camera
   m_TagString: MainCamera
@@ -1564,6 +1578,19 @@ MonoBehaviour:
   blendDistance: 0
   weight: 1
   priority: 0
+--- !u!114 &5766366012513579858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5030113247728523191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdae42ddcf63e87429a4e4abc08bd14a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxRayDistance: 1.1
 --- !u!1 &5320919109234143622
 GameObject:
   m_ObjectHideFlags: 0

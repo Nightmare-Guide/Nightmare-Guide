@@ -44,6 +44,7 @@ public class Door : MonoBehaviour
             istrigger_on();
 
         }
+      
         while (startTime < endTime)
         {
             transform.rotation = Quaternion.Lerp(startRotation, endRotation, startTime / endTime);
@@ -55,6 +56,7 @@ public class Door : MonoBehaviour
         currentCoroutine = null;
         isRotation = false;
         istrigger_off();
+        
         Debug.Log("ทฮลื" + isRotation);
 
     }
