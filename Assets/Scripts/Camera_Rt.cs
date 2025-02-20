@@ -5,7 +5,7 @@ using UnityStandardAssets.Characters.FirstPerson;
 public class Camera_Rt : MonoBehaviour
 {
     public static Camera_Rt instance; 
-
+    
     private Camera m_Camera;
     private MouseLook m_MouseLook = new MouseLook(); // 마우스 컨트롤용 객체
     private Camera_Rt rt_Camera;

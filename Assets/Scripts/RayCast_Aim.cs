@@ -43,6 +43,12 @@ public class RayCast_Aim : MonoBehaviour
                     DoorCheck(click_object);
                 }
 
+                if (click_object.CompareTag("CellPhone"))
+                {
+                    Debug.Log("CellPhone");
+                    TouchCellPhone(click_object);
+                }
+
             }
         }
     }
@@ -92,5 +98,13 @@ public class RayCast_Aim : MonoBehaviour
         {
             door.Select_Door();
         }
+    }
+
+    void TouchCellPhone(GameObject obj)
+    {
+        obj.GetComponent<CellPhone>().UpPhone();
+
+        //플레이어 컨트롤 OFF
+        PlayerController.instance.Close_PlayerController();
     }
 }
