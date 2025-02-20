@@ -10,8 +10,8 @@ public class Door : MonoBehaviour
     [SerializeField] private Quaternion startRotation;
     [SerializeField] private Quaternion endRotation;
     private float endTime = 0.5f; //회전 시간
-    private bool isRotation = false; // false면 회전 안하고있음.
-    private Coroutine currentCoroutine;
+    public bool isRotation = false; // false면 회전 안하고있음.
+    public Coroutine currentCoroutine;
 
     private void Start()
     {
@@ -21,13 +21,15 @@ public class Door : MonoBehaviour
     {
         if (!isRotation)
         {
+            isRotation = true;
             StartCoroutine(RotationDoor());
         }
+     
     }
 
     private IEnumerator RotationDoor()
     {
-        isRotation = true;
+     
         float startTime = 0f;
         startRotation = transform.rotation;
 
@@ -40,6 +42,7 @@ public class Door : MonoBehaviour
         {
             endRotation = Quaternion.Euler(0, startRotation.eulerAngles.y - 110, 0);
             istrigger_on();
+
         }
         while (startTime < endTime)
         {
@@ -52,6 +55,8 @@ public class Door : MonoBehaviour
         currentCoroutine = null;
         isRotation = false;
         istrigger_off();
+        Debug.Log("로테" + isRotation);
+
     }
 
     public void istrigger_on() => boxcollider.isTrigger = true;

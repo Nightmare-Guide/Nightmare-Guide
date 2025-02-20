@@ -11,6 +11,7 @@ public class Maze_Button : MonoBehaviour
     [SerializeField] Material changeMaterial; // 선택후 변경될 마테리얼
     public bool isSelect = false; // 색상을 선택했는지 확인
     public int set_Value=0; //발송할 변수
+    public float effect_time;
     private void Start()
     {
         if (instance == null) { instance = this; }
@@ -33,11 +34,16 @@ public class Maze_Button : MonoBehaviour
     {
         if (!isSelect)
         {
-            //this.GetComponent<Renderer>().material = changeMaterial; //마테리얼 변경
-            this.GetComponent<Renderer>().material.color = changedColor; //색상 초기화
+            this.GetComponent<Renderer>().material = changeMaterial; //마테리얼 변경
+            //this.GetComponent<Renderer>().material.color = changedColor; //색상 초기화
+            // Emission 색상 변경 (Emission 활성화 필요!)
+            this.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
+            this.GetComponent<Renderer>().material.SetColor("_EmissionColor", changedColor);
             isSelect = true;
             Maze_Mgr.instance.panel_Check++;
             Maze_Mgr.instance.anw.Add(set_Value);
+            Invoke("Btn_Effect", effect_time);
+            Maze_Mgr.instance.StartCoroutine("Button_Timer");// 타이머
         }
         else
         {
@@ -47,13 +53,30 @@ public class Maze_Button : MonoBehaviour
         
     }
 
+    public void Btn_Effect()//깜빡임
+    {
 
+        this.GetComponent<Renderer>().material = originalMaterial;//마테리얼 초기화
+        //this.GetComponent<Renderer>().material.color = selectedColor;//색상 초기화
+
+        // Emission 색상 원래대로 복구
+        /*this.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
+        this.GetComponent<Renderer>().material.SetColor("_EmissionColor", selectedColor);*/
+
+        
+        ApplyColor();
+    }
 
     public void Clear_Btn()//버튼 초기화
     {
 
-        //this.GetComponent<Renderer>().material = originalMaterial;//마테리얼 초기화
-        this.GetComponent<Renderer>().material.color = selectedColor;//색상 초기화
+        this.GetComponent<Renderer>().material = originalMaterial;//마테리얼 초기화
+        //this.GetComponent<Renderer>().material.color = selectedColor;//색상 초기화
+
+        // Emission 색상 원래대로 복구
+        /*this.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
+        this.GetComponent<Renderer>().material.SetColor("_EmissionColor", selectedColor);*/
+
         isSelect = false;
         ApplyColor();
     }

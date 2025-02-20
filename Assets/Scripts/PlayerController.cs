@@ -9,8 +9,11 @@ namespace UnityStandardAssets.Characters.FirstPerson
 {
     [RequireComponent(typeof (CharacterController))]
     [RequireComponent(typeof (AudioSource))]
+
     public class PlayerController : MonoBehaviour
     {
+        public static PlayerController instance;
+
         [SerializeField] private bool m_IsWalking;
         [SerializeField] private float m_WalkSpeed;
         [SerializeField] private float m_RunSpeed;
@@ -43,9 +46,13 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private bool m_Jumping;
         private AudioSource m_AudioSource;
 
+        
+
         // Use this for initialization
         private void Start()
         {
+            if (instance == null) { instance = this; }
+
             m_CharacterController = GetComponent<CharacterController>();
             m_Camera = Camera.main;
             m_OriginalCameraPosition = m_Camera.transform.localPosition; // 카메라 로컬 포지션입력
@@ -56,14 +63,21 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_Jumping = false;
             m_AudioSource = GetComponent<AudioSource>();
 			m_MouseLook.Init(transform , m_Camera.transform);
+
+
         }
 
 
         // Update is called once per frame
         private void Update()
         {
-            RotateView();
-            // the jump state needs to read here to make sure it is not missed
+            //RotateView(); // 기존 회전 함수가 있다면 여기에 포함
+            HandleJump();
+        
+        }
+
+        private void HandleJump()
+        {
             if (!m_Jump)
             {
                 m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
@@ -84,6 +98,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_PreviouslyGrounded = m_CharacterController.isGrounded;
         }
 
+
+
         public void DisableInput() // 플레이어 움직임 제거
         {
             GetComponent<PlayerController>().enabled = false;
@@ -100,6 +116,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         private void FixedUpdate()
         {
+          
             float speed;
             GetInput(out speed);
             // always move along the camera forward as it is the direction that it being aimed at
@@ -275,5 +292,17 @@ namespace UnityStandardAssets.Characters.FirstPerson
             }
             body.AddForceAtPosition(m_CharacterController.velocity*0.1f, hit.point, ForceMode.Impulse);
         }
+        public void Open_PlayerController()
+        {
+            m_CharacterController.enabled = true;
+        }
+        public void Close_PlayerController()
+        {
+            m_CharacterController.enabled = false;
+        }
     }
+
+  
+
+
 }
