@@ -35,7 +35,11 @@ public class Camera_Rt : MonoBehaviour
     {
         m_MouseLook.LookRotation(transform, m_Camera.transform);
     }
-    public void Open_Camera() => lockerCamera = true;
+    public void Open_Camera()
+    {
+        m_MouseLook.Init(transform, m_Camera.transform);
+        lockerCamera = true;
+    }
     public void Close_Camera() => lockerCamera = false;
 
 

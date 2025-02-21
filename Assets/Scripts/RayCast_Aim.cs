@@ -107,5 +107,10 @@ public class RayCast_Aim : MonoBehaviour
 
         //플레이어 컨트롤 OFF
         PlayerController.instance.Close_PlayerController();
+        //카메라 회전 정지
+        Camera_Rt.instance.Close_Camera();
+        //마우스 커서 활성화
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;  // 커서를 안보이게 하기
     }
 }

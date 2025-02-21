@@ -16,4 +16,6 @@ public class Chapter1_Mgr : MonoBehaviour
     {
         if (instance == null) { instance = this; }
     }
+
+
 }
