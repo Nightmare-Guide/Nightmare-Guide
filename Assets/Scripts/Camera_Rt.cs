@@ -9,12 +9,14 @@ public class Camera_Rt : MonoBehaviour
     private Camera m_Camera;
     private MouseLook m_MouseLook = new MouseLook(); // 마우스 컨트롤용 객체
     private Camera_Rt rt_Camera;
+    public bool lockerCamera=true;
     private void Start()
     {
         if (instance == null)
         {
             instance = this;
         }
+        lockerCamera = true;
         m_Camera = Camera.main;
         m_MouseLook.Init(transform, m_Camera.transform); // 마우스 컨트롤 초기화
         rt_Camera = GetComponent<Camera_Rt>();
@@ -22,15 +24,19 @@ public class Camera_Rt : MonoBehaviour
 
     private void Update()
     {
-        RotateView(); // 마우스 회전 실행
+        if (lockerCamera)
+        {
+            RotateView(); // 마우스 회전 실행
+        }
+      
     }
 
     private void RotateView()
     {
         m_MouseLook.LookRotation(transform, m_Camera.transform);
     }
-    public void Open_Camera() => rt_Camera.enabled = true;
-    public void Close_Camera() => rt_Camera.enabled = false;
+    public void Open_Camera() => lockerCamera = true;
+    public void Close_Camera() => lockerCamera = false;
 
 
 
