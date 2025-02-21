@@ -655,6 +655,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blurBG: {fileID: 866618636}
+  uiObjects:
+  - {fileID: 866618636}
+  - {fileID: 1351344270}
   LockPhoneUI: {fileID: 1351344270}
   timeText: {fileID: 930616072}
   dateText: {fileID: 737401689}
@@ -1090,7 +1093,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1351344271
 RectTransform:
   m_ObjectHideFlags: 0

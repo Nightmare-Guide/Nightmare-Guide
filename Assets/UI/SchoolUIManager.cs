@@ -4,10 +4,12 @@ using System.Collections.Generic;
 using System.Globalization;
 using TMPro;
 using UnityEngine;
+using UnityStandardAssets.Characters.FirstPerson;
 
 public class SchoolUIManager : MonoBehaviour
 {
     public GameObject blurBG;
+    public GameObject[] uiObjects;
 
     // 휴대폰 잠금화면
     [Header ("#Lock")]
@@ -22,7 +24,40 @@ public class SchoolUIManager : MonoBehaviour
 
     private void Update()
     {
-        GetDate();
+        // 휴대폰 UI 시간 실시간 적용
+        if (LockPhoneUI.activeInHierarchy)
+        {
+            GetDate();
+        }
+
+        // ui 닫기
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            foreach (GameObject uiObj in uiObjects)
+            {
+                if (uiObj.activeInHierarchy)
+                {
+                    CloseUI(uiObj);
+                }
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Keypad1))
+        {
+            //마우스 커서 중앙에 고정
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;  // 커서를 안보이게 하기
+
+            Debug.Log("Cursor Locked");
+        }
+        if (Input.GetKeyDown(KeyCode.Keypad2))
+        {
+            //마우스 커서 중앙에 고정
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;  // 커서를 안보이게 하기
+
+            Debug.Log("Cursor Enable");
+        }
     }
 
     void GetDate()
@@ -62,11 +97,43 @@ public class SchoolUIManager : MonoBehaviour
     {
         blurBG.SetActive(false);
         LockPhoneUI.SetActive(false);
+
+        //마우스 커서 중앙에 고정
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;  // 커서를 안보이게 하기
+
+        Debug.Log("UI First Setup");
+    }
+
+    public void CloseUI(GameObject ui)
+    {
+        ui.SetActive(false);
+
+        //카메라 회전 활성화
+        Camera_Rt.instance.Open_Camera();
+
+        //플레이어 컨트롤 On
+        PlayerController.instance.Open_PlayerController();
+
+        //마우스 커서 중앙에 고정
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;  // 커서를 안보이게 하기
+
+        Debug.Log("Close UI : " + ui.name);  
     }
 
     public void OpenPhoneUI()
     {
         blurBG.SetActive(true);
         LockPhoneUI.SetActive(true);
+
+        //카메라 회전 정지
+        Camera_Rt.instance.Close_Camera();
+
+        //마우스 커서 활성화
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;  // 커서를 보이게 하기
+
+        Debug.Log("Open PhoneUI");
     }
 }
