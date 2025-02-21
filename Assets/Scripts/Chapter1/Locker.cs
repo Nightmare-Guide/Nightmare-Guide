@@ -15,7 +15,7 @@ public class Locker : MonoBehaviour
     public float speed = 0.1f; // 플레이어가 락커로 들어가는 이동 속도
     [Header("플레이어 회전")]
     public bool lockPr = false;//락커에 입장시 플레이어 회전
-    Transform playerCameraTransform;//카메라
+    //Transform playerCameraTransform;//카메라
     Quaternion targetRotation;
     Quaternion startRotation;
     Transform pr;
@@ -29,8 +29,8 @@ public class Locker : MonoBehaviour
         door_Obj.Select_Door();
         if (lockPr)
         {
-            playerCameraTransform = Chapter1_Mgr.instance.player.transform;
-            startRotation = playerCameraTransform.rotation;
+           // playerCameraTransform = Chapter1_Mgr.instance.player.transform;
+           // startRotation = playerCameraTransform.rotation;
             Vector3 currentRotation = startRotation.eulerAngles;
 
             // Y축 회전 값에 180도를 더함
@@ -44,6 +44,7 @@ public class Locker : MonoBehaviour
 
             // 새로운 회전을 Quaternion으로 생성
             targetRotation = Quaternion.Euler(currentRotation);
+            targetRotation = setTr.transform.rotation;
         }
         isMovingToLocker = true;
 
@@ -61,7 +62,7 @@ public class Locker : MonoBehaviour
             {            
                 isMovingToLocker = false;
                 Invoke("OffDoor", 0.5f);//문열리는 코루틴 종료후 실행
-              
+                
             }
 
 
@@ -69,7 +70,10 @@ public class Locker : MonoBehaviour
             {
                 pr.rotation = Quaternion.Slerp(pr.rotation, targetRotation, speed);
                 Debug.Log("플레이어 회전");
-                pr.rotation = targetRotation; 
+               
+                pr.rotation = targetRotation; // 목표 회전으로 정확히 맞춤
+                Debug.Log("최종 회전" + pr.rotation);
+                
             }
         }
       
@@ -80,11 +84,15 @@ public class Locker : MonoBehaviour
     {
 
      
+        Debug.Log("최종 회전2" + pr.rotation);
         door_Obj.Select_Door(); // 플레이어 입장후 문닫기
         Debug.Log("잠김");
         lockPr = false;
-        Camera_Rt.instance.Open_Camera();
+        Invoke("OnCamera", 1f);
       
     }
-    
+    public void OnCamera()
+    {   //카메라 회전값 이거 키면 강제 초기화됨
+        Camera_Rt.instance.Open_Camera();
+    }
 }
