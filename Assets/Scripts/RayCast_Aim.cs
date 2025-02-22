@@ -66,23 +66,24 @@ public class RayCast_Aim : MonoBehaviour
     public void Locker(GameObject obj)
     {
         Debug.Log("락커 인식"+obj.name);
+        Locker lockerObj = obj.GetComponent<Locker>();
         if (locker ==0)//문이 열리고 플레이어 이동후 문디 닫힘
         {
-            
             PlayerController.instance.Close_PlayerController();//플레이어 컨트롤 OFF
             Camera_Rt.instance.Close_Camera();//카메라 회전 잠금
-            Locker lockerObj = obj.GetComponent<Locker>();
-            lockerObj.PlayerHide();
             lockerObj.lockPr = true;
+            lockerObj.PlayerHide();  
             locker = 1;
             
 
         }
         else if (locker==1)//플레이어 컨트롤러가 활성화되고 문이 열림
         {
-            PlayerController.instance.Open_PlayerController();//플레이어 컨트롤 ON
-            locker = 2;
-            DoorCheck(obj);
+            Camera_Rt.instance.Close_Camera();
+            lockerObj.OpenLocker();
+           // PlayerController.instance.Open_PlayerController();//플레이어 컨트롤 ON
+            locker = 0;
+           // DoorCheck(obj);
         }else if (locker == 2) //문이 닫힘
         {
             DoorCheck(obj);
