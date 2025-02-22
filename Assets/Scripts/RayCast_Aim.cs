@@ -117,9 +117,6 @@ public class RayCast_Aim : MonoBehaviour
         // 휴대폰 최종 포지션 값
         Vector3 cellPhonePos = cameraPos + cameraForward * 0.01f + new Vector3(cameraForward.x * 0.35f, -0.25f, cameraForward.z * 0.35f);
 
-        Debug.Log("Camera Pos : " + transform.position);
-        Debug.Log("CellPhone Pos : " + cellPhonePos);
-
         // 휴대폰 최종 회전 값
         Vector3 cellPhoneRotate = new Vector3(-cameraRotate.x, 180 + cameraRotate.y, 180 + cameraRotate.z);
 
