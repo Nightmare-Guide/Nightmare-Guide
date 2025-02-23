@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -8,7 +9,7 @@ using UnityStandardAssets.Characters.FirstPerson;
 public class Locker : MonoBehaviour
 {
     public Transform setTr;//플레이어 목표 위치
-    private Transform startPr;//플레이어 락커 연 시점의 위치
+    public Vector3 startPr;//플레이어 락커 연 시점의 위치
     private bool isMovingToLocker = false; //락커에 들어갈떄
     private bool outMovingToLocker = false; //락커에 나갈때
     [SerializeField] GameObject door; //도어 오브젝트
@@ -25,14 +26,16 @@ public class Locker : MonoBehaviour
     {
        
         door_Obj = door.GetComponent<Door>();
+
+        speed = 0.1f;
     }
 
     public void PlayerHide()
     {
         door_Obj.Select_Door();
         pr = Chapter1_Mgr.instance.player.transform;
-        startPr = new GameObject("StartPosition").transform; //수정 필요함
-        Debug.Log("처음 목표 좌표: " + startPr.position);
+        startPr = pr.position;
+        Debug.Log("처음 목표 좌표: " + startPr);
         if (lockPr)
         {
             startRotation = pr.rotation;
@@ -46,8 +49,9 @@ public class Locker : MonoBehaviour
     public void OpenLocker()//락커를 열고 나올 떄
     {
         door_Obj.Select_Door();// 락커 열기
+       
         Debug.Log("시작 좌표: " + pr.position);
-        Debug.Log("목표 좌표: " + startPr.position);
+        Debug.Log("목표 좌표: " + startPr);
         outMovingToLocker = true;
         
     }
@@ -81,8 +85,8 @@ public class Locker : MonoBehaviour
 
         if (outMovingToLocker)
         {
-            pr.position = Vector3.MoveTowards(pr.position, startPr.position, speed);
-            if (Vector3.Distance(pr.position, startPr.position) < 0.01f)
+            pr.position = Vector3.MoveTowards(pr.position, startPr, speed);
+            if (Vector3.Distance(pr.position, startPr) < 0.01f)
             {
                 outMovingToLocker = false;
                 Debug.Log("락커 탈출");

@@ -67,6 +67,7 @@ public class RayCast_Aim : MonoBehaviour
     {
         Debug.Log("락커 인식"+obj.name);
         Locker lockerObj = obj.GetComponent<Locker>();
+       
         if (locker ==0)//문이 열리고 플레이어 이동후 문디 닫힘
         {
             PlayerController.instance.Close_PlayerController();//플레이어 컨트롤 OFF
