@@ -22,17 +22,28 @@ public class Locker : MonoBehaviour
     Transform pr; // 플레이어 위치값
     //카메라 회전 범위
     public float rotateRange = 180f;
+
+    [Header("락커 열고 닫기")]
+    public bool doorState; //true면 닫힌상태 false면 열린상태
+    public BoxCollider boxcollider;
+
+    [SerializeField] private Quaternion startRotationLocker;
+    [SerializeField] private Quaternion endRotation;
+    private float endTime = 0.5f; //회전 시간
+    public bool isRotation = false; // false면 회전 안하고있음.
+    public Coroutine currentCoroutine;
+
     private void Start()
     {
        
         door_Obj = door.GetComponent<Door>();
-
-        speed = 0.1f;
+        boxcollider = GetComponent<BoxCollider>();
+        speed = 0.01f;
     }
 
     public void PlayerHide()
     {
-        door_Obj.Select_Door();
+        Select_Locker();
         pr = Chapter1_Mgr.instance.player.transform;
         startPr = pr.position;
         Debug.Log("처음 목표 좌표: " + startPr);
@@ -48,8 +59,8 @@ public class Locker : MonoBehaviour
 
     public void OpenLocker()//락커를 열고 나올 떄
     {
-        door_Obj.Select_Door();// 락커 열기
-       
+        Select_Locker();// 락커 열기
+        
         Debug.Log("시작 좌표: " + pr.position);
         Debug.Log("목표 좌표: " + startPr);
         outMovingToLocker = true;
@@ -61,7 +72,7 @@ public class Locker : MonoBehaviour
         if (isMovingToLocker) //락커안까지 플레이어 이동 및 카메라 회전
         {
             
-            pr.position = Vector3.MoveTowards(pr.position, setTr.position, speed);
+            pr.position = Vector3.MoveTowards(pr.position, setTr.position, Time.fixedDeltaTime);
            
             if (Vector3.Distance(pr.position, setTr.position) < 0.01f && Quaternion.Angle(pr.rotation, targetRotation) < 1f)
             {            
@@ -70,7 +81,11 @@ public class Locker : MonoBehaviour
                 lockPr = false;
                 Debug.Log("최종 회전: " + pr.rotation.eulerAngles);
 
-                Invoke("InLocker", 0.5f);//문열리는 코루틴 종료후 실행
+                if (currentCoroutine ==null)
+                {
+                    InLocker();//문열리는 코루틴 종료후 실행
+                }
+              
             }
 
 
@@ -85,12 +100,16 @@ public class Locker : MonoBehaviour
 
         if (outMovingToLocker)
         {
-            pr.position = Vector3.MoveTowards(pr.position, startPr, speed);
+            pr.position = Vector3.MoveTowards(pr.position, startPr, Time.fixedDeltaTime);
             if (Vector3.Distance(pr.position, startPr) < 0.01f)
             {
                 outMovingToLocker = false;
                 Debug.Log("락커 탈출");
-                Invoke("OutLocker", 1f); // 문 닫기 실행
+                if (currentCoroutine == null)
+                {
+                    OutLocker();//문열리는 코루틴 종료후 실행
+                }
+               
             }
         }
 
@@ -99,7 +118,7 @@ public class Locker : MonoBehaviour
 
     public void OutLocker()
     {
-        door_Obj.Select_Door(); // 플레이어 탈추후 문닫기
+        Select_Locker(); // 플레이어 탈추후 문닫기
         Camera_Rt.instance.Open_Camera();
         PlayerController.instance.Open_PlayerController();
     }
@@ -108,11 +127,53 @@ public class Locker : MonoBehaviour
 
      
         Debug.Log("최종 회전2" + pr.rotation);
-        door_Obj.Select_Door(); // 플레이어 입장후 문닫기
+        Select_Locker(); // 플레이어 입장후 문닫기
         Debug.Log("잠김");
         lockPr = false;
         Camera_Rt.instance.Open_Camera();
 
     }
+
+
+    public void Select_Locker()
+    {
+        if (!isRotation)
+        {
+            isRotation = true;
+            StartCoroutine(RotationDoor());
+        }
+
+    }
+
+    private IEnumerator RotationDoor()
+    {
+        float startTime = 0f;
+        float speedMultiplier = 2.5f; // 속도 증가
+        startRotationLocker = transform.rotation;
+
+        if (doorState)
+            endRotation = Quaternion.Euler(0, startRotationLocker.eulerAngles.y + 110, 0);
+        else
+            endRotation = Quaternion.Euler(0, startRotationLocker.eulerAngles.y - 110, 0);
+
+        istrigger_on();
+
+        while (startTime < endTime)
+        {
+            float t = (startTime / endTime);
+            transform.rotation = Quaternion.Slerp(startRotationLocker, endRotation, t);
+            startTime += Time.deltaTime * speedMultiplier;
+            yield return null;
+        }
+
+        transform.rotation = endRotation;
+        doorState = !doorState;
+        currentCoroutine = null;
+        isRotation = false;
+        istrigger_off();
+    }
+
+    public void istrigger_on() => boxcollider.isTrigger = true;
+    public void istrigger_off() => boxcollider.isTrigger = false;
 
 }
