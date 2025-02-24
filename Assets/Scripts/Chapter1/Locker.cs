@@ -23,7 +23,7 @@ public class Locker : MonoBehaviour
     {
         door_Obj = door.GetComponent<Door>();
     }
-
+    
     public void PlayerHide()
     {
         door_Obj.Select_Door();
@@ -46,7 +46,7 @@ public class Locker : MonoBehaviour
             targetRotation = Quaternion.Euler(currentRotation);
         }
         isMovingToLocker = true;
-
+        
     }
 
     private void FixedUpdate()
@@ -61,7 +61,7 @@ public class Locker : MonoBehaviour
             {            
                 isMovingToLocker = false;
                 Invoke("OffDoor", 0.5f);//문열리는 코루틴 종료후 실행
-              
+                
             }
 
 
@@ -69,7 +69,7 @@ public class Locker : MonoBehaviour
             {
                 pr.rotation = Quaternion.Slerp(pr.rotation, targetRotation, speed);
                 Debug.Log("플레이어 회전");
-                pr.rotation = targetRotation; 
+                pr.rotation = targetRotation;
             }
         }
       
