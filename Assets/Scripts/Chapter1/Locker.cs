@@ -72,7 +72,7 @@ public class Locker : MonoBehaviour
         if (isMovingToLocker) //락커안까지 플레이어 이동 및 카메라 회전
         {
             
-            pr.position = Vector3.MoveTowards(pr.position, setTr.position, Time.fixedDeltaTime);
+            pr.position = Vector3.MoveTowards(pr.position, setTr.position, Time.fixedDeltaTime*1.2f);//이동 속도 조절 필요
            
             if (Vector3.Distance(pr.position, setTr.position) < 0.01f && Quaternion.Angle(pr.rotation, targetRotation) < 1f)
             {            
@@ -91,7 +91,7 @@ public class Locker : MonoBehaviour
 
             if (lockPr)
             {
-                pr.rotation = Quaternion.Slerp(pr.rotation, targetRotation, Time.deltaTime * 5f);
+                pr.rotation = Quaternion.Slerp(pr.rotation, targetRotation, Time.deltaTime * 5f);//카메라 회전 속도
                 Debug.Log("현재 회전: " + pr.rotation.eulerAngles);
             }
           
@@ -100,7 +100,7 @@ public class Locker : MonoBehaviour
 
         if (outMovingToLocker)
         {
-            pr.position = Vector3.MoveTowards(pr.position, startPr, Time.fixedDeltaTime);
+            pr.position = Vector3.MoveTowards(pr.position, startPr, Time.fixedDeltaTime*1.2f);//나오는 속도 조절 필요
             if (Vector3.Distance(pr.position, startPr) < 0.01f)
             {
                 outMovingToLocker = false;
