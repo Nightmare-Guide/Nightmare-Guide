@@ -62,6 +62,10 @@ public class RayCast_Aim : MonoBehaviour
             mazeButton.Select_Btn(); // 클릭한 오브젝트의 Select_Btn 호출
             Debug.Log(obj.name + "색상 변경");
         }
+        else
+        {
+            Debug.Log("색상없음");
+        }
     }
     public void Locker(GameObject obj)
     {
