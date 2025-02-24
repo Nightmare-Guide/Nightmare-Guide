@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityStandardAssets.Characters.FirstPerson;
 
@@ -7,6 +8,7 @@ public class RayCast_Aim : MonoBehaviour
 
     [Header("Locker")]
     int locker = 0;
+
     private void Start()
     {
         // 커서를 화면 중앙에 고정
@@ -16,7 +18,6 @@ public class RayCast_Aim : MonoBehaviour
     }
     private void Update()
     {
-       
         if (Input.GetMouseButtonDown(0)) // 마우스 왼쪽 버튼 클릭
         {
          
@@ -43,6 +44,11 @@ public class RayCast_Aim : MonoBehaviour
                     DoorCheck(click_object);
                 }
 
+                if (click_object.CompareTag("CellPhone"))
+                {
+                    Debug.Log("CellPhone");
+                    TouchCellPhone(click_object);
+                }
             }
         }
     }
@@ -60,23 +66,25 @@ public class RayCast_Aim : MonoBehaviour
     public void Locker(GameObject obj)
     {
         Debug.Log("락커 인식"+obj.name);
+        Locker lockerObj = obj.GetComponent<Locker>();
+       
         if (locker ==0)//문이 열리고 플레이어 이동후 문디 닫힘
         {
-            
             PlayerController.instance.Close_PlayerController();//플레이어 컨트롤 OFF
             Camera_Rt.instance.Close_Camera();//카메라 회전 잠금
-            Locker lockerObj = obj.GetComponent<Locker>();
-            lockerObj.PlayerHide();
             lockerObj.lockPr = true;
+            lockerObj.PlayerHide();  
             locker = 1;
             
 
         }
         else if (locker==1)//플레이어 컨트롤러가 활성화되고 문이 열림
         {
-            PlayerController.instance.Open_PlayerController();//플레이어 컨트롤 ON
-            locker = 2;
-            DoorCheck(obj);
+            Camera_Rt.instance.Close_Camera();
+            lockerObj.OpenLocker();
+           // PlayerController.instance.Open_PlayerController();//플레이어 컨트롤 ON
+            locker = 0;
+           // DoorCheck(obj);
         }else if (locker == 2) //문이 닫힘
         {
             DoorCheck(obj);
@@ -93,5 +101,33 @@ public class RayCast_Aim : MonoBehaviour
         {
             door.Select_Door();
         }
+    }
+
+    void TouchCellPhone(GameObject obj)
+    {
+        CellPhone cellPhoneLogic = obj.GetComponent<CellPhone>();
+
+        // 카메라 포지션 값
+        Vector3 cameraPos = this.GetComponent<Transform>().position;
+
+        // 카메라 회전값
+        Vector3 cameraRotate = this.GetComponent<Transform>().eulerAngles;
+
+        // 카메라가 바라보는 방향
+        Vector3 cameraForward = transform.forward;
+
+        // 휴대폰 최종 포지션 값
+        Vector3 cellPhonePos = cameraPos + cameraForward * 0.01f + new Vector3(cameraForward.x * 0.35f, -0.25f, cameraForward.z * 0.35f);
+
+        // 휴대폰 최종 회전 값
+        Vector3 cellPhoneRotate = new Vector3(-cameraRotate.x, 180 + cameraRotate.y, 180 + cameraRotate.z);
+
+        cellPhoneLogic.UpPhone(cellPhonePos, cellPhoneRotate);
+
+        //플레이어 컨트롤 OFF
+        PlayerController.instance.Close_PlayerController();
+
+        //카메라 회전 정지
+        Camera_Rt.instance.Close_Camera();
     }
 }
