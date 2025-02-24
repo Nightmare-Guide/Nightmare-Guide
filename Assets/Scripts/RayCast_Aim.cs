@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityStandardAssets.Characters.FirstPerson;
 
@@ -7,6 +8,7 @@ public class RayCast_Aim : MonoBehaviour
 
     [Header("Locker")]
     int locker = 0;
+
     private void Start()
     {
         // 커서를 화면 중앙에 고정
@@ -16,7 +18,6 @@ public class RayCast_Aim : MonoBehaviour
     }
     private void Update()
     {
-       
         if (Input.GetMouseButtonDown(0)) // 마우스 왼쪽 버튼 클릭
         {
          
@@ -48,7 +49,6 @@ public class RayCast_Aim : MonoBehaviour
                     Debug.Log("CellPhone");
                     TouchCellPhone(click_object);
                 }
-
             }
         }
     }
@@ -105,14 +105,29 @@ public class RayCast_Aim : MonoBehaviour
 
     void TouchCellPhone(GameObject obj)
     {
-        obj.GetComponent<CellPhone>().UpPhone();
+        CellPhone cellPhoneLogic = obj.GetComponent<CellPhone>();
+
+        // 카메라 포지션 값
+        Vector3 cameraPos = this.GetComponent<Transform>().position;
+
+        // 카메라 회전값
+        Vector3 cameraRotate = this.GetComponent<Transform>().eulerAngles;
+
+        // 카메라가 바라보는 방향
+        Vector3 cameraForward = transform.forward;
+
+        // 휴대폰 최종 포지션 값
+        Vector3 cellPhonePos = cameraPos + cameraForward * 0.01f + new Vector3(cameraForward.x * 0.35f, -0.25f, cameraForward.z * 0.35f);
+
+        // 휴대폰 최종 회전 값
+        Vector3 cellPhoneRotate = new Vector3(-cameraRotate.x, 180 + cameraRotate.y, 180 + cameraRotate.z);
+
+        cellPhoneLogic.UpPhone(cellPhonePos, cellPhoneRotate);
 
         //플레이어 컨트롤 OFF
         PlayerController.instance.Close_PlayerController();
+
         //카메라 회전 정지
         Camera_Rt.instance.Close_Camera();
-        //마우스 커서 활성화
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;  // 커서를 안보이게 하기
     }
 }
