@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 3300002}
   - component: {fileID: 2300002}
   - component: {fileID: 6500000}
-  - component: {fileID: 5246115743243521585}
   - component: {fileID: 599428020774811329}
   m_Layer: 0
   m_Name: door
@@ -107,23 +106,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.6223224, y: 1.7774656, z: 0.022210777}
   m_Center: {x: 0.30766246, y: 0.014849365, z: 0.0014266968}
---- !u!114 &5246115743243521585
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 100000}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a1a8a3cd4ab88d84d9adc1d1a381ec64, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  doorState: 0
-  boxcollider: {fileID: 0}
-  startRotation: {x: 0, y: 0, z: 0, w: 0}
-  endRotation: {x: 0, y: 0, z: 0, w: 0}
-  isRotation: 0
 --- !u!114 &599428020774811329
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -137,10 +119,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   setTr: {fileID: 3647623022641306433}
+  startPr: {x: 0, y: 0, z: 0}
   door: {fileID: 100000}
   door_Obj: {fileID: 0}
   speed: 0.1
   lockPr: 0
+  rotateRange: 180
+  doorState: 0
+  boxcollider: {fileID: 0}
+  startRotationLocker: {x: 0, y: 0, z: 0, w: 0}
+  endRotation: {x: 0, y: 0, z: 0, w: 0}
+  isRotation: 0
 --- !u!1 &100002
 GameObject:
   m_ObjectHideFlags: 0
@@ -206,7 +195,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: cd3992409e29a6d44bcdb8584c716d6a, type: 2}
+  - {fileID: 2100000, guid: fc9b53b42b726484b9c5c7c0ae84face, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -312,7 +301,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 5f469581b50505747a410deecdf8f11d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

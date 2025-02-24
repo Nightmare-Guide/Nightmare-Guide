@@ -21,7 +21,7 @@ public class Enemy : MonoBehaviour
             enemy_single = this;
         }
         animator = GetComponent<Animator>();
-        targetPlayer = GameManager.instance.player_tr;
+        //targetPlayer = GameManager.instance.player_tr;
     }
 
     private void OnTriggerEnter(Collider other)
