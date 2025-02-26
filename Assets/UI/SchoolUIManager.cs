@@ -12,10 +12,10 @@ using System.Linq;
 using UnityEngine.Rendering.HighDefinition;
 using static UnityEngine.Rendering.DebugUI;
 using System.Drawing;
-using UnityEngine.UIElements;
 
 public class SchoolUIManager : MonoBehaviour
 {
+    [Header("# UI")]
     public GameObject blurBG;
     public GameObject[] uiObjects;
     public GameObject aimUI;
@@ -27,9 +27,22 @@ public class SchoolUIManager : MonoBehaviour
     private const int MOUSEEVENTF_LEFTDOWN = 0x02; // 마우스 왼쪽 버튼 누름
     private const int MOUSEEVENTF_LEFTUP = 0x04; // 마우스 왼쪽 버튼 뗌
 
+    public static SchoolUIManager instance { get; private set; }
+
+
     private void Awake()
     {
         FirstSetUP();
+
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject); // 중복 생성 방지
+        }
     }
 
     private void Update()
@@ -89,7 +102,7 @@ public class SchoolUIManager : MonoBehaviour
         // 마우스 커서 중앙에 고정
         CursorLocked();
 
-        Debug.Log("Close UI : " + ui.name);  
+        Debug.Log("Close UI : " + ui.name);
     }
 
     public void PauseGame()
@@ -136,5 +149,39 @@ public class SchoolUIManager : MonoBehaviour
         // 화면 중앙을 클릭하는 효과를 발생시킴 (Windows 전용)
         mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
         mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
+    }
+
+    public void SetUIOpacity(Image img, bool up, float time)
+    {
+        StartCoroutine(SetOpacity(img, up, time));
+    }
+
+    // Image 투명도 조절 코루틴
+    private IEnumerator SetOpacity(Image img, bool up, float time)
+    {
+        yield return new WaitForSeconds(0.2f);
+
+        if (up) { img.gameObject.SetActive(true); }
+
+        float elapsed = 0f;
+
+        float start = up ? 0f : 1f;
+        float end = up ? 1f : 0f;
+
+        while (elapsed < time)
+        {
+            elapsed += Time.deltaTime;
+            UnityEngine.Color color = img.color;
+            color.a = Mathf.Lerp(start, end, elapsed / time);
+            img.color = color;
+            yield return null;
+        }
+
+        // 최종 값 보정
+        UnityEngine.Color finalColor = img.color;
+        finalColor.a = end;
+        img.color = finalColor;
+
+        if(!up) { img.gameObject.SetActive(false);}
     }
 }

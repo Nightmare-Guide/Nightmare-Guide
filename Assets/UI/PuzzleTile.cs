@@ -49,14 +49,16 @@ public class PuzzleTile : MonoBehaviour, IPointerClickHandler
 
         isCorrected = corretPos == rectTransform.anchoredPosition ? true : false;
 
-        board.isTileMoving = false;
-
         // 이동 후 퍼즐 정답 확인
         if (board.tileList.All(tile => tile.isCorrected))
         {
             Debug.Log("All Correct");
-            board.tileList[11].gameObject.SetActive(true); // 마지막 조각 활성화
+
+            // 퍼즐 성공 함수 실행
+            board.UnLockedPhone();
         }
+
+        board.isTileMoving = false; // 퍼즐 이동 끝 알림
     }
 
     public void OnPointerClick(PointerEventData eventData)
