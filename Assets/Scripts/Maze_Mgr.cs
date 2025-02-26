@@ -34,7 +34,7 @@ public class Maze_Mgr : MonoBehaviour
     public Transform resetPoint; // 리셋 좌표
     [SerializeField] GameObject clear_Line; // 번호 초기화 영역
     public bool reStart = false;
-
+    public Coroutine currentCoroutine;
 
     private void Start()
     {
@@ -56,6 +56,10 @@ public class Maze_Mgr : MonoBehaviour
             Chapter1_Mgr.instance.player.transform.position = resetPoint.position;
             PlayerController.instance.Open_PlayerController();
             reStart = false;
+        }
+        if(panel_Check ==0 && currentCoroutine != null)
+        {
+            StopCoroutine(currentCoroutine);
         }
     }
     private void Make_Answer()
