@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
     [Header("플레이어 데이터")]
     public Transform player_tr;
 
+    public Transform player { get; internal set; }
+
     private void Awake()
     {
         if (instance == null)

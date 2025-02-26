@@ -22114,9 +22114,13 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3277421123212227301, guid: c4ac670d79ddcf34b99fd27499009c8e, type: 3}
+      propertyPath: blackboard
+      value: 
+      objectReference: {fileID: 11400000, guid: 5613f57763d5942479943035b460390c, type: 2}
     - target: {fileID: 4360325307282849023, guid: c4ac670d79ddcf34b99fd27499009c8e, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5397811141979969879, guid: c4ac670d79ddcf34b99fd27499009c8e, type: 3}
       propertyPath: m_ApplyRootMotion
@@ -22128,7 +22132,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7510736993942467889, guid: c4ac670d79ddcf34b99fd27499009c8e, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8246310741177774117, guid: c4ac670d79ddcf34b99fd27499009c8e, type: 3}
       propertyPath: m_Name
@@ -22200,6 +22204,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8246310741177774117, guid: c4ac670d79ddcf34b99fd27499009c8e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1543577235}
+    - targetCorrespondingSourceObject: {fileID: 8246310741177774117, guid: c4ac670d79ddcf34b99fd27499009c8e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1543577241}
   m_SourcePrefab: {fileID: 100100000, guid: c4ac670d79ddcf34b99fd27499009c8e, type: 3}
 --- !u!1001 &1418319896
 PrefabInstance:
@@ -24040,6 +24047,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tree: {fileID: 11400000, guid: 5613f57763d5942479943035b460390c, type: 2}
+--- !u!114 &1543577241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1543577233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18c6b54014073c44db5845fd9ef01791, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  detectionRadius: 10
+  detectionAngle: 80
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 1
+  player: {fileID: 0}
 --- !u!1001 &1545667205
 PrefabInstance:
   m_ObjectHideFlags: 0
