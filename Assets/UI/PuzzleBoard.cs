@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class PuzzleBoard : MonoBehaviour
 {
@@ -94,12 +95,25 @@ public class PuzzleBoard : MonoBehaviour
     {
         suffleButton.SetActive(false);
         StartCoroutine("OnSuffle");
+
+        // 휴대폰 시간, 날짜, 슬라이드바 는 비활성화
+        cellPhone.sliderUI.SetActive(false);
+        cellPhone.timeText.gameObject.SetActive(false);
+        cellPhone.dateText.gameObject.SetActive(false);
     }
 
     public void UnLockedPhone()
     {
         canMovePuzzle = false;
         cellPhone.unLocked = true;
-        SchoolUIManager.instance.SetUIOpacity(cellPhone.puzzleUI[cellPhone.puzzleUI.Length - 1], true, 1f); // 마지막 퍼즐 조각 투명도 조절
+        SchoolUIManager.instance.SetUIOpacity(cellPhone.puzzleUI[cellPhone.puzzleUI.Length - 1], true, 1f, 0.2f); // 마지막 퍼즐 조각 투명도 조절
+
+        // 퍼즐 UI 천천히 사라짐
+        for (int i = 0; i < cellPhone.puzzleUI.Length; i++)
+        {
+            SchoolUIManager.instance.SetUIOpacity(cellPhone.puzzleUI[i], false, 0.5f, 3f);
+        }
+
+        // 어플 UI 활성화
     }
 }

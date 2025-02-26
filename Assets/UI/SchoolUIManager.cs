@@ -151,15 +151,15 @@ public class SchoolUIManager : MonoBehaviour
         mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
     }
 
-    public void SetUIOpacity(Image img, bool up, float time)
+    public void SetUIOpacity(Image img, bool up, float time, float waitTime)
     {
-        StartCoroutine(SetOpacity(img, up, time));
+        StartCoroutine(SetOpacity(img, up, time, waitTime));
     }
 
     // Image 투명도 조절 코루틴
-    private IEnumerator SetOpacity(Image img, bool up, float time)
+    private IEnumerator SetOpacity(Image img, bool up, float time, float waitTime)
     {
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(waitTime);
 
         if (up) { img.gameObject.SetActive(true); }
 

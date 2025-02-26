@@ -32,13 +32,17 @@ public class CellPhone : MonoBehaviour
 
     public SchoolUIManager schoolUIManager;
 
+    private void OnEnable()
+    {
+        // 퍼즐 해제 후, 바로 어플 화면 사용 가능하게 변경
+        if (unLocked)
+        {
+
+        }
+    }
+
     private void Start()
     {
-        // 잠금화면 Text 초기화
-        UnityEngine.Color color = pwText.color;  // 기존 색상 가져오기
-        color.a = 160; // 투명도 설정
-        pwText.color = color;  // 새 색상 적용
-
         phoneBlurMat.SetFloat("_Size", 0); // 휴대폰 Blur Spacing 값 초기화
 
         sliderUI.SetActive(true); // 슬라이더 활성화
@@ -97,7 +101,7 @@ public class CellPhone : MonoBehaviour
     {
         // Slider Value 에 따른 변화
         UnityEngine.Color color = pwText.color;  // 기존 색상 가져오기
-        color.a = Mathf.Lerp(160f / 255f, 0f, pwSlider.value * 2); // 투명도 변경  // 0 → 160 / 255, 1 → 0
+        color.a = Mathf.Lerp(1f, 0f, pwSlider.value * 2); // 투명도 변경  // 0 → 160 / 255, 1 → 0
         pwText.color = color;  // 새 색상 적용
 
         // 휴대폰 Blur
@@ -105,18 +109,17 @@ public class CellPhone : MonoBehaviour
 
         if (pwSlider.value >= 1)
         {
-            SchoolUIManager.instance.SetUIOpacity(sliderImage[0], true, 1f);
-            SchoolUIManager.instance.SetUIOpacity(sliderImage[1], true, 1f);
+            SchoolUIManager.instance.SetUIOpacity(sliderImage[0], true, 1f, 0.2f);
+            SchoolUIManager.instance.SetUIOpacity(sliderImage[1], true, 1f, 0.2f);
             puzzleUI[0].gameObject.SetActive(true);
 
-            // 마지막 퍼즐 조각 제외 이미지 투명도 0 -> 255 로 천천히 조정
+            // 마지막 퍼즐 조각 제외 이미지 투명도 천천히 조정
             for (int i = 0; i < puzzleUI.Length - 1; i++)
             {
-                SchoolUIManager.instance.SetUIOpacity(puzzleUI[i], true, 1f);
+                SchoolUIManager.instance.SetUIOpacity(puzzleUI[i], true, 0.6f, 0.2f);
             }
         }
     }
-
 
 
     IEnumerator DoTween()
