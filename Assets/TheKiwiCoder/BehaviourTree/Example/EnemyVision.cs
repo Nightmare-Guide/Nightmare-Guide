@@ -17,15 +17,21 @@ public class EnemyVision : MonoBehaviour
 
     [Header("탐지 상태")]
     [SerializeField] private bool isDetected = false; // 플레이어 탐지 여부 (인스펙터에서 확인 가능)
-    public BehaviourTree behaviourTree;
+    public BehaviourTree behaviourTree; // 비헤이비어 트리 연결
+    private Blackboard blackboard; // 블랙보드 변수
 
     void Start()
     {
-
+        blackboard = behaviourTree.blackboard; // 블랙보드 가져오기
     }
 
     void Update()
     {
+        if (isDetected)
+        {
+            blackboard.isDetected = true; // 블랙보드 값 업데이트
+        }
+
         if (Chapter1_Mgr.instance.player != null&& player == null)
         {
             player = Chapter1_Mgr.instance.player;
