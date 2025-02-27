@@ -1,9 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.UIElements;
 
 public class PuzzleBoard : MonoBehaviour
 {
@@ -114,6 +114,16 @@ public class PuzzleBoard : MonoBehaviour
             SchoolUIManager.instance.SetUIOpacity(cellPhone.puzzleUI[i], false, 0.5f, 3f);
         }
 
-        // 어플 UI 활성화
+        // App Screen UI 활성화
+        cellPhone.appScreenUI.SetActive(true);
+
+        foreach (Image img in cellPhone.appScreenImgs)
+        {
+            SchoolUIManager.instance.SetUIOpacity(img, true, 1f, 3.1f);
+        }
+        foreach(TextMeshProUGUI text in cellPhone.appScreenTexts)
+        {
+            SchoolUIManager.instance.SetUIOpacity(text, true, 1f, 3.1f);
+        }
     }
 }
