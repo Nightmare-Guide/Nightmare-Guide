@@ -49,11 +49,30 @@ public class CellPhone : MonoBehaviour
 
     private void Start()
     {
+        SetFirst();
+    }
+
+    public void SetFirst()
+    {
         phoneBlurMat.SetFloat("_Size", 0); // 휴대폰 Blur Spacing 값 초기화
 
         sliderUI.SetActive(true); // 슬라이더 활성화
+        pwSlider.value = 0;
+        PhoneSlider();
         puzzleUI[0].gameObject.SetActive(false); // 퍼즐 비활성화
         appScreenUI.SetActive(false);
+
+        SchoolUIManager.instance.SetUIOpacity(sliderImage[0], true, 0.1f, 0f);
+        SchoolUIManager.instance.SetUIOpacity(sliderImage[1], true, 0.1f, 0f);
+
+        // 마지막 퍼즐 조각 제외 이미지 투명도 천천히 조정
+        for (int i = 0; i < puzzleUI.Length; i++)
+        {
+            SchoolUIManager.instance.SetUIOpacity(puzzleUI[i], false, 0.1f, 0f);
+        }
+
+        // 퍼즐 초기화
+        puzzleUI[1].GetComponent<PuzzleBoard>().InitializationPuzzle();
     }
 
     private void Update()
@@ -62,12 +81,18 @@ public class CellPhone : MonoBehaviour
         {
             GetDate();
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            this.gameObject.SetActive(false);
+        }
     }
 
     public void UpPhone(Vector3 pos, Vector3 rotate)
     {
         finalPos = pos;
         finalRotate = rotate;
+
         StartCoroutine(DoTween());
     }
 
@@ -140,7 +165,7 @@ public class CellPhone : MonoBehaviour
 
         yield return new WaitForSeconds(moveSpeed - 0.05f);
 
-        schoolUIManager.OpenUI(schoolUIManager.uiObjects[2]);
+        schoolUIManager.OpenUI(schoolUIManager.uiObjects[1]); // null 값용 UI 오브젝트 활성화
 
         // BoxCollider 비활성화
         this.GetComponent<BoxCollider>().enabled = false;

@@ -16,9 +16,13 @@ using System.Drawing;
 public class SchoolUIManager : MonoBehaviour
 {
     [Header("# UI")]
-    public GameObject blurBG;
     public GameObject[] uiObjects;
     public GameObject aimUI;
+
+    [Header("# Object")]
+    public GameObject cellPhone;
+    public bool getCellPhone = false;
+    [SerializeField] Camera playerCamera;
 
     // Windows의 마우스 입력을 시뮬레이션하는 API
     [DllImport("user32.dll")]
@@ -67,11 +71,17 @@ public class SchoolUIManager : MonoBehaviour
                 }
             }
         }
+
+        // 테스트용
+        if (Input.GetKeyDown(KeyCode.Keypad7) && getCellPhone)
+        {
+            OpenCellPhoneItem();
+        }
     }
 
     void FirstSetUP()
     {
-        blurBG.SetActive(false);
+        uiObjects[0].SetActive(false);
         aimUI.SetActive(true);
 
         CursorLocked(); // 마우스 커서 중앙에 고정
@@ -108,10 +118,13 @@ public class SchoolUIManager : MonoBehaviour
     public void PauseGame()
     {
         // 일시 정지 UI 활성화
-        blurBG.SetActive(true);
+        uiObjects[0].SetActive(true);
 
         // 플레이어 움직임 멈춤
         StopPlayerController();
+
+        //플레이어 컨트롤 OFF
+        PlayerController.instance.Close_PlayerController();
 
         Debug.Log("Pause Game");
     }
@@ -187,7 +200,7 @@ public class SchoolUIManager : MonoBehaviour
         finalColor.a = end;
         img.color = finalColor;
 
-        if(!up) { img.gameObject.SetActive(false);}
+        if (!up) { img.gameObject.SetActive(false); }
     }
 
     // TextMeshProUGUI
@@ -217,5 +230,26 @@ public class SchoolUIManager : MonoBehaviour
         text.color = finalColor;
 
         if (!up) { text.gameObject.SetActive(false); }
+    }
+
+
+    public void OpenCellPhoneItem()
+    {
+        // 휴대폰 포지션값 설정
+        Vector3[] cellPhoneTransform = playerCamera.GetComponent<RayCast_Aim>().GetCameraInfo();
+
+        cellPhone.GetComponent<Transform>().position = cellPhoneTransform[0];
+        cellPhone.GetComponent<Transform>().rotation = Quaternion.Euler(cellPhoneTransform[1]);
+
+        cellPhone.SetActive(true);
+
+        OpenUI(uiObjects[1]); // null 값용 UI 오브젝트 활성화
+
+
+        // 잠금해제를 한 상태가 아니라면 초기화
+        if (!cellPhone.GetComponent<CellPhone>().unLocked)
+        {
+            cellPhone.GetComponent<CellPhone>().SetFirst();
+        }
     }
 }

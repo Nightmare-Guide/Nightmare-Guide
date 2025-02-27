@@ -18,20 +18,26 @@ public class PuzzleBoard : MonoBehaviour
 
     private void Awake()
     {
+        InitializationPuzzle();
+    }
+
+    public void InitializationPuzzle()
+    {
         emptyTilePosition = tileList[tileList.Count - 1].GetComponent<RectTransform>().anchoredPosition;
 
         // 타일 정답 확인용 bool 값 초기화
         tileList.ForEach(tile => tile.isCorrected = false);
         tileList[^1].isCorrected = true; // 마지막 index 는 시작부터 true 값
         tileList[^1].gameObject.SetActive(false); // 활성화 상태일 경우 섞는 과정에서 오류 발생.
-    }
 
-    public void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Keypad1))
+        foreach (PuzzleTile puzzle in tileList)
         {
-            StartCoroutine("OnSuffle");
+            puzzle.GetComponent<RectTransform>().anchoredPosition = puzzle.corretPos;
         }
+
+        canMovePuzzle = false;
+        isTileMoving = false;
+        suffleButton.SetActive(true);
     }
 
     public void IsMoveTile(PuzzleTile tile)
@@ -60,6 +66,8 @@ public class PuzzleBoard : MonoBehaviour
         float percent = 0;
         float time = 1.5f;
 
+        Debug.Log("Suffle 1");
+
         // 타일이 이동 중이 아니면 계속 진행
 
         while (percent < 1)
@@ -67,8 +75,11 @@ public class PuzzleBoard : MonoBehaviour
             current += Time.deltaTime;
             percent = current / time;
 
+            Debug.Log("Suffle 2");
+
             for (int i = Random.Range(0, tileList.Count - 1); i < tileList.Count - 1; i++)
             {
+                Debug.Log("Suffle 3");
                 float dist = Vector3.Distance(emptyTilePosition, tileList[i].GetComponent<RectTransform>().anchoredPosition);
 
                 if (neighborTileDistance.Contains(dist))
@@ -81,6 +92,7 @@ public class PuzzleBoard : MonoBehaviour
 
                     tileList[i].OnMoveTo(goalPosition);
 
+                    Debug.Log("Suffle 4");
                     break;
                 }
             }
@@ -121,7 +133,7 @@ public class PuzzleBoard : MonoBehaviour
         {
             SchoolUIManager.instance.SetUIOpacity(img, true, 1f, 3.1f);
         }
-        foreach(TextMeshProUGUI text in cellPhone.appScreenTexts)
+        foreach (TextMeshProUGUI text in cellPhone.appScreenTexts)
         {
             SchoolUIManager.instance.SetUIOpacity(text, true, 1f, 3.1f);
         }

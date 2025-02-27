@@ -21,7 +21,7 @@ public class PuzzleTile : MonoBehaviour, IPointerClickHandler
 
     private void Start()
     {
-        corretPos = rectTransform.anchoredPosition;
+        // corretPos = rectTransform.anchoredPosition;
         dist = Vector3.Distance(corretPos, board.emptyTilePosition);
     }
 

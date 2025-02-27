@@ -109,7 +109,24 @@ public class RayCast_Aim : MonoBehaviour
 
     void TouchCellPhone(GameObject obj)
     {
+        SchoolUIManager.instance.getCellPhone = true; // 휴대폰 획득 bool 값 변경
+
         CellPhone cellPhoneLogic = obj.GetComponent<CellPhone>();
+
+        Vector3[] cellPhoneTransform = GetCameraInfo();
+
+        cellPhoneLogic.UpPhone(cellPhoneTransform[0], cellPhoneTransform[1]);
+
+        //플레이어 컨트롤 OFF
+        PlayerController.instance.Close_PlayerController();
+
+        //카메라 회전 정지
+        Camera_Rt.instance.Close_Camera();
+    }
+
+    public Vector3[] GetCameraInfo()
+    {
+        Vector3[] arr = new Vector3[2];
 
         // 카메라 포지션 값
         Vector3 cameraPos = this.GetComponent<Transform>().position;
@@ -125,13 +142,10 @@ public class RayCast_Aim : MonoBehaviour
 
         // 휴대폰 최종 회전 값
         Vector3 cellPhoneRotate = new Vector3(-cameraRotate.x, 180 + cameraRotate.y, 180 + cameraRotate.z);
+        
+        arr[0] = cellPhonePos;
+        arr[1] = cellPhoneRotate;
 
-        cellPhoneLogic.UpPhone(cellPhonePos, cellPhoneRotate);
-
-        //플레이어 컨트롤 OFF
-        PlayerController.instance.Close_PlayerController();
-
-        //카메라 회전 정지
-        Camera_Rt.instance.Close_Camera();
+        return arr;
     }
 }
