@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TheKiwiCoder;
 using UnityEngine;
 
 public class EnemyVision : MonoBehaviour
@@ -16,6 +17,7 @@ public class EnemyVision : MonoBehaviour
 
     [Header("탐지 상태")]
     [SerializeField] private bool isDetected = false; // 플레이어 탐지 여부 (인스펙터에서 확인 가능)
+    public BehaviourTree behaviourTree;
 
     void Start()
     {
