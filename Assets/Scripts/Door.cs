@@ -17,6 +17,7 @@ public class Door : MonoBehaviour
     {
         boxcollider = GetComponent<BoxCollider>();
     }
+
     public void Select_Door()
     {
         if (!isRotation)
