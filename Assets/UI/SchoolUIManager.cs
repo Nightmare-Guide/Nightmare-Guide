@@ -243,6 +243,8 @@ public class SchoolUIManager : MonoBehaviour
     // 인벤토리 휴대폰 버튼 함수
     public void OpenCellPhoneItem()
     {
+        cellPhone.GetComponent<CellPhone>().isUsing = true;
+
         // 휴대폰 포지션값 설정
         Vector3[] cellPhoneTransform = playerCamera.GetComponent<RayCast_Aim>().GetCameraInfo();
 
@@ -252,7 +254,6 @@ public class SchoolUIManager : MonoBehaviour
         cellPhone.SetActive(true);
 
         OpenUI(uiObjects[1]); // null 값용 UI 오브젝트 활성화
-
 
         // 잠금해제를 한 상태가 아니라면 초기화
         if (!cellPhone.GetComponent<CellPhone>().unLocked)
