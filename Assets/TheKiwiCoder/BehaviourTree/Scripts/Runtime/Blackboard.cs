@@ -10,5 +10,6 @@ namespace TheKiwiCoder {
     [System.Serializable]
     public class Blackboard {
         public Vector3 moveToPosition;
+        public bool isDetected = false; // 적을 발견했는지 여부
     }
 }

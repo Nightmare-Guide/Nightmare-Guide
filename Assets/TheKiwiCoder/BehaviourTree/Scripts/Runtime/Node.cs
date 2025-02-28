@@ -7,7 +7,8 @@ namespace TheKiwiCoder {
         public enum State {
             Running,
             Failure,
-            Success
+            Success,
+            Chase
         }
 
         [HideInInspector] public State state = State.Running;
