@@ -21,6 +21,7 @@ public class PuzzleBoard : MonoBehaviour
         InitializationPuzzle();
     }
 
+    // 퍼즐 초기화 함수
     public void InitializationPuzzle()
     {
         emptyTilePosition = tileList[tileList.Count - 1].GetComponent<RectTransform>().anchoredPosition;
@@ -103,7 +104,7 @@ public class PuzzleBoard : MonoBehaviour
         canMovePuzzle = true;
     }
 
-    public void SufflePuzzle()
+    public void SufflePuzzle() // 버튼에서 사용
     {
         suffleButton.SetActive(false);
         StartCoroutine("OnSuffle");
@@ -114,6 +115,7 @@ public class PuzzleBoard : MonoBehaviour
         cellPhone.dateText.gameObject.SetActive(false);
     }
 
+    // 잠금 해제 후 변화
     public void UnLockedPhone()
     {
         canMovePuzzle = false;

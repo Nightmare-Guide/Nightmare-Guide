@@ -72,13 +72,14 @@ public class SchoolUIManager : MonoBehaviour
             }
         }
 
-        // 테스트용
+        // 테스트용 -> 인벤토리 휴대폰 상호작용
         if (Input.GetKeyDown(KeyCode.Keypad7) && getCellPhone)
         {
             OpenCellPhoneItem();
         }
     }
-
+    
+    // 시작 세팅 함수
     void FirstSetUP()
     {
         uiObjects[0].SetActive(false);
@@ -89,6 +90,7 @@ public class SchoolUIManager : MonoBehaviour
         Debug.Log("UI First Setup");
     }
 
+    // UI 열기 함수
     public void OpenUI(GameObject ui)
     {
         ui.SetActive(true);
@@ -99,6 +101,8 @@ public class SchoolUIManager : MonoBehaviour
         Debug.Log("Open PhoneUI");
 
     }
+
+    // UI 닫기 함수
     public void CloseUI(GameObject ui)
     {
         ui.SetActive(false);
@@ -115,6 +119,7 @@ public class SchoolUIManager : MonoBehaviour
         Debug.Log("Close UI : " + ui.name);
     }
 
+    // 게임 일시 정지 함수
     public void PauseGame()
     {
         // 일시 정지 UI 활성화
@@ -129,6 +134,7 @@ public class SchoolUIManager : MonoBehaviour
         Debug.Log("Pause Game");
     }
 
+    // 오브젝트 상호작용 시 플레이어 움직임 멈춤 함수
     void StopPlayerController()
     {
         // 에임 UI 비활성화
@@ -150,6 +156,7 @@ public class SchoolUIManager : MonoBehaviour
         return uiObjects.All(obj => !obj.activeSelf);
     }
 
+    // 커서 고정 함수
     void CursorLocked()
     {
         // 에임 UI 활성화
@@ -164,6 +171,7 @@ public class SchoolUIManager : MonoBehaviour
         mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
     }
 
+    
     public void SetUIOpacity(Image img, bool up, float time, float waitTime)
     {
         StartCoroutine(SetOpacity(img, up, time, waitTime));
@@ -203,7 +211,7 @@ public class SchoolUIManager : MonoBehaviour
         if (!up) { img.gameObject.SetActive(false); }
     }
 
-    // TextMeshProUGUI
+    // TextMeshProUGUI 투명도 조절 코루틴
     private IEnumerator SetOpacity(TextMeshProUGUI text, bool up, float time, float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
@@ -232,7 +240,7 @@ public class SchoolUIManager : MonoBehaviour
         if (!up) { text.gameObject.SetActive(false); }
     }
 
-
+    // 인벤토리 휴대폰 버튼 함수
     public void OpenCellPhoneItem()
     {
         // 휴대폰 포지션값 설정

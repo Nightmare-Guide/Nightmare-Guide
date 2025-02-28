@@ -52,6 +52,7 @@ public class CellPhone : MonoBehaviour
         SetFirst();
     }
 
+    // 처음 세팅 함수
     public void SetFirst()
     {
         phoneBlurMat.SetFloat("_Size", 0); // 휴대폰 Blur Spacing 값 초기화
@@ -88,6 +89,7 @@ public class CellPhone : MonoBehaviour
         }
     }
 
+    // 인게임 휴대폰 오브젝트 상호작용 함수
     public void UpPhone(Vector3 pos, Vector3 rotate)
     {
         finalPos = pos;
@@ -96,6 +98,7 @@ public class CellPhone : MonoBehaviour
         StartCoroutine(DoTween());
     }
 
+    // 휴대폰 날짜 및 시간 입력 함수
     void GetDate()
     {
         // 현재 날짜와 시간 가져오기
@@ -130,6 +133,7 @@ public class CellPhone : MonoBehaviour
         appScreenTexts[0].text = formattedTime;
     }
 
+    // 휴대폰 잠금화면 슬라이더 상호작용 함수
     public void PhoneSlider()
     {
         // Slider Value 에 따른 변화
@@ -154,7 +158,7 @@ public class CellPhone : MonoBehaviour
         }
     }
 
-
+    // DoTween 에셋을 활용한 이동함수
     IEnumerator DoTween()
     {
         // InQuad : 시작할 때 빠르게 가속, 끝날 때 감속
