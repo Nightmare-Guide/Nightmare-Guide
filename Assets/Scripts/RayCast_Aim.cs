@@ -1,6 +1,7 @@
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityStandardAssets.Characters.FirstPerson;
+using static UnityEngine.Rendering.DebugUI;
 
 public class RayCast_Aim : MonoBehaviour
 {
@@ -115,7 +116,7 @@ public class RayCast_Aim : MonoBehaviour
 
         Vector3[] cellPhoneTransform = GetCameraInfo();
 
-        cellPhoneLogic.UpPhone(cellPhoneTransform[0], cellPhoneTransform[1]);
+        cellPhoneLogic.UpPhone(cellPhoneTransform[0], cellPhoneTransform[1]); // 카메라 앞으로 휴대폰 이동
 
         //플레이어 컨트롤 OFF
         PlayerController.instance.Close_PlayerController();
@@ -137,8 +138,11 @@ public class RayCast_Aim : MonoBehaviour
         // 카메라가 바라보는 방향
         Vector3 cameraForward = transform.forward;
 
+        // 카메라 x 축 회전값에 따라 Y 위치 조정 (최대 ±0.35f 변동)
+        float yOffset = Mathf.Sin(cameraRotate.x * Mathf.Deg2Rad) * Mathf.Sign(cameraRotate.x) * -0.35f;
+
         // 휴대폰 최종 포지션 값
-        Vector3 cellPhonePos = cameraPos + cameraForward * 0.01f + new Vector3(cameraForward.x * 0.35f, -0.25f, cameraForward.z * 0.35f);
+        Vector3 cellPhonePos = cameraPos + new Vector3(cameraForward.x * 0.35f, yOffset, cameraForward.z * 0.35f);
 
         // 휴대폰 최종 회전 값
         Vector3 cellPhoneRotate = new Vector3(-cameraRotate.x, 180 + cameraRotate.y, 180 + cameraRotate.z);

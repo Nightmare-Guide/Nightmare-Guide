@@ -18,6 +18,9 @@ public class CellPhone : MonoBehaviour
     public Vector3 finalRotate;
     public float rotateSpeed;
 
+    // bool 값
+    public bool isUsing = false;
+
     [Header ("# Lock Screen")]
     public GameObject LockPhoneUI;
     public GameObject sliderUI;
@@ -63,6 +66,11 @@ public class CellPhone : MonoBehaviour
         puzzleUI[0].gameObject.SetActive(false); // 퍼즐 비활성화
         appScreenUI.SetActive(false);
 
+        // 휴대폰 시간, 날짜, 슬라이드바 활성화
+        sliderUI.SetActive(true);
+        timeText.gameObject.SetActive(true);
+        dateText.gameObject.SetActive(true);
+
         SchoolUIManager.instance.SetUIOpacity(sliderImage[0], true, 0.1f, 0f);
         SchoolUIManager.instance.SetUIOpacity(sliderImage[1], true, 0.1f, 0f);
 
@@ -83,15 +91,23 @@ public class CellPhone : MonoBehaviour
             GetDate();
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && isUsing)
         {
+            isUsing = false;
             this.gameObject.SetActive(false);
+
+            if(!unLocked) // 해제를 못한 경우에는 블러 초기화
+            {
+                phoneBlurMat.SetFloat("_Size", 0); // 휴대폰 Blur Spacing 값 초기화
+            }
         }
     }
 
     // 인게임 휴대폰 오브젝트 상호작용 함수
     public void UpPhone(Vector3 pos, Vector3 rotate)
     {
+        isUsing = true;
+
         finalPos = pos;
         finalRotate = rotate;
 
