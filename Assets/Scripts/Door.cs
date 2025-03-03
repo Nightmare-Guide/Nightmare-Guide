@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Door : MonoBehaviour
 {
-    public bool doorState; //true면 닫힌상태 false면 열린상태
+    public int lockerIndex;
+    public bool doorState; //true면 닫힌상태 false면 열린상태 //locker는 반대로 true면 열린상태 false면 닫힌상태
     public BoxCollider boxcollider;
 
     [SerializeField] private Quaternion startRotation;
@@ -15,6 +16,7 @@ public class Door : MonoBehaviour
 
     private void Start()
     {
+        startRotation = transform.rotation;
         boxcollider = GetComponent<BoxCollider>();
     }
 
@@ -25,7 +27,8 @@ public class Door : MonoBehaviour
             isRotation = true;
             StartCoroutine(RotationDoor());
         }
-     
+
+
     }
 
     private IEnumerator RotationDoor()
@@ -57,9 +60,6 @@ public class Door : MonoBehaviour
         currentCoroutine = null;
         isRotation = false;
         istrigger_off();
-        
-        Debug.Log("로테" + isRotation);
-
     }
 
     public void istrigger_on() => boxcollider.isTrigger = true;

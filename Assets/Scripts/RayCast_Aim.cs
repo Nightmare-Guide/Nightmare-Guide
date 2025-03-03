@@ -102,9 +102,15 @@ public class RayCast_Aim : MonoBehaviour
     public void DoorCheck(GameObject obj)
     {
         Door door = obj.GetComponent<Door>();
-        if(door != null)
+        LockerRoomDoor ldoor = obj.GetComponent<LockerRoomDoor>();
+
+        if(door != null) //일반적인 door 스크립트
         {
             door.Select_Door();
+        }
+        if(ldoor != null) //LockerRoomDoor 값 확인용
+        {
+            ldoor.OpenLockerDoor();
         }
     }
 
