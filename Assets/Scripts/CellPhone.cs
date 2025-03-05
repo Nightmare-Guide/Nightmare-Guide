@@ -21,7 +21,7 @@ public class CellPhone : MonoBehaviour
     // bool 값
     public bool isUsing = false;
 
-    [Header ("# Lock Screen")]
+    [Header("# Lock Screen")]
     public GameObject LockPhoneUI;
     public GameObject sliderUI;
     public Image[] sliderImage;
@@ -37,17 +37,21 @@ public class CellPhone : MonoBehaviour
     public GameObject appScreenUI;
     public Image[] appScreenImgs;
     public TextMeshProUGUI[] appScreenTexts;
+    private Vector2[][] appScreenAnchors;
 
     [Header("# ETC.")]
     public SchoolUIManager schoolUIManager;
 
-    private void OnEnable()
+    private void Awake()
     {
-        // 퍼즐 해제 후, 바로 어플 화면 사용 가능하게 변경
-        if (unLocked)
+        // 어플 화면 기본 anchors 값 저장 -> min, max
+        appScreenAnchors = new Vector2[4][]
         {
-
-        }
+            new Vector2[] { new Vector2(0.08f, 0.73f) , new Vector2(0.32f, 0.85f) },
+            new Vector2[] { Vector2.zero, Vector2.one },
+            new Vector2[] { Vector2.zero, Vector2.one },
+            new Vector2[] { Vector2.zero, Vector2.one }
+        };
     }
 
     private void Start()
@@ -96,7 +100,7 @@ public class CellPhone : MonoBehaviour
             isUsing = false;
             this.gameObject.SetActive(false);
 
-            if(!unLocked) // 해제를 못한 경우에는 블러 초기화
+            if (!unLocked) // 해제를 못한 경우에는 블러 초기화
             {
                 phoneBlurMat.SetFloat("_Size", 0); // 휴대폰 Blur Spacing 값 초기화
             }
@@ -191,5 +195,66 @@ public class CellPhone : MonoBehaviour
 
         // BoxCollider 비활성화
         this.GetComponent<BoxCollider>().enabled = false;
+    }
+
+    public void AppIconButton(RectTransform appScreenRect)
+    {
+        StartCoroutine(AnchorsCoroutine(appScreenRect, appScreenRect.anchorMin, appScreenRect.anchorMax, Vector2.zero, Vector2.one, 0.15f, true));
+    }
+
+    IEnumerator AnchorsCoroutine(RectTransform rectTransform, Vector2 startMin, Vector2 startMax, Vector2 targetMin, Vector2 targetMax, float time, bool use)
+    {
+        if(use)
+        {
+            rectTransform.gameObject.SetActive(true);
+        }
+
+        float elapsed = 0f;
+        while (elapsed < time)
+        {
+            elapsed += Time.deltaTime;
+            float t = elapsed / time; // 0 ~ 1 사이의 값
+
+            rectTransform.anchorMin = Vector2.Lerp(startMin, targetMin, t);
+            rectTransform.anchorMax = Vector2.Lerp(startMax, targetMax, t);
+
+            yield return null; // 다음 프레임까지 대기
+        }
+
+        // 최종 값 보정
+        rectTransform.anchorMin = targetMin;
+        rectTransform.anchorMax = targetMax;
+
+        if (!use)
+        {
+            rectTransform.gameObject.SetActive(false);
+        }
+    }
+
+    public void BackButton()
+    {
+
+    }
+
+    public void HomeButton(RectTransform appScreenRect)
+    {
+        string objectName = appScreenRect.gameObject.name;
+
+        if (objectName.Contains("Dial"))
+        {
+            StartCoroutine(AnchorsCoroutine(appScreenRect, appScreenRect.anchorMin, appScreenRect.anchorMax, appScreenAnchors[0][0], appScreenAnchors[0][1], 0.15f, false));
+        }
+        else if (objectName.Contains("Message"))
+        {
+            
+        }
+        else if (objectName.Contains("Note"))
+        {
+            
+        }
+        else if (objectName.Contains("Gallery"))
+        {
+            
+        }
     }
 }
