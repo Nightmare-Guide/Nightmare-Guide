@@ -32,7 +32,12 @@ public class Locker : MonoBehaviour
     private float endTime = 0.5f; //회전 시간
     public bool isRotation = false; // false면 회전 안하고있음.
     public Coroutine currentCoroutine;
-
+    public enum LockerStat
+    {
+        Open,
+        Close
+    }
+    public LockerStat stat = LockerStat.Close;
     private void Start()
     {
        
@@ -43,26 +48,34 @@ public class Locker : MonoBehaviour
 
     public void PlayerHide()
     {
-        Select_Locker();
+        if (!PlayerController.instance.stat.Equals(PlayerController.PlayerState.Hide))
+        {
+            return;
+        }
+        Select_Locker();//락커 열기
         pr = Chapter1_Mgr.instance.player.transform;
         startPr = pr.position;
-        Debug.Log("처음 목표 좌표: " + startPr);
+        //Debug.Log("처음 목표 좌표: " + startPr);
         if (lockPr)
         {
             startRotation = pr.rotation;
             targetRotation = Quaternion.Euler(0, startRotation.eulerAngles.y + rotateRange, 0);
-            Debug.Log("시작 회전: " + startRotation.eulerAngles);
-            Debug.Log("목표 회전: " + targetRotation.eulerAngles);
+           // Debug.Log("시작 회전: " + startRotation.eulerAngles);
+           // Debug.Log("목표 회전: " + targetRotation.eulerAngles);
         }
         isMovingToLocker = true;
     }
 
     public void OpenLocker()//락커를 열고 나올 떄
     {
+        if (!PlayerController.instance.stat.Equals(PlayerController.PlayerState.Idle))
+        {
+            return;
+        }
         Select_Locker();// 락커 열기
         
-        Debug.Log("시작 좌표: " + pr.position);
-        Debug.Log("목표 좌표: " + startPr);
+        //Debug.Log("시작 좌표: " + pr.position);
+        //Debug.Log("목표 좌표: " + startPr);
         outMovingToLocker = true;
         
     }
@@ -79,7 +92,7 @@ public class Locker : MonoBehaviour
                 isMovingToLocker = false;
                 pr.rotation = targetRotation;
                 lockPr = false;
-                Debug.Log("최종 회전: " + pr.rotation.eulerAngles);
+                //Debug.Log("최종 회전: " + pr.rotation.eulerAngles);
 
                 if (currentCoroutine ==null)
                 {
@@ -92,7 +105,7 @@ public class Locker : MonoBehaviour
             if (lockPr)
             {
                 pr.rotation = Quaternion.Slerp(pr.rotation, targetRotation, Time.deltaTime * 5f);//카메라 회전 속도
-                Debug.Log("현재 회전: " + pr.rotation.eulerAngles);
+                //Debug.Log("현재 회전: " + pr.rotation.eulerAngles);
             }
           
             
@@ -104,7 +117,7 @@ public class Locker : MonoBehaviour
             if (Vector3.Distance(pr.position, startPr) < 0.01f)
             {
                 outMovingToLocker = false;
-                Debug.Log("락커 탈출");
+                //Debug.Log("락커 탈출");
                 if (currentCoroutine == null)
                 {
                     OutLocker();//문열리는 코루틴 종료후 실행
@@ -126,16 +139,16 @@ public class Locker : MonoBehaviour
     {
 
      
-        Debug.Log("최종 회전2" + pr.rotation);
+        //Debug.Log("최종 회전2" + pr.rotation);
         Select_Locker(); // 플레이어 입장후 문닫기
-        Debug.Log("잠김");
+       // Debug.Log("잠김");
         lockPr = false;
         Camera_Rt.instance.Open_Camera();
 
     }
 
 
-    public void Select_Locker()
+    public void Select_Locker()//도어 열기
     {
         if (!isRotation)
         {
@@ -145,7 +158,7 @@ public class Locker : MonoBehaviour
 
     }
 
-    private IEnumerator RotationDoor()
+    private IEnumerator RotationDoor()//도어 열기
     {
         float startTime = 0f;
         float speedMultiplier = 2.5f; // 속도 증가
@@ -173,7 +186,17 @@ public class Locker : MonoBehaviour
         istrigger_off();
     }
 
-    public void istrigger_on() => boxcollider.isTrigger = true;
-    public void istrigger_off() => boxcollider.isTrigger = false;
+    public void istrigger_on()
+    {
+        boxcollider.isTrigger = true;
+        // 부모의 MeshCollider를 비활성화
+        transform.parent.GetComponent<MeshCollider>().enabled = false;
+    }
+    public void istrigger_off()
+    {
+        boxcollider.isTrigger = false;
+        // 부모의 MeshCollider를 비활성화
+        transform.parent.GetComponent<MeshCollider>().enabled = true;
+    }
 
 }

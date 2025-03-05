@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityStandardAssets.Characters.FirstPerson;
 
 public class Chapter1_Mgr : MonoBehaviour
 {
@@ -39,6 +40,8 @@ public class Chapter1_Mgr : MonoBehaviour
         doorScript2.enabled = false;
         //
         RandomLockerShuffle();
+
+     
 
     }
     private void Update()

@@ -10,6 +10,7 @@ public class RayCast_Aim : MonoBehaviour
     [Header("Locker")]
     int locker = 0;
 
+
     private void Start()
     {
         // 커서를 화면 중앙에 고정
@@ -70,30 +71,40 @@ public class RayCast_Aim : MonoBehaviour
     }
     public void Locker(GameObject obj)
     {
+        
         Debug.Log("락커 인식"+obj.name);
+        PlayerController.instance.stat = PlayerController.PlayerState.Hide;
         Locker lockerObj = obj.GetComponent<Locker>();
-       
+        
+        
+
         if (locker ==0)//문이 열리고 플레이어 이동후 문디 닫힘
         {
+            PlayerController.instance.stat = PlayerController.PlayerState.Hide;
             PlayerController.instance.Close_PlayerController();//플레이어 컨트롤 OFF
             Camera_Rt.instance.Close_Camera();//카메라 회전 잠금
             lockerObj.lockPr = true;
             lockerObj.PlayerHide();  
             locker = 1;
-            
+         
 
         }
         else if (locker==1)//플레이어 컨트롤러가 활성화되고 문이 열림
         {
+            PlayerController.instance.stat = PlayerController.PlayerState.Idle;
             Camera_Rt.instance.Close_Camera();
             lockerObj.OpenLocker();
            // PlayerController.instance.Open_PlayerController();//플레이어 컨트롤 ON
             locker = 0;
-           // DoorCheck(obj);
-        }else if (locker == 2) //문이 닫힘
+            // DoorCheck(obj);
+  
+        }
+        else if (locker == 2) //문이 닫힘
         {
+
             DoorCheck(obj);
             locker = 0;
+            
         }
        
      
