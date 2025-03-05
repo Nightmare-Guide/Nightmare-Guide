@@ -183,6 +183,8 @@ public class CellPhone : MonoBehaviour
 
         transform.DORotate(finalRotate, rotateSpeed).SetEase(Ease.InOutQuad);
 
+        transform.DOScale(2.5f, moveSpeed).SetEase(Ease.InOutQuad);
+
         yield return new WaitForSeconds(moveSpeed - 0.05f);
 
         schoolUIManager.OpenUI(schoolUIManager.uiObjects[1]); // null 값용 UI 오브젝트 활성화
