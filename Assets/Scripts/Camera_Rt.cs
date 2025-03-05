@@ -16,6 +16,10 @@ public class Camera_Rt : MonoBehaviour
         {
             instance = this;
         }
+        else
+        {
+            Destroy(gameObject); // 중복된 인스턴스 제거
+        }
         lockerCamera = true;
         m_Camera = Camera.main;
         m_MouseLook.Init(transform, m_Camera.transform); // 마우스 컨트롤 초기화
@@ -28,6 +32,7 @@ public class Camera_Rt : MonoBehaviour
         {
             RotateView(); // 마우스 회전 실행
         }
+        Debug.Log(lockerCamera);
       
     }
 
@@ -40,9 +45,9 @@ public class Camera_Rt : MonoBehaviour
         m_MouseLook.Init(transform, m_Camera.transform);
         lockerCamera = true;
     }
-    public void Close_Camera() => lockerCamera = false;
+    public void Close_Camera()
+        {
+            lockerCamera = false;
+        }
 
-
-
-
-}
+    }
