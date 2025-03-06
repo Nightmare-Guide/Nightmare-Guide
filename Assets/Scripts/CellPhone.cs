@@ -48,8 +48,8 @@ public class CellPhone : MonoBehaviour
         appScreenAnchors = new Vector2[4][]
         {
             new Vector2[] { new Vector2(0.08f, 0.73f) , new Vector2(0.32f, 0.85f) },
-            new Vector2[] { Vector2.zero, Vector2.one },
-            new Vector2[] { Vector2.zero, Vector2.one },
+            new Vector2[] { new Vector2(0.38f, 0.73f),new Vector2(0.62f, 0.85f) },
+            new Vector2[] { Vector2.zero, new Vector2(0.32f, 0.85f) },
             new Vector2[] { Vector2.zero, Vector2.one }
         };
     }
@@ -246,7 +246,7 @@ public class CellPhone : MonoBehaviour
         }
         else if (objectName.Contains("Message"))
         {
-            
+            StartCoroutine(AnchorsCoroutine(appScreenRect, appScreenRect.anchorMin, appScreenRect.anchorMax, appScreenAnchors[1][0], appScreenAnchors[1][1], 0.15f, false));
         }
         else if (objectName.Contains("Note"))
         {
