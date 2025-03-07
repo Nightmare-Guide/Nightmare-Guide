@@ -38,6 +38,8 @@ public class CellPhone : MonoBehaviour
     public Image[] appScreenImgs;
     public TextMeshProUGUI[] appScreenTexts;
     private Vector2[][] appScreenAnchors;
+    [SerializeField] private GameObject bottomBar;
+    [SerializeField] private ScrollRect[] scrollRects;
 
     [Header("# ETC.")]
     public SchoolUIManager schoolUIManager;
@@ -47,10 +49,10 @@ public class CellPhone : MonoBehaviour
         // 어플 화면 기본 anchors 값 저장 -> min, max
         appScreenAnchors = new Vector2[4][]
         {
-            new Vector2[] { new Vector2(0.08f, 0.73f) , new Vector2(0.32f, 0.85f) },
-            new Vector2[] { new Vector2(0.38f, 0.73f),new Vector2(0.62f, 0.85f) },
-            new Vector2[] { Vector2.zero, new Vector2(0.32f, 0.85f) },
-            new Vector2[] { Vector2.zero, Vector2.one }
+            new Vector2[] { new Vector2(0.08f, 0.73f) , new Vector2(0.32f, 0.85f) }, // Dial App Screen
+            new Vector2[] { new Vector2(0.38f, 0.73f), new Vector2(0.62f, 0.85f) }, // Message App Screen
+            new Vector2[] { new Vector2(0.68f, 0.73f), new Vector2(0.92f, 0.85f) }, // Note App Screen
+            new Vector2[] { new Vector2(0.08f, 0.57f) , new Vector2(0.32f, 0.69f) }, // Gallery App Screen
         };
     }
 
@@ -202,11 +204,47 @@ public class CellPhone : MonoBehaviour
         StartCoroutine(AnchorsCoroutine(appScreenRect, appScreenRect.anchorMin, appScreenRect.anchorMax, Vector2.zero, Vector2.one, 0.15f, true));
     }
 
+    public void UpScreenButton(RectTransform appScreenRect)
+    {
+        StartCoroutine(AnchorsCoroutine(appScreenRect, Vector2.zero, new Vector2(1, 0), Vector2.zero, Vector2.one, 0.08f, true));
+    }
+
+    public void BackButton(RectTransform appScreenRect)
+    {
+        StartCoroutine(AnchorsCoroutine(appScreenRect, Vector2.zero, Vector2.one, Vector2.zero, new Vector2(1, 0), 0.08f, true));
+    }
+
+    public void HomeButton(RectTransform appScreenRect)
+    {
+        string objectName = appScreenRect.gameObject.name;
+
+        if (objectName.Contains("Dial"))
+        {
+            StartCoroutine(AnchorsCoroutine(appScreenRect, appScreenRect.anchorMin, appScreenRect.anchorMax, appScreenAnchors[0][0], appScreenAnchors[0][1], 0.15f, false));
+        }
+        else if (objectName.Contains("Message") || objectName.Contains("Conversation"))
+        {
+            StartCoroutine(AnchorsCoroutine(appScreenRect, appScreenRect.anchorMin, appScreenRect.anchorMax, appScreenAnchors[1][0], appScreenAnchors[1][1], 0.15f, false));
+        }
+        else if (objectName.Contains("Note") || objectName.Contains("Page"))
+        {
+            StartCoroutine(AnchorsCoroutine(appScreenRect, appScreenRect.anchorMin, appScreenRect.anchorMax, appScreenAnchors[2][0], appScreenAnchors[2][1], 0.15f, false));
+        }
+        else if (objectName.Contains("Gallery"))
+        {
+            StartCoroutine(AnchorsCoroutine(appScreenRect, appScreenRect.anchorMin, appScreenRect.anchorMax, appScreenAnchors[3][0], appScreenAnchors[3][1], 0.15f, false));
+        }
+    }
+
     IEnumerator AnchorsCoroutine(RectTransform rectTransform, Vector2 startMin, Vector2 startMax, Vector2 targetMin, Vector2 targetMax, float time, bool use)
     {
-        if(use)
+        if (use)
         {
             rectTransform.gameObject.SetActive(true);
+        }
+        else
+        {
+            bottomBar.SetActive(false);
         }
 
         float elapsed = 0f;
@@ -225,36 +263,24 @@ public class CellPhone : MonoBehaviour
         rectTransform.anchorMin = targetMin;
         rectTransform.anchorMax = targetMax;
 
+        ScrollToTop(); // 스크롤 초기화
+
         if (!use)
         {
             rectTransform.gameObject.SetActive(false);
         }
+        else
+        {
+            bottomBar.SetActive(true);
+        }
     }
 
-    public void BackButton()
+    // 스크롤을 맨 위로 올리는 함수
+    public void ScrollToTop()
     {
-
-    }
-
-    public void HomeButton(RectTransform appScreenRect)
-    {
-        string objectName = appScreenRect.gameObject.name;
-
-        if (objectName.Contains("Dial"))
+        foreach(ScrollRect scroll in scrollRects)
         {
-            StartCoroutine(AnchorsCoroutine(appScreenRect, appScreenRect.anchorMin, appScreenRect.anchorMax, appScreenAnchors[0][0], appScreenAnchors[0][1], 0.15f, false));
-        }
-        else if (objectName.Contains("Message"))
-        {
-            StartCoroutine(AnchorsCoroutine(appScreenRect, appScreenRect.anchorMin, appScreenRect.anchorMax, appScreenAnchors[1][0], appScreenAnchors[1][1], 0.15f, false));
-        }
-        else if (objectName.Contains("Note"))
-        {
-            
-        }
-        else if (objectName.Contains("Gallery"))
-        {
-            
+            scroll.verticalNormalizedPosition = 1f;
         }
     }
 }
