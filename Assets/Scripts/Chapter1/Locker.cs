@@ -10,8 +10,8 @@ public class Locker : MonoBehaviour
 {
     public Transform setTr;//플레이어 목표 위치
     public Vector3 startPr;//플레이어 락커 연 시점의 위치
-    private bool isMovingToLocker = false; //락커에 들어갈떄
-    private bool outMovingToLocker = false; //락커에 나갈때
+    public bool isMovingToLocker = false; //락커에 들어갈떄
+    public bool outMovingToLocker = false; //락커에 나갈때
     [SerializeField] GameObject door; //도어 오브젝트
     [SerializeField] Door door_Obj; //도어 오브젝트 스크립트 컴포넌트
     public float speed = 0.1f; // 플레이어가 락커로 들어가는 이동 속도
@@ -33,36 +33,54 @@ public class Locker : MonoBehaviour
     public bool isRotation = false; // false면 회전 안하고있음.
     public Coroutine currentCoroutine;
 
+
+
+    public enum LockerStat
+    {
+        In,
+        None
+    }
+    public LockerStat stat = LockerStat.None;
     private void Start()
     {
-       
+
         door_Obj = door.GetComponent<Door>();
         boxcollider = GetComponent<BoxCollider>();
         speed = 0.01f;
     }
-
     public void PlayerHide()
     {
-        Select_Locker();
+        PlayerController.instance.stat = PlayerController.PlayerState.Hide;
+        PlayerController.instance.Close_PlayerController();//플레이어 컨트롤 OFF
+        Camera_Rt.instance.Close_Camera();//카메라 회전 잠금
+        lockPr = true;
+
+        Select_Locker();//락커 열기
         pr = Chapter1_Mgr.instance.player.transform;
         startPr = pr.position;
-        Debug.Log("처음 목표 좌표: " + startPr);
+        //Debug.Log("처음 목표 좌표: " + startPr);
         if (lockPr)
         {
             startRotation = pr.rotation;
             targetRotation = Quaternion.Euler(0, startRotation.eulerAngles.y + rotateRange, 0);
-            Debug.Log("시작 회전: " + startRotation.eulerAngles);
-            Debug.Log("목표 회전: " + targetRotation.eulerAngles);
+           // Debug.Log("시작 회전: " + startRotation.eulerAngles);
+           // Debug.Log("목표 회전: " + targetRotation.eulerAngles);
         }
         isMovingToLocker = true;
     }
 
     public void OpenLocker()//락커를 열고 나올 떄
     {
+        PlayerController.instance.stat = PlayerController.PlayerState.Idle;
+        Camera_Rt.instance.Close_Camera();
+        if (!PlayerController.instance.stat.Equals(PlayerController.PlayerState.Idle))
+        {
+            return;
+        }
         Select_Locker();// 락커 열기
         
-        Debug.Log("시작 좌표: " + pr.position);
-        Debug.Log("목표 좌표: " + startPr);
+        //Debug.Log("시작 좌표: " + pr.position);
+        //Debug.Log("목표 좌표: " + startPr);
         outMovingToLocker = true;
         
     }
@@ -79,7 +97,7 @@ public class Locker : MonoBehaviour
                 isMovingToLocker = false;
                 pr.rotation = targetRotation;
                 lockPr = false;
-                Debug.Log("최종 회전: " + pr.rotation.eulerAngles);
+                //Debug.Log("최종 회전: " + pr.rotation.eulerAngles);
 
                 if (currentCoroutine ==null)
                 {
@@ -92,7 +110,7 @@ public class Locker : MonoBehaviour
             if (lockPr)
             {
                 pr.rotation = Quaternion.Slerp(pr.rotation, targetRotation, Time.deltaTime * 5f);//카메라 회전 속도
-                Debug.Log("현재 회전: " + pr.rotation.eulerAngles);
+                //Debug.Log("현재 회전: " + pr.rotation.eulerAngles);
             }
           
             
@@ -104,7 +122,7 @@ public class Locker : MonoBehaviour
             if (Vector3.Distance(pr.position, startPr) < 0.01f)
             {
                 outMovingToLocker = false;
-                Debug.Log("락커 탈출");
+                //Debug.Log("락커 탈출");
                 if (currentCoroutine == null)
                 {
                     OutLocker();//문열리는 코루틴 종료후 실행
@@ -126,16 +144,16 @@ public class Locker : MonoBehaviour
     {
 
      
-        Debug.Log("최종 회전2" + pr.rotation);
+        //Debug.Log("최종 회전2" + pr.rotation);
         Select_Locker(); // 플레이어 입장후 문닫기
-        Debug.Log("잠김");
+        // Debug.Log("잠김");
         lockPr = false;
         Camera_Rt.instance.Open_Camera();
-
+        stat = LockerStat.In;
     }
 
 
-    public void Select_Locker()
+    public void Select_Locker()//도어 열기
     {
         if (!isRotation)
         {
@@ -145,7 +163,7 @@ public class Locker : MonoBehaviour
 
     }
 
-    private IEnumerator RotationDoor()
+    private IEnumerator RotationDoor()//도어 열기
     {
         float startTime = 0f;
         float speedMultiplier = 2.5f; // 속도 증가
@@ -173,7 +191,55 @@ public class Locker : MonoBehaviour
         istrigger_off();
     }
 
-    public void istrigger_on() => boxcollider.isTrigger = true;
-    public void istrigger_off() => boxcollider.isTrigger = false;
+    public void istrigger_on()
+    {
+        boxcollider.isTrigger = true;
+        // 부모의 MeshCollider를 비활성화
+        transform.parent.GetComponent<MeshCollider>().enabled = false;
+    }
+    public void istrigger_off()
+    {
+        boxcollider.isTrigger = false;
+        // 부모의 MeshCollider를 비활성화
+        transform.parent.GetComponent<MeshCollider>().enabled = true;
+    }
 
+
+    public void Clear_Locker()
+    {
+        // 플레이어 관련 변수 초기화
+        isMovingToLocker = false;
+        outMovingToLocker = false;
+        lockPr = false;
+
+        // 이동및 회전 값 초기화
+        startPr = Vector3.zero;
+        startRotation = Quaternion.identity;
+
+        // 락커 문 상태 초기화
+        doorState = true; // 기본적으로 닫힌 상태로 설정
+        isRotation = false;
+
+        // 문 회전 초기화
+        transform.rotation = startRotationLocker;
+
+        // 코루틴 초기화
+        if (currentCoroutine != null)
+        {
+            StopCoroutine(currentCoroutine);
+            currentCoroutine = null;
+        }
+
+        // 충돌 처리 초기화
+        boxcollider.isTrigger = false;
+        if (transform.parent != null && transform.parent.GetComponent<MeshCollider>() != null)
+        {
+            transform.parent.GetComponent<MeshCollider>().enabled = true;
+        }
+
+        // 락커 상태 초기화
+        stat = LockerStat.None;
+
+        Debug.Log("락커 상태가 초기화되었습니다.");
+    }
 }

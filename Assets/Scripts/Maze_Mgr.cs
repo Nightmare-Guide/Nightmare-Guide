@@ -36,6 +36,8 @@ public class Maze_Mgr : MonoBehaviour
     public bool reStart = false;
     public Coroutine currentCoroutine;
 
+
+
     private void Start()
     {
         if (instance == null) { instance = this; }
@@ -52,15 +54,14 @@ public class Maze_Mgr : MonoBehaviour
         }
         if (reStart)//플레이어 위치 초기화 맵 시작점으로
         {
-            PlayerController.instance.Close_PlayerController();
-            Chapter1_Mgr.instance.player.transform.position = resetPoint.position;
-            PlayerController.instance.Open_PlayerController();
+            Respawn();
             reStart = false;
         }
         if(panel_Check ==0 && currentCoroutine != null)
         {
             StopCoroutine(currentCoroutine);
         }
+        
     }
     private void Make_Answer()
     {
@@ -125,6 +126,12 @@ public class Maze_Mgr : MonoBehaviour
                     
             }
         }
+    }
+    public void Respawn()
+    {
+        PlayerController.instance.Close_PlayerController();
+        Chapter1_Mgr.instance.player.transform.position = resetPoint.position;
+        PlayerController.instance.Open_PlayerController();
     }
 
     public void Check_Answer()//답안 체크
