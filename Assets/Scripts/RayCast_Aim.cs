@@ -8,7 +8,7 @@ public class RayCast_Aim : MonoBehaviour
     public float maxRayDistance = 1.1f; // 레이 길이 설정
 
     [Header("Locker")]
-    int locker = 0;
+    bool locker = true;
 
 
     private void Start()
@@ -54,7 +54,7 @@ public class RayCast_Aim : MonoBehaviour
             }
         }
     }
-
+   
     public void Chapter1_Maze(GameObject obj) //챕터 1 미로맵 탈출용 버튼 클릭
     {
         Maze_Button mazeButton = obj.GetComponent<Maze_Button>();
@@ -73,40 +73,30 @@ public class RayCast_Aim : MonoBehaviour
     {
         
         Debug.Log("락커 인식"+obj.name);
-        PlayerController.instance.stat = PlayerController.PlayerState.Hide;
         Locker lockerObj = obj.GetComponent<Locker>();
-        
-        
-
-        if (locker ==0)//문이 열리고 플레이어 이동후 문디 닫힘
+        if (lockerObj.isMovingToLocker)
         {
-            PlayerController.instance.stat = PlayerController.PlayerState.Hide;
-            PlayerController.instance.Close_PlayerController();//플레이어 컨트롤 OFF
-            Camera_Rt.instance.Close_Camera();//카메라 회전 잠금
-            lockerObj.lockPr = true;
+
+        }
+
+        if (locker)//문이 열리고 플레이어 이동후 문디 닫힘
+        {
+            
             lockerObj.PlayerHide();  
-            locker = 1;
+            locker = false;
          
 
         }
-        else if (locker==1)//플레이어 컨트롤러가 활성화되고 문이 열림
+        else if (!locker)//플레이어 컨트롤러가 활성화되고 문이 열림
         {
-            PlayerController.instance.stat = PlayerController.PlayerState.Idle;
-            Camera_Rt.instance.Close_Camera();
+            
             lockerObj.OpenLocker();
            // PlayerController.instance.Open_PlayerController();//플레이어 컨트롤 ON
-            locker = 0;
+            locker = true;
             // DoorCheck(obj);
   
         }
-        else if (locker == 2) //문이 닫힘
-        {
 
-            DoorCheck(obj);
-            locker = 0;
-            
-        }
-       
      
     }
 
