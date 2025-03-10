@@ -48,6 +48,7 @@ MonoBehaviour:
   children:
   - {fileID: 6402316061889451186}
   - {fileID: -2247863421084346560}
+  - {fileID: 3212435533261781964}
   - {fileID: -4755641854017797634}
 --- !u!114 &-4755641854017797634
 MonoBehaviour:
@@ -64,37 +65,13 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: d654e6bf449ef0a4e9d4228651cef97e
-  position: {x: 9.333313, y: 448}
+  position: {x: 207.94824, y: 448}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     isDetected: 0
   description: 
   drawGizmos: 0
   duration: 1
---- !u!114 &-3333355368110483223
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 61431bba79d7d7843b82bf1de71703f5, type: 3}
-  m_Name: Sequencer
-  m_EditorClassIdentifier: 
-  state: 0
-  started: 0
-  guid: b8183ae58b50798428afe260cce213d8
-  position: {x: 330.61105, y: 203.33334}
-  blackboard:
-    moveToPosition: {x: 0, y: 0, z: 0}
-    isDetected: 0
-  description: 
-  drawGizmos: 0
-  children:
-  - {fileID: 3212435533261781964}
-  - {fileID: 3071281466789771180}
 --- !u!114 &-2247863421084346560
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -143,9 +120,7 @@ MonoBehaviour:
   - {fileID: 6402316061889451186}
   - {fileID: -2247863421084346560}
   - {fileID: 126179549495469473}
-  - {fileID: -3333355368110483223}
   - {fileID: 3212435533261781964}
-  - {fileID: 3071281466789771180}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     isDetected: 0
@@ -172,29 +147,6 @@ MonoBehaviour:
   drawGizmos: 0
   children:
   - {fileID: -5660333016957678146}
-  - {fileID: -3333355368110483223}
---- !u!114 &3071281466789771180
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a5134d9de14153468b48928d3e7359a, type: 3}
-  m_Name: Wait
-  m_EditorClassIdentifier: 
-  state: 0
-  started: 0
-  guid: a432c3a1c39c81c4d8e5fedfd63d8f0a
-  position: {x: 530.325, y: 448.0001}
-  blackboard:
-    moveToPosition: {x: 0, y: 0, z: 0}
-    isDetected: 0
-  description: 
-  drawGizmos: 0
-  duration: 1
 --- !u!114 &3212435533261781964
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -210,7 +162,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: 0d591afd111aa2a46812af7c41670ae8
-  position: {x: 329.99997, y: 448.0001}
+  position: {x: 27.588287, y: 448}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     isDetected: 0
@@ -253,7 +205,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: e8b7b3236babb5b45a8c128a30261cab
-  position: {x: -329.99994, y: 448.00006}
+  position: {x: -328.66666, y: 447.99994}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     isDetected: 0
