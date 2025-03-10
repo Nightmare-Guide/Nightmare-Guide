@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -12,14 +12,14 @@ public class ChaseNode : ActionNode
 
     protected override void OnStart()
     {
-        enemy = context.transform; // AIÀÇ Transform °¡Á®¿À±â
-        agent = enemy.GetComponent<NavMeshAgent>(); // NavMeshAgent °¡Á®¿À±â
-        player = GameObject.FindGameObjectWithTag("Player")?.transform; // ÇÃ·¹ÀÌ¾î Ã£±â
+        enemy = context.transform; // AIì˜ Transform ê°€ì ¸ì˜¤ê¸°
+        agent = enemy.GetComponent<NavMeshAgent>(); // NavMeshAgent ê°€ì ¸ì˜¤ê¸°
+        player = Chapter1_Mgr.instance.player.transform; // í”Œë ˆì´ì–´ ì°¾ê¸°
     }
 
     protected override void OnStop()
     {
-        // Ãß°İÀ» ¸ØÃâ ¶§, AIÀÇ ¼Óµµ¸¦ 0À¸·Î ¼³Á¤
+        // ì¶”ê²©ì„ ë©ˆì¶œ ë•Œ, AIì˜ ì†ë„ë¥¼ 0ìœ¼ë¡œ ì„¤ì •
         if (agent != null)
         {
             agent.velocity = Vector3.zero;
@@ -29,21 +29,21 @@ public class ChaseNode : ActionNode
 
     protected override State OnUpdate()
     {
-        // ÇÃ·¹ÀÌ¾î°¡ ¾ø°Å³ª, ³×ºñ°ÔÀÌ¼Ç ¿¡ÀÌÀüÆ®°¡ ¾øÀ¸¸é ½ÇÆĞ ¹İÈ¯
+        // í”Œë ˆì´ì–´ê°€ ì—†ê±°ë‚˜, ë„¤ë¹„ê²Œì´ì…˜ ì—ì´ì „íŠ¸ê°€ ì—†ìœ¼ë©´ ì‹¤íŒ¨ ë°˜í™˜
         if (player == null || agent == null)
         {
             return State.Failure;
         }
 
-        // ÇÃ·¹ÀÌ¾î¸¦ ¸ñÇ¥·Î ÀÌµ¿
+        // í”Œë ˆì´ì–´ë¥¼ ëª©í‘œë¡œ ì´ë™
         agent.SetDestination(player.position);
 
-        // ÇÃ·¹ÀÌ¾î¿Í ³Ê¹« °¡±î¿öÁ³´Ù¸é ¼º°ø ¹İÈ¯
-        if (Vector3.Distance(enemy.position, player.position) < 2f)
+        // í”Œë ˆì´ì–´ì™€ ë„ˆë¬´ ë©€ì–´ì¡Œë‹¤ë©´ ì„±ê³µ ë°˜í™˜ 
+        if (Vector3.Distance(enemy.position, player.position) > 30f)  
         {
             return State.Success;
         }
 
-        return State.Running; // °è¼Ó Ãß°İ Áß
+        return State.Running; // ê³„ì† ì¶”ê²© ì¤‘
     }
 }
