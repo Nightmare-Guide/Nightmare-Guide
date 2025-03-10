@@ -74,14 +74,14 @@ public class RayCast_Aim : MonoBehaviour
         
         Debug.Log("락커 인식"+obj.name);
         Locker lockerObj = obj.GetComponent<Locker>();
-        if (lockerObj.isMovingToLocker)
+        if (lockerObj.isMovingToLocker || lockerObj.outMovingToLocker)
         {
-
+            return;
         }
 
         if (locker)//문이 열리고 플레이어 이동후 문디 닫힘
         {
-            
+            lockerObj.isMovingToLocker = true;
             lockerObj.PlayerHide();  
             locker = false;
          
