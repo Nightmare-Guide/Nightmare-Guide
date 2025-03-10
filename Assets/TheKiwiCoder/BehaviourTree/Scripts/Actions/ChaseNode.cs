@@ -38,8 +38,8 @@ public class ChaseNode : ActionNode
         // 플레이어를 목표로 이동
         agent.SetDestination(player.position);
 
-        // 플레이어와 너무 가까워졌다면 성공 반환
-        if (Vector3.Distance(enemy.position, player.position) < 2f)
+        // 플레이어와 너무 멀어졌다면 성공 반환 
+        if (Vector3.Distance(enemy.position, player.position) > 30f)  
         {
             return State.Success;
         }
