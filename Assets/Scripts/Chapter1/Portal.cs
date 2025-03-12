@@ -7,6 +7,7 @@ public class Portal : MonoBehaviour
     public GameObject exitPortal;
     public Camera portalCamera;         // 포탈 뷰를 렌더링할 카메라
     public RenderTexture viewTexture;   // 포탈 뷰를 저장할 텍스처
+    public bool turnPlayer; // true면 회전, false면 회전X
 
     private MeshRenderer screen;
 
@@ -15,14 +16,6 @@ public class Portal : MonoBehaviour
         screen = GetComponentInChildren<MeshRenderer>();
         portalCamera.targetTexture = viewTexture;
         screen.material.SetTexture("_MainTex", viewTexture);
-    }
-
-    void LateUpdate()
-    {
-        if (portalCamera != null && Camera.main != null)
-        {
-            portalCamera.aspect = Camera.main.aspect;
-        }
     }
 
     public void UpdateCamera(Camera playerCamera)
@@ -36,11 +29,16 @@ public class Portal : MonoBehaviour
 
         // 3️ 포탈 회전 보정 (180도 회전 추가)
         Quaternion portalRotationalDifference = Quaternion.Inverse(transform.rotation) * exitPortal.transform.rotation;
-        portalCamera.transform.rotation = portalRotationalDifference * playerCamera.transform.rotation * Quaternion.Euler(20, 180, 0);
+        Quaternion portalCameraRotation = portalRotationalDifference * playerCamera.transform.rotation;
+
+        // Y축 회전만 사용하고, X, Z축 회전은 고정
+        portalCamera.transform.rotation = Quaternion.Euler(0, portalCameraRotation.eulerAngles.y, 0) * playerCamera.transform.rotation;
 
         // 4️ 카메라 시야각 및 클리핑 조정
         portalCamera.fieldOfView = playerCamera.fieldOfView;
     }
+
+
 
     private void OnTriggerEnter(Collider other)
     {
@@ -59,42 +57,36 @@ public class Portal : MonoBehaviour
             // 1. 포탈 통과 전 CharacterController 비활성화
             PlayerController.instance.Close_PlayerController();
 
-            // 2. 포탈을 통한 플레이어 위치 이동
-            Vector3 portalToPlayer = player.transform.position - transform.position;
-            float dotProduct = Vector3.Dot(transform.forward, portalToPlayer);
+            // 2. 플레이어 위치를 출구 포탈의 위치로 직접 설정
+            player.transform.position = exitPortal.transform.position;
 
-            if (dotProduct < 0f) return;
-
-            // 3. 상대적 위치 계산
-            Vector3 relativePos = transform.InverseTransformPoint(player.transform.position);
-            Vector3 newPos = exitPortal.transform.TransformPoint(new Vector3(-relativePos.x, relativePos.y, -relativePos.z));
-
-            // 4. 위치 이동
-            player.transform.position = newPos;
-
-            // 5. 카메라 회전 잠금 해제
+            // 3. 카메라 회전 잠금 해제
             if (Camera_Rt.instance != null)
             {
                 Camera_Rt.instance.Close_Camera();
             }
-            // 6. 180도 회전 추가
-            player.transform.Rotate(0, 180, 0);
 
-            // 7. CharacterController 활성화 (딜레이 후 활성화)
+            // 4. 설정한 값에 따라 플레이어 회전 처리
+            if (turnPlayer)
+            {
+                player.transform.Rotate(0, 180, 0);
+            }
+
+            // 5. CharacterController 활성화 (딜레이 후 활성화)
             StartCoroutine(EnableCharacterControllerAfterDelay());
 
-            // 8. Rigidbody가 있을 경우 속도 처리
+            // 6. Rigidbody가 있을 경우 속도 초기화
             Rigidbody rb = player.GetComponent<Rigidbody>();
             if (rb != null)
-            {
-                Vector3 relativeVel = transform.InverseTransformDirection(rb.velocity);
-                rb.velocity = exitPortal.transform.TransformDirection(new Vector3(-relativeVel.x, relativeVel.y, -relativeVel.z));
+                {
+                rb.velocity = Vector3.zero;
             }
         }
     }
 
+
     // 딜레이 후 CharacterController 활성화
-    private IEnumerator EnableCharacterControllerAfterDelay()
+    private IEnumerator EnableCharacterControllerAfterDelay()   
     {
         yield return new WaitForSeconds(0.1f);  // 딜레이 추가
         if (PlayerController.instance != null)
