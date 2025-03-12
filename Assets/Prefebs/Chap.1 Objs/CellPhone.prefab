@@ -372,6 +372,18 @@ MonoBehaviour:
   appScreenTexts:
   - {fileID: 4184265534292118313}
   bottomBar: {fileID: 5961512887093931514}
+  scrollRects:
+  - {fileID: 6989180213558940941}
+  - {fileID: 1601237774292450515}
+  - {fileID: 2021456092482745786}
+  - {fileID: 1278968113790576739}
+  - {fileID: 6513012745585214978}
+  - {fileID: 1951891051646358284}
+  - {fileID: 86121948764852150}
+  - {fileID: 5448420180222656114}
+  - {fileID: 7599490934275573521}
+  - {fileID: 8572592398350123660}
+  - {fileID: 5685130791324892253}
   schoolUIManager: {fileID: 0}
 --- !u!1 &79328689094367433
 GameObject:
@@ -1946,8 +1958,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4269790225846195916}
   m_HandleRect: {fileID: 8037235626811123517}
   m_Direction: 2
-  m_Value: 0
-  m_Size: 0.9999361
+  m_Value: 0.0043879733
+  m_Size: 0.9640256
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -3626,7 +3638,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 59f9a57bf72c6fe43bd2bcf8645b8c1c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3679,7 +3691,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8726023095820270450}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 876380290662836403}
+        m_TargetAssemblyTypeName: Gallery, Assembly-CSharp
+        m_MethodName: SizeUpImgButton
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 8
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1293703762447971888
 GameObject:
   m_ObjectHideFlags: 0
@@ -7575,7 +7599,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 59f9a57bf72c6fe43bd2bcf8645b8c1c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -7628,7 +7652,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5640110234838887295}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 876380290662836403}
+        m_TargetAssemblyTypeName: Gallery, Assembly-CSharp
+        m_MethodName: SizeUpImgButton
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2825955329669619020
 GameObject:
   m_ObjectHideFlags: 0
@@ -8627,7 +8663,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7129126158162682670
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8635,15 +8671,15 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3412052163626531301}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.00001168251}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4787814902446324661}
+  m_Father: {fileID: 2062088779452771673}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.13}
-  m_AnchorMax: {x: 1, y: 0.78}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -8832,6 +8868,43 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &3458710758501769130
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2062088779452771673}
+  m_Layer: 5
+  m_Name: Main Img Group
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2062088779452771673
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3458710758501769130}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 7129126158162682670}
+  - {fileID: 6114562800054889546}
+  m_Father: {fileID: 4787814902446324661}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.05, y: 0.13}
+  m_AnchorMax: {x: 0.95, y: 0.78}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &3509135693071478107
 GameObject:
   m_ObjectHideFlags: 0
@@ -9636,6 +9709,81 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &3723015045551902551
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6114562800054889546}
+  - component: {fileID: 264128647786355790}
+  - component: {fileID: 2074291314164012954}
+  m_Layer: 5
+  m_Name: Main Img
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &6114562800054889546
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3723015045551902551}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2062088779452771673}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &264128647786355790
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3723015045551902551}
+  m_CullTransparentMesh: 1
+--- !u!114 &2074291314164012954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3723015045551902551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &3771340107205605370
 GameObject:
   m_ObjectHideFlags: 0
@@ -10106,7 +10254,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 59f9a57bf72c6fe43bd2bcf8645b8c1c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -10159,7 +10307,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7061384391546153734}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 876380290662836403}
+        m_TargetAssemblyTypeName: Gallery, Assembly-CSharp
+        m_MethodName: SizeUpImgButton
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 5
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &3916416043931770141
 GameObject:
   m_ObjectHideFlags: 0
@@ -11724,7 +11884,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 59f9a57bf72c6fe43bd2bcf8645b8c1c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -11777,7 +11937,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2457341844383310037}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 876380290662836403}
+        m_TargetAssemblyTypeName: Gallery, Assembly-CSharp
+        m_MethodName: SizeUpImgButton
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &4508161556927217544
 GameObject:
   m_ObjectHideFlags: 0
@@ -11897,6 +12069,7 @@ GameObject:
   - component: {fileID: 4787814902446324661}
   - component: {fileID: 6100387782648230782}
   - component: {fileID: 4016379496344035662}
+  - component: {fileID: 876380290662836403}
   m_Layer: 5
   m_Name: Gallery Screen
   m_TagString: Untagged
@@ -11916,9 +12089,9 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 7129126158162682670}
   - {fileID: 8449742333674650069}
   - {fileID: 5460307016680395392}
+  - {fileID: 2062088779452771673}
   - {fileID: 7691846906430987439}
   - {fileID: 692074857053681884}
   m_Father: {fileID: 7546853398689819387}
@@ -11966,6 +12139,31 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &876380290662836403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4535274446767211092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 382ee5889c7c38e418c8b63ccea355be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cellPhone: {fileID: 4354280328723002432}
+  galleryImgs:
+  - {fileID: 808236326615526791}
+  - {fileID: 2457341844383310037}
+  - {fileID: 248208708137056118}
+  - {fileID: 5640110234838887295}
+  - {fileID: 160819139541781056}
+  - {fileID: 7061384391546153734}
+  - {fileID: 996108145412260484}
+  - {fileID: 7793258310876482805}
+  - {fileID: 8726023095820270450}
+  mainImgRect: {fileID: 6114562800054889546}
+  bgImg: {fileID: 3412052163626531301}
 --- !u!1 &4541634328682725036
 GameObject:
   m_ObjectHideFlags: 0
@@ -13462,13 +13660,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4354280328723002432}
-        m_TargetAssemblyTypeName: CellPhone, Assembly-CSharp
+      - m_Target: {fileID: 876380290662836403}
+        m_TargetAssemblyTypeName: Gallery, Assembly-CSharp
         m_MethodName: HomeButton
-        m_Mode: 2
+        m_Mode: 1
         m_Arguments:
-          m_ObjectArgument: {fileID: 4787814902446324661}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.RectTransform, UnityEngine
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -13818,13 +14016,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4354280328723002432}
-        m_TargetAssemblyTypeName: CellPhone, Assembly-CSharp
-        m_MethodName: HomeButton
-        m_Mode: 2
+      - m_Target: {fileID: 876380290662836403}
+        m_TargetAssemblyTypeName: Gallery, Assembly-CSharp
+        m_MethodName: BackButton
+        m_Mode: 1
         m_Arguments:
-          m_ObjectArgument: {fileID: 4787814902446324661}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.RectTransform, UnityEngine
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -15336,7 +15534,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 59f9a57bf72c6fe43bd2bcf8645b8c1c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -15389,7 +15587,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 996108145412260484}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 876380290662836403}
+        m_TargetAssemblyTypeName: Gallery, Assembly-CSharp
+        m_MethodName: SizeUpImgButton
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 6
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5649400643833725486
 GameObject:
   m_ObjectHideFlags: 0
@@ -15615,7 +15825,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5751138420515060953}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.00011456012}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -15631,9 +15841,9 @@ RectTransform:
   m_Father: {fileID: 4606026461245098973}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.008880615, y: -0.00642395}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 0.98}
+  m_AnchoredPosition: {x: 0, y: 1.2428627}
+  m_SizeDelta: {x: 0, y: 2.5007396}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &5763524018038690016
 GameObject:
@@ -15910,7 +16120,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 59f9a57bf72c6fe43bd2bcf8645b8c1c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -15963,7 +16173,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 248208708137056118}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 876380290662836403}
+        m_TargetAssemblyTypeName: Gallery, Assembly-CSharp
+        m_MethodName: SizeUpImgButton
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5924322879018178357
 GameObject:
   m_ObjectHideFlags: 0
@@ -16312,7 +16534,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 59f9a57bf72c6fe43bd2bcf8645b8c1c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -16365,7 +16587,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7793258310876482805}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 876380290662836403}
+        m_TargetAssemblyTypeName: Gallery, Assembly-CSharp
+        m_MethodName: SizeUpImgButton
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 7
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5961154681496923612
 GameObject:
   m_ObjectHideFlags: 0
@@ -17168,6 +17402,7 @@ GameObject:
   - component: {fileID: 5410642823636989419}
   - component: {fileID: 808236326615526791}
   - component: {fileID: 3518482826866048814}
+  - component: {fileID: 3118900636291709437}
   m_Layer: 5
   m_Name: Image 1 (Btn)
   m_TagString: Untagged
@@ -17222,7 +17457,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 59f9a57bf72c6fe43bd2bcf8645b8c1c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -17275,7 +17510,32 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 808236326615526791}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 876380290662836403}
+        m_TargetAssemblyTypeName: Gallery, Assembly-CSharp
+        m_MethodName: SizeUpImgButton
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &3118900636291709437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6283503978138035366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31a19414c41e5ae4aae2af33fee712f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShowMaskGraphic: 1
 --- !u!1 &6302455073396956690
 GameObject:
   m_ObjectHideFlags: 0
@@ -22563,8 +22823,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 8950514871921724167}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 0.9999361}
+  m_AnchorMin: {x: 0, y: 0.00015785464}
+  m_AnchorMax: {x: 1, y: 0.96418345}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -25352,7 +25612,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 59f9a57bf72c6fe43bd2bcf8645b8c1c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -25405,7 +25665,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 160819139541781056}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 876380290662836403}
+        m_TargetAssemblyTypeName: Gallery, Assembly-CSharp
+        m_MethodName: SizeUpImgButton
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 4
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &8931816682859799915
 GameObject:
   m_ObjectHideFlags: 0
