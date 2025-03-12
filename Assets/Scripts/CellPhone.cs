@@ -21,7 +21,7 @@ public class CellPhone : MonoBehaviour
     // bool 값
     public bool isUsing = false;
 
-    [Header ("# Lock Screen")]
+    [Header("# Lock Screen")]
     public GameObject LockPhoneUI;
     public GameObject sliderUI;
     public Image[] sliderImage;
@@ -37,17 +37,23 @@ public class CellPhone : MonoBehaviour
     public GameObject appScreenUI;
     public Image[] appScreenImgs;
     public TextMeshProUGUI[] appScreenTexts;
+    private Vector2[][] appScreenAnchors;
+    [SerializeField] private GameObject bottomBar; // 자연스러움을 위해 추가된 Img 오브젝트
+    [SerializeField] private ScrollRect[] scrollRects;
 
     [Header("# ETC.")]
     public SchoolUIManager schoolUIManager;
 
-    private void OnEnable()
+    private void Awake()
     {
-        // 퍼즐 해제 후, 바로 어플 화면 사용 가능하게 변경
-        if (unLocked)
+        // 어플 화면 기본 anchors 값 저장 -> min, max
+        appScreenAnchors = new Vector2[4][]
         {
-
-        }
+            new Vector2[] { new Vector2(0.08f, 0.73f) , new Vector2(0.32f, 0.85f) }, // Dial App Screen
+            new Vector2[] { new Vector2(0.38f, 0.73f), new Vector2(0.62f, 0.85f) }, // Message App Screen
+            new Vector2[] { new Vector2(0.68f, 0.73f), new Vector2(0.92f, 0.85f) }, // Note App Screen
+            new Vector2[] { new Vector2(0.08f, 0.57f) , new Vector2(0.32f, 0.69f) }, // Gallery App Screen
+        };
     }
 
     private void Start()
@@ -96,7 +102,7 @@ public class CellPhone : MonoBehaviour
             isUsing = false;
             this.gameObject.SetActive(false);
 
-            if(!unLocked) // 해제를 못한 경우에는 블러 초기화
+            if (!unLocked) // 해제를 못한 경우에는 블러 초기화
             {
                 phoneBlurMat.SetFloat("_Size", 0); // 휴대폰 Blur Spacing 값 초기화
             }
@@ -183,11 +189,98 @@ public class CellPhone : MonoBehaviour
 
         transform.DORotate(finalRotate, rotateSpeed).SetEase(Ease.InOutQuad);
 
+        transform.DOScale(2.5f, moveSpeed).SetEase(Ease.InOutQuad);
+
         yield return new WaitForSeconds(moveSpeed - 0.05f);
 
         schoolUIManager.OpenUI(schoolUIManager.uiObjects[1]); // null 값용 UI 오브젝트 활성화
 
         // BoxCollider 비활성화
         this.GetComponent<BoxCollider>().enabled = false;
+    }
+
+    public void AppIconButton(RectTransform appScreenRect)
+    {
+        StartCoroutine(AnchorsCoroutine(appScreenRect, appScreenRect.anchorMin, appScreenRect.anchorMax, Vector2.zero, Vector2.one, 0.15f, true));
+    }
+
+    public void UpScreenButton(RectTransform appScreenRect)
+    {
+        StartCoroutine(AnchorsCoroutine(appScreenRect, Vector2.zero, new Vector2(1, 0), Vector2.zero, Vector2.one, 0.08f, true));
+    }
+
+    public void BackButton(RectTransform appScreenRect)
+    {
+        StartCoroutine(AnchorsCoroutine(appScreenRect, Vector2.zero, Vector2.one, Vector2.zero, new Vector2(1, 0), 0.08f, true));
+    }
+
+    public void HomeButton(RectTransform appScreenRect)
+    {
+        string objectName = appScreenRect.gameObject.name;
+
+        if (objectName.Contains("Dial"))
+        {
+            StartCoroutine(AnchorsCoroutine(appScreenRect, appScreenRect.anchorMin, appScreenRect.anchorMax, appScreenAnchors[0][0], appScreenAnchors[0][1], 0.15f, false));
+        }
+        else if (objectName.Contains("Message") || objectName.Contains("Conversation"))
+        {
+            StartCoroutine(AnchorsCoroutine(appScreenRect, appScreenRect.anchorMin, appScreenRect.anchorMax, appScreenAnchors[1][0], appScreenAnchors[1][1], 0.15f, false));
+        }
+        else if (objectName.Contains("Note") || objectName.Contains("Page"))
+        {
+            StartCoroutine(AnchorsCoroutine(appScreenRect, appScreenRect.anchorMin, appScreenRect.anchorMax, appScreenAnchors[2][0], appScreenAnchors[2][1], 0.15f, false));
+        }
+        else if (objectName.Contains("Gallery"))
+        {
+            StartCoroutine(AnchorsCoroutine(appScreenRect, appScreenRect.anchorMin, appScreenRect.anchorMax, appScreenAnchors[3][0], appScreenAnchors[3][1], 0.15f, false));
+        }
+    }
+
+    IEnumerator AnchorsCoroutine(RectTransform rectTransform, Vector2 startMin, Vector2 startMax, Vector2 targetMin, Vector2 targetMax, float time, bool use)
+    {
+        if (use)
+        {
+            rectTransform.gameObject.SetActive(true);
+        }
+        else
+        {
+            bottomBar.SetActive(false); // 종료 시에는 하단 바 Img 비활성화
+        }
+
+        float elapsed = 0f;
+        while (elapsed < time)
+        {
+            elapsed += Time.deltaTime;
+            float t = elapsed / time; // 0 ~ 1 사이의 값
+
+            rectTransform.anchorMin = Vector2.Lerp(startMin, targetMin, t);
+            rectTransform.anchorMax = Vector2.Lerp(startMax, targetMax, t);
+
+            yield return null; // 다음 프레임까지 대기
+        }
+
+        // 최종 값 보정
+        rectTransform.anchorMin = targetMin;
+        rectTransform.anchorMax = targetMax;
+
+        ScrollToTop(); // 스크롤 초기화
+
+        if (!use)
+        {
+            rectTransform.gameObject.SetActive(false);
+        }
+        else
+        {
+            bottomBar.SetActive(true); // ui 활성화 후, 하단 바 Img 활성화
+        }
+    }
+
+    // 스크롤을 맨 위로 올리는 함수
+    public void ScrollToTop()
+    {
+        foreach(ScrollRect scroll in scrollRects)
+        {
+            scroll.verticalNormalizedPosition = 1f;
+        }
     }
 }

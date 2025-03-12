@@ -46,12 +46,26 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private bool m_Jumping;
         private AudioSource m_AudioSource;
 
+        public enum PlayerState
+        {
 
+            Idle,
+            Hide,
+            Death
+        }
+        public PlayerState stat = PlayerState.Idle;
 
         // Use this for initialization
         private void Start()
         {
-            if (instance == null) { instance = this; }
+            if (instance == null)
+            {
+                instance = this;
+            }
+            else
+            {
+                Destroy(gameObject); // 중복된 인스턴스 제거
+            }
 
             m_CharacterController = GetComponent<CharacterController>();
             m_Camera = Camera.main;
