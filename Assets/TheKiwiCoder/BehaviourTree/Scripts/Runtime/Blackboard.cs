@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,5 +12,10 @@ namespace TheKiwiCoder {
     public class Blackboard {
         public Vector3 moveToPosition;
         public bool isDetected = false; // 적을 발견했는지 여부
+
+        internal T Get<T>(string keyName)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
