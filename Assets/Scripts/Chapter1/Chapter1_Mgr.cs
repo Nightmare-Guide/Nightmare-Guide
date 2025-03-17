@@ -26,10 +26,7 @@ public class Chapter1_Mgr : MonoBehaviour
 
     [Header("Aim")]
     public bool isPlaying=true;
-    [Header("Trigger오브젝트")]
-    [SerializeField] private GameObject movewall1;
-    [SerializeField] private GameObject movewall2;
-    [SerializeField] private GameObject movePiller;
+
 
     private void Start()
     {
@@ -92,10 +89,11 @@ public class Chapter1_Mgr : MonoBehaviour
         doorScript2.enabled = true;
     }
 
-    public void MoveWall()
+    public void MoveWall(Animator gameobject)
     {
-
+        gameobject.SetTrigger("StartTrigger");
     }
+
 
 
 }
