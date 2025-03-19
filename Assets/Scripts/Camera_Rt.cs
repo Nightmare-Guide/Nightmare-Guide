@@ -32,8 +32,6 @@ public class Camera_Rt : MonoBehaviour
         {
             RotateView(); // 마우스 회전 실행
         }
-        Debug.Log(lockerCamera);
-      
     }
 
     private void RotateView()

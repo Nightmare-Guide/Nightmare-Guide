@@ -1,63 +1,50 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using TheKiwiCoder;
 using UnityEngine;
 
 public class EnemyVision : MonoBehaviour
 {
-    [Header("Å½Áö ¼³Á¤")]
-    public float detectionRadius = 10f; // °¨Áö °Å¸®
-    [Range(0, 360)] public float detectionAngle = 120f; // °¨Áö ½Ã¾ß°¢ (120µµ)
+    [Header("íƒì§€ ì„¤ì •")]
+    public float detectionRadius = 10f; // ê°ì§€ ê±°ë¦¬
+    [Range(0, 360)] public float detectionAngle = 120f; // ê°ì§€ ì‹œì•¼ê° (120ë„)
 
-    [Header("·¹ÀÌ¾î ¼³Á¤")]
-    public LayerMask obstacleLayer; // Àå¾Ö¹° ·¹ÀÌ¾î
+    [Header("ë ˆì´ì–´ ì„¤ì •")]
+    public LayerMask obstacleLayer; // ì¥ì• ë¬¼ ë ˆì´ì–´
 
-    [Header("ÇÃ·¹ÀÌ¾î Á¤º¸")]
+    [Header("í”Œë ˆì´ì–´ ì •ë³´")]
     [SerializeField] private GameObject player;
 
-    [Header("Å½Áö »óÅÂ")]
-    [SerializeField] private bool isDetected = false; // ÇÃ·¹ÀÌ¾î Å½Áö ¿©ºÎ (ÀÎ½ºÆåÅÍ¿¡¼­ È®ÀÎ °¡´É)
-    public BehaviourTree behaviourTree; // ºñÇìÀÌºñ¾î Æ®¸® ¿¬°á
-    private Blackboard blackboard; // ºí·¢º¸µå º¯¼ö
+    [Header("íƒì§€ ìƒíƒœ")]
+    private bool isDetected = false; // í”Œë ˆì´ì–´ íƒì§€ ì—¬ë¶€
+    public BehaviourTree behaviourTree; // ë¹„í—¤ì´ë¹„ì–´ íŠ¸ë¦¬ ì—°ê²°
+    private Blackboard blackboard; // ë¸”ë™ë³´ë“œ ë³€ìˆ˜
 
-    private float detectionCooldown = 1f; // °¨Áö ÈÄ ´Ù½Ã Ã¼Å©ÇÏ±â À§ÇÑ ´ë±â ½Ã°£
-    private bool canDetect = true; // °¨Áö °¡´ÉÇÑÁö ¿©ºÎ
+    private float detectionCooldown = 1f; // ê°ì§€ í›„ ë‹¤ì‹œ ì²´í¬í•˜ê¸° ìœ„í•œ ëŒ€ê¸° ì‹œê°„
+    private bool canDetect = true; // ê°ì§€ ê°€ëŠ¥í•œì§€ ì—¬ë¶€
 
     void Start()
     {
-        blackboard = behaviourTree.blackboard; // ºí·¢º¸µå °¡Á®¿À±â
+        blackboard = behaviourTree.blackboard; // ë¸”ë™ë³´ë“œ ê°€ì ¸ì˜¤ê¸°
     }
 
     void Update()
     {
-        if (Chapter1_Mgr.instance.player != null && player == null)
+        // ê°ì§€í•  ìˆ˜ ìˆì„ ë•Œë§Œ íƒì§€ ì§„í–‰
+        if (canDetect)
         {
-            player = Chapter1_Mgr.instance.player;
-            Debug.Log("½ÇÇàµÊ");
+            // í”Œë ˆì´ì–´ê°€ íƒì§€ëœ ìƒíƒœì¸ì§€ í™•ì¸
+            isDetected = CheckPlayerInView();
+            blackboard.Set("isDetected", isDetected); // ë¸”ë™ë³´ë“œì— íƒì§€ ìƒíƒœë¥¼ ì„¤ì •
+
+            // ë””ë²„ê·¸ ë¡œê·¸ë¡œ ì„¤ì •ëœ ê°’ í™•ì¸
+            Debug.Log("[EnemyVision] isDetected value set to: " + isDetected);
         }
 
-        if (player != null)
+        // íƒì§€ í›„ ì¼ì • ì‹œê°„ ë™ì•ˆ ê°ì§€ë¥¼ ì¤‘ì§€í•˜ëŠ” ì½”ë£¨í‹´ ì‹¤í–‰
+        if (!canDetect)
         {
-            // ÇÃ·¹ÀÌ¾î Å½Áö ¿©ºÎ¸¦ È®ÀÎÇÏ°í, Å½ÁöµÇ¾úÀ¸¸é °Ë»ç¸¦ ½ÃÀÛ
-            if (canDetect)
-            {
-                isDetected = CheckPlayerInView(); // ÇÃ·¹ÀÌ¾î Å½Áö ¿©ºÎ È®ÀÎ
-                if (isDetected)
-                {
-                    StartCoroutine(HandleDetectionCooldown()); // Å½Áö ÈÄ ÄğÅ¸ÀÓ Ã³¸®
-                }
-            }
-        }
-
-        if (isDetected)
-        {
-            blackboard.isDetected = true; // ºí·¢º¸µå °ª ¾÷µ¥ÀÌÆ®
-            /*Debug.Log("ÇÃ·¹ÀÌ¾î ¹ß°ß! Ãß°İ ½ÃÀÛ!");*/
-            // Ãß°İ »óÅÂ·Î ÀüÈ¯ÇÏ´Â ÄÚµå Ãß°¡ °¡´É
-        }
-        else
-        {
-            blackboard.isDetected = false; // ÇÃ·¹ÀÌ¾î°¡ Å½ÁöµÇÁö ¾ÊÀ¸¸é ºí·¢º¸µå °ª ÃÊ±âÈ­
+            StartCoroutine(HandleDetectionCooldown());
         }
     }
 
@@ -65,41 +52,37 @@ public class EnemyVision : MonoBehaviour
     {
         if (player == null) return false;
 
-        // 1. °Å¸® Ã¼Å©
+        // 1. ê±°ë¦¬ ì²´í¬
         float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
         if (distanceToPlayer > detectionRadius) return false;
 
-        // 2. ½Ã¾ß°¢ Ã¼Å©
+        // 2. ì‹œì•¼ê° ì²´í¬
         Vector3 directionToPlayer = (player.transform.position - transform.position).normalized;
         float angleToPlayer = Vector3.Angle(transform.forward, directionToPlayer);
         if (angleToPlayer > detectionAngle / 2) return false;
 
-        // 3. Àå¾Ö¹° Ã¼Å© (·¹ÀÌÄ³½ºÆ®)
+        // 3. ì¥ì• ë¬¼ ì²´í¬ (ë ˆì´ìºìŠ¤íŠ¸)
         if (Physics.Raycast(transform.position, directionToPlayer, distanceToPlayer, obstacleLayer))
         {
-            return false; // Àå¾Ö¹°¿¡ °¡·ÁÁ® ÀÖÀ¸¸é Å½Áö X
+            Debug.Log("[EnemyVision] Player is blocked by an obstacle."); // ì¥ì• ë¬¼ ì²´í¬
+            return false;
         }
 
-        return true; // ¸ğµç Á¶°ÇÀ» ¸¸Á·ÇÏ¸é Å½Áö ¼º°ø
+        return true; // ìœ„ ì¡°ê±´ì„ ëª¨ë‘ í†µê³¼í•˜ë©´ í”Œë ˆì´ì–´ë¥¼ ê°ì§€
     }
 
-    // Å½Áö ÈÄ ÀÏÁ¤ ½Ã°£ µ¿¾È ´Ù½Ã Å½ÁöÇÏÁö ¾Êµµ·Ï ´ë±âÇÏ´Â ÄÚ·çÆ¾
+    // íƒì§€ í›„ ì¼ì • ì‹œê°„ ë™ì•ˆ ë‹¤ì‹œ íƒì§€í•˜ì§€ ì•Šë„ë¡ ëŒ€ê¸°í•˜ëŠ” ì½”ë£¨í‹´
     private IEnumerator HandleDetectionCooldown()
     {
-        canDetect = false; // ÀÏÁ¤ ½Ã°£ µ¿¾È Å½Áö ÁßÁö
-        yield return new WaitForSeconds(detectionCooldown); // ´ë±â ½Ã°£ (¿¹: 2ÃÊ)
-        canDetect = true; // ´Ù½Ã Å½Áö °¡´É
-    }
-
-    public bool IsPlayerDetected()
-    {
-        return isDetected;
+        canDetect = false; // ì¼ì • ì‹œê°„ ë™ì•ˆ íƒì§€ ì¤‘ì§€
+        yield return new WaitForSeconds(detectionCooldown); // ëŒ€ê¸° ì‹œê°„ (ì˜ˆ: 1ì´ˆ)
+        canDetect = true; // ë‹¤ì‹œ íƒì§€ ê°€ëŠ¥
     }
 
     void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, detectionRadius); // °¨Áö ¹üÀ§ Ç¥½Ã
+        Gizmos.DrawWireSphere(transform.position, detectionRadius); // ê°ì§€ ë²”ìœ„ í‘œì‹œ
 
         Vector3 leftBoundary = Quaternion.Euler(0, -detectionAngle / 2, 0) * transform.forward;
         Vector3 rightBoundary = Quaternion.Euler(0, detectionAngle / 2, 0) * transform.forward;
@@ -111,7 +94,7 @@ public class EnemyVision : MonoBehaviour
         if (isDetected)
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawLine(transform.position, player.transform.position); // Å½ÁöµÈ ÇÃ·¹ÀÌ¾î¿ÍÀÇ ¿¬°á¼±
+            Gizmos.DrawLine(transform.position, player.transform.position); // íƒì§€ëœ í”Œë ˆì´ì–´ì™€ì˜ ì—°ê²°ì„ 
         }
     }
 }

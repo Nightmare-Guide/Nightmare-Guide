@@ -1,11 +1,11 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using TheKiwiCoder;
+using UnityEngine;
 
 public class Detected_Check : DecoratorNode
 {
-    public string keyName = "isDetected"; // ºí·¢º¸µå¿¡¼­ »ç¿ëÇÒ Å°
+    public string keyName = "isDetected"; // ë¸”ë™ë³´ë“œì—ì„œ ì‚¬ìš©í•  í‚¤
 
     protected override void OnStart()
     {
@@ -17,13 +17,22 @@ public class Detected_Check : DecoratorNode
 
     protected override State OnUpdate()
     {
-        bool isDetected = blackboard.Get<bool>(keyName); // ºí·¢º¸µå¿¡¼­ ºÒ°ª °¡Á®¿À±â
+        bool isDetected = blackboard.Get<bool>(keyName);// ë¸”ë™ë³´ë“œì—ì„œ ê°’ ê°€ì ¸ì˜¤ê¸°
+
+        // ë¸”ë™ë³´ë“œì—ì„œ ê°’ì„ ì œëŒ€ë¡œ ê°€ì ¸ì˜¤ëŠ”ì§€ í™•ì¸í•˜ëŠ” ë¡œê·¸
+        Debug.Log("[Detected_Check] Retrieved isDetected value from blackboard: " + isDetected);
 
         if (isDetected)
         {
-            return State.Failure; // Ã¹ ¹øÂ° ½ÃÄö½º¸¦ ½ºÅµÇÏ°í ´ÙÀ½ ½ÃÄö½º·Î ÀÌµ¿
+            return State.Success;  // isDetectedê°€ trueì´ë©´ Success ë°˜í™˜
         }
 
-        return child.Update(); // Á¤»óÀûÀ¸·Î ÀÚ½Ä ³ëµå¸¦ ½ÇÇà
+        if (child == null)
+        {
+            Debug.LogWarning("[Detected_Check] Child node is missing!");
+            return State.Failure;
+        }
+
+        return child.Update();  // ìì‹ ë…¸ë“œê°€ ìˆìœ¼ë©´ ìì‹ ë…¸ë“œ ì‹¤í–‰
     }
 }

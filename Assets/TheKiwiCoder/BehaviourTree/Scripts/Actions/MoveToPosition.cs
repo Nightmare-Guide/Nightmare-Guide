@@ -22,19 +22,30 @@ public class MoveToPosition : ActionNode
     protected override void OnStop() {
     }
 
-    protected override State OnUpdate() {
-        if (context.agent.pathPending) {
+    protected override State OnUpdate()
+    {
+        // isDetected가 true라면 현재 액션을 중단하고 실패 상태로 반환하여 다음 시퀀스를 실행하게 만듭니다.
+        if (blackboard.Get<bool>("isDetected"))
+        {
+            return State.Failure;
+        }
+
+        if (context.agent.pathPending)
+        {
             return State.Running;
         }
 
-        if (context.agent.remainingDistance < tolerance) {
+        if (context.agent.remainingDistance < tolerance)
+        {
             return State.Success;
         }
 
-        if (context.agent.pathStatus == UnityEngine.AI.NavMeshPathStatus.PathInvalid) {
+        if (context.agent.pathStatus == UnityEngine.AI.NavMeshPathStatus.PathInvalid)
+        {
             return State.Failure;
         }
 
         return State.Running;
     }
+
 }

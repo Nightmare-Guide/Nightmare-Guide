@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,32 +7,38 @@ namespace TheKiwiCoder
     public class Selector : CompositeNode
     {
         protected int current;
-        private ChaseNode chaseNode;
 
         protected override void OnStart()
         {
-            current = 0;
-            chaseNode = new ChaseNode(); // Ãß°İ ³ëµå »ı¼º
+            current = 0; // ì‹¤í–‰í•  ìì‹ ë…¸ë“œ ì¸ë±ìŠ¤ ì´ˆê¸°í™”
         }
 
         protected override void OnStop() { }
 
         protected override State OnUpdate()
         {
-            if (blackboard.isDetected)
+            // ğŸ“Œ isDetectedê°€ trueì´ë©´ ChaseNode ì‹¤í–‰
+            if ((bool)blackboard["isDetected"])
             {
-                State chaseState = chaseNode.Update();
-
-                // ¸¸¾à Ãß°İÀÌ ³¡³µ´Ù¸é(isDetected°¡ false·Î º¯°æµÊ), ¼øÂû·Î µ¹¾Æ°¨
-                if (chaseState == State.Failure)
+                // ìì‹ ë…¸ë“œ ì¤‘ ChaseNodeê°€ ìˆìœ¼ë©´ ì‹¤í–‰
+                foreach (var child in children)
                 {
-                    blackboard.isDetected = false;
-                }
+                    if (child is ChaseNode chaseNode)
+                    {
+                        State chaseState = chaseNode.Update();
 
-                return chaseState;
+                        // ë§Œì•½ ì¶”ê²©ì´ ëë‚¬ë‹¤ë©´(isDetectedë¥¼ falseë¡œ ë³€ê²½)
+                        if (chaseState == State.Failure)
+                        {
+                            blackboard["isDetected"] = false;
+                        }
+
+                        return chaseState;
+                    }
+                }
             }
 
-            // ±âÁ¸ÀÇ Selector µ¿ÀÛ À¯Áö
+            // ğŸ“Œ ê¸°ì¡´ Selector ë™ì‘ ìœ ì§€
             for (int i = current; i < children.Count; ++i)
             {
                 current = i;
