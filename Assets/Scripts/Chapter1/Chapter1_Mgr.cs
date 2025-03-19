@@ -26,6 +26,8 @@ public class Chapter1_Mgr : MonoBehaviour
 
     [Header("Aim")]
     public bool isPlaying=true;
+
+
     private void Start()
     {
         if (instance == null) { instance = this; }
@@ -87,6 +89,11 @@ public class Chapter1_Mgr : MonoBehaviour
         doorScript2.enabled = true;
     }
 
-    
+    public void MoveWall(Animator gameobject)
+    {
+        gameobject.SetTrigger("StartTrigger");
+    }
+
+
 
 }

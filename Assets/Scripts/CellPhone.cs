@@ -38,7 +38,7 @@ public class CellPhone : MonoBehaviour
     public Image[] appScreenImgs;
     public TextMeshProUGUI[] appScreenTexts;
     private Vector2[][] appScreenAnchors;
-    [SerializeField] private GameObject bottomBar;
+    [SerializeField] private GameObject bottomBar; // 자연스러움을 위해 추가된 Img 오브젝트
     [SerializeField] private ScrollRect[] scrollRects;
 
     [Header("# ETC.")]
@@ -244,7 +244,7 @@ public class CellPhone : MonoBehaviour
         }
         else
         {
-            bottomBar.SetActive(false);
+            bottomBar.SetActive(false); // 종료 시에는 하단 바 Img 비활성화
         }
 
         float elapsed = 0f;
@@ -271,7 +271,7 @@ public class CellPhone : MonoBehaviour
         }
         else
         {
-            bottomBar.SetActive(true);
+            bottomBar.SetActive(true); // ui 활성화 후, 하단 바 Img 활성화
         }
     }
 
