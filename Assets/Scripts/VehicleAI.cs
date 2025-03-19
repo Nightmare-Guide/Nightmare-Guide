@@ -36,7 +36,7 @@ public class VehicleAI : MonoBehaviour
 
         if (agent == null || waypoint == null || waypoint.Count == 0)
         {
-            Debug.LogError(" Waypoint가 제대로 설정되지 않았습니다."); 
+            //Debug.LogError(" Waypoint가 제대로 설정되지 않았습니다."); 
              
             enabled = false; // 스크립트 비활성화
             return;
@@ -45,7 +45,7 @@ public class VehicleAI : MonoBehaviour
 
         agent.autoBraking = false;
         agent.speed = speed;
-        Debug.Log(this.name+ " => 차량 현재 속도 : " + speed);
+        //Debug.Log(this.name+ " => 차량 현재 속도 : " + speed);
         GotoNext(); // 첫 Waypoint로 이동
         SetWheelAnimation("Idle"); // 기본 애니메이션
     }
@@ -98,7 +98,7 @@ public class VehicleAI : MonoBehaviour
         {
             
                 currentNode = 0;
-                Debug.Log("차량이 배회합니다.");
+                //Debug.Log("차량이 배회합니다.");
             
             
         }
@@ -123,7 +123,7 @@ public class VehicleAI : MonoBehaviour
         transform.position = waypoint[0].position;
         currentNode = 0;
         agent.speed = speed; // 기본 속도로 복구
-        Debug.Log("차량 위치를 초기화합니다.");
+        //Debug.Log("차량 위치를 초기화합니다.");
         GotoNext();
     }
 
@@ -146,12 +146,12 @@ public class VehicleAI : MonoBehaviour
             if (!other.transform.parent.gameObject.name.Equals(waypoint[currentNode].transform.parent.name))
                 return;
             agent.speed = 10f;
-            Debug.Log("감속중");
+            //Debug.Log("감속중");
         }
         if (other.CompareTag("accelerationRange"))
         {
             agent.speed = speed;
-            Debug.Log("가속중");
+            //Debug.Log("가속중");
         }
         if (other.CompareTag("ResetPoint"))
         {
