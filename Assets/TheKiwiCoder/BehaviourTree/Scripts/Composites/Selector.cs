@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,49 +7,42 @@ namespace TheKiwiCoder
     public class Selector : CompositeNode
     {
         protected int current;
-        private ChaseNode chaseNode;
+        private Detected_Check detectedCheck; // ğŸ”¹ Detected_Check ë…¸ë“œ ì €ì¥
 
         protected override void OnStart()
         {
-            current = 0;
-            chaseNode = new ChaseNode(); // Ãß°İ ³ëµå »ı¼º
+            current = 0; // ì‹¤í–‰í•  ìì‹ ë…¸ë“œ ì¸ë±ìŠ¤ ì´ˆê¸°í™”
+
+            // ğŸ”¹ Detected_Check ë…¸ë“œë¥¼ ì°¾ì•„ì„œ ì €ì¥
+            foreach (var child in children)
+            {
+                if (child is Detected_Check checkNode)
+                {
+                    detectedCheck = checkNode;
+                    break;
+                }
+            }
         }
 
         protected override void OnStop() { }
 
         protected override State OnUpdate()
         {
-            if (blackboard.isDetected)
+            // ğŸ”¹ Detected_Checkì—ì„œ isDetected ê°’ì„ ì‹¤ì‹œê°„ìœ¼ë¡œ ê°±ì‹ í•˜ì—¬ ê°€ì ¸ì˜¤ê¸°
+            bool isDetected = blackboard.Get<bool>("isDetected");
+
+            // ğŸ”¹ isDetected ê°’ì— ë”°ë¼ ì‹¤í–‰í•  ì‹œí€€ìŠ¤ ì„ íƒ (trueì´ë©´ ë‘ ë²ˆì§¸, falseì´ë©´ ì²« ë²ˆì§¸ ì‹œí€€ìŠ¤)
+            int targetIndex = isDetected ? 1 : 0;
+
+            // ğŸ”¹ ì‹œí€€ìŠ¤ê°€ ë¶€ì¡±í•˜ë©´ ì‹¤íŒ¨ ë°˜í™˜
+            if (targetIndex >= children.Count)
             {
-                State chaseState = chaseNode.Update();
-
-                // ¸¸¾à Ãß°İÀÌ ³¡³µ´Ù¸é(isDetected°¡ false·Î º¯°æµÊ), ¼øÂû·Î µ¹¾Æ°¨
-                if (chaseState == State.Failure)
-                {
-                    blackboard.isDetected = false;
-                }
-
-                return chaseState;
+                Debug.LogError("[Selector] ì‹œí€€ìŠ¤ ë…¸ë“œ ë¶€ì¡±!");
+                return State.Failure;
             }
 
-            // ±âÁ¸ÀÇ Selector µ¿ÀÛ À¯Áö
-            for (int i = current; i < children.Count; ++i)
-            {
-                current = i;
-                var child = children[current];
-
-                switch (child.Update())
-                {
-                    case State.Running:
-                        return State.Running;
-                    case State.Success:
-                        return State.Success;
-                    case State.Failure:
-                        continue;
-                }
-            }
-
-            return State.Failure;
+            // ğŸ”¹ ì„ íƒëœ ìì‹ ë…¸ë“œ ì‹¤í–‰
+            return children[targetIndex].Update();
         }
     }
 }
