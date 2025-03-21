@@ -25,33 +25,6 @@ public class PlayerMainCamera : MonoBehaviour
             camera_single = this;
         }
     }
-    private void Update()
-    {
-
-        if (Input.GetKeyDown("o")) // 낮으로 변경
-        {
-            Change_Day();
-        }
-        if (Input.GetKeyDown("u")) // 밤으로 변경
-        {
-            Change_Night();
-        }
-    }
-    void Change_Day() // 밤에서 낮으로 변경
-    {
-        mainCamera.renderingPath = RenderingPath.UsePlayerSettings;
-        mainCamera.allowHDR = false;
-        mainCamera.allowMSAA = true;
-        postProcessingBehaviour.profile = day_Scene;
-    }
-    void Change_Night() // 낮에서 밤으로 변경
-    {
-        mainCamera.renderingPath = RenderingPath.DeferredShading;
-        mainCamera.allowHDR = true;
-        mainCamera.allowMSAA = false;
-        postProcessingBehaviour.profile = night_Scene;
-    }
-
     public void DeathCamera()
     {
         death_Camera_Target = Enemy.enemy_single.deathCamTarget; // 플레이어가 enemy 타겟으로 카메라 전환

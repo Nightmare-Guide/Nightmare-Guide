@@ -94,6 +94,10 @@ public class Chapter1_Mgr : MonoBehaviour
         gameobject.SetTrigger("StartTrigger");
     }
 
+    public void CloseDoor(Animator gameobject)
+    {
+        gameobject.SetTrigger("CloseDoor");
+    }
 
 
 }

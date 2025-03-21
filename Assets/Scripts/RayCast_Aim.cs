@@ -54,7 +54,12 @@ public class RayCast_Aim : MonoBehaviour
             }
         }
     }
-   
+    
+    public void ElevatorButton()
+    {
+
+    }
+
     public void Chapter1_Maze(GameObject obj) //챕터 1 미로맵 탈출용 버튼 클릭
     {
         Maze_Button mazeButton = obj.GetComponent<Maze_Button>();
@@ -69,6 +74,7 @@ public class RayCast_Aim : MonoBehaviour
             Debug.Log("색상없음");
         }
     }
+
     public void Locker(GameObject obj)
     {
         
