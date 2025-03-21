@@ -8,7 +8,6 @@ namespace TheKiwiCoder {
             Running,
             Failure,
             Success,
-            Chase
         }
 
         [HideInInspector] public State state = State.Running;

@@ -83,7 +83,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: 6bc6981b00778a744bc6d4097134e636
-  position: {x: -122.66667, y: 447.99994}
+  position: {x: -122.66654, y: 448}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
   description: 
@@ -115,10 +115,10 @@ MonoBehaviour:
   - {fileID: 6402316061889451186}
   - {fileID: -2247863421084346560}
   - {fileID: 126179549495469473}
-  - {fileID: 2752961667652547491}
   - {fileID: 8417622060116891960}
   - {fileID: 3905612508622176171}
   - {fileID: 2416129358109696888}
+  - {fileID: 7158668878530965008}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &126179549495469473
@@ -143,7 +143,7 @@ MonoBehaviour:
   drawGizmos: 0
   children:
   - {fileID: -5660333016957678146}
-  - {fileID: 2752961667652547491}
+  - {fileID: 7158668878530965008}
 --- !u!114 &2416129358109696888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -164,29 +164,6 @@ MonoBehaviour:
     moveToPosition: {x: 0, y: 0, z: 0}
   description: 
   drawGizmos: 0
---- !u!114 &2752961667652547491
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 61431bba79d7d7843b82bf1de71703f5, type: 3}
-  m_Name: Sequencer
-  m_EditorClassIdentifier: 
-  state: 0
-  started: 0
-  guid: 707ab969bf52d7a4fb1f68d8484acdf6
-  position: {x: 356.99988, y: 150}
-  blackboard:
-    moveToPosition: {x: 0, y: 0, z: 0}
-  description: 
-  drawGizmos: 0
-  children:
-  - {fileID: 2416129358109696888}
-  - {fileID: 3905612508622176171}
 --- !u!114 &3905612508622176171
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -251,6 +228,29 @@ MonoBehaviour:
   drawGizmos: 0
   min: {x: -112, y: -64}
   max: {x: 20, y: -168}
+--- !u!114 &7158668878530965008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e04e06cb27a66f409d3d766ac37f538, type: 3}
+  m_Name: ChaseSequencer
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 06f9a487e60e7a841974f4fc7647c4ee
+  position: {x: 356.66663, y: 150}
+  blackboard:
+    moveToPosition: {x: 0, y: 0, z: 0}
+  description: 
+  drawGizmos: 0
+  children:
+  - {fileID: 2416129358109696888}
+  - {fileID: 3905612508622176171}
 --- !u!114 &8417622060116891960
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -272,4 +272,3 @@ MonoBehaviour:
   description: 
   drawGizmos: 0
   child: {fileID: 126179549495469473}
-  keyName: isDetected

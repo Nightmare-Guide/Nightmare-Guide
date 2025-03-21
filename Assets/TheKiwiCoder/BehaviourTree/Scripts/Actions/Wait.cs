@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace TheKiwiCoder {
+namespace TheKiwiCoder
+{
     public class Wait : ActionNode
     {
         public float waitTime = 3f;
@@ -17,10 +18,14 @@ namespace TheKiwiCoder {
         {
         }
 
+        // Wait에서 isDetected 체크
         protected override State OnUpdate()
         {
-            // isDetected가 true이면 기다리지 않고 실패 상태로 반환하여 시퀀서를 넘김
-            if (blackboard.Get<bool>("isDetected"))
+            // blackboard에서 isDetected 값을 가져옵니다.
+            bool isDetected = blackboard.Get<bool>("isDetected");
+
+            // isDetected가 true이면 바로 실패 상태로 반환하여 다음 시퀀스로 넘어가게 함
+            if (isDetected)
             {
                 return State.Failure;
             }
@@ -33,5 +38,6 @@ namespace TheKiwiCoder {
 
             return State.Running;
         }
+
     }
 }

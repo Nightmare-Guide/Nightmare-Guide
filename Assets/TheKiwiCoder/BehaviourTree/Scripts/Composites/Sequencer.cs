@@ -19,6 +19,17 @@ namespace TheKiwiCoder
 
         protected override State OnUpdate()
         {
+            // isDetected 값 체크
+            bool isDetected = blackboard.Get<bool>("isDetected");
+
+            // isDetected가 true일 경우 바로 Failure를 반환하여 다음 시퀀스로 넘기기
+            if (isDetected)
+            {
+                Debug.Log("[Sequencer] isDetected is true, skipping current sequence and moving to next.");
+                return State.Failure;
+            }
+
+            // 시퀀스 실행
             for (int i = current; i < children.Count; ++i)
             {
                 current = i;
@@ -38,5 +49,4 @@ namespace TheKiwiCoder
             return State.Success;
         }
     }
-
 }

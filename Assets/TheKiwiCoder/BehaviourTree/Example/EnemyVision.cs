@@ -30,18 +30,16 @@ public class EnemyVision : MonoBehaviour
 
     void Update()
     {
-        // 감지할 수 있을 때만 탐지 진행
         if (canDetect)
         {
-            // 플레이어가 탐지된 상태인지 확인
+            // 탐지 여부 업데이트
             isDetected = CheckPlayerInView();
-            blackboard.Set("isDetected", isDetected); // 블랙보드에 탐지 상태를 설정
+            blackboard.Set("isDetected", isDetected); // 블랙보드 값 반영
 
-            // 디버그 로그로 설정된 값 확인
-            Debug.Log("[EnemyVision] isDetected value set to: " + isDetected);
+            // 디버깅 로그
+            Debug.Log($"[EnemyVision] isDetected: {isDetected}");
         }
 
-        // 탐지 후 일정 시간 동안 감지를 중지하는 코루틴 실행
         if (!canDetect)
         {
             StartCoroutine(HandleDetectionCooldown());
@@ -64,25 +62,23 @@ public class EnemyVision : MonoBehaviour
         // 3. 장애물 체크 (레이캐스트)
         if (Physics.Raycast(transform.position, directionToPlayer, distanceToPlayer, obstacleLayer))
         {
-            Debug.Log("[EnemyVision] Player is blocked by an obstacle."); // 장애물 체크
             return false;
         }
 
-        return true; // 위 조건을 모두 통과하면 플레이어를 감지
+        return true; // 플레이어를 감지함
     }
 
-    // 탐지 후 일정 시간 동안 다시 탐지하지 않도록 대기하는 코루틴
     private IEnumerator HandleDetectionCooldown()
     {
-        canDetect = false; // 일정 시간 동안 탐지 중지
-        yield return new WaitForSeconds(detectionCooldown); // 대기 시간 (예: 1초)
-        canDetect = true; // 다시 탐지 가능
+        canDetect = false;
+        yield return new WaitForSeconds(detectionCooldown);
+        canDetect = true;
     }
 
     void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, detectionRadius); // 감지 범위 표시
+        Gizmos.DrawWireSphere(transform.position, detectionRadius);
 
         Vector3 leftBoundary = Quaternion.Euler(0, -detectionAngle / 2, 0) * transform.forward;
         Vector3 rightBoundary = Quaternion.Euler(0, detectionAngle / 2, 0) * transform.forward;
@@ -94,7 +90,7 @@ public class EnemyVision : MonoBehaviour
         if (isDetected)
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawLine(transform.position, player.transform.position); // 탐지된 플레이어와의 연결선
+            Gizmos.DrawLine(transform.position, player.transform.position);
         }
     }
 }
