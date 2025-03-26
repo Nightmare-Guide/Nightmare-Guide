@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TheKiwiCoder;
@@ -28,14 +28,7 @@ namespace TheKiwiCoder
 
         protected override State OnUpdate()
         {
-            // ½Ç½Ã°£À¸·Î isDetected °ªÀ» °»½ÅÇÏ¿© Ã³¸®
-            bool isDetected = blackboard.Get<bool>("isDetected");
-
-            if (isDetected)
-            {
-                // ¸¸¾à isDetected°¡ true¶ó¸é, Çàµ¿À» Áß´ÜÇÏ°Å³ª ´Ù¸¥ µ¿ÀÛÀ» ½ÇÇà
-                return State.Failure;
-            }
+  
 
             if (context.agent.pathPending)
             {
@@ -52,7 +45,14 @@ namespace TheKiwiCoder
                 return State.Failure;
             }
 
+            if (blackboard.Get<bool>("isDetected")) { 
+                Debug.Log("[MoveToPosition] ê°ì§€ë¨! ì‹œí€€ìŠ¤ ë³€ê²½");
+                return State.Failure;  // ğŸš€ ì´ë™ì„ ì¤‘ë‹¨í•˜ê³  ì‹œí€€ìŠ¤ë¥¼ ë³€ê²½
+            }
+
             return State.Running;
         }
+
+
     }
 }

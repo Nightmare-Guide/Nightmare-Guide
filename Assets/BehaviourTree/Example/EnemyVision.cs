@@ -36,8 +36,6 @@ public class EnemyVision : MonoBehaviour
             isDetected = CheckPlayerInView();
             blackboard.Set("isDetected", isDetected); // 블랙보드 값 반영
 
-            // 디버깅 로그
-            Debug.Log($"[EnemyVision] isDetected: {isDetected}");
         }
 
         if (!canDetect)

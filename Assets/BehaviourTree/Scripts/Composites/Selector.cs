@@ -7,42 +7,54 @@ namespace TheKiwiCoder
     public class Selector : CompositeNode
     {
         protected int current;
-        private Detected_Check detectedCheck; // 🔹 Detected_Check 노드 저장
 
         protected override void OnStart()
         {
             current = 0; // 실행할 자식 노드 인덱스 초기화
-
-            // 🔹 Detected_Check 노드를 찾아서 저장
-            foreach (var child in children)
-            {
-                if (child is Detected_Check checkNode)
-                {
-                    detectedCheck = checkNode;
-                    break;
-                }
-            }
         }
 
         protected override void OnStop() { }
 
         protected override State OnUpdate()
         {
-            // 🔹 Detected_Check에서 isDetected 값을 실시간으로 갱신하여 가져오기
-            bool isDetected = blackboard.Get<bool>("isDetected");
+            bool isDetected = blackboard.Get<bool>("isDetected"); // 🔥 실시간 감지값 가져오기
+            Debug.Log($"[Selector] 현재 isDetected 값: {isDetected}");
 
-            // 🔹 isDetected 값에 따라 실행할 시퀀스 선택 (true이면 두 번째, false이면 첫 번째 시퀀스)
+            // 🔹 `isDetected` 값이 true면 오른쪽(1), false면 왼쪽(0) 실행
             int targetIndex = isDetected ? 1 : 0;
 
-            // 🔹 시퀀스가 부족하면 실패 반환
+            // 🔥 예외 처리: 실행할 노드가 존재하는지 확인
             if (targetIndex >= children.Count)
             {
-                Debug.LogError("[Selector] 시퀀스 노드 부족!");
+                Debug.LogError($"[Selector] 실행할 노드가 없습니다! (targetIndex: {targetIndex}, childrenCount: {children.Count})");
                 return State.Failure;
             }
 
-            // 🔹 선택된 자식 노드 실행
-            return children[targetIndex].Update();
+            // 🔥 선택한 노드 실행 후 상태 체크
+            State result = children[targetIndex].Update();
+            Debug.Log($"[Selector] 실행된 노드 {targetIndex} 결과: {result}");
+
+            if (result == State.Success)
+            {
+                // 성공적으로 실행된 경우, 해당 노드를 성공으로 처리
+                return State.Success;
+            }
+            else if (result == State.Failure)
+            {
+                // 실패한 경우, 다음 노드로 진행
+                Debug.Log($"[Selector] 실패, 다른 노드를 시도합니다.");
+                current++;
+                if (current < children.Count)
+                {
+                    return State.Running;  // 아직 실행할 자식 노드가 남아있으므로 Running 상태 반환
+                }
+                else
+                {
+                    return State.Failure; // 모든 자식 노드가 실패하면 최종적으로 실패 반환
+                }
+            }
+
+            return State.Running;  // 노드가 아직 실행 중인 경우
         }
     }
 }

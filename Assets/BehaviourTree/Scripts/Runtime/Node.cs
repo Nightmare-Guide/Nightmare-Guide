@@ -19,22 +19,37 @@ namespace TheKiwiCoder {
         [TextArea] public string description;
         public bool drawGizmos = false;
 
-        public State Update() {
+        public void SetBlackboard(Blackboard sharedBlackboard)
+        {
+            blackboard = sharedBlackboard;
+        }
+        public State Update()
+        {
+            if (blackboard == null)
+            {
+                Debug.LogError($"[Node] Blackboard is NULL in node {name}");
+                return State.Failure;
+            }
 
-            if (!started) {
+            Debug.Log($"[Node] {name} - isDetected: {blackboard.Get<bool>("isDetected")}");
+
+            if (!started)
+            {
                 OnStart();
                 started = true;
             }
 
             state = OnUpdate();
 
-            if (state != State.Running) {
+            if (state != State.Running)
+            {
                 OnStop();
                 started = false;
             }
 
             return state;
         }
+
 
         public virtual Node Clone() {
             return Instantiate(this);
@@ -54,4 +69,6 @@ namespace TheKiwiCoder {
         protected abstract void OnStop();
         protected abstract State OnUpdate();
     }
+
+
 }
