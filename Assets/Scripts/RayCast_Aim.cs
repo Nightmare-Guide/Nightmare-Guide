@@ -5,7 +5,7 @@ using static UnityEngine.Rendering.DebugUI;
 
 public class RayCast_Aim : MonoBehaviour
 {
-    public float maxRayDistance = 1.1f; // 레이 길이 설정
+    public float maxRayDistance = 5f; // 레이 길이 설정
 
     [Header("Locker")]
     bool locker = true;
@@ -51,13 +51,22 @@ public class RayCast_Aim : MonoBehaviour
                     Debug.Log("CellPhone");
                     TouchCellPhone(click_object);
                 }
+                if (click_object.CompareTag("ElevatorButton"))
+                {
+                    Debug.Log("ElevatorButton");
+                    ElevatorButton(click_object);
+                }
             }
         }
     }
     
-    public void ElevatorButton()
+    public void ElevatorButton(GameObject obj)
     {
-
+        Animator button_anim = obj.GetComponent<Animator>();
+        obj.GetComponent<Collider>().enabled = false;    
+        
+        button_anim.SetTrigger("ClickButton");
+        button_anim.SetBool("On", true);
     }
 
     public void Chapter1_Maze(GameObject obj) //챕터 1 미로맵 탈출용 버튼 클릭
