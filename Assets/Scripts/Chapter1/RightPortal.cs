@@ -54,6 +54,7 @@ public class RightPortal : MonoBehaviour
         rightPortalCamera.fieldOfView = playerCamera.fieldOfView;
 
     }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
