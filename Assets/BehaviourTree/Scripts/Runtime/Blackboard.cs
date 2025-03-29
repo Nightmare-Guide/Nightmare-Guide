@@ -17,7 +17,8 @@ namespace TheKiwiCoder
         public Blackboard()
         {
             // 초기값 설정
-            data["isDetected"] = false; // 초기값 false
+            data["isDetected"] = false;       // 초기값 false
+            data["lockerDetected"] = false;   // 🔹 lockerDetected 추가
         }
 
         // 인덱서 사용 → blackboard["isDetected"] = true; 형태로 저장 가능
@@ -39,15 +40,26 @@ namespace TheKiwiCoder
             data[keyName] = value;
         }
 
-        // 실시간으로 값이 갱신되면 이 메서드를 사용하여 노드에 전달
+        // isDetected 값 관리
         public bool IsDetected()
         {
-            return Get<bool>("isDetected"); // 실시간으로 isDetected 값 갱신
+            return Get<bool>("isDetected");
         }
 
         public void UpdateDetectionStatus(bool value)
         {
-            Set("isDetected", value); // 갱신된 isDetected 값 저장
+            Set("isDetected", value);
+        }
+
+        // lockerDetected 값 관리
+        public bool LockerDetected()
+        {
+            return Get<bool>("lockerDetected");
+        }
+
+        public void UpdateLockerDetectionStatus(bool value)
+        {
+            Set("lockerDetected", value);
         }
     }
 }
