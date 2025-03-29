@@ -51,6 +51,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
             Idle,
             Hide,
+            Hiding,
             Death
         }
         public PlayerState stat = PlayerState.Idle;
