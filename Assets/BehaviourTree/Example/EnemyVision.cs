@@ -70,7 +70,7 @@ public class EnemyVision : MonoBehaviour
         // InMove 상태일 때 감지하면 찾을 수 있도록 처리
         bool isDetectedNow = CheckObjectInView(player);
 
-        if (isDetectedNow && playerState == PlayerController.PlayerState.InMove)
+        if (isDetectedNow && playerState == PlayerController.PlayerState.Idle)
         {
             blackboard.Set("playerSpottedEnteringLocker", true); // 플레이어가 락커에 들어가는 순간 감지됨
         }
