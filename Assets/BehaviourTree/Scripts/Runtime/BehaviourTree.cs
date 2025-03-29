@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+Ôªøusing System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
@@ -10,7 +10,7 @@ namespace TheKiwiCoder
         public Node rootNode;
         public Node.State treeState = Node.State.Running;
         public List<Node> nodes = new List<Node>();
-        public Blackboard blackboard = new Blackboard(); // Blackboard∏¶ ScriptableObject ≥ªø°º≠ ∞¸∏Æ
+        public Blackboard blackboard = new Blackboard(); // BlackboardÎ•º ScriptableObject ÎÇ¥ÏóêÏÑú Í¥ÄÎ¶¨
 
         public Node.State Update()
         {
@@ -58,9 +58,11 @@ namespace TheKiwiCoder
             BehaviourTree tree = Instantiate(this);
             tree.rootNode = tree.rootNode.Clone();
             tree.nodes = new List<Node>();
-            Traverse(tree.rootNode, (n) =>
-            {
+            tree.blackboard = this.blackboard; // ‚úÖ Í∏∞Ï°¥ blackboard Ïú†ÏßÄ
+
+            Traverse(tree.rootNode, (n) => {
                 tree.nodes.Add(n);
+                n.blackboard = tree.blackboard; // ‚úÖ Î™®Îì† ÎÖ∏ÎìúÍ∞Ä Í∞ôÏùÄ Î∏îÎûôÎ≥¥ÎìúÎ•º ÏÇ¨Ïö©ÌïòÎèÑÎ°ù ÏÑ§Ï†ï
             });
 
             return tree;
@@ -71,7 +73,7 @@ namespace TheKiwiCoder
             Traverse(rootNode, node =>
             {
                 node.context = context;
-                node.blackboard = blackboard;  // ∫Ì∑¢∫∏µÂ ø¨∞·
+                node.blackboard = blackboard;  // Î∏îÎûôÎ≥¥Îìú Ïó∞Í≤∞
             });
         }
 

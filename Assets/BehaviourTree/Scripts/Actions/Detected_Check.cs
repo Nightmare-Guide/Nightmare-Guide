@@ -21,7 +21,7 @@ namespace TheKiwiCoder
 
             if (isDetected)
             {
-                return State.Success;  // isDetected가 true이면 Success 반환
+                return child.Update();  // isDetected가 true이면 Success 반환
             }
 
             if (child == null)

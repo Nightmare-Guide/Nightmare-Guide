@@ -7,37 +7,44 @@ public class EnemyVision : MonoBehaviour
 {
     [Header("탐지 설정")]
     public float detectionRadius = 10f; // 감지 거리
-    [Range(0, 360)] public float detectionAngle = 120f; // 감지 시야각 (120도)
+    [Range(0, 360)] public float detectionAngle = 120f; // 감지 시야각
 
     [Header("레이어 설정")]
     public LayerMask obstacleLayer; // 장애물 레이어
+    public LayerMask lockerLayer;   // 락커 레이어 추가
 
-    [Header("플레이어 정보")]
+    [Header("플레이어 및 오브젝트 정보")]
     [SerializeField] private GameObject player;
+    [SerializeField] private GameObject detectedLocker; // 감지된 락커 저장
 
     [Header("탐지 상태")]
-    private bool isDetected = false; // 플레이어 탐지 여부
-    public BehaviourTree behaviourTree; // 비헤이비어 트리 연결
-    private Blackboard blackboard; // 블랙보드 변수
+    private bool isDetected = false;
+    private bool lockerDetected = false;
+    public BehaviourTree behaviourTree;
+    private Blackboard blackboard;
 
-    private float detectionCooldown = 1f; // 감지 후 다시 체크하기 위한 대기 시간
-    private bool canDetect = true; // 감지 가능한지 여부
+    private float detectionCooldown = 1f;
+    private bool canDetect = true;
 
     void Start()
     {
-        blackboard = behaviourTree.blackboard; // 블랙보드 가져오기
+        blackboard = behaviourTree.blackboard;
     }
 
     void Update()
     {
         if (canDetect)
         {
-            // 탐지 여부 업데이트
             isDetected = CheckPlayerInView();
-            blackboard.Set("isDetected", isDetected); // 블랙보드 값 반영
+            lockerDetected = CheckLockerInView();
 
-            // 디버깅 로그
-            Debug.Log($"[EnemyVision] isDetected: {isDetected}");
+            blackboard.Set("isDetected", isDetected);
+            blackboard.Set("lockerDetected", lockerDetected);
+
+            if (lockerDetected && detectedLocker != null)
+            {
+                blackboard.Set("detectedLocker", detectedLocker);
+            }
         }
 
         if (!canDetect)
@@ -48,24 +55,46 @@ public class EnemyVision : MonoBehaviour
 
     private bool CheckPlayerInView()
     {
-        if (player == null) return false;
+        return CheckObjectInView(player);
+    }
 
-        // 1. 거리 체크
-        float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
-        if (distanceToPlayer > detectionRadius) return false;
+    private bool CheckLockerInView()
+    {
+        Collider[] lockers = Physics.OverlapSphere(transform.position, detectionRadius, lockerLayer);
 
-        // 2. 시야각 체크
-        Vector3 directionToPlayer = (player.transform.position - transform.position).normalized;
-        float angleToPlayer = Vector3.Angle(transform.forward, directionToPlayer);
-        if (angleToPlayer > detectionAngle / 2) return false;
+        foreach (var locker in lockers)
+        {
+            if (CheckObjectInView(locker.gameObject))
+            {
+                detectedLocker = locker.gameObject;
+                return true;
+            }
+        }
 
-        // 3. 장애물 체크 (레이캐스트)
-        if (Physics.Raycast(transform.position, directionToPlayer, distanceToPlayer, obstacleLayer))
+        detectedLocker = null;
+        return false;
+    }
+
+    private bool CheckObjectInView(GameObject obj)
+    {
+        if (obj == null) return false;
+
+        // 거리 체크
+        float distanceToObj = Vector3.Distance(transform.position, obj.transform.position);
+        if (distanceToObj > detectionRadius) return false;
+
+        // 시야각 체크
+        Vector3 directionToObj = (obj.transform.position - transform.position).normalized;
+        float angleToObj = Vector3.Angle(transform.forward, directionToObj);
+        if (angleToObj > detectionAngle / 2) return false;
+
+        // 장애물 체크 (레이캐스트)
+        if (Physics.Raycast(transform.position, directionToObj, distanceToObj, obstacleLayer))
         {
             return false;
         }
 
-        return true; // 플레이어를 감지함
+        return true;
     }
 
     private IEnumerator HandleDetectionCooldown()
@@ -91,6 +120,12 @@ public class EnemyVision : MonoBehaviour
         {
             Gizmos.color = Color.red;
             Gizmos.DrawLine(transform.position, player.transform.position);
+        }
+
+        if (lockerDetected && detectedLocker != null)
+        {
+            Gizmos.color = Color.green;
+            Gizmos.DrawLine(transform.position, detectedLocker.transform.position);
         }
     }
 }

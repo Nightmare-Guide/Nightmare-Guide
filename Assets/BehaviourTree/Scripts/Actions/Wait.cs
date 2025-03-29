@@ -6,7 +6,7 @@ namespace TheKiwiCoder
 {
     public class Wait : ActionNode
     {
-        public float waitTime = 3f;
+        public float waitTime = 1f;
         private float timer = 0f;
 
         protected override void OnStart()
