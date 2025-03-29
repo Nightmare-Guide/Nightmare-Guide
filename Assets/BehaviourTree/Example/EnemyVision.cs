@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using TheKiwiCoder;
 using UnityEngine;
+using UnityStandardAssets.Characters.FirstPerson;
 
 public class EnemyVision : MonoBehaviour
 {
@@ -55,7 +56,26 @@ public class EnemyVision : MonoBehaviour
 
     private bool CheckPlayerInView()
     {
-        return CheckObjectInView(player);
+        if (player == null) return false;
+
+        // 플레이어 상태 확인
+        PlayerController.PlayerState playerState = PlayerController.instance.stat;
+
+        // Hide 상태면 무시
+        if (playerState == PlayerController.PlayerState.Hide)
+        {
+            return false;
+        }
+
+        // InMove 상태일 때 감지하면 찾을 수 있도록 처리
+        bool isDetectedNow = CheckObjectInView(player);
+
+        if (isDetectedNow && playerState == PlayerController.PlayerState.InMove)
+        {
+            blackboard.Set("playerSpottedEnteringLocker", true); // 플레이어가 락커에 들어가는 순간 감지됨
+        }
+
+        return isDetectedNow;
     }
 
     private bool CheckLockerInView()

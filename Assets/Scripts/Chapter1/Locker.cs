@@ -54,7 +54,7 @@ public class Locker : MonoBehaviour
     {
         //상태 변환
         stat = LockerStat.InMove;
-        PlayerController.instance.stat = PlayerController.PlayerState.Hide;
+        
         PlayerController.instance.Close_PlayerController();//플레이어 컨트롤 OFF
         lockPr = true;
 
@@ -150,7 +150,7 @@ public class Locker : MonoBehaviour
     public void InLocker() //플레이어 진입후 도어 닫김
     {
 
-     
+        PlayerController.instance.stat = PlayerController.PlayerState.Hide;
         //Debug.Log("최종 회전2" + pr.rotation);
         Select_Locker(); // 플레이어 입장후 문닫기
         // Debug.Log("잠김");
