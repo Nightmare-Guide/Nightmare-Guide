@@ -54,11 +54,7 @@ public class Chapter1_Mgr : MonoBehaviour
             nextdoorPassword = 0;
             Debug.Log("다음지역이 열렸습니다.");
         }
-        if (isPlaying)
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;  // 커서를 안보이게 하기
-        }
+     
     }
 
     private void RandomLockerShuffle() //Locker 이름 랜덤 부여
