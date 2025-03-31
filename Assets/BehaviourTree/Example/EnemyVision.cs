@@ -65,16 +65,25 @@ public class EnemyVision : MonoBehaviour
 
         foreach (var locker in lockers)
         {
-            if (CheckObjectInView(locker.gameObject))
+            Locker lockerScript = locker.GetComponent<Locker>(); // Locker 스크립트 가져오기
+
+            if (lockerScript != null && lockerScript.stat == Locker.LockerStat.InMove) // 🔹 InMove 상태인지 확인
             {
-                detectedLocker = locker.gameObject;
-                return true;
+                if (CheckObjectInView(locker.gameObject))
+                {
+                    detectedLocker = locker.gameObject;
+                    blackboard.UpdateLockerDetectionStatus(true); // 🔹 블랙보드 값 업데이트
+                    return true;
+                }
             }
         }
 
         detectedLocker = null;
+        blackboard.UpdateLockerDetectionStatus(false); // 🔹 락커가 탐지되지 않으면 false
         return false;
     }
+
+
 
     private bool CheckObjectInView(GameObject obj)
     {

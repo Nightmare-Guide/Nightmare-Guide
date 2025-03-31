@@ -35,15 +35,25 @@ public class ChaseNode : ActionNode
             return State.Failure;
         }
 
+        // 블랙보드에서 lockerDetected 값 가져오기
+        bool lockerDetected = blackboard.Get<bool>("lockerDetected");
+
+        // 만약 락커가 감지되었다면 추격을 멈추고 다음 노드로 넘어감
+        if (lockerDetected)
+        {
+            return State.Success;
+        }
+
         // 플레이어를 목표로 이동
         agent.SetDestination(player.position);
 
-        // 플레이어와 너무 멀어졌다면 성공 반환  ( > 30f )  너무 가깝다면 성공 반환 (< 1f)
-        if (Vector3.Distance(enemy.position, player.position) < 1f || Vector3.Distance (enemy.position, player.position) > 20f)  
+        // 플레이어와 너무 멀어졌거나 너무 가까워졌을 경우 추격 종료
+        if (Vector3.Distance(enemy.position, player.position) < 1f || Vector3.Distance(enemy.position, player.position) > 20f)
         {
             return State.Success;
         }
 
         return State.Running; // 계속 추격 중
     }
+
 }
