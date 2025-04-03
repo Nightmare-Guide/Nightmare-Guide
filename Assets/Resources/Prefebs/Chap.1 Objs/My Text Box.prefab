@@ -346,8 +346,8 @@ MonoBehaviour:
   m_Padding:
     m_Left: 0
     m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
+    m_Top: 3
+    m_Bottom: 3
   m_ChildAlignment: 2
   m_Spacing: 0
   m_ChildForceExpandWidth: 0
@@ -370,4 +370,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 3886578941096149036}
-  imageRect: {fileID: 4000093055411472432}
+  changingLanguage: 0

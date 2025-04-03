@@ -53,8 +53,8 @@ MonoBehaviour:
   m_Padding:
     m_Left: 0
     m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
+    m_Top: 3
+    m_Bottom: 3
   m_ChildAlignment: 0
   m_Spacing: 0
   m_ChildForceExpandWidth: 0
@@ -77,7 +77,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 3345214601468584385}
-  imageRect: {fileID: 5016528982140441416}
+  changingLanguage: 0
 --- !u!1 &2861694264539930154
 GameObject:
   m_ObjectHideFlags: 0
