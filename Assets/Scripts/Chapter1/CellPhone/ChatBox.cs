@@ -54,14 +54,26 @@ public class ChatBox : MonoBehaviour
         // Localization 시스템이 변경을 반영할 시간을 주기 위해 초기화가 끝날 때까지 대기
         yield return LocalizationSettings.InitializationOperation;
 
-
         // 언어 변경
         LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[index];
 
+        // Localization 시스템이 변경을 반영할 시간을 주기 위해 초기화가 끝날 때까지 대기
+        yield return LocalizationSettings.InitializationOperation;
         yield return new WaitForSeconds(0.5f);
 
-        // 글자 정렬
-        AdjustText(index);
+        // chatBox 정렬
+        if (this.gameObject.name.Contains("Other"))
+        {
+            verticalLayoutGroup.childAlignment = TextAnchor.UpperLeft; // 상대 채팅은 왼쪽에 배치
+            Debug.Log("Other");
+        }
+        else
+        {
+            verticalLayoutGroup.childAlignment = TextAnchor.UpperRight; // 내 채팅은 오른쪽에 배치
+        }
+
+        // 강제로 레이아웃 업데이트
+        LayoutRebuilder.ForceRebuildLayoutImmediate(verticalLayoutGroup.GetComponent<RectTransform>());
 
         changingLanguage = false;
     }
