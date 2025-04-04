@@ -377,7 +377,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 68fc2289a1d9b3340bbaa93e49610556, type: 2}
+  - {fileID: 2100000, guid: b59597790486f4840b76f888406178c5, type: 2}
   - {fileID: 2100000, guid: b59597790486f4840b76f888406178c5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -14640,8 +14640,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 751608145148393511}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.06512866}
-  m_AnchorMax: {x: 1, y: 0.99998015}
+  m_AnchorMin: {x: 0, y: 0.99999}
+  m_AnchorMax: {x: 1, y: 0.99999}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -27679,8 +27679,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2452773688129228515}
   m_HandleRect: {fileID: 5534690669882650473}
   m_Direction: 2
-  m_Value: 0.99969494
-  m_Size: 0.93485147
+  m_Value: 0.99999
+  m_Size: 0
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

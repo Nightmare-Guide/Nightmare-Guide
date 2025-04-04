@@ -215,6 +215,75 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &583946108
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 55116736941073569, guid: 744dd126e2eec6941891a32f8b8a1578, type: 3}
+      propertyPath: m_Name
+      value: Steven CellPhone
+      objectReference: {fileID: 0}
+    - target: {fileID: 4354280328723002432, guid: 744dd126e2eec6941891a32f8b8a1578, type: 3}
+      propertyPath: schoolUIManager
+      value: 
+      objectReference: {fileID: 870882981}
+    - target: {fileID: 4355648067675867567, guid: 744dd126e2eec6941891a32f8b8a1578, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4355648067675867567, guid: 744dd126e2eec6941891a32f8b8a1578, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7415653223787065137, guid: 744dd126e2eec6941891a32f8b8a1578, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -144.839
+      objectReference: {fileID: 0}
+    - target: {fileID: 7415653223787065137, guid: 744dd126e2eec6941891a32f8b8a1578, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7415653223787065137, guid: 744dd126e2eec6941891a32f8b8a1578, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -39
+      objectReference: {fileID: 0}
+    - target: {fileID: 7415653223787065137, guid: 744dd126e2eec6941891a32f8b8a1578, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 7415653223787065137, guid: 744dd126e2eec6941891a32f8b8a1578, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 7415653223787065137, guid: 744dd126e2eec6941891a32f8b8a1578, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7415653223787065137, guid: 744dd126e2eec6941891a32f8b8a1578, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7415653223787065137, guid: 744dd126e2eec6941891a32f8b8a1578, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 7415653223787065137, guid: 744dd126e2eec6941891a32f8b8a1578, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 7415653223787065137, guid: 744dd126e2eec6941891a32f8b8a1578, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 180
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 744dd126e2eec6941891a32f8b8a1578, type: 3}
 --- !u!1 &619937850 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5030113247728523191, guid: ddc4bea01b8b2c1499a4419384e206a7, type: 3}
@@ -444,6 +513,46 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ethan CellPhone
       objectReference: {fileID: 0}
+    - target: {fileID: 1074525666819699088, guid: 19be3efd9fa9ba54f94cddfa577f7053, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1074525666819699088, guid: 19be3efd9fa9ba54f94cddfa577f7053, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1074525666819699088, guid: 19be3efd9fa9ba54f94cddfa577f7053, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1074525666819699088, guid: 19be3efd9fa9ba54f94cddfa577f7053, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1074525666819699088, guid: 19be3efd9fa9ba54f94cddfa577f7053, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1074525666819699088, guid: 19be3efd9fa9ba54f94cddfa577f7053, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1612865552233062953, guid: 19be3efd9fa9ba54f94cddfa577f7053, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1612865552233062953, guid: 19be3efd9fa9ba54f94cddfa577f7053, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1612865552233062953, guid: 19be3efd9fa9ba54f94cddfa577f7053, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3286778538065625921, guid: 19be3efd9fa9ba54f94cddfa577f7053, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4354280328723002432, guid: 19be3efd9fa9ba54f94cddfa577f7053, type: 3}
       propertyPath: schoolUIManager
       value: 
@@ -454,6 +563,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4355648067675867567, guid: 19be3efd9fa9ba54f94cddfa577f7053, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5534690669882650473, guid: 19be3efd9fa9ba54f94cddfa577f7053, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5534690669882650473, guid: 19be3efd9fa9ba54f94cddfa577f7053, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5534690669882650473, guid: 19be3efd9fa9ba54f94cddfa577f7053, type: 3}
+      propertyPath: m_AnchorMin.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7415653223787065137, guid: 19be3efd9fa9ba54f94cddfa577f7053, type: 3}
@@ -3666,3 +3787,4 @@ SceneRoots:
   - {fileID: 1718269113}
   - {fileID: 1027628921}
   - {fileID: 1375955701}
+  - {fileID: 583946108}
