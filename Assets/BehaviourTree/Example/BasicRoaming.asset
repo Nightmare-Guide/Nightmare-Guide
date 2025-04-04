@@ -44,30 +44,7 @@ MonoBehaviour:
   description: 
   drawGizmos: 0
   children:
-  - {fileID: 6402316061889451186}
   - {fileID: -2247863421084346560}
-  - {fileID: -4755641854017797634}
---- !u!114 &-4755641854017797634
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a5134d9de14153468b48928d3e7359a, type: 3}
-  m_Name: Wait
-  m_EditorClassIdentifier: 
-  state: 0
-  started: 0
-  guid: d654e6bf449ef0a4e9d4228651cef97e
-  position: {x: 61.582626, y: 448.00003}
-  blackboard:
-    moveToPosition: {x: 0, y: 0, z: 0}
-  description: 
-  drawGizmos: 0
-  waitTime: 3
 --- !u!114 &-2247863421084346560
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -111,17 +88,13 @@ MonoBehaviour:
   - {fileID: 4300890025194573056}
   - {fileID: -8754077107127582826}
   - {fileID: -5660333016957678146}
-  - {fileID: -4755641854017797634}
-  - {fileID: 6402316061889451186}
   - {fileID: -2247863421084346560}
   - {fileID: 126179549495469473}
   - {fileID: 8417622060116891960}
-  - {fileID: 3905612508622176171}
   - {fileID: 2416129358109696888}
   - {fileID: 7158668878530965008}
-  - {fileID: 1996139228431496521}
   blackboard:
-    moveToPosition: {x: -92.61828, y: 0, z: -64.03221}
+    moveToPosition: {x: -84, y: -0.5, z: -2}
 --- !u!114 &126179549495469473
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -145,26 +118,6 @@ MonoBehaviour:
   children:
   - {fileID: -5660333016957678146}
   - {fileID: 7158668878530965008}
---- !u!114 &1996139228431496521
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 78f5c915a8a7edb4e8a37aaa27242db3, type: 3}
-  m_Name: ScanLocker
-  m_EditorClassIdentifier: 
-  state: 0
-  started: 0
-  guid: c6e80bfd7d3da3c44b1a8376d2796fe0
-  position: {x: 571.9997, y: 447.99982}
-  blackboard:
-    moveToPosition: {x: 0, y: 0, z: 0}
-  description: 
-  drawGizmos: 0
 --- !u!114 &2416129358109696888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -180,32 +133,11 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: 2c8b16cdc0417144f9ebe1be241fb430
-  position: {x: 356.6667, y: 448}
+  position: {x: 571.99976, y: 447.9999}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
   description: 
   drawGizmos: 0
---- !u!114 &3905612508622176171
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a5134d9de14153468b48928d3e7359a, type: 3}
-  m_Name: Wait
-  m_EditorClassIdentifier: 
-  state: 0
-  started: 0
-  guid: 173796f8e4ddd99468e98d83287cdaa6
-  position: {x: 801.321, y: 447.99982}
-  blackboard:
-    moveToPosition: {x: 0, y: 0, z: 0}
-  description: 
-  drawGizmos: 0
-  waitTime: 3
 --- !u!114 &4300890025194573056
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -227,28 +159,6 @@ MonoBehaviour:
   description: 
   drawGizmos: 0
   child: {fileID: -8754077107127582826}
---- !u!114 &6402316061889451186
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b0a055ff4bd9e6642b3f0dff32a86e1d, type: 3}
-  m_Name: RandomPosition
-  m_EditorClassIdentifier: 
-  state: 0
-  started: 0
-  guid: e8b7b3236babb5b45a8c128a30261cab
-  position: {x: -310.96503, y: 448}
-  blackboard:
-    moveToPosition: {x: 0, y: 0, z: 0}
-  description: 
-  drawGizmos: 0
-  min: {x: -112, y: -64}
-  max: {x: 20, y: -168}
 --- !u!114 &7158668878530965008
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -271,8 +181,6 @@ MonoBehaviour:
   drawGizmos: 0
   children:
   - {fileID: 2416129358109696888}
-  - {fileID: 1996139228431496521}
-  - {fileID: 3905612508622176171}
 --- !u!114 &8417622060116891960
 MonoBehaviour:
   m_ObjectHideFlags: 0
