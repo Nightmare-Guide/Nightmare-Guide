@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering.HighDefinition;
 using UnityEngine.UI;
 
 public class PuzzleBoard : MonoBehaviour
@@ -68,19 +69,24 @@ public class PuzzleBoard : MonoBehaviour
         if (!canMovePuzzle)
             return;
 
+        Debug.Log("1");
         isTileMoving = true; // 퍼즐 동시 이동 방지
 
         // 빈 자리와의 거리
         float dist = Vector3.Distance(emptyTilePosition, tile.GetComponent<RectTransform>().anchoredPosition);
+        dist = Mathf.Round(dist * 1000f) / 1000f; // 소수점 3째 자리에서 반올림
+        Debug.Log($"dist : {dist}");
 
         if (neighborTileDistance.Contains(dist))
         {
+            Debug.Log("2");
             Vector3 goalPosition = emptyTilePosition;
 
             emptyTilePosition = tile.GetComponent<RectTransform>().anchoredPosition;
 
             tile.OnMoveTo(goalPosition);
         }
+
     }
 
     private IEnumerator OnSuffle()
@@ -90,7 +96,6 @@ public class PuzzleBoard : MonoBehaviour
         float time = 1.5f;
 
         // 타일이 이동 중이 아니면 계속 진행
-
         while (percent < 1)
         {
             current += Time.deltaTime;
@@ -100,11 +105,11 @@ public class PuzzleBoard : MonoBehaviour
             {
                 float dist = Vector3.Distance(emptyTilePosition, tileList[i].GetComponent<RectTransform>().anchoredPosition);
 
-                if (neighborTileDistance.Contains(dist))
+                if (cellPhone.schoolUIManager.ApproximatelyEqual(dist, neighborTileDistance[0]) || cellPhone.schoolUIManager.ApproximatelyEqual(dist, neighborTileDistance[1]))
                 {
                     isTileMoving = true;
 
-                    Vector3 goalPosition = emptyTilePosition;
+                    Vector2 goalPosition = emptyTilePosition;
 
                     emptyTilePosition = tileList[i].GetComponent<RectTransform>().anchoredPosition;
 

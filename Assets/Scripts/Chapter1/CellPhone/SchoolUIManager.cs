@@ -261,4 +261,16 @@ public class SchoolUIManager : MonoBehaviour
             cellPhone.GetComponent<CellPhone>().SetFirst();
         }
     }
+
+    // 부동 소수점 오차 방지 함수
+    public bool ApproximatelyEqual(Vector2 a, Vector2 b, float tolerance = 0.01f)
+    {
+        return Vector2.Distance(a, b) < tolerance;
+    }
+
+    public bool ApproximatelyEqual(float a, float b, float tolerance = 0.01f)
+    {
+        return Mathf.Abs(a - b) < tolerance;
+    }
+
 }

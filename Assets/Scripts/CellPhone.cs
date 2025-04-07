@@ -61,6 +61,11 @@ public class CellPhone : MonoBehaviour
         SetFirst();
     }
 
+    private void OnDisable()
+    {
+        phoneBlurMat.SetFloat("_Size", 0); // 휴대폰 Blur Spacing 값 초기화
+    }
+
     // 처음 세팅 함수
     public void SetFirst()
     {
@@ -69,7 +74,6 @@ public class CellPhone : MonoBehaviour
         sliderUI.SetActive(true); // 슬라이더 활성화
         pwSlider.value = 0;
         PhoneSlider();
-        puzzleUI[0].gameObject.SetActive(false); // 퍼즐 비활성화
         appScreenUI.SetActive(false);
 
         // 휴대폰 시간, 날짜, 슬라이드바 활성화
@@ -77,17 +81,21 @@ public class CellPhone : MonoBehaviour
         timeText.gameObject.SetActive(true);
         dateText.gameObject.SetActive(true);
 
-        SchoolUIManager.instance.SetUIOpacity(sliderImage[0], true, 0.1f, 0f);
-        SchoolUIManager.instance.SetUIOpacity(sliderImage[1], true, 0.1f, 0f);
+        schoolUIManager.SetUIOpacity(sliderImage[0], true, 0.1f, 0f);
+        schoolUIManager.SetUIOpacity(sliderImage[1], true, 0.1f, 0f);
 
         // 마지막 퍼즐 조각 제외 이미지 투명도 천천히 조정
         for (int i = 0; i < puzzleUI.Length; i++)
         {
-            SchoolUIManager.instance.SetUIOpacity(puzzleUI[i], false, 0.1f, 0f);
+            schoolUIManager.SetUIOpacity(puzzleUI[i], false, 0.1f, 0f);
         }
 
         // 퍼즐 초기화
-        puzzleUI[1].GetComponent<PuzzleBoard>().InitializationPuzzle();
+        if (!this.gameObject.name.Contains("Steven"))
+        {
+            puzzleUI[1].GetComponent<PuzzleBoard>().InitializationPuzzle(); // 퍼즐 초기화
+            puzzleUI[0].gameObject.SetActive(false); // 퍼즐 비활성화
+        }
     }
 
     private void Update()
@@ -101,11 +109,6 @@ public class CellPhone : MonoBehaviour
         {
             isUsing = false;
             this.gameObject.SetActive(false);
-
-            if (!unLocked) // 해제를 못한 경우에는 블러 초기화
-            {
-                phoneBlurMat.SetFloat("_Size", 0); // 휴대폰 Blur Spacing 값 초기화
-            }
         }
     }
 
@@ -168,14 +171,40 @@ public class CellPhone : MonoBehaviour
 
         if (pwSlider.value >= 1)
         {
-            SchoolUIManager.instance.SetUIOpacity(sliderImage[0], false, 0.5f, 0f);
-            SchoolUIManager.instance.SetUIOpacity(sliderImage[1], false, 0.5f, 0f);
-            puzzleUI[0].gameObject.SetActive(true);
+            schoolUIManager.SetUIOpacity(sliderImage[0], false, 0.5f, 0f);
+            schoolUIManager.SetUIOpacity(sliderImage[1], false, 0.5f, 0f);
 
-            // 마지막 퍼즐 조각 제외 이미지 투명도 천천히 조정
-            for (int i = 0; i < puzzleUI.Length - 1; i++)
+            // 에단,데이비드 휴대폰만 슬라이드 퍼즐로 연결
+            if (!this.gameObject.name.Contains("Steven"))
             {
-                SchoolUIManager.instance.SetUIOpacity(puzzleUI[i], true, 0.6f, 0.2f);
+                puzzleUI[0].gameObject.SetActive(true);
+
+                // 마지막 퍼즐 조각 제외 이미지 투명도 천천히 조정
+                for (int i = 0; i < puzzleUI.Length - 1; i++)
+                {
+                    schoolUIManager.SetUIOpacity(puzzleUI[i], true, 0.6f, 0.2f);
+                }
+            }
+            else
+            {
+                // 스티븐 휴대폰은 슬라이더로 잠금 해제 후, 바로 잠금해제
+                unLocked = true;
+
+                // App Screen UI 활성화
+                appScreenUI.SetActive(true);
+
+                foreach (Image img in appScreenImgs)
+                {
+                    schoolUIManager.SetUIOpacity(img, true, 0.5f, 0f);
+                }
+                foreach (TextMeshProUGUI text in appScreenTexts)
+                {
+                    schoolUIManager.SetUIOpacity(text, true, 0.5f, 0f);
+                }
+
+                // 시간, 날짜 text 서서히 비활성화
+                schoolUIManager.SetUIOpacity(timeText, false, 0.2f, 0f);
+                schoolUIManager.SetUIOpacity(dateText, false, 0.2f, 0f);
             }
         }
     }
@@ -278,7 +307,7 @@ public class CellPhone : MonoBehaviour
     // 스크롤을 맨 위로 올리는 함수
     public void ScrollToTop()
     {
-        foreach(ScrollRect scroll in scrollRects)
+        foreach (ScrollRect scroll in scrollRects)
         {
             scroll.verticalNormalizedPosition = 1f;
         }
