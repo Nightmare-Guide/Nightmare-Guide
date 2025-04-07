@@ -25,17 +25,17 @@ public class PuzzleTile : MonoBehaviour, IPointerClickHandler
         dist = Vector3.Distance(corretPos, board.emptyTilePosition);
     }
 
-    public void OnMoveTo(Vector3 end)
+    public void OnMoveTo(Vector2 end)
     {
-        StartCoroutine("MoveTo", end);
+        StartCoroutine(MoveTo(end));
     }
 
-    private IEnumerator MoveTo(Vector3 end)
+    private IEnumerator MoveTo(Vector2 end)
     {
         float current = 0;
         float percent = 0;
         float moveTime = 0.1f;
-        Vector3 start = rectTransform.anchoredPosition;
+        Vector2 start = rectTransform.anchoredPosition;
 
         while (percent < 1)
         {
@@ -47,8 +47,10 @@ public class PuzzleTile : MonoBehaviour, IPointerClickHandler
             yield return null;
         }
 
-        isCorrected = corretPos == rectTransform.anchoredPosition ? true : false;
+        rectTransform.anchoredPosition = end;
 
+        isCorrected = ApproximatelyEqual(corretPos, rectTransform.anchoredPosition);
+        
         // 이동 후 퍼즐 정답 확인
         if (board.tileList.All(tile => tile.isCorrected))
         {
@@ -59,6 +61,12 @@ public class PuzzleTile : MonoBehaviour, IPointerClickHandler
         }
 
         board.isTileMoving = false; // 퍼즐 이동 끝 알림
+    }
+
+    // 부동 소수점 오차 방지 함수
+    bool ApproximatelyEqual(Vector2 a, Vector2 b, float tolerance = 0.01f)
+    {
+        return Vector2.Distance(a, b) < tolerance;
     }
 
     public void OnPointerClick(PointerEventData eventData)
