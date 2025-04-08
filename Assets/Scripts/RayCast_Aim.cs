@@ -1,6 +1,7 @@
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityStandardAssets.Characters.FirstPerson;
+using static SchoolUIManager;
 using static UnityEngine.Rendering.DebugUI;
 
 public class RayCast_Aim : MonoBehaviour
@@ -132,8 +133,13 @@ public class RayCast_Aim : MonoBehaviour
 
     void TouchCellPhone(GameObject obj)
     {
-        SchoolUIManager.instance.getCellPhone = true; // ÈÞ´ëÆù È¹µæ bool °ª º¯°æ
+        // ÇØ´ç ÈÞ´ëÆù È¹µæ bool °ª º¯°æ
+        CharacterPhoneInfo targetPhone = SchoolUIManager.instance.phoneInfos
+                                            .Find(info => obj.gameObject.name.Contains(info.name));
 
+        targetPhone.hasPhone = true;
+
+        // CellPhone À§Ä¡ º¯°æ ÇÔ¼ö ½ÇÇà
         CellPhone cellPhoneLogic = obj.GetComponent<CellPhone>();
 
         Vector3[] cellPhoneTransform = GetCameraInfo();

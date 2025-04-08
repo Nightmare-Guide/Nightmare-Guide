@@ -246,7 +246,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC5C4\uB9C8"
+  m_text: "\uC544\uBC84\uC9C0"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 465af517bae68d2418e447337ce36b3f, type: 2}
   m_sharedMaterial: {fileID: 7906800258845002438, guid: 465af517bae68d2418e447337ce36b3f, type: 2}
@@ -273,12 +273,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20
+  m_fontSize: 30
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 1
-  m_fontSizeMax: 20
+  m_fontSizeMax: 30
   m_fontStyle: 0
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
@@ -423,10 +423,10 @@ RectTransform:
   - {fileID: 1793723958473903675}
   m_Father: {fileID: 3894612883147192702}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 123.5, y: -295}
-  m_SizeDelta: {x: 243, y: 70}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 197, y: -442.5}
+  m_SizeDelta: {x: 390, y: 105}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &216615521089470941
 GameObject:
@@ -592,7 +592,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 7983348528812607718}
         m_TargetAssemblyTypeName: CellPhone, Assembly-CSharp
         m_MethodName: HomeButton
         m_Mode: 2
@@ -832,7 +832,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 7983348528812607718}
         m_TargetAssemblyTypeName: CellPhone, Assembly-CSharp
         m_MethodName: BackButton
         m_Mode: 2
@@ -1052,10 +1052,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 32132659204756450}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 80.79999, y: -55}
+  m_SizeDelta: {x: 110, y: 110}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7063231803004632179
 CanvasRenderer:
@@ -1139,7 +1139,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 7983348528812607718}
         m_TargetAssemblyTypeName: CellPhone, Assembly-CSharp
         m_MethodName: AppIconButton
         m_Mode: 2
@@ -1243,8 +1243,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 13
-  m_fontSizeBase: 13
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 1
@@ -1497,9 +1497,9 @@ RectTransform:
   m_Father: {fileID: 6570643710871095839}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 2.418148, y: 0}
+  m_SizeDelta: {x: 2.0461426, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &7953746947815038174
 CanvasRenderer:
@@ -1923,7 +1923,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 7983348528812607718}
         m_TargetAssemblyTypeName: CellPhone, Assembly-CSharp
         m_MethodName: HomeButton
         m_Mode: 2
@@ -1935,7 +1935,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 7983348528812607718}
         m_TargetAssemblyTypeName: CellPhone, Assembly-CSharp
         m_MethodName: HomeButton
         m_Mode: 2
@@ -1981,10 +1981,10 @@ RectTransform:
   - {fileID: 7541531740677566479}
   m_Father: {fileID: 4279487951486957137}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 121.5, y: -18.9}
-  m_SizeDelta: {x: 243, y: 37.8}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 195, y: -28.349998}
+  m_SizeDelta: {x: 390, y: 56.699997}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1125282045012566024
 GameObject:
@@ -2083,7 +2083,7 @@ MonoBehaviour:
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 1
-  m_fontSizeMax: 10
+  m_fontSizeMax: 15
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -2652,7 +2652,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 7983348528812607718}
         m_TargetAssemblyTypeName: CellPhone, Assembly-CSharp
         m_MethodName: HomeButton
         m_Mode: 2
@@ -3099,7 +3099,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.0008392334, y: -0.0058736196}
+  m_AnchoredPosition: {x: 0.0008544922, y: -0.0058736196}
   m_SizeDelta: {x: 0, y: 310}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &7636956185134682039
@@ -3540,8 +3540,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 4784443990051204879}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.9999864}
-  m_AnchorMax: {x: 1, y: 0.9999864}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -3819,7 +3819,7 @@ MonoBehaviour:
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 1
-  m_fontSizeMax: 10
+  m_fontSizeMax: 15
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -4146,9 +4146,9 @@ RectTransform:
   m_Father: {fileID: 4071135623491509516}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 2.418148, y: 0}
+  m_SizeDelta: {x: 2.0461426, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &2665988535507400314
 CanvasRenderer:
@@ -4352,7 +4352,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2083791822292256254
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4832,7 +4832,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 10.xx.20xx
+  m_text: "\uC545\uBABD\uC758 \uD2B9\uC131"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 465af517bae68d2418e447337ce36b3f, type: 2}
   m_sharedMaterial: {fileID: 7906800258845002438, guid: 465af517bae68d2418e447337ce36b3f, type: 2}
@@ -4859,8 +4859,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 23
-  m_fontSizeBase: 23
+  m_fontSize: 28
+  m_fontSizeBase: 28
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 1
@@ -5193,7 +5193,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 7983348528812607718}
         m_TargetAssemblyTypeName: CellPhone, Assembly-CSharp
         m_MethodName: HomeButton
         m_Mode: 2
@@ -5205,7 +5205,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 7983348528812607718}
         m_TargetAssemblyTypeName: CellPhone, Assembly-CSharp
         m_MethodName: HomeButton
         m_Mode: 2
@@ -5416,7 +5416,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 7983348528812607718}
         m_TargetAssemblyTypeName: CellPhone, Assembly-CSharp
         m_MethodName: BackButton
         m_Mode: 2
@@ -5520,12 +5520,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 10
+  m_fontSize: 15
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 1
-  m_fontSizeMax: 10
+  m_fontSizeMax: 15
   m_fontStyle: 0
   m_HorizontalAlignment: 4
   m_VerticalAlignment: 512
@@ -5690,8 +5690,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 13
-  m_fontSizeBase: 13
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 1
@@ -5767,7 +5767,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 57, y: -415}
-  m_SizeDelta: {x: 110, y: 150}
+  m_SizeDelta: {x: 180, y: 2220}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2459544244152571503
 GameObject:
@@ -6232,8 +6232,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.0008392334, y: -0.0025651557}
-  m_SizeDelta: {x: -3.0140076, y: 390}
+  m_AnchoredPosition: {x: 0.0008544922, y: -0.000036831138}
+  m_SizeDelta: {x: -3.0140076, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &6726257312373872997
 MonoBehaviour:
@@ -6255,7 +6255,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 238, y: 380}
+  m_CellSize: {x: 390, y: 380}
   m_Spacing: {x: 20, y: 20}
   m_Constraint: 0
   m_ConstraintCount: 2
@@ -6305,10 +6305,10 @@ RectTransform:
   - {fileID: 293695570046573444}
   m_Father: {fileID: 6294284422643319558}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 122.507, y: 0}
-  m_SizeDelta: {x: 241.014, y: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 199.23277, y: 0}
+  m_SizeDelta: {x: 394.46555, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &5402091209961027991
 MonoBehaviour:
@@ -6554,8 +6554,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 13
-  m_fontSizeBase: 13
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 1
@@ -7455,7 +7455,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 7983348528812607718}
         m_TargetAssemblyTypeName: CellPhone, Assembly-CSharp
         m_MethodName: UpScreenButton
         m_Mode: 2
@@ -7783,12 +7783,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 8
+  m_fontSize: 13
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 1
-  m_fontSizeMax: 8
+  m_fontSizeMax: 13
   m_fontStyle: 0
   m_HorizontalAlignment: 4
   m_VerticalAlignment: 512
@@ -8077,7 +8077,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uB370\uC774\uBE44\uB4DC"
+  m_text: "\uC81C\uC784\uC2A4"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 465af517bae68d2418e447337ce36b3f, type: 2}
   m_sharedMaterial: {fileID: 7906800258845002438, guid: 465af517bae68d2418e447337ce36b3f, type: 2}
@@ -8104,8 +8104,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 15
-  m_fontSizeBase: 15
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 1
@@ -8353,8 +8353,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.0008392334, y: -0.006751287}
-  m_SizeDelta: {x: 0, y: 310}
+  m_AnchoredPosition: {x: 0.0008544922, y: -0.00015549992}
+  m_SizeDelta: {x: 0, y: 410}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1695285587548246262
 MonoBehaviour:
@@ -8376,7 +8376,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 238, y: 300}
+  m_CellSize: {x: 390, y: 400}
   m_Spacing: {x: 20, y: 20}
   m_Constraint: 0
   m_ConstraintCount: 2
@@ -8589,7 +8589,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 7983348528812607718}
         m_TargetAssemblyTypeName: CellPhone, Assembly-CSharp
         m_MethodName: HomeButton
         m_Mode: 2
@@ -8601,7 +8601,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 7983348528812607718}
         m_TargetAssemblyTypeName: CellPhone, Assembly-CSharp
         m_MethodName: HomeButton
         m_Mode: 2
@@ -8795,8 +8795,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.0008392334, y: -0.0057901037}
-  m_SizeDelta: {x: 0, y: 320}
+  m_AnchoredPosition: {x: 0.0008239746, y: 0.00002135078}
+  m_SizeDelta: {x: 0, y: 460}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &60457823799205637
 MonoBehaviour:
@@ -8818,7 +8818,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 110, y: 150}
+  m_CellSize: {x: 180, y: 220}
   m_Spacing: {x: 20, y: 20}
   m_Constraint: 0
   m_ConstraintCount: 2
@@ -8906,10 +8906,10 @@ RectTransform:
   - {fileID: 1010465037875345764}
   m_Father: {fileID: 6740629120388188675}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 121.5, y: -22.05}
-  m_SizeDelta: {x: 243, y: 44.1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 195, y: -33.075}
+  m_SizeDelta: {x: 390, y: 66.15}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &4122215700514734465
 GameObject:
@@ -9003,12 +9003,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 10
+  m_fontSize: 15
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 1
-  m_fontSizeMax: 10
+  m_fontSizeMax: 15
   m_fontStyle: 0
   m_HorizontalAlignment: 4
   m_VerticalAlignment: 512
@@ -9080,9 +9080,9 @@ RectTransform:
   m_Father: {fileID: 5572982972570561340}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0.57562256, y: 0}
+  m_SizeDelta: {x: -0.97439575, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &969678305289025457
 CanvasRenderer:
@@ -9287,7 +9287,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC54C\uACA0\uC5B4.."
+  m_text: "\uB124! \uAC10\uC0AC\uD569\uB2C8\uB2E4.\n\uCCAB \uCD9C\uADFC \uB0A0 \uBD59\uACA0\uC2B5\uB2C8\uB2E4."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 465af517bae68d2418e447337ce36b3f, type: 2}
   m_sharedMaterial: {fileID: 7906800258845002438, guid: 465af517bae68d2418e447337ce36b3f, type: 2}
@@ -9314,8 +9314,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 13
-  m_fontSizeBase: 13
+  m_fontSize: 18
+  m_fontSizeBase: 18
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 1
@@ -9429,10 +9429,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 32132659204756450}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 80.79999, y: -195}
+  m_SizeDelta: {x: 110, y: 110}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1267075986305371877
 CanvasRenderer:
@@ -9516,7 +9516,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 7983348528812607718}
         m_TargetAssemblyTypeName: CellPhone, Assembly-CSharp
         m_MethodName: AppIconButton
         m_Mode: 2
@@ -9819,10 +9819,10 @@ RectTransform:
   - {fileID: 3640053909098179706}
   m_Father: {fileID: 9053982739218799019}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 123.5, y: -30}
-  m_SizeDelta: {x: 243, y: 60}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 197, y: -45}
+  m_SizeDelta: {x: 390, y: 90}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3000589861164045649
 CanvasRenderer:
@@ -9876,7 +9876,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 7983348528812607718}
         m_TargetAssemblyTypeName: CellPhone, Assembly-CSharp
         m_MethodName: UpScreenButton
         m_Mode: 2
@@ -10222,7 +10222,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4318552130525530138
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10288,7 +10288,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &3401844279676845428
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10389,8 +10389,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 3635460266412247458}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.86737746}
-  m_AnchorMax: {x: 1, y: 0.9999571}
+  m_AnchorMin: {x: 0, y: 0.8545948}
+  m_AnchorMax: {x: 0, y: 0.99999857}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -10859,10 +10859,10 @@ RectTransform:
   - {fileID: 2410248349393135410}
   m_Father: {fileID: 8428097500689743073}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 57, y: -245}
-  m_SizeDelta: {x: 110, y: 150}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 92, y: -350}
+  m_SizeDelta: {x: 180, y: 220}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &4755095926095483217
 GameObject:
@@ -11340,8 +11340,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 12
-  m_fontSizeBase: 12
+  m_fontSize: 17
+  m_fontSizeBase: 17
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 1
@@ -11542,7 +11542,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 7983348528812607718}
         m_TargetAssemblyTypeName: CellPhone, Assembly-CSharp
         m_MethodName: HomeButton
         m_Mode: 2
@@ -11589,7 +11589,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.0008392334, y: -0.0041237785}
+  m_AnchoredPosition: {x: 0.0008544922, y: -0.0041237785}
   m_SizeDelta: {x: 0, y: 390}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &7510091630307729062
@@ -11843,8 +11843,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 157681118740558431}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.86326665}
-  m_AnchorMax: {x: 1, y: 0.99998796}
+  m_AnchorMin: {x: 0, y: 0.84353334}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -12201,8 +12201,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 5568649418039298112}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.9999874}
-  m_AnchorMax: {x: 1, y: 0.9999874}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -12337,12 +12337,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 10
+  m_fontSize: 15
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 1
-  m_fontSizeMax: 10
+  m_fontSizeMax: 15
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -12636,10 +12636,10 @@ RectTransform:
   - {fileID: 4501635334644002776}
   m_Father: {fileID: 3894612883147192702}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 123.5, y: -35}
-  m_SizeDelta: {x: 243, y: 70}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 197, y: -52.5}
+  m_SizeDelta: {x: 390, y: 105}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &5239033315579845599
 GameObject:
@@ -12839,7 +12839,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uB8E8\uCE74\uC2A4"
+  m_text: "\uB9C8\uC774\uD074"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 465af517bae68d2418e447337ce36b3f, type: 2}
   m_sharedMaterial: {fileID: 7906800258845002438, guid: 465af517bae68d2418e447337ce36b3f, type: 2}
@@ -12866,12 +12866,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20
+  m_fontSize: 30
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 1
-  m_fontSizeMax: 20
+  m_fontSizeMax: 30
   m_fontStyle: 0
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
@@ -12981,10 +12981,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 32132659204756450}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 220.79999, y: -55}
+  m_SizeDelta: {x: 110, y: 110}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1603249408750808909
 CanvasRenderer:
@@ -13068,7 +13068,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 7983348528812607718}
         m_TargetAssemblyTypeName: CellPhone, Assembly-CSharp
         m_MethodName: AppIconButton
         m_Mode: 2
@@ -13531,7 +13531,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uB370\uC774\uBE44\uB4DC"
+  m_text: "\uC81C\uC784\uC2A4"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 465af517bae68d2418e447337ce36b3f, type: 2}
   m_sharedMaterial: {fileID: 7906800258845002438, guid: 465af517bae68d2418e447337ce36b3f, type: 2}
@@ -13558,7 +13558,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 1
+  m_fontSize: 40
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -14083,7 +14083,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 382ee5889c7c38e418c8b63ccea355be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cellPhone: {fileID: 0}
+  cellPhone: {fileID: 7983348528812607718}
   galleryImgs:
   - {fileID: 5319085206110591309}
   - {fileID: 971015062235488809}
@@ -14192,10 +14192,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 7172688120988964338}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 121, y: -160}
-  m_SizeDelta: {x: 238, y: 300}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 197, y: -210}
+  m_SizeDelta: {x: 390, y: 400}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3930679986148300157
 CanvasRenderer:
@@ -14265,8 +14265,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 15
-  m_fontSizeBase: 15
+  m_fontSize: 23
+  m_fontSizeBase: 23
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 1
@@ -14380,10 +14380,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 150477670693465804}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 121, y: -200}
-  m_SizeDelta: {x: 238, y: 380}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 197, y: 0}
+  m_SizeDelta: {x: 390, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4549730003032672798
 CanvasRenderer:
@@ -14460,8 +14460,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 15
-  m_fontSizeBase: 15
+  m_fontSize: 23
+  m_fontSizeBase: 23
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 1
@@ -14890,10 +14890,10 @@ RectTransform:
   - {fileID: 6740629120388188675}
   m_Father: {fileID: 3894612883147192702}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 123.5, y: -105}
-  m_SizeDelta: {x: 243, y: 70}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 197, y: -157.5}
+  m_SizeDelta: {x: 390, y: 105}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &6140034960984260145
 GameObject:
@@ -14961,8 +14961,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC6B0\uB9AC \uD559\uAD50\uC5D0\uB294 \uD559\uAD50 \uD3ED\uB825\uC774
-    \uC788\uB2E4... "
+  m_text: "\uC545\uBABD \uAC00\uC774\uB4DC\uB294 \uC815\uC2E0 \uC5F0\uACB0\n\uAE30\uACC4\uC7A5\uCE58\uB97C
+    \uC0AC\uC6A9\uD558\uC5EC, \n\uACFC\uB3C4\uD55C \uC815\uC2E0\uC801 \uC2A4\uD2B8\uB808\uC2A4\uC5D0
+    \uC758\uD574..."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 465af517bae68d2418e447337ce36b3f, type: 2}
   m_sharedMaterial: {fileID: 7906800258845002438, guid: 465af517bae68d2418e447337ce36b3f, type: 2}
@@ -14989,8 +14990,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 12
-  m_fontSizeBase: 12
+  m_fontSize: 17
+  m_fontSizeBase: 17
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 1
@@ -15137,7 +15138,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uB370\uC774\uBE44\uB4DC"
+  m_text: "\uC5B4\uBA38\uB2C8"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 465af517bae68d2418e447337ce36b3f, type: 2}
   m_sharedMaterial: {fileID: 7906800258845002438, guid: 465af517bae68d2418e447337ce36b3f, type: 2}
@@ -15164,12 +15165,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20
+  m_fontSize: 30
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 1
-  m_fontSizeMax: 20
+  m_fontSizeMax: 30
   m_fontStyle: 0
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
@@ -15356,9 +15357,9 @@ RectTransform:
   m_Father: {fileID: 7565932470100809052}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0.57562256, y: 0}
+  m_SizeDelta: {x: -0.97439575, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &9142898205041188491
 CanvasRenderer:
@@ -15527,7 +15528,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0.98}
-  m_AnchoredPosition: {x: 0, y: 1.2428665}
+  m_AnchoredPosition: {x: 0, y: 1.2428741}
   m_SizeDelta: {x: 0, y: 2.5007396}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &6480818532644538492
@@ -15565,9 +15566,9 @@ RectTransform:
   m_Father: {fileID: 2931848348064751240}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0.57562256, y: 0}
+  m_SizeDelta: {x: -0.97439575, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &5750171954569469760
 CanvasRenderer:
@@ -15712,12 +15713,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 10
+  m_fontSize: 15
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 1
-  m_fontSizeMax: 10
+  m_fontSizeMax: 15
   m_fontStyle: 0
   m_HorizontalAlignment: 4
   m_VerticalAlignment: 512
@@ -15791,7 +15792,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000015258789, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4765350919373392524
@@ -16009,9 +16010,9 @@ RectTransform:
   m_Father: {fileID: 7506723293943529098}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 2.418148, y: 0}
+  m_SizeDelta: {x: 2.0461426, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &4048354670923718989
 CanvasRenderer:
@@ -16288,12 +16289,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 10
+  m_fontSize: 13
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 1
-  m_fontSizeMax: 10
+  m_fontSizeMax: 15
   m_fontStyle: 0
   m_HorizontalAlignment: 4
   m_VerticalAlignment: 512
@@ -16368,8 +16369,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.0008392334, y: 0.00075263454}
-  m_SizeDelta: {x: 0, y: 330}
+  m_AnchoredPosition: {x: 0.0008239746, y: 0.00075263454}
+  m_SizeDelta: {x: 0, y: 495}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1980963555161636881
 MonoBehaviour:
@@ -16444,10 +16445,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 32132659204756450}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 360.8, y: -55}
+  m_SizeDelta: {x: 110, y: 110}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3521998638751494420
 CanvasRenderer:
@@ -16531,7 +16532,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 7983348528812607718}
         m_TargetAssemblyTypeName: CellPhone, Assembly-CSharp
         m_MethodName: AppIconButton
         m_Mode: 2
@@ -16580,8 +16581,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.0030791557}
-  m_SizeDelta: {x: 0, y: 287.41}
+  m_AnchoredPosition: {x: 0, y: -0.00011851153}
+  m_SizeDelta: {x: 0, y: 359.21}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &3909001446964301700
 MonoBehaviour:
@@ -16655,8 +16656,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 8795912766725499225}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.27077115}
-  m_AnchorMax: {x: 1, y: 0.9999361}
+  m_AnchorMin: {x: 0, y: 0.20028156}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -17059,7 +17060,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uB370\uC774\uBE44\uB4DC"
+  m_text: "\uC81C\uC784\uC2A4"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 465af517bae68d2418e447337ce36b3f, type: 2}
   m_sharedMaterial: {fileID: 7906800258845002438, guid: 465af517bae68d2418e447337ce36b3f, type: 2}
@@ -17086,12 +17087,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20
+  m_fontSize: 30
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 1
-  m_fontSizeMax: 20
+  m_fontSizeMax: 30
   m_fontStyle: 0
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
@@ -17351,7 +17352,7 @@ RectTransform:
   m_Father: {fileID: 4061146138174909813}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0.2, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
@@ -17427,10 +17428,10 @@ RectTransform:
   - {fileID: 2045681007068632799}
   m_Father: {fileID: 4501635334644002776}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 121.5, y: -22.05}
-  m_SizeDelta: {x: 243, y: 44.1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 195, y: -33.075}
+  m_SizeDelta: {x: 390, y: 66.15}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &7091484927901866736
 GameObject:
@@ -17858,8 +17859,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 13
-  m_fontSizeBase: 13
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 1
@@ -18305,12 +18306,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 10
+  m_fontSize: 15
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 1
-  m_fontSizeMax: 10
+  m_fontSizeMax: 15
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -18423,8 +18424,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.008895874, y: -0.0058480683}
-  m_SizeDelta: {x: 0, y: 60}
+  m_AnchoredPosition: {x: 0.008911133, y: 0.0000032702073}
+  m_SizeDelta: {x: 0, y: 90}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &9088411172054539127
 MonoBehaviour:
@@ -18699,10 +18700,10 @@ RectTransform:
   - {fileID: 3237078034657305326}
   m_Father: {fileID: 8428097500689743073}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 57, y: -75}
-  m_SizeDelta: {x: 110, y: 150}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 92, y: -110}
+  m_SizeDelta: {x: 180, y: 220}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &7907274065917768791
 GameObject:
@@ -18923,10 +18924,10 @@ RectTransform:
   - {fileID: 4279487951486957137}
   m_Father: {fileID: 3894612883147192702}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 123.5, y: -200}
-  m_SizeDelta: {x: 243, y: 120}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 197, y: -300}
+  m_SizeDelta: {x: 390, y: 180}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &8261398118454078803
 GameObject:
@@ -19192,12 +19193,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 10
+  m_fontSize: 15
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 1
-  m_fontSizeMax: 10
+  m_fontSizeMax: 15
   m_fontStyle: 0
   m_HorizontalAlignment: 4
   m_VerticalAlignment: 512
@@ -19300,7 +19301,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uACB0\uAD6D \uC77C\uC774 \uD130\uC838\uBC84\uB838\uB2E4..."
+  m_text: "\uC545\uBABD\uC740 \uD658\uC790\uC758 \uC815\uC2E0\uC801\n\uC2A4\uD2B8\uB808\uC2A4\uC5D0
+    \uC601\uD5A5\uC744 \uBC1B\uC544\n\uD2B9\uC815\uD55C \uD14C\uB9C8\uB85C \uD615\uC131\uB41C\uB2E4.\r.."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 465af517bae68d2418e447337ce36b3f, type: 2}
   m_sharedMaterial: {fileID: 7906800258845002438, guid: 465af517bae68d2418e447337ce36b3f, type: 2}
@@ -19327,8 +19329,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 12
-  m_fontSizeBase: 12
+  m_fontSize: 17
+  m_fontSizeBase: 17
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 1
@@ -19641,7 +19643,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 7983348528812607718}
         m_TargetAssemblyTypeName: CellPhone, Assembly-CSharp
         m_MethodName: HomeButton
         m_Mode: 2
@@ -19983,8 +19985,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 23
-  m_fontSizeBase: 23
+  m_fontSize: 28
+  m_fontSizeBase: 28
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 1
@@ -20342,7 +20344,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 57, y: -585}
-  m_SizeDelta: {x: 110, y: 150}
+  m_SizeDelta: {x: 180, y: 2220}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &8736822228083171829
 GameObject:
@@ -20468,10 +20470,10 @@ RectTransform:
   - {fileID: 6241463027368423873}
   m_Father: {fileID: 1793723958473903675}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 121.5, y: -22.05}
-  m_SizeDelta: {x: 243, y: 44.1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 195, y: -33.075}
+  m_SizeDelta: {x: 390, y: 66.15}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &8773158224300233308
 GameObject:
@@ -20539,7 +20541,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uB370\uC774\uBE44\uB4DC"
+  m_text: "\uC5B4\uBA38\uB2C8"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 465af517bae68d2418e447337ce36b3f, type: 2}
   m_sharedMaterial: {fileID: 7906800258845002438, guid: 465af517bae68d2418e447337ce36b3f, type: 2}
@@ -20566,12 +20568,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20
+  m_fontSize: 30
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 1
-  m_fontSizeMax: 20
+  m_fontSizeMax: 30
   m_fontStyle: 0
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
@@ -21290,7 +21292,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 7983348528812607718}
         m_TargetAssemblyTypeName: CellPhone, Assembly-CSharp
         m_MethodName: HomeButton
         m_Mode: 2
@@ -21396,8 +21398,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 12
-  m_fontSizeBase: 12
+  m_fontSize: 17
+  m_fontSizeBase: 17
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 1
@@ -21549,8 +21551,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 972629106047299187}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.99999}
-  m_AnchorMax: {x: 1, y: 0.99999}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -21844,7 +21846,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 7983348528812607718}
         m_TargetAssemblyTypeName: CellPhone, Assembly-CSharp
         m_MethodName: BackButton
         m_Mode: 2
@@ -22013,7 +22015,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 7983348528812607718}
         m_TargetAssemblyTypeName: CellPhone, Assembly-CSharp
         m_MethodName: UpScreenButton
         m_Mode: 2
@@ -22289,7 +22291,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 7983348528812607718}
         m_TargetAssemblyTypeName: CellPhone, Assembly-CSharp
         m_MethodName: HomeButton
         m_Mode: 2
@@ -22505,10 +22507,10 @@ RectTransform:
   - {fileID: 3451782530307760212}
   m_Father: {fileID: 4279487951486957137}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 121.5, y: -56.699997}
-  m_SizeDelta: {x: 243, y: 37.8}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 195, y: -85.049995}
+  m_SizeDelta: {x: 390, y: 56.699997}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &4460890644085356
 PrefabInstance:
@@ -23136,55 +23138,64 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2625282199207238497, guid: 78207463a9e17a34d84a3c472a0fe385, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2625282199207238497, guid: 78207463a9e17a34d84a3c472a0fe385, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2625282199207238497, guid: 78207463a9e17a34d84a3c472a0fe385, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 123.64
+      value: 164.86
       objectReference: {fileID: 0}
     - target: {fileID: 2625282199207238497, guid: 78207463a9e17a34d84a3c472a0fe385, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 30.46
+      value: 40.6
       objectReference: {fileID: 0}
     - target: {fileID: 2625282199207238497, guid: 78207463a9e17a34d84a3c472a0fe385, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 71.82
+      value: 92.43
       objectReference: {fileID: 0}
     - target: {fileID: 2625282199207238497, guid: 78207463a9e17a34d84a3c472a0fe385, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -25.23
+      value: -30.3
       objectReference: {fileID: 0}
     - target: {fileID: 3886578941096149036, guid: 78207463a9e17a34d84a3c472a0fe385, type: 3}
       propertyPath: m_text
-      value: "\uBBF8\uC548\uD574... \n\uB0B4\uC77C \uAC00\uC838\uAC08\uAC8C\u2026"
+      value: "\uB124! \uAC10\uC0AC\uD569\uB2C8\uB2E4.\n\uCCAB \uCD9C\uADFC \uB0A0
+        \uBD59\uACA0\uC2B5\uB2C8\uB2E4."
+      objectReference: {fileID: 0}
+    - target: {fileID: 3886578941096149036, guid: 78207463a9e17a34d84a3c472a0fe385, type: 3}
+      propertyPath: m_fontSize
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3886578941096149036, guid: 78207463a9e17a34d84a3c472a0fe385, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 4000093055411472432, guid: 78207463a9e17a34d84a3c472a0fe385, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4000093055411472432, guid: 78207463a9e17a34d84a3c472a0fe385, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4000093055411472432, guid: 78207463a9e17a34d84a3c472a0fe385, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 148.64
+      value: 189.86
       objectReference: {fileID: 0}
     - target: {fileID: 4000093055411472432, guid: 78207463a9e17a34d84a3c472a0fe385, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 50.46
+      value: 60.6
       objectReference: {fileID: 0}
     - target: {fileID: 4000093055411472432, guid: 78207463a9e17a34d84a3c472a0fe385, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 166.694
+      value: 299.53555
       objectReference: {fileID: 0}
     - target: {fileID: 4000093055411472432, guid: 78207463a9e17a34d84a3c472a0fe385, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -28.23
+      value: -33.3
       objectReference: {fileID: 0}
     - target: {fileID: 6093112177523393741, guid: 78207463a9e17a34d84a3c472a0fe385, type: 3}
       propertyPath: m_Name
@@ -23212,7 +23223,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7211559588779372404, guid: 78207463a9e17a34d84a3c472a0fe385, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7211559588779372404, guid: 78207463a9e17a34d84a3c472a0fe385, type: 3}
       propertyPath: m_AnchorMin.x
@@ -23220,15 +23231,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7211559588779372404, guid: 78207463a9e17a34d84a3c472a0fe385, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7211559588779372404, guid: 78207463a9e17a34d84a3c472a0fe385, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 241.014
+      value: 394.46555
       objectReference: {fileID: 0}
     - target: {fileID: 7211559588779372404, guid: 78207463a9e17a34d84a3c472a0fe385, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 56.46
+      value: 66.6
       objectReference: {fileID: 0}
     - target: {fileID: 7211559588779372404, guid: 78207463a9e17a34d84a3c472a0fe385, type: 3}
       propertyPath: m_LocalPosition.x
@@ -23260,11 +23271,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7211559588779372404, guid: 78207463a9e17a34d84a3c472a0fe385, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 122.507
+      value: 199.23277
       objectReference: {fileID: 0}
     - target: {fileID: 7211559588779372404, guid: 78207463a9e17a34d84a3c472a0fe385, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -259.18
+      value: -325.90997
       objectReference: {fileID: 0}
     - target: {fileID: 7211559588779372404, guid: 78207463a9e17a34d84a3c472a0fe385, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -23616,53 +23627,71 @@ PrefabInstance:
       propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
       value: 734214975946752
       objectReference: {fileID: 0}
+    - target: {fileID: 3345214601468584385, guid: 32765e98bac815b4da12d9f6db8d8505, type: 3}
+      propertyPath: m_text
+      value: "\uC548\uB155\uD558\uC138\uC694, BDHH \uBCD1\uC6D0\uC758 \uC545\uBABD
+        \n\uAC00\uC774\uB4DC \uC81C\uC784\uC2A4\uC785\uB2C8\uB2E4.\r\n\n\uBA3C\uC800
+        \uC785\uC0AC\uD558\uC2E0 \uAC83\uC744 \uCD95\uD558\uB4DC\uB9BD\uB2C8\uB2E4.\n\n\uC5C5\uBB34\uC5D0
+        \uAD00\uD55C \uC790\uC138\uD55C \uC0AC\uD56D\uC740\n\uC0AC\uBB34\uC2E4\uC5D0\uC11C
+        \uC548\uB0B4\uB4DC\uB9AC\uACA0\uC2B5\uB2C8\uB2E4.\n\n\uC0AC\uBB34\uC2E4\uC740
+        BDHH \uBCD1\uC6D0 2\uCE35,\n00\uD638\uC2E4\uC5D0 \uC704\uCE58\uD574 \uC788\uC2B5\uB2C8\uB2E4.\n\n\uADF8\uB7FC
+        \uCCAB \uCD9C\uADFC \uB0A0 \uBD59\uACA0\uC2B5\uB2C8\uB2E4."
+      objectReference: {fileID: 0}
+    - target: {fileID: 3345214601468584385, guid: 32765e98bac815b4da12d9f6db8d8505, type: 3}
+      propertyPath: m_fontSize
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3345214601468584385, guid: 32765e98bac815b4da12d9f6db8d8505, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 4206280176443648861, guid: 32765e98bac815b4da12d9f6db8d8505, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4206280176443648861, guid: 32765e98bac815b4da12d9f6db8d8505, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4206280176443648861, guid: 32765e98bac815b4da12d9f6db8d8505, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 183.46
+      value: 244.62
       objectReference: {fileID: 0}
     - target: {fileID: 4206280176443648861, guid: 32765e98bac815b4da12d9f6db8d8505, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 184.95
+      value: 246.61
       objectReference: {fileID: 0}
     - target: {fileID: 4206280176443648861, guid: 32765e98bac815b4da12d9f6db8d8505, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 106.73
+      value: 137.31
       objectReference: {fileID: 0}
     - target: {fileID: 4206280176443648861, guid: 32765e98bac815b4da12d9f6db8d8505, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -102.475
+      value: -133.305
       objectReference: {fileID: 0}
     - target: {fileID: 5016528982140441416, guid: 32765e98bac815b4da12d9f6db8d8505, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5016528982140441416, guid: 32765e98bac815b4da12d9f6db8d8505, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5016528982140441416, guid: 32765e98bac815b4da12d9f6db8d8505, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 208.46
+      value: 269.62
       objectReference: {fileID: 0}
     - target: {fileID: 5016528982140441416, guid: 32765e98bac815b4da12d9f6db8d8505, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 204.95
+      value: 266.61
       objectReference: {fileID: 0}
     - target: {fileID: 5016528982140441416, guid: 32765e98bac815b4da12d9f6db8d8505, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 104.23
+      value: 134.81
       objectReference: {fileID: 0}
     - target: {fileID: 5016528982140441416, guid: 32765e98bac815b4da12d9f6db8d8505, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -105.475
+      value: -136.305
       objectReference: {fileID: 0}
     - target: {fileID: 5828297508587770828, guid: 32765e98bac815b4da12d9f6db8d8505, type: 3}
       propertyPath: m_Pivot.x
@@ -23678,7 +23707,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5828297508587770828, guid: 32765e98bac815b4da12d9f6db8d8505, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5828297508587770828, guid: 32765e98bac815b4da12d9f6db8d8505, type: 3}
       propertyPath: m_AnchorMin.x
@@ -23686,15 +23715,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5828297508587770828, guid: 32765e98bac815b4da12d9f6db8d8505, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5828297508587770828, guid: 32765e98bac815b4da12d9f6db8d8505, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 241.014
+      value: 394.46555
       objectReference: {fileID: 0}
     - target: {fileID: 5828297508587770828, guid: 32765e98bac815b4da12d9f6db8d8505, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 210.95
+      value: 272.61
       objectReference: {fileID: 0}
     - target: {fileID: 5828297508587770828, guid: 32765e98bac815b4da12d9f6db8d8505, type: 3}
       propertyPath: m_LocalPosition.x
@@ -23726,11 +23755,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5828297508587770828, guid: 32765e98bac815b4da12d9f6db8d8505, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 122.507
+      value: 199.23277
       objectReference: {fileID: 0}
     - target: {fileID: 5828297508587770828, guid: 32765e98bac815b4da12d9f6db8d8505, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -115.475
+      value: -146.305
       objectReference: {fileID: 0}
     - target: {fileID: 5828297508587770828, guid: 32765e98bac815b4da12d9f6db8d8505, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

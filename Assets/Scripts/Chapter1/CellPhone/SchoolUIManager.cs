@@ -20,9 +20,9 @@ public class SchoolUIManager : MonoBehaviour
     public GameObject aimUI;
 
     [Header("# Object")]
-    public GameObject cellPhone;
-    public bool getCellPhone = false;
     [SerializeField] Camera playerCamera;
+    public GameObject[] cellPhoneObjs;
+    public List<CharacterPhoneInfo> phoneInfos; // 각각 휴대폰 정보를 담는 list
 
     // Windows의 마우스 입력을 시뮬레이션하는 API
     [DllImport("user32.dll")]
@@ -38,6 +38,8 @@ public class SchoolUIManager : MonoBehaviour
     {
         FirstSetUP();
 
+        phoneInfos = new List<CharacterPhoneInfo>();
+
         if (instance == null)
         {
             instance = this;
@@ -47,6 +49,13 @@ public class SchoolUIManager : MonoBehaviour
         {
             Destroy(gameObject); // 중복 생성 방지
         }
+    }
+
+    private void Start()
+    {
+        phoneInfos.Add(new CharacterPhoneInfo { name = "Ethan", hasPhone = false, isUnlocked = false, cellPhoneObj = cellPhoneObjs[0], cellPhoneUI = uiObjects[2] });
+        phoneInfos.Add(new CharacterPhoneInfo { name = "David", hasPhone = false, isUnlocked = false, cellPhoneObj = cellPhoneObjs[1], cellPhoneUI = uiObjects[3] });
+        phoneInfos.Add(new CharacterPhoneInfo { name = "Steven", hasPhone = false, isUnlocked = false, cellPhoneObj = cellPhoneObjs[2], cellPhoneUI = uiObjects[4] });
     }
 
     private void Update()
@@ -73,12 +82,20 @@ public class SchoolUIManager : MonoBehaviour
         }
 
         // 테스트용 -> 인벤토리 휴대폰 상호작용
-        if (Input.GetKeyDown(KeyCode.Keypad7) && getCellPhone)
+        if (Input.GetKeyDown(KeyCode.Keypad1) && phoneInfos[0].hasPhone)
         {
-            OpenCellPhoneItem();
+            OpenCellPhoneItem(phoneInfos[0], 2);
+        }
+        else if (Input.GetKeyDown(KeyCode.Keypad2) && phoneInfos[1].hasPhone)
+        {
+            OpenCellPhoneItem(phoneInfos[1], 3);
+        }
+        else if (Input.GetKeyDown(KeyCode.Keypad3) && phoneInfos[2].hasPhone)
+        {
+            OpenCellPhoneItem(phoneInfos[2], 4);
         }
     }
-    
+
     // 시작 세팅 함수
     void FirstSetUP()
     {
@@ -171,7 +188,7 @@ public class SchoolUIManager : MonoBehaviour
         mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
     }
 
-    
+
     public void SetUIOpacity(Image img, bool up, float time, float waitTime)
     {
         StartCoroutine(SetOpacity(img, up, time, waitTime));
@@ -241,24 +258,35 @@ public class SchoolUIManager : MonoBehaviour
     }
 
     // 인벤토리 휴대폰 버튼 함수
-    public void OpenCellPhoneItem()
+    public void OpenCellPhoneItem(CharacterPhoneInfo cellPhone, int index)
     {
-        cellPhone.GetComponent<CellPhone>().isUsing = true;
+        OpenUI(uiObjects[0]); // blur 배경 활성화
+        OpenUI(uiObjects[index]);
 
-        // 휴대폰 포지션값 설정
-        Vector3[] cellPhoneTransform = playerCamera.GetComponent<RayCast_Aim>().GetCameraInfo();
+        CellPhone cpLogic = cellPhone.cellPhoneUI.GetComponent<CellPhone>();
 
-        cellPhone.GetComponent<Transform>().position = cellPhoneTransform[0];
-        cellPhone.GetComponent<Transform>().rotation = Quaternion.Euler(cellPhoneTransform[1]);
-
-        cellPhone.SetActive(true);
-
-        OpenUI(uiObjects[1]); // null 값용 UI 오브젝트 활성화
 
         // 잠금해제를 한 상태가 아니라면 초기화
-        if (!cellPhone.GetComponent<CellPhone>().unLocked)
+        if (!cellPhone.isUnlocked)
         {
-            cellPhone.GetComponent<CellPhone>().SetFirst();
+            cpLogic.SetFirst();
+        }
+        else
+        {
+            Debug.Log($"name : {cellPhone.name} , isUnlocked : {cellPhone.isUnlocked}");
+
+            // Lock Screen 비활성화, App Screen UI 활성화
+            cpLogic.LockPhoneUI.SetActive(false);
+            cpLogic.appScreenUI.SetActive(true);
+
+            foreach (Image img in cpLogic.appScreenImgs)
+            {
+                SetUIOpacity(img, true, 0f, 0f);
+            }
+            foreach (TextMeshProUGUI text in cpLogic.appScreenTexts)
+            {
+                SetUIOpacity(text, true, 0f, 0f);
+            }
         }
     }
 
@@ -273,4 +301,13 @@ public class SchoolUIManager : MonoBehaviour
         return Mathf.Abs(a - b) < tolerance;
     }
 
+    // 휴대폰 정보 Class
+    public class CharacterPhoneInfo
+    {
+        public string name;
+        public bool hasPhone;
+        public bool isUnlocked;
+        public GameObject cellPhoneObj;
+        public GameObject cellPhoneUI;
+    }
 }
