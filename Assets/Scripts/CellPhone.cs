@@ -6,6 +6,7 @@ using TMPro;
 using UnityEngine.UI;
 using System.Globalization;
 using System;
+using static SchoolUIManager;
 
 public class CellPhone : MonoBehaviour
 {
@@ -31,7 +32,6 @@ public class CellPhone : MonoBehaviour
     public Scrollbar pwSlider;
     public TextMeshProUGUI pwText;
     public Material phoneBlurMat;
-    public bool unLocked = false;
 
     [Header("# App Screen")]
     public GameObject appScreenUI;
@@ -71,30 +71,39 @@ public class CellPhone : MonoBehaviour
     {
         phoneBlurMat.SetFloat("_Size", 0); // 휴대폰 Blur Spacing 값 초기화
 
-        sliderUI.SetActive(true); // 슬라이더 활성화
-        pwSlider.value = 0;
-        PhoneSlider();
-        appScreenUI.SetActive(false);
 
-        // 휴대폰 시간, 날짜, 슬라이드바 활성화
-        sliderUI.SetActive(true);
-        timeText.gameObject.SetActive(true);
-        dateText.gameObject.SetActive(true);
-
-        schoolUIManager.SetUIOpacity(sliderImage[0], true, 0.1f, 0f);
-        schoolUIManager.SetUIOpacity(sliderImage[1], true, 0.1f, 0f);
-
-        // 마지막 퍼즐 조각 제외 이미지 투명도 천천히 조정
-        for (int i = 0; i < puzzleUI.Length; i++)
+        // 휴대폰 잠금 해제 여부 확인 후 잠금화면 초기화
+        foreach (CharacterPhoneInfo cellPhone in SchoolUIManager.instance.phoneInfos)
         {
-            schoolUIManager.SetUIOpacity(puzzleUI[i], false, 0.1f, 0f);
-        }
+            if (!this.gameObject.name.Contains(cellPhone.name)) continue;
 
-        // 퍼즐 초기화
-        if (!this.gameObject.name.Contains("Steven"))
-        {
-            puzzleUI[1].GetComponent<PuzzleBoard>().InitializationPuzzle(); // 퍼즐 초기화
-            puzzleUI[0].gameObject.SetActive(false); // 퍼즐 비활성화
+            if (cellPhone.isUnlocked) break;
+
+            sliderUI.SetActive(true); // 슬라이더 활성화
+            pwSlider.value = 0;
+            PhoneSlider();
+            appScreenUI.SetActive(false);
+
+            // 휴대폰 시간, 날짜, 슬라이드바 활성화
+            sliderUI.SetActive(true);
+            timeText.gameObject.SetActive(true);
+            dateText.gameObject.SetActive(true);
+
+            schoolUIManager.SetUIOpacity(sliderImage[0], true, 0.1f, 0f);
+            schoolUIManager.SetUIOpacity(sliderImage[1], true, 0.1f, 0f);
+
+            // 마지막 퍼즐 조각 제외 이미지 투명도 천천히 조정
+            for (int i = 0; i < puzzleUI.Length; i++)
+            {
+                schoolUIManager.SetUIOpacity(puzzleUI[i], false, 0.1f, 0f);
+            }
+
+            // 퍼즐 초기화
+            if (!this.gameObject.name.Contains("Steven"))
+            {
+                puzzleUI[1].GetComponent<PuzzleBoard>().InitializationPuzzle(); // 퍼즐 초기화
+                puzzleUI[0].gameObject.SetActive(false); // 퍼즐 비활성화
+            }
         }
     }
 
@@ -188,7 +197,7 @@ public class CellPhone : MonoBehaviour
             else
             {
                 // 스티븐 휴대폰은 슬라이더로 잠금 해제 후, 바로 잠금해제
-                unLocked = true;
+                schoolUIManager.phoneInfos[2].isUnlocked = true;
 
                 // App Screen UI 활성화
                 appScreenUI.SetActive(true);

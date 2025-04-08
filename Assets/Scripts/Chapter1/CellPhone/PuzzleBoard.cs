@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering.HighDefinition;
 using UnityEngine.UI;
+using static SchoolUIManager;
 
 public class PuzzleBoard : MonoBehaviour
 {
@@ -140,7 +141,14 @@ public class PuzzleBoard : MonoBehaviour
     public void UnLockedPhone()
     {
         canMovePuzzle = false;
-        cellPhone.unLocked = true;
+
+        // 해당 휴대폰 잠금해제 여부 bool 값 변경
+        CharacterPhoneInfo targetPhone = SchoolUIManager.instance.phoneInfos
+                                            .Find(info => this.cellPhone.gameObject.name.Contains(info.name));
+
+        targetPhone.isUnlocked = true;
+
+        // 마지막 퍼즐 투명도 조절
         SchoolUIManager.instance.SetUIOpacity(cellPhone.puzzleUI[cellPhone.puzzleUI.Length - 1], true, 1f, 0.2f); // 마지막 퍼즐 조각 투명도 조절
 
         // 퍼즐 UI 천천히 사라짐
