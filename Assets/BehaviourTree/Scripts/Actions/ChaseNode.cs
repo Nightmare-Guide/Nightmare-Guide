@@ -48,7 +48,7 @@ public class ChaseNode : ActionNode
         agent.SetDestination(player.position);
 
         // 플레이어와 너무 멀어졌거나 너무 가까워졌을 경우 추격 종료
-        if (Vector3.Distance(enemy.position, player.position) < 1f || Vector3.Distance(enemy.position, player.position) > 20f)
+        if (Vector3.Distance(enemy.position, player.position) < 0f || Vector3.Distance(enemy.position, player.position) > 20f)
         {
             return State.Success;
         }
