@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.Rendering.HighDefinition;
 using UnityEngine.UI;
 using static SchoolUIManager;
+using static UnityEditor.PlayerSettings;
 
 public class PuzzleBoard : MonoBehaviour
 {
@@ -70,7 +71,6 @@ public class PuzzleBoard : MonoBehaviour
         if (!canMovePuzzle)
             return;
 
-        Debug.Log("1");
         isTileMoving = true; // 퍼즐 동시 이동 방지
 
         // 빈 자리와의 거리
@@ -80,7 +80,6 @@ public class PuzzleBoard : MonoBehaviour
 
         if (neighborTileDistance.Contains(dist))
         {
-            Debug.Log("2");
             Vector3 goalPosition = emptyTilePosition;
 
             emptyTilePosition = tile.GetComponent<RectTransform>().anchoredPosition;
@@ -114,6 +113,40 @@ public class PuzzleBoard : MonoBehaviour
 
                     emptyTilePosition = tileList[i].GetComponent<RectTransform>().anchoredPosition;
 
+                    if (cellPhone.gameObject.name.Contains("Canvas"))
+                    {
+                        // emptyTilePosition 값 보정
+                        float[] possibleX = { 231.75f, 139.05f, 46.35f };
+                        float[] possibleY = { -531.3f, -379.5f, -227.7f, -75.9f };
+
+                        float correctedX = emptyTilePosition.x;
+                        float correctedY = emptyTilePosition.y;
+
+                        // X축 보정
+                        foreach (float x in possibleX)
+                        {
+                            if (Mathf.Abs(emptyTilePosition.x - x) <= 3f)
+                            {
+                                correctedX = x;
+                                break;
+                            }
+                        }
+
+                        // Y축 보정
+                        foreach (float y in possibleY)
+                        {
+                            if (Mathf.Abs(emptyTilePosition.y - y) <= 3f)
+                            {
+                                correctedY = y;
+                                break;
+                            }
+                        }
+
+                        // 최종 보정 위치
+                        emptyTilePosition = new Vector2(correctedX, correctedY);
+                    }
+
+                    // 타일 이동
                     tileList[i].OnMoveTo(goalPosition);
 
                     break;

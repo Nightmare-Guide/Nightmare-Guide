@@ -40,7 +40,7 @@ public class PuzzleTile : MonoBehaviour, IPointerClickHandler
         while (percent < 1)
         {
             current += Time.deltaTime;
-            percent = current / moveTime;
+            percent = Mathf.Clamp01(current / moveTime);
 
             rectTransform.anchoredPosition = Vector3.Lerp(start, end, percent);
 
@@ -49,7 +49,7 @@ public class PuzzleTile : MonoBehaviour, IPointerClickHandler
 
         rectTransform.anchoredPosition = end;
 
-        isCorrected = ApproximatelyEqual(corretPos, rectTransform.anchoredPosition);
+        isCorrected = SchoolUIManager.instance.ApproximatelyEqual(corretPos, rectTransform.anchoredPosition);
         
         // 이동 후 퍼즐 정답 확인
         if (board.tileList.All(tile => tile.isCorrected))
@@ -61,12 +61,6 @@ public class PuzzleTile : MonoBehaviour, IPointerClickHandler
         }
 
         board.isTileMoving = false; // 퍼즐 이동 끝 알림
-    }
-
-    // 부동 소수점 오차 방지 함수
-    bool ApproximatelyEqual(Vector2 a, Vector2 b, float tolerance = 0.01f)
-    {
-        return Vector2.Distance(a, b) < tolerance;
     }
 
     public void OnPointerClick(PointerEventData eventData)
