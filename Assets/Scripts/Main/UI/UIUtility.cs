@@ -36,7 +36,7 @@ public class UIUtility : MonoBehaviour
     }
 
     // UI 닫기 함수
-    public void CloseUI(GameObject ui)
+    protected void CloseUI(GameObject ui)
     {
         ui.SetActive(false);
 
@@ -53,7 +53,7 @@ public class UIUtility : MonoBehaviour
     }
 
     // 게임 일시 정지 함수
-    public void PauseGame(GameObject blur)
+    protected void PauseGame(GameObject blur)
     {
         // 일시 정지 UI 활성화
         blur.SetActive(true);
@@ -68,21 +68,16 @@ public class UIUtility : MonoBehaviour
     }
 
     // 오브젝트 상호작용 시 플레이어 움직임 멈춤 함수
-    public void StopPlayerController()
+    protected void StopPlayerController()
     {
-        // 에임 UI 비활성화
-        aimUI.SetActive(false);
-
         //카메라 회전 정지
         Camera_Rt.instance.Close_Camera();
 
-        //마우스 커서 활성화
-        UnityEngine.Cursor.lockState = CursorLockMode.None;
-        UnityEngine.Cursor.visible = true;  // 커서를 보이게 하기
+        CursorUnLocked();
     }
 
     // UI 오브젝트 모두 비활성화 상태인 지 확인
-    public bool AreAllObjectsDisabled(GameObject[] uiObjs)
+    protected bool AreAllObjectsDisabled(GameObject[] uiObjs)
     {
         Debug.Log("All UI Objects Disabled");
 
@@ -90,7 +85,7 @@ public class UIUtility : MonoBehaviour
     }
 
     // 커서 고정 함수
-    public void CursorLocked()
+    protected void CursorLocked()
     {
         // 에임 UI 활성화
         aimUI.SetActive(true);
@@ -102,6 +97,16 @@ public class UIUtility : MonoBehaviour
         // 화면 중앙을 클릭하는 효과를 발생시킴 (Windows 전용)
         mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
         mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
+    }
+
+    protected void CursorUnLocked()
+    {
+        // 에임 UI 비활성화
+        aimUI.SetActive(false);
+
+        //마우스 커서 활성화
+        UnityEngine.Cursor.lockState = CursorLockMode.None;
+        UnityEngine.Cursor.visible = true;  // 커서를 보이게 하기
     }
 
 
