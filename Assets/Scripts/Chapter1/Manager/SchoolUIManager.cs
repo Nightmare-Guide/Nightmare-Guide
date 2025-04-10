@@ -13,14 +13,9 @@ using UnityEngine.Rendering.HighDefinition;
 using static UnityEngine.Rendering.DebugUI;
 using System.Drawing;
 
-public class SchoolUIManager : MonoBehaviour
+public class SchoolUIManager : UIUtility
 {
-    [Header("# UI")]
-    public GameObject[] uiObjects;
-    public GameObject aimUI;
-
     [Header("# Object")]
-    [SerializeField] Camera playerCamera;
     public GameObject[] cellPhoneObjs;
     public List<CharacterPhoneInfo> phoneInfos; // 각각 휴대폰 정보를 담는 list
 
@@ -63,10 +58,10 @@ public class SchoolUIManager : MonoBehaviour
         // ESC 키
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (AreAllObjectsDisabled())
+            if (AreAllObjectsDisabled(uiObjects))
             {
                 // 일시정지 UI 활성화
-                PauseGame();
+                PauseGame(uiObjects[0]);
             }
             else
             {
@@ -107,156 +102,6 @@ public class SchoolUIManager : MonoBehaviour
         Debug.Log("UI First Setup");
     }
 
-    // UI 열기 함수
-    public void OpenUI(GameObject ui)
-    {
-        ui.SetActive(true);
-
-        // 플레이어 움직임 멈춤
-        StopPlayerController();
-
-        Debug.Log("Open PhoneUI");
-
-    }
-
-    // UI 닫기 함수
-    public void CloseUI(GameObject ui)
-    {
-        ui.SetActive(false);
-
-        //카메라 회전 활성화
-        Camera_Rt.instance.Open_Camera();
-
-        //플레이어 컨트롤 On
-        PlayerController.instance.Open_PlayerController();
-
-        // 마우스 커서 중앙에 고정
-        CursorLocked();
-
-        Debug.Log("Close UI : " + ui.name);
-    }
-
-    // 게임 일시 정지 함수
-    public void PauseGame()
-    {
-        // 일시 정지 UI 활성화
-        uiObjects[0].SetActive(true);
-
-        // 플레이어 움직임 멈춤
-        StopPlayerController();
-
-        //플레이어 컨트롤 OFF
-        PlayerController.instance.Close_PlayerController();
-
-        Debug.Log("Pause Game");
-    }
-
-    // 오브젝트 상호작용 시 플레이어 움직임 멈춤 함수
-    void StopPlayerController()
-    {
-        // 에임 UI 비활성화
-        aimUI.SetActive(false);
-
-        //카메라 회전 정지
-        Camera_Rt.instance.Close_Camera();
-
-        //마우스 커서 활성화
-        UnityEngine.Cursor.lockState = CursorLockMode.None;
-        UnityEngine.Cursor.visible = true;  // 커서를 보이게 하기
-    }
-
-    // UI 오브젝트 모두 비활성화 상태인 지 확인
-    bool AreAllObjectsDisabled()
-    {
-        Debug.Log("All UI Objects Disabled");
-
-        return uiObjects.All(obj => !obj.activeSelf);
-    }
-
-    // 커서 고정 함수
-    void CursorLocked()
-    {
-        // 에임 UI 활성화
-        aimUI.SetActive(true);
-
-        // 게임 시작 시 기본적으로 Locked 상태 유지
-        UnityEngine.Cursor.lockState = CursorLockMode.Locked;
-        UnityEngine.Cursor.visible = false;
-
-        // 화면 중앙을 클릭하는 효과를 발생시킴 (Windows 전용)
-        mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
-        mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
-    }
-
-
-    public void SetUIOpacity(Image img, bool up, float time, float waitTime)
-    {
-        StartCoroutine(SetOpacity(img, up, time, waitTime));
-    }
-
-    public void SetUIOpacity(TextMeshProUGUI text, bool up, float time, float waitTime)
-    {
-        StartCoroutine(SetOpacity(text, up, time, waitTime));
-    }
-
-    // Image 투명도 조절 코루틴
-    private IEnumerator SetOpacity(Image img, bool up, float time, float waitTime)
-    {
-        yield return new WaitForSeconds(waitTime);
-
-        if (up) { img.gameObject.SetActive(true); }
-
-        float elapsed = 0f;
-
-        float start = up ? 0f : 1f;
-        float end = up ? 1f : 0f;
-
-        while (elapsed < time)
-        {
-            elapsed += Time.deltaTime;
-            UnityEngine.Color color = img.color;
-            color.a = Mathf.Lerp(start, end, elapsed / time);
-            img.color = color;
-            yield return null;
-        }
-
-        // 최종 값 보정
-        UnityEngine.Color finalColor = img.color;
-        finalColor.a = end;
-        img.color = finalColor;
-
-        if (!up) { img.gameObject.SetActive(false); }
-    }
-
-    // TextMeshProUGUI 투명도 조절 코루틴
-    private IEnumerator SetOpacity(TextMeshProUGUI text, bool up, float time, float waitTime)
-    {
-        yield return new WaitForSeconds(waitTime);
-
-        if (up) { text.gameObject.SetActive(true); }
-
-        float elapsed = 0f;
-
-        float start = up ? 0f : 1f;
-        float end = up ? 1f : 0f;
-
-        while (elapsed < time)
-        {
-            elapsed += Time.deltaTime;
-            UnityEngine.Color color = text.color;
-            color.a = Mathf.Lerp(start, end, elapsed / time);
-            text.color = color;
-            yield return null;
-        }
-
-        // 최종 값 보정
-        UnityEngine.Color finalColor = text.color;
-        finalColor.a = end;
-        text.color = finalColor;
-
-        if (!up) { text.gameObject.SetActive(false); }
-    }
-
     // 인벤토리 휴대폰 버튼 함수
     public void OpenCellPhoneItem(CharacterPhoneInfo cellPhone, int index)
     {
@@ -290,16 +135,6 @@ public class SchoolUIManager : MonoBehaviour
         }
     }
 
-    // 부동 소수점 오차 방지 함수
-    public bool ApproximatelyEqual(Vector2 a, Vector2 b, float tolerance = 0.01f)
-    {
-        return Vector2.Distance(a, b) < tolerance;
-    }
-
-    public bool ApproximatelyEqual(float a, float b, float tolerance = 0.01f)
-    {
-        return Mathf.Abs(a - b) < tolerance;
-    }
 
     // 휴대폰 정보 Class
     public class CharacterPhoneInfo

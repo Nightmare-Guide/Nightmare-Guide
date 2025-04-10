@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static SchoolUIManager;
 
-public class MainUIManager : MonoBehaviour
+public class MainUIManager : UIUtility
 {
     public static MainUIManager instance { get; private set; }
 
