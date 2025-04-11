@@ -26,24 +26,12 @@ public class SchoolUIManager : UIUtility
     private const int MOUSEEVENTF_LEFTDOWN = 0x02; // 마우스 왼쪽 버튼 누름
     private const int MOUSEEVENTF_LEFTUP = 0x04; // 마우스 왼쪽 버튼 뗌
 
-    public static SchoolUIManager instance { get; private set; }
-
 
     private void Awake()
     {
         FirstSetUP();
 
         phoneInfos = new List<CharacterPhoneInfo>();
-
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject); // 중복 생성 방지
-        }
     }
 
     private void Start()
@@ -51,6 +39,9 @@ public class SchoolUIManager : UIUtility
         phoneInfos.Add(new CharacterPhoneInfo { name = "Ethan", hasPhone = false, isUnlocked = false, cellPhoneObj = cellPhoneObjs[0], cellPhoneUI = uiObjects[2] });
         phoneInfos.Add(new CharacterPhoneInfo { name = "David", hasPhone = false, isUnlocked = false, cellPhoneObj = cellPhoneObjs[1], cellPhoneUI = uiObjects[3] });
         phoneInfos.Add(new CharacterPhoneInfo { name = "Steven", hasPhone = false, isUnlocked = false, cellPhoneObj = cellPhoneObjs[2], cellPhoneUI = uiObjects[4] });
+
+        optionUI = CommonUIManager.instance.optionUI;
+        uiObjects.Add(optionUI);
     }
 
     private void Update()
@@ -70,7 +61,7 @@ public class SchoolUIManager : UIUtility
                 {
                     if (uiObj.activeInHierarchy)
                     {
-                        CloseUI(uiObj);
+                        InGameCloseUI(uiObj);
                     }
                 }
             }
@@ -105,8 +96,8 @@ public class SchoolUIManager : UIUtility
     // 인벤토리 휴대폰 버튼 함수
     public void OpenCellPhoneItem(CharacterPhoneInfo cellPhone, int index)
     {
-        OpenUI(uiObjects[0]); // blur 배경 활성화
-        OpenUI(uiObjects[index]);
+        InGameOpenUI(uiObjects[0]); // blur 배경 활성화
+        InGameOpenUI(uiObjects[index]);
 
         CellPhone cpLogic = cellPhone.cellPhoneUI.GetComponent<CellPhone>();
 

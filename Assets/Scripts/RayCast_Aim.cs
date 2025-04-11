@@ -134,7 +134,7 @@ public class RayCast_Aim : MonoBehaviour
     void TouchCellPhone(GameObject obj)
     {
         // ÇØ´ç ÈÞ´ëÆù È¹µæ bool °ª º¯°æ
-        CharacterPhoneInfo targetPhone = SchoolUIManager.instance.phoneInfos
+        CharacterPhoneInfo targetPhone = obj.GetComponent<CellPhone>().schoolUIManager.phoneInfos
                                             .Find(info => obj.gameObject.name.Contains(info.name));
 
         targetPhone.hasPhone = true;

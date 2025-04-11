@@ -73,7 +73,7 @@ public class CellPhone : MonoBehaviour
 
 
         // 휴대폰 잠금 해제 여부 확인 후 잠금화면 초기화
-        foreach (CharacterPhoneInfo cellPhone in SchoolUIManager.instance.phoneInfos)
+        foreach (CharacterPhoneInfo cellPhone in schoolUIManager.phoneInfos)
         {
             if (!this.gameObject.name.Contains(cellPhone.name)) continue;
 
@@ -231,7 +231,7 @@ public class CellPhone : MonoBehaviour
 
         yield return new WaitForSeconds(moveSpeed - 0.05f);
 
-        schoolUIManager.OpenUI(schoolUIManager.uiObjects[1]); // null 값용 UI 오브젝트 활성화
+        schoolUIManager.InGameOpenUI(schoolUIManager.uiObjects[1]); // null 값용 UI 오브젝트 활성화
 
         // BoxCollider 비활성화
         this.GetComponent<BoxCollider>().enabled = false;
