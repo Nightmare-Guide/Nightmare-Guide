@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -26,6 +27,7 @@ public class VehicleAI : MonoBehaviour
     {
         if (offline)
         {
+            OffCar();
             enabled = false; // 스크립트 비활성화
             return;
         }
@@ -201,5 +203,25 @@ public class VehicleAI : MonoBehaviour
     private void ResetAnimation()
     {
         SetWheelAnimation("Idle");
+    }
+
+    void OffCar()//오프라인 자동차는 하위 바퀴 애니메이션 종료
+    {
+        for(int i= 0; i < transform.childCount; i++)
+        {
+            bool wheel = transform.GetChild(i).name.ToLower().Contains("wheel");
+            if (wheel)
+            {
+                Animator anim = transform.GetChild(i).GetComponent<Animator>();
+                if (anim != null)
+                {
+                    anim.enabled = false;
+                }
+                else
+                {
+                    Debug.LogWarning(transform.GetChild(i).name+" 에 애니메이터 없음!");
+                }
+            }
+        }
     }
 }
