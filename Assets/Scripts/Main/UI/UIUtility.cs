@@ -200,4 +200,13 @@ public class UIUtility : MonoBehaviour
     {
         return Mathf.Abs(a - b) < tolerance;
     }
+
+    // VerticalLayoutGroup ÃÊ±âÈ­
+    public void RebuildVerticalLayout(List<VerticalLayoutGroup> verticalLayoutGroup)
+    {
+        foreach(VerticalLayoutGroup group in verticalLayoutGroup)
+        {
+            LayoutRebuilder.MarkLayoutForRebuild(group.GetComponent<RectTransform>());
+        }
+    }
 }

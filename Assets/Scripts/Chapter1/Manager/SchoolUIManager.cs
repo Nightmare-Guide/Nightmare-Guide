@@ -18,6 +18,7 @@ public class SchoolUIManager : UIUtility
     [Header("# Object")]
     public GameObject[] cellPhoneObjs;
     public List<CharacterPhoneInfo> phoneInfos; // 각각 휴대폰 정보를 담는 list
+    public List<VerticalLayoutGroup> textBoxLayouts;
 
     // Windows의 마우스 입력을 시뮬레이션하는 API
     [DllImport("user32.dll")]
@@ -32,6 +33,11 @@ public class SchoolUIManager : UIUtility
         FirstSetUP();
 
         phoneInfos = new List<CharacterPhoneInfo>();
+    }
+
+    private void OnEnable()
+    {
+        CommonUIManager.instance.schoolUIManager = this;
     }
 
     private void Start()
@@ -80,6 +86,11 @@ public class SchoolUIManager : UIUtility
         {
             OpenCellPhoneItem(phoneInfos[2], 4);
         }
+    }
+
+    private void OnDisable()
+    {
+        CommonUIManager.instance.schoolUIManager = null;
     }
 
     // 시작 세팅 함수

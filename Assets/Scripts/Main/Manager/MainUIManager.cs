@@ -1,22 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using static SchoolUIManager;
 
 public class MainUIManager : UIUtility
 {
-    public static MainUIManager instance { get; private set; }
+    public List<VerticalLayoutGroup> textBoxLayouts;
 
-    private void Awake()
+    private void OnEnable()
     {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject); // 중복 생성 방지
-        }
+        CommonUIManager.instance.mainUIManager = this;
+    }
+
+    private void OnDisable()
+    {
+        CommonUIManager.instance.mainUIManager = null;
     }
 }

@@ -14,6 +14,10 @@ public class TitleUIManager : UIUtility
         optionUI = CommonUIManager.instance.optionUI;
         uiObjects.Add(optionUI);
     }
+    private void OnEnable()
+    {
+        CommonUIManager.instance.TitleUIManager = this;
+    }
 
     private void Update()
     {
@@ -29,6 +33,11 @@ public class TitleUIManager : UIUtility
                 }
             }
         }
+    }
+
+    private void OnDisable()
+    {
+        CommonUIManager.instance.TitleUIManager = null;
     }
 
     public void NewGameBtn()
