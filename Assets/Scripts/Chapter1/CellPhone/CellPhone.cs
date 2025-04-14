@@ -164,7 +164,11 @@ public class CellPhone : MonoBehaviour
         // UI 텍스트에 날짜와 시간 표시
         dateText.text = formattedDate;
         timeText.text = formattedTime;
-        appScreenTexts[0].text = formattedTime;
+
+        if (this.gameObject.name.Contains("Canvas"))
+        {
+            appScreenTexts[0].text = formattedTime;
+        }
     }
 
     // 휴대폰 잠금화면 슬라이더 상호작용 함수
