@@ -6,6 +6,11 @@ public class TitleUIManager : UIUtility
 {
     [SerializeField] GameObject titleUI;
 
+    private void OnEnable()
+    {
+        CommonUIManager.instance.TitleUIManager = this;
+    }
+
     private void Start()
     {
         uiObjects[2].SetActive(true); // BG Img È°¼ºÈ­
@@ -13,9 +18,7 @@ public class TitleUIManager : UIUtility
 
         optionUI = CommonUIManager.instance.optionUI;
         uiObjects.Add(optionUI);
-    }
-    private void OnEnable()
-    {
+
         CommonUIManager.instance.TitleUIManager = this;
     }
 

@@ -48,6 +48,8 @@ public class SchoolUIManager : UIUtility
 
         optionUI = CommonUIManager.instance.optionUI;
         uiObjects.Add(optionUI);
+
+        CommonUIManager.instance.schoolUIManager = this;
     }
 
     private void Update()

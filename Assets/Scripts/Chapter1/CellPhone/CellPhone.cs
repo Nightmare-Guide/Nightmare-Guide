@@ -235,6 +235,16 @@ public class CellPhone : MonoBehaviour
 
         // BoxCollider 비활성화
         this.GetComponent<BoxCollider>().enabled = false;
+
+        // UI 활성화
+        if (this.gameObject.name.Contains("Ethan"))
+        {
+            schoolUIManager.OpenUI(schoolUIManager.uiObjects[2]);
+        }
+        else if (this.gameObject.name.Contains("David"))
+        {
+            schoolUIManager.OpenUI(schoolUIManager.uiObjects[3]);
+        }
     }
 
     public void AppIconButton(RectTransform appScreenRect)

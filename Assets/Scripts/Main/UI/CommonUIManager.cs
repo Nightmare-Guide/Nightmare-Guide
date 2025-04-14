@@ -45,7 +45,7 @@ public class CommonUIManager : MonoBehaviour
             Destroy(gameObject); // 중복 생성 방지
             Destroy(commonUICanvas);
         }
-
+        Debug.Log("CommonUIManager Awake");
         FirstSet();
 
         // 첫 언어 설정
@@ -59,6 +59,18 @@ public class CommonUIManager : MonoBehaviour
         optionUI.SetActive(false);
 
         FullScreenBtn();
+    }
+
+    public void BackToTitleBtn()
+    {
+        if(TitleUIManager != null)
+        {
+            optionUI.SetActive(false);
+        }
+        else
+        {
+            // Title 씬으로 이동
+        }
     }
 
     public void FullScreenBtn()

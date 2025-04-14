@@ -13,6 +13,11 @@ public class MainUIManager : UIUtility
         CommonUIManager.instance.mainUIManager = this;
     }
 
+    private void Start()
+    {
+        CommonUIManager.instance.mainUIManager = this;
+    }
+
     private void OnDisable()
     {
         CommonUIManager.instance.mainUIManager = null;
