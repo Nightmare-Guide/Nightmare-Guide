@@ -6,12 +6,14 @@ using TMPro;
 using System.Linq;
 using System.Runtime.InteropServices;
 using UnityStandardAssets.Characters.FirstPerson;
+using Unity.VisualScripting;
 
 public class UIUtility : MonoBehaviour
 {
     [Header("# UI")]
-    public GameObject[] uiObjects;
+    public List<GameObject> uiObjects;
     public GameObject aimUI;
+    public GameObject optionUI;
 
     [Header("# Object")]
     [SerializeField] Camera playerCamera;
@@ -23,22 +25,19 @@ public class UIUtility : MonoBehaviour
     private const int MOUSEEVENTF_LEFTDOWN = 0x02; // 마우스 왼쪽 버튼 누름
     private const int MOUSEEVENTF_LEFTUP = 0x04; // 마우스 왼쪽 버튼 뗌
 
-    // UI 열기 함수
-    public void OpenUI(GameObject ui)
+    // 인게임 UI 열기 함수 -> Player O
+    public void InGameOpenUI(GameObject ui)
     {
-        ui.SetActive(true);
+        OpenUI(ui);
 
         // 플레이어 움직임 멈춤
         StopPlayerController();
-
-        Debug.Log("Open PhoneUI");
-
     }
 
-    // UI 닫기 함수
-    protected void CloseUI(GameObject ui)
+    // 인게임 UI 닫기 함수 -> Player O
+    public void InGameCloseUI(GameObject ui)
     {
-        ui.SetActive(false);
+        CloseUI(ui);
 
         //카메라 회전 활성화
         Camera_Rt.instance.Open_Camera();
@@ -48,8 +47,20 @@ public class UIUtility : MonoBehaviour
 
         // 마우스 커서 중앙에 고정
         CursorLocked();
+    }
 
+    public void OpenUI(GameObject ui)
+    {
+        Debug.Log("Open UI : " + ui.name);
+
+        ui.SetActive(true);
+    }
+
+    public void CloseUI(GameObject ui)
+    {
         Debug.Log("Close UI : " + ui.name);
+
+        ui.SetActive(false);
     }
 
     // 게임 일시 정지 함수
@@ -57,6 +68,7 @@ public class UIUtility : MonoBehaviour
     {
         // 일시 정지 UI 활성화
         blur.SetActive(true);
+        optionUI.SetActive(true);
 
         // 플레이어 움직임 멈춤
         StopPlayerController();
@@ -77,7 +89,7 @@ public class UIUtility : MonoBehaviour
     }
 
     // UI 오브젝트 모두 비활성화 상태인 지 확인
-    protected bool AreAllObjectsDisabled(GameObject[] uiObjs)
+    protected bool AreAllObjectsDisabled(List<GameObject> uiObjs)
     {
         Debug.Log("All UI Objects Disabled");
 
@@ -187,5 +199,14 @@ public class UIUtility : MonoBehaviour
     public bool ApproximatelyEqual(float a, float b, float tolerance = 0.01f)
     {
         return Mathf.Abs(a - b) < tolerance;
+    }
+
+    // VerticalLayoutGroup 초기화
+    public void RebuildVerticalLayout(List<VerticalLayoutGroup> verticalLayoutGroup)
+    {
+        foreach(VerticalLayoutGroup group in verticalLayoutGroup)
+        {
+            LayoutRebuilder.MarkLayoutForRebuild(group.GetComponent<RectTransform>());
+        }
     }
 }

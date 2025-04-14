@@ -4,24 +4,58 @@ using UnityEngine;
 
 public class TitleUIManager : UIUtility
 {
+    [SerializeField] GameObject titleUI;
+
     private void Start()
     {
         uiObjects[2].SetActive(true); // BG Img 활성화
-        uiObjects[3].SetActive(true); // Start UI 활성화
-        CursorUnLocked();
+        titleUI.SetActive(true); // Start UI 활성화
+
+        optionUI = CommonUIManager.instance.optionUI;
+        uiObjects.Add(optionUI);
+    }
+    private void OnEnable()
+    {
+        CommonUIManager.instance.TitleUIManager = this;
     }
 
-    public void StartGame()
+    private void Update()
+    {
+        // ESC 키
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            // 모든 UI 닫기
+            foreach (GameObject uiObj in uiObjects)
+            {
+                if (uiObj.activeInHierarchy)
+                {
+                    CloseUI(uiObj);
+                }
+            }
+        }
+    }
+
+    private void OnDisable()
+    {
+        CommonUIManager.instance.TitleUIManager = null;
+    }
+
+    public void NewGameBtn()
+    {
+        
+    }
+
+    public void LoadGameBtn()
     {
 
     }
 
-    public void LoadGame()
+    public void OptionBtn()
     {
-
+        optionUI.SetActive(true);
     }
 
-    public void ExitGame()
+    public void ExitGameBtn()
     {
 
     }

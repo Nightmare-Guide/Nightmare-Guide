@@ -1,0 +1,84 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: UI Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: UI
+  m_TableCollectionNameGuidString: cc92136c43b9b9b4797f7f0d595a8aed
+  m_Entries:
+  - m_Id: 10248658944
+    m_Key: language
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13994172416
+    m_Key: background_Sound
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16921796608
+    m_Key: Effect_Sound
+    m_Metadata:
+      m_Items: []
+  - m_Id: 304663633920
+    m_Key: Character_Sound
+    m_Metadata:
+      m_Items: []
+  - m_Id: 386754551808
+    m_Key: Screen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 427825176576
+    m_Key: Fullscreen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 431935594496
+    m_Key: Windowed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 521278464000
+    m_Key: new_Game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 523803435008
+    m_Key: load_Game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 763478548480
+    m_Key: setting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 765126909952
+    m_Key: exit_Game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 877135798272
+    m_Key: back_To_Title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 976867958784
+    m_Key: esc_Close
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1318443687936
+    m_Key: sound
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 1103577944902336518
+  references:
+    version: 2
+    RefIds:
+    - rid: 1103577944902336518
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1744614825071

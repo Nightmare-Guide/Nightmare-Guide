@@ -1,0 +1,79 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: UI_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: cc92136c43b9b9b4797f7f0d595a8aed, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 10248658944
+    m_Localized: Language
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13994172416
+    m_Localized: BackGround
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16921796608
+    m_Localized: Effect
+    m_Metadata:
+      m_Items: []
+  - m_Id: 304663633920
+    m_Localized: "\uCE90\uB9AD\uD130"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 386754551808
+    m_Localized: Screen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 427825176576
+    m_Localized: Fullscreen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 431935594496
+    m_Localized: Windowed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 521278464000
+    m_Localized: New Game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 523803435008
+    m_Localized: Load Game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 763478548480
+    m_Localized: Setting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 765126909952
+    m_Localized: Exit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 877135798272
+    m_Localized: Back To Title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 976867958784
+    m_Localized: 'ESC : Close'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1318443687936
+    m_Localized: Sound
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []
