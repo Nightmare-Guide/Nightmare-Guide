@@ -10,15 +10,22 @@ using UnityStandardAssets.Characters.FirstPerson;
 using System.Runtime.InteropServices;
 using System.Linq;
 using UnityEngine.Rendering.HighDefinition;
-using static UnityEngine.Rendering.DebugUI;
 using System.Drawing;
+using Unity.VisualScripting;
+using UnityEngine.Localization.SmartFormat.Utilities;
 
 public class SchoolUIManager : UIUtility
 {
-    [Header("# Object")]
+    [Header("# School Object")]
     public GameObject[] cellPhoneObjs;
     public List<CharacterPhoneInfo> phoneInfos; // 각각 휴대폰 정보를 담는 list
     public List<VerticalLayoutGroup> textBoxLayouts;
+
+    [Header("# School Inventory")]
+    public List<Sprite> itemImgs; // 인벤토리에 들어갈 이미지들
+    public List<String> inventory; // 인벤토리 데이터
+    public List<Image> inventorySlots; // 실제 UI Slot 들
+    public Dictionary<string, int> schoolItems; // name, img index -> 아이템 이름이랑 key 값이 같아야 함.
 
     // Windows의 마우스 입력을 시뮬레이션하는 API
     [DllImport("user32.dll")]
@@ -33,6 +40,10 @@ public class SchoolUIManager : UIUtility
         FirstSetUP();
 
         phoneInfos = new List<CharacterPhoneInfo>();
+        inventory = new List<String>();
+
+        // Dictionary 초기화
+        schoolItems = new Dictionary<string, int>();
     }
 
     private void OnEnable()
@@ -45,6 +56,11 @@ public class SchoolUIManager : UIUtility
         phoneInfos.Add(new CharacterPhoneInfo { name = "Ethan", hasPhone = false, isUnlocked = false, cellPhoneObj = cellPhoneObjs[0], cellPhoneUI = uiObjects[2] });
         phoneInfos.Add(new CharacterPhoneInfo { name = "David", hasPhone = false, isUnlocked = false, cellPhoneObj = cellPhoneObjs[1], cellPhoneUI = uiObjects[3] });
         phoneInfos.Add(new CharacterPhoneInfo { name = "Steven", hasPhone = false, isUnlocked = false, cellPhoneObj = cellPhoneObjs[2], cellPhoneUI = uiObjects[4] });
+
+        // Item Dictionary 에 데이터 입력
+        schoolItems.Add("Locker Key", 0);
+        schoolItems.Add("Ethan CellPhone", 1);
+        schoolItems.Add("David CellPhone", 2);
 
         optionUI = CommonUIManager.instance.optionUI;
         uiObjects.Add(optionUI);
@@ -87,6 +103,15 @@ public class SchoolUIManager : UIUtility
         else if (Input.GetKeyDown(KeyCode.Keypad3) && phoneInfos[2].hasPhone)
         {
             OpenCellPhoneItem(phoneInfos[2], 4);
+        }
+
+        if(Input.GetKeyDown(KeyCode.Tab))
+        {
+            if (AreAllObjectsDisabled(uiObjects))
+            {
+                InGameOpenUI(uiObjects[0]); // blur 배경 활성화
+                InGameOpenUI(uiObjects[5]);
+            }
         }
     }
 
@@ -136,6 +161,21 @@ public class SchoolUIManager : UIUtility
             {
                 SetUIOpacity(text, true, 0f, 0f);
             }
+        }
+
+
+    }
+
+    // 아이템 획득 함수
+    public void AddItem(GameObject obj)
+    {
+        inventory.Add(obj.name);
+
+        // 인벤토리 정리
+        for (int i = 0; i < inventory.Count; i++)
+        {
+            inventorySlots[i].gameObject.SetActive(true);
+            inventorySlots[i].sprite = itemImgs[schoolItems[inventory[i]]];
         }
     }
 

@@ -146,6 +146,9 @@ public class RayCast_Aim : MonoBehaviour
 
         cellPhoneLogic.UpPhone(cellPhoneTransform[0], cellPhoneTransform[1]); // 카메라 앞으로 휴대폰 이동
 
+        // 데이터 입력
+        cellPhoneLogic.schoolUIManager.AddItem(obj);
+
         //플레이어 컨트롤 OFF
         PlayerController.instance.Close_PlayerController();
 
