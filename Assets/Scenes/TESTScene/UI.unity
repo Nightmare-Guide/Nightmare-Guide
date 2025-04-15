@@ -5821,7 +5821,6 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 4e8229bb9f72c0447afd58a8a7fb5728, type: 3}
   - {fileID: 21300000, guid: 4e8229bb9f72c0447afd58a8a7fb5728, type: 3}
   - {fileID: 21300000, guid: 69dca3d1edff39d45bcec09af5f57f77, type: 3}
-  inventory: []
   inventorySlots:
   - {fileID: 1897554755}
   - {fileID: 1637739150}
@@ -8200,7 +8199,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1331479340
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10259,7 +10258,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1607808076
 MonoBehaviour:
   m_ObjectHideFlags: 0
