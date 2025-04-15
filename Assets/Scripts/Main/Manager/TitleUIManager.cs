@@ -9,6 +9,7 @@ public class TitleUIManager : UIUtility
     private void OnEnable()
     {
         CommonUIManager.instance.TitleUIManager = this;
+        optionUI = CommonUIManager.instance.optionUI;
     }
 
     private void Start()

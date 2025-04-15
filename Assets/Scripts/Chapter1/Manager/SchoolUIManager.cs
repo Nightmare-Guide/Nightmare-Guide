@@ -23,9 +23,9 @@ public class SchoolUIManager : UIUtility
 
     [Header("# School Inventory")]
     public List<Sprite> itemImgs; // 인벤토리에 들어갈 이미지들
-    public List<String> inventory; // 인벤토리 데이터
+    public List<Item> inventory; // 플레이어 인벤토리 데이터
+    private List<Item> items; // 인게임 아이템 데이터
     public List<Image> inventorySlots; // 실제 UI Slot 들
-    public Dictionary<string, int> schoolItems; // name, img index -> 아이템 이름이랑 key 값이 같아야 함.
 
     // Windows의 마우스 입력을 시뮬레이션하는 API
     [DllImport("user32.dll")]
@@ -40,30 +40,29 @@ public class SchoolUIManager : UIUtility
         FirstSetUP();
 
         phoneInfos = new List<CharacterPhoneInfo>();
-        inventory = new List<String>();
-
-        // Dictionary 초기화
-        schoolItems = new Dictionary<string, int>();
+        items = new List<Item>();
+        inventory = new List<Item>();
     }
 
     private void OnEnable()
     {
         CommonUIManager.instance.schoolUIManager = this;
+        optionUI = CommonUIManager.instance.optionUI;
     }
 
     private void Start()
     {
-        phoneInfos.Add(new CharacterPhoneInfo { name = "Ethan", hasPhone = false, isUnlocked = false, cellPhoneObj = cellPhoneObjs[0], cellPhoneUI = uiObjects[2] });
-        phoneInfos.Add(new CharacterPhoneInfo { name = "David", hasPhone = false, isUnlocked = false, cellPhoneObj = cellPhoneObjs[1], cellPhoneUI = uiObjects[3] });
-        phoneInfos.Add(new CharacterPhoneInfo { name = "Steven", hasPhone = false, isUnlocked = false, cellPhoneObj = cellPhoneObjs[2], cellPhoneUI = uiObjects[4] });
-
-        // Item Dictionary 에 데이터 입력
-        schoolItems.Add("Locker Key", 0);
-        schoolItems.Add("Ethan CellPhone", 1);
-        schoolItems.Add("David CellPhone", 2);
-
         optionUI = CommonUIManager.instance.optionUI;
         uiObjects.Add(optionUI);
+
+        // 휴대폰 데이터 입력
+        phoneInfos.Add(new CharacterPhoneInfo { name = "Ethan", hasPhone = false, isUnlocked = false, cellPhoneObj = cellPhoneObjs[0], cellPhoneUI = uiObjects[2] });
+        phoneInfos.Add(new CharacterPhoneInfo { name = "David", hasPhone = false, isUnlocked = false, cellPhoneObj = cellPhoneObjs[1], cellPhoneUI = uiObjects[3] });
+
+        // 아이템 데이터 입력
+        items.Add(new Item { name = "Locker Key", itemImg = itemImgs[0], uiObj = uiObjects[1] });
+        items.Add(new Item { name = "Ethan CellPhone", itemImg = itemImgs[1], uiObj = uiObjects[2] });
+        items.Add(new Item { name = "David CellPhone", itemImg = itemImgs[2], uiObj = uiObjects[3] });
 
         CommonUIManager.instance.schoolUIManager = this;
     }
@@ -100,17 +99,20 @@ public class SchoolUIManager : UIUtility
         {
             OpenCellPhoneItem(phoneInfos[1], 3);
         }
-        else if (Input.GetKeyDown(KeyCode.Keypad3) && phoneInfos[2].hasPhone)
-        {
-            OpenCellPhoneItem(phoneInfos[2], 4);
-        }
 
-        if(Input.GetKeyDown(KeyCode.Tab))
+
+        // Tab 키 -> 인벤토리
+        if (Input.GetKeyDown(KeyCode.Tab))
         {
             if (AreAllObjectsDisabled(uiObjects))
             {
                 InGameOpenUI(uiObjects[0]); // blur 배경 활성화
-                InGameOpenUI(uiObjects[5]);
+                InGameOpenUI(uiObjects[4]);
+            }
+            else if (uiObjects[4].activeInHierarchy)
+            {
+                uiObjects[0].SetActive(false);
+                uiObjects[4].SetActive(false);
             }
         }
     }
@@ -167,15 +169,18 @@ public class SchoolUIManager : UIUtility
     }
 
     // 아이템 획득 함수
-    public void AddItem(GameObject obj)
+    public void GetItem(GameObject obj)
     {
-        inventory.Add(obj.name);
+        Debug.Log("Add Item");
+
+        // obj 이름을 포함하는 items 의 데이터를 inventory 에 추가
+        inventory.Add(items.Find(info => obj.gameObject.name.Contains(info.name))); // info -> items List 의 요소
 
         // 인벤토리 정리
         for (int i = 0; i < inventory.Count; i++)
         {
             inventorySlots[i].gameObject.SetActive(true);
-            inventorySlots[i].sprite = itemImgs[schoolItems[inventory[i]]];
+            inventorySlots[i].sprite = inventory[i].itemImg;
         }
     }
 
@@ -188,5 +193,12 @@ public class SchoolUIManager : UIUtility
         public bool isUnlocked;
         public GameObject cellPhoneObj;
         public GameObject cellPhoneUI;
+    }
+
+    public class Item
+    {
+        public string name;
+        public Sprite itemImg;
+        public GameObject uiObj;
     }
 }

@@ -51,7 +51,7 @@ public class UIUtility : MonoBehaviour
 
     public void OpenUI(GameObject ui)
     {
-        Debug.Log("Open UI : " + ui.name);
+        Debug.Log("Open UI : " + ui.name);  
 
         ui.SetActive(true);
     }

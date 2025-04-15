@@ -43,6 +43,7 @@ public class CellPhone : MonoBehaviour
 
     [Header("# ETC.")]
     public SchoolUIManager schoolUIManager;
+    public MainUIManager mainUIManager;
 
     private void Awake()
     {
