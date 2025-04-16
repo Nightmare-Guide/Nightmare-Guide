@@ -1147,7 +1147,7 @@ RectTransform:
   m_Father: {fileID: 8094612262361900448}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0.2, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
@@ -1565,7 +1565,7 @@ GameObject:
   - component: {fileID: 3185964996729845552}
   - component: {fileID: 4883989066808354818}
   - component: {fileID: 2071337075671513608}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: David CellPhone  (Empty)
   m_TagString: CellPhone
   m_Icon: {fileID: 0}
@@ -1677,6 +1677,7 @@ MonoBehaviour:
   finalRotate: {x: 0, y: 0, z: 0}
   rotateSpeed: 0.5
   isUsing: 0
+  isCanvas: 0
   LockPhoneUI: {fileID: 446914748040946255}
   sliderUI: {fileID: 3933694616939778571}
   sliderImage:

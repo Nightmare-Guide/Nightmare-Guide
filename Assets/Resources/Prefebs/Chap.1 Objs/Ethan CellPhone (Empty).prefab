@@ -1750,7 +1750,7 @@ GameObject:
   - component: {fileID: 4475541628308373286}
   - component: {fileID: 3674350545513539607}
   - component: {fileID: 6436504387903563936}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Ethan CellPhone (Empty)
   m_TagString: CellPhone
   m_Icon: {fileID: 0}
@@ -1862,6 +1862,7 @@ MonoBehaviour:
   finalRotate: {x: 0, y: 0, z: 0}
   rotateSpeed: 0.5
   isUsing: 0
+  isCanvas: 0
   LockPhoneUI: {fileID: 579009854150614501}
   sliderUI: {fileID: 8341411574581190645}
   sliderImage:

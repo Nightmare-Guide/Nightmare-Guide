@@ -46,8 +46,8 @@ public class SchoolUIManager : UIUtility
 
     private void OnEnable()
     {
-        CommonUIManager.instance.schoolUIManager = this;
-        optionUI = CommonUIManager.instance.optionUI;
+        // CommonUIManager.instance.schoolUIManager = this;
+        // optionUI = CommonUIManager.instance.optionUI;
     }
 
     private void Start()

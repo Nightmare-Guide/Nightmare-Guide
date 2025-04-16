@@ -25,8 +25,8 @@ public class MainUIManager : UIUtility
 
     private void OnEnable()
     {
-        CommonUIManager.instance.mainUIManager = this;
-        optionUI = CommonUIManager.instance.optionUI;
+        // CommonUIManager.instance.mainUIManager = this;
+        // optionUI = CommonUIManager.instance.optionUI;
     }
 
     private void Start()
@@ -71,8 +71,8 @@ public class MainUIManager : UIUtility
             }
             else if (uiObjects[3].activeInHierarchy)
             {
-                uiObjects[0].SetActive(false);
-                uiObjects[3].SetActive(false);
+                InGameCloseUI(uiObjects[0]);
+                InGameCloseUI(uiObjects[3]);
             }
         }
 
