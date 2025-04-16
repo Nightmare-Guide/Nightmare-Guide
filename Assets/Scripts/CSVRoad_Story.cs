@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class CSVRoad_Story : MonoBehaviour
 {
+    public static CSVRoad_Story instance;
+
     [SerializeField] private string go_Story;
 
     [SerializeField] private TextMeshProUGUI dialogue; // 기본 자막
@@ -31,6 +33,7 @@ public class CSVRoad_Story : MonoBehaviour
         {
             Debug.LogWarning("CSV 데이터가 비어 있습니다.");
         }
+        if (instance == null) { instance = this; }
     }
 
     public void OnSelectChapter(string subChapterKey)
