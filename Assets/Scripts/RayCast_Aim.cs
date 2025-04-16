@@ -21,15 +21,17 @@ public class RayCast_Aim : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0)) // 마우스 왼쪽 버튼 클릭
+        if (Input.GetKeyDown(KeyCode.E)) // 마우스 왼쪽 버튼 클릭
         {
-
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, maxRayDistance))
+
+            if (Physics.Raycast(ray, out hit, maxRayDistance, LayerMask.GetMask("ActiveObject")))
             {
                 GameObject click_object = hit.transform.gameObject;
                 Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.red); // 실제 충돌 지점까지 빨간색
+
+                Debug.Log($"Object Name : {click_object.name}");
 
                 // 태그가 "maze_Btn"이라면 Select_Btn() 호출
                 if (click_object.CompareTag("maze_Btn"))

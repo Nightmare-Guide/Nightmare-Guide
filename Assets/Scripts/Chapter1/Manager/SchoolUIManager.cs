@@ -25,7 +25,7 @@ public class SchoolUIManager : UIUtility
     public List<Sprite> itemImgs; // 인벤토리에 들어갈 이미지들
     public List<Item> inventory; // 플레이어 인벤토리 데이터
     private List<Item> items; // 인게임 아이템 데이터
-    public List<Image> inventorySlots; // 실제 UI Slot 들
+    public List<ItemSlot> inventorySlots; // 실제 UI Slot 들
 
     // Windows의 마우스 입력을 시뮬레이션하는 API
     [DllImport("user32.dll")]
@@ -46,8 +46,8 @@ public class SchoolUIManager : UIUtility
 
     private void OnEnable()
     {
-        CommonUIManager.instance.schoolUIManager = this;
-        optionUI = CommonUIManager.instance.optionUI;
+        // CommonUIManager.instance.schoolUIManager = this;
+        // optionUI = CommonUIManager.instance.optionUI;
     }
 
     private void Start()
@@ -60,9 +60,9 @@ public class SchoolUIManager : UIUtility
         phoneInfos.Add(new CharacterPhoneInfo { name = "David", hasPhone = false, isUnlocked = false, cellPhoneObj = cellPhoneObjs[1], cellPhoneUI = uiObjects[3] });
 
         // 아이템 데이터 입력
-        items.Add(new Item { name = "Locker Key", itemImg = itemImgs[0], uiObj = uiObjects[1] });
-        items.Add(new Item { name = "Ethan CellPhone", itemImg = itemImgs[1], uiObj = uiObjects[2] });
-        items.Add(new Item { name = "David CellPhone", itemImg = itemImgs[2], uiObj = uiObjects[3] });
+        items.Add(new Item { name = "Locker Key", itemImg = itemImgs[0], uiObj = null, schoolUIManager = this});
+        items.Add(new Item { name = "Ethan CellPhone", itemImg = itemImgs[1], uiObj = uiObjects[2], schoolUIManager = this });
+        items.Add(new Item { name = "David CellPhone", itemImg = itemImgs[2], uiObj = uiObjects[3], schoolUIManager = this });
 
         CommonUIManager.instance.schoolUIManager = this;
     }
@@ -90,16 +90,6 @@ public class SchoolUIManager : UIUtility
             }
         }
 
-        // 테스트용 -> 인벤토리 휴대폰 상호작용
-        if (Input.GetKeyDown(KeyCode.Keypad1) && phoneInfos[0].hasPhone)
-        {
-            OpenCellPhoneItem(phoneInfos[0], 2);
-        }
-        else if (Input.GetKeyDown(KeyCode.Keypad2) && phoneInfos[1].hasPhone)
-        {
-            OpenCellPhoneItem(phoneInfos[1], 3);
-        }
-
 
         // Tab 키 -> 인벤토리
         if (Input.GetKeyDown(KeyCode.Tab))
@@ -111,8 +101,8 @@ public class SchoolUIManager : UIUtility
             }
             else if (uiObjects[4].activeInHierarchy)
             {
-                uiObjects[0].SetActive(false);
-                uiObjects[4].SetActive(false);
+                InGameCloseUI(uiObjects[0]);
+                InGameCloseUI(uiObjects[4]);
             }
         }
     }
@@ -134,10 +124,10 @@ public class SchoolUIManager : UIUtility
     }
 
     // 인벤토리 휴대폰 버튼 함수
-    public void OpenCellPhoneItem(CharacterPhoneInfo cellPhone, int index)
+    public void OpenCellPhoneItem(CharacterPhoneInfo cellPhone, GameObject uiObj)
     {
         InGameOpenUI(uiObjects[0]); // blur 배경 활성화
-        InGameOpenUI(uiObjects[index]);
+        InGameOpenUI(uiObj);
 
         CellPhone cpLogic = cellPhone.cellPhoneUI.GetComponent<CellPhone>();
 
@@ -179,8 +169,7 @@ public class SchoolUIManager : UIUtility
         // 인벤토리 정리
         for (int i = 0; i < inventory.Count; i++)
         {
-            inventorySlots[i].gameObject.SetActive(true);
-            inventorySlots[i].sprite = inventory[i].itemImg;
+            inventorySlots[i].itemData = inventory[i];
         }
     }
 
@@ -200,5 +189,6 @@ public class SchoolUIManager : UIUtility
         public string name;
         public Sprite itemImg;
         public GameObject uiObj;
+        public SchoolUIManager schoolUIManager;
     }
 }

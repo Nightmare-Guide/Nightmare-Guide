@@ -12,16 +12,28 @@ public class MainUIManager : UIUtility
     public GameObject cellPhoneObjs;
     public CharacterPhoneInfo phoneInfos; // 휴대폰 정보를 담는 변수
 
+    [Header("# Main Inventory")]
+    public List<Sprite> itemImgs; // 인벤토리에 들어갈 이미지들
+    public List<Item> inventory; // 플레이어 인벤토리 데이터
+    private List<Item> items; // 인게임 아이템 데이터
+    public List<ItemSlot> inventorySlots; // 실제 UI Slot 들
+
+    private void Awake()
+    {
+        FirstSetUP();
+    }
+
     private void OnEnable()
     {
-        CommonUIManager.instance.mainUIManager = this;
-        optionUI = CommonUIManager.instance.optionUI;
+        // CommonUIManager.instance.mainUIManager = this;
+        // optionUI = CommonUIManager.instance.optionUI;
     }
 
     private void Start()
     {
         CommonUIManager.instance.mainUIManager = this;
         optionUI = CommonUIManager.instance.optionUI;
+        uiObjects.Add(optionUI);
 
         phoneInfos = new CharacterPhoneInfo { name = "Steven", hasPhone = false, isUnlocked = false, cellPhoneObj = cellPhoneObjs, cellPhoneUI = uiObjects[2] };
     }
@@ -50,30 +62,49 @@ public class MainUIManager : UIUtility
         }
 
         // Tab 키 -> 인벤토리
-        //if (Input.GetKeyDown(KeyCode.Tab))
-        //{
-        //    if (AreAllObjectsDisabled(uiObjects))
-        //    {
-        //        InGameOpenUI(uiObjects[0]); // blur 배경 활성화
-        //        InGameOpenUI(uiObjects[3]);
-        //    }
-        //    else if (uiObjects[3].activeInHierarchy)
-        //    {
-        //        uiObjects[0].SetActive(false);
-        //        uiObjects[3].SetActive(false);
-        //    }
-        //}
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            if (AreAllObjectsDisabled(uiObjects))
+            {
+                InGameOpenUI(uiObjects[0]); // blur 배경 활성화
+                InGameOpenUI(uiObjects[3]);
+            }
+            else if (uiObjects[3].activeInHierarchy)
+            {
+                InGameCloseUI(uiObjects[0]);
+                InGameCloseUI(uiObjects[3]);
+            }
+        }
 
         // I 키 -> 휴대폰
         if (Input.GetKeyDown(KeyCode.I) && phoneInfos.hasPhone)
         {
-            OpenCellPhoneItem(phoneInfos);
+            if (AreAllObjectsDisabled(uiObjects))
+            {
+                OpenCellPhoneItem(phoneInfos);
+            }
+            else if (uiObjects[2].activeInHierarchy)
+            {
+                InGameCloseUI(uiObjects[0]);
+                InGameCloseUI(uiObjects[2]);
+            }
         }
     }
 
     private void OnDisable()
     {
         CommonUIManager.instance.mainUIManager = null;
+    }
+
+    // 시작 세팅 함수
+    void FirstSetUP()
+    {
+        uiObjects[0].SetActive(false);
+        aimUI.SetActive(true);
+
+        CursorLocked(); // 마우스 커서 중앙에 고정
+
+        Debug.Log("UI First Setup");
     }
 
     // 휴대폰 열기 함수 -> I 키
@@ -121,5 +152,11 @@ public class MainUIManager : UIUtility
         public GameObject cellPhoneUI;
     }
 
-
+    public class Item
+    {
+        public string name;
+        public Sprite itemImg;
+        public GameObject uiObj;
+        public SchoolUIManager schoolUIManager;
+    }
 }

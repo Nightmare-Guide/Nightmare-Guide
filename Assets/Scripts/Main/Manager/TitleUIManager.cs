@@ -8,13 +8,12 @@ public class TitleUIManager : UIUtility
 
     private void OnEnable()
     {
-        CommonUIManager.instance.TitleUIManager = this;
-        optionUI = CommonUIManager.instance.optionUI;
+        // CommonUIManager.instance.TitleUIManager = this;
+        // optionUI = CommonUIManager.instance.optionUI;
     }
 
     private void Start()
     {
-        uiObjects[2].SetActive(true); // BG Img 활성화
         titleUI.SetActive(true); // Start UI 활성화
 
         optionUI = CommonUIManager.instance.optionUI;
