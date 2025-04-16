@@ -49,7 +49,7 @@ public class ChaseNode : ActionNode
         {
             return State.Success;
         }
-        else if (distance < 2.6f)
+        else if (distance < 2f)
         {
             // 🥊 어택 애니메이션 트리거 발동
             if (animator != null)
