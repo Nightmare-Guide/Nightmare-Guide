@@ -21,7 +21,7 @@ public class RayCast_Aim : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0)) // 마우스 왼쪽 버튼 클릭
+        if (Input.GetKeyDown(KeyCode.E)) // 마우스 왼쪽 버튼 클릭
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
