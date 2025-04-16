@@ -13,7 +13,9 @@ public class Chapter1_Mgr : MonoBehaviour
     public GameObject lockerRoomMainDoor1; // 락커룸 도어
     public GameObject lockerRoomMainDoor2;
     public int nextdoorPassword = 0;
-
+    [Header("StrangeRoom")]
+    public GameObject[] strangeRoom1;
+    public GameObject[] strangeRoom2;
     [Header("Door")]
     public Door doorScript1;
     public Door doorScript2;
@@ -85,7 +87,7 @@ public class Chapter1_Mgr : MonoBehaviour
         doorScript2.enabled = true;
     }
 
-    public void MoveWall(Animator gameobject)
+    public void ActiveTriggerAnimator(Animator gameobject)
     {
         gameobject.SetTrigger("StartTrigger");
     }
@@ -95,5 +97,18 @@ public class Chapter1_Mgr : MonoBehaviour
         gameobject.SetTrigger("CloseDoor");
     }
 
+    public void MoveStrangeClass(GameObject[] strange )
+    {
+        foreach (GameObject obj in strange)
+        {
+            if (obj.GetComponent<Rigidbody>() == null)
+            {
+                Rigidbody rb = obj.AddComponent<Rigidbody>();
+                rb.useGravity = true;
+                rb.AddTorque(Random.onUnitSphere * Random.Range(5f, 15f), ForceMode.Impulse); //회전방향 랜덤으로 적용
+                rb.mass = 1f; // 필요에 따라 조절
+            }
+        }
+    }
 
 }
