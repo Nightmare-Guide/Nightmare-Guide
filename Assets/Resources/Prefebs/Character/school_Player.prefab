@@ -760,6 +760,7 @@ MonoBehaviour:
   m_JumpSound: {fileID: 8300000, guid: 5897aeed9b676024fbb8c694b421a861, type: 3}
   m_LandSound: {fileID: 8300000, guid: 3b09d59f4499d45428baa7a21e954296, type: 3}
   m_Camera: {fileID: 694136378683529783}
+  stat: 0
 --- !u!54 &2139007686366711640
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -895,6 +896,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 908858834b49c6d47a2440f334be4022, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lockerCamera: 1
 --- !u!1 &2164447522756949527
 GameObject:
   m_ObjectHideFlags: 0
