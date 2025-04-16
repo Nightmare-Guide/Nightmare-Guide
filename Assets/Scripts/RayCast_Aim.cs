@@ -23,7 +23,7 @@ public class RayCast_Aim : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0)) // 마우스 왼쪽 버튼 클릭
         {
-         
+
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit, maxRayDistance))
@@ -60,12 +60,12 @@ public class RayCast_Aim : MonoBehaviour
             }
         }
     }
-    
+
     public void ElevatorButton(GameObject obj)
     {
         Animator button_anim = obj.GetComponent<Animator>();
-        obj.GetComponent<Collider>().enabled = false;    
-        
+        obj.GetComponent<Collider>().enabled = false;
+
         button_anim.SetTrigger("ClickButton");
         button_anim.SetBool("On", true);
     }
@@ -87,8 +87,8 @@ public class RayCast_Aim : MonoBehaviour
 
     public void Locker(GameObject obj)
     {
-        
-        Debug.Log("락커 인식"+obj.name);
+
+        Debug.Log("락커 인식" + obj.name);
         Locker lockerObj = obj.GetComponent<Locker>();
         if (lockerObj.isMovingToLocker || lockerObj.outMovingToLocker)
         {
@@ -98,22 +98,22 @@ public class RayCast_Aim : MonoBehaviour
         if (locker)//문이 열리고 플레이어 이동후 문디 닫힘
         {
             lockerObj.isMovingToLocker = true;
-            lockerObj.PlayerHide();  
+            lockerObj.PlayerHide();
             locker = false;
-         
+
 
         }
         else if (!locker)//플레이어 컨트롤러가 활성화되고 문이 열림
         {
-            
+
             lockerObj.OpenLocker();
-           // PlayerController.instance.Open_PlayerController();//플레이어 컨트롤 ON
+            // PlayerController.instance.Open_PlayerController();//플레이어 컨트롤 ON
             locker = true;
             // DoorCheck(obj);
-  
+
         }
 
-     
+
     }
 
     public void DoorCheck(GameObject obj)
@@ -121,11 +121,11 @@ public class RayCast_Aim : MonoBehaviour
         Door door = obj.GetComponent<Door>();
         LockerRoomDoor ldoor = obj.GetComponent<LockerRoomDoor>();
 
-        if(door != null) //일반적인 door 스크립트
+        if (door != null) //일반적인 door 스크립트
         {
             door.Select_Door();
         }
-        if(ldoor != null) //LockerRoomDoor 값 확인용
+        if (ldoor != null) //LockerRoomDoor 값 확인용
         {
             ldoor.OpenLockerDoor();
         }
@@ -134,10 +134,17 @@ public class RayCast_Aim : MonoBehaviour
     void TouchCellPhone(GameObject obj)
     {
         // 해당 휴대폰 획득 bool 값 변경
-        CharacterPhoneInfo targetPhone = SchoolUIManager.instance.phoneInfos
+        if (obj.name.Contains("Steven"))
+        {
+            obj.GetComponent<CellPhone>().mainUIManager.phoneInfos.hasPhone = true;
+        }
+        else
+        {
+            CharacterPhoneInfo targetPhone = obj.GetComponent<CellPhone>().schoolUIManager.phoneInfos
                                             .Find(info => obj.gameObject.name.Contains(info.name));
 
-        targetPhone.hasPhone = true;
+            targetPhone.hasPhone = true;
+        }
 
         // CellPhone 위치 변경 함수 실행
         CellPhone cellPhoneLogic = obj.GetComponent<CellPhone>();
@@ -145,6 +152,12 @@ public class RayCast_Aim : MonoBehaviour
         Vector3[] cellPhoneTransform = GetCameraInfo();
 
         cellPhoneLogic.UpPhone(cellPhoneTransform[0], cellPhoneTransform[1]); // 카메라 앞으로 휴대폰 이동
+
+        // 데이터 입력
+        if (!obj.name.Contains("Steven"))
+        {
+            cellPhoneLogic.schoolUIManager.GetItem(obj);
+        }
 
         //플레이어 컨트롤 OFF
         PlayerController.instance.Close_PlayerController();
@@ -174,7 +187,7 @@ public class RayCast_Aim : MonoBehaviour
 
         // 휴대폰 최종 회전 값
         Vector3 cellPhoneRotate = new Vector3(-cameraRotate.x, 180 + cameraRotate.y, 180 + cameraRotate.z);
-        
+
         arr[0] = cellPhonePos;
         arr[1] = cellPhoneRotate;
 

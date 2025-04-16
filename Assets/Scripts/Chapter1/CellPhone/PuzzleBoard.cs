@@ -176,18 +176,18 @@ public class PuzzleBoard : MonoBehaviour
         canMovePuzzle = false;
 
         // 해당 휴대폰 잠금해제 여부 bool 값 변경
-        CharacterPhoneInfo targetPhone = SchoolUIManager.instance.phoneInfos
+        CharacterPhoneInfo targetPhone = cellPhone.schoolUIManager.phoneInfos
                                             .Find(info => this.cellPhone.gameObject.name.Contains(info.name));
 
         targetPhone.isUnlocked = true;
 
         // 마지막 퍼즐 투명도 조절
-        SchoolUIManager.instance.SetUIOpacity(cellPhone.puzzleUI[cellPhone.puzzleUI.Length - 1], true, 1f, 0.2f); // 마지막 퍼즐 조각 투명도 조절
+        cellPhone.schoolUIManager.SetUIOpacity(cellPhone.puzzleUI[cellPhone.puzzleUI.Length - 1], true, 1f, 0.2f); // 마지막 퍼즐 조각 투명도 조절
 
         // 퍼즐 UI 천천히 사라짐
         for (int i = 0; i < cellPhone.puzzleUI.Length; i++)
         {
-            SchoolUIManager.instance.SetUIOpacity(cellPhone.puzzleUI[i], false, 0.5f, 1f);
+            cellPhone.schoolUIManager.SetUIOpacity(cellPhone.puzzleUI[i], false, 0.5f, 1f);
         }
 
         // App Screen UI 활성화
@@ -195,11 +195,11 @@ public class PuzzleBoard : MonoBehaviour
 
         foreach (Image img in cellPhone.appScreenImgs)
         {
-            SchoolUIManager.instance.SetUIOpacity(img, true, 0.5f, 1.1f);
+            cellPhone.schoolUIManager.SetUIOpacity(img, true, 0.5f, 1.1f);
         }
         foreach (TextMeshProUGUI text in cellPhone.appScreenTexts)
         {
-            SchoolUIManager.instance.SetUIOpacity(text, true, 0.5f, 1.1f);
+            cellPhone.schoolUIManager.SetUIOpacity(text, true, 0.5f, 1.1f);
         }
     }
 }

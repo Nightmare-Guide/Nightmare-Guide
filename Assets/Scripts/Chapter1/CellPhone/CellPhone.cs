@@ -43,6 +43,7 @@ public class CellPhone : MonoBehaviour
 
     [Header("# ETC.")]
     public SchoolUIManager schoolUIManager;
+    public MainUIManager mainUIManager;
 
     private void Awake()
     {
@@ -73,7 +74,7 @@ public class CellPhone : MonoBehaviour
 
 
         // 휴대폰 잠금 해제 여부 확인 후 잠금화면 초기화
-        foreach (CharacterPhoneInfo cellPhone in SchoolUIManager.instance.phoneInfos)
+        foreach (CharacterPhoneInfo cellPhone in schoolUIManager.phoneInfos)
         {
             if (!this.gameObject.name.Contains(cellPhone.name)) continue;
 
@@ -164,7 +165,11 @@ public class CellPhone : MonoBehaviour
         // UI 텍스트에 날짜와 시간 표시
         dateText.text = formattedDate;
         timeText.text = formattedTime;
-        appScreenTexts[0].text = formattedTime;
+
+        if (this.gameObject.name.Contains("Canvas"))
+        {
+            appScreenTexts[0].text = formattedTime;
+        }
     }
 
     // 휴대폰 잠금화면 슬라이더 상호작용 함수
@@ -231,10 +236,20 @@ public class CellPhone : MonoBehaviour
 
         yield return new WaitForSeconds(moveSpeed - 0.05f);
 
-        schoolUIManager.OpenUI(schoolUIManager.uiObjects[1]); // null 값용 UI 오브젝트 활성화
+        schoolUIManager.InGameOpenUI(schoolUIManager.uiObjects[1]); // null 값용 UI 오브젝트 활성화
 
         // BoxCollider 비활성화
         this.GetComponent<BoxCollider>().enabled = false;
+
+        // UI 활성화
+        if (this.gameObject.name.Contains("Ethan"))
+        {
+            schoolUIManager.OpenUI(schoolUIManager.uiObjects[2]);
+        }
+        else if (this.gameObject.name.Contains("David"))
+        {
+            schoolUIManager.OpenUI(schoolUIManager.uiObjects[3]);
+        }
     }
 
     public void AppIconButton(RectTransform appScreenRect)

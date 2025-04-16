@@ -11,6 +11,12 @@ public class TitleButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     [SerializeField] TextMeshProUGUI text;
     [SerializeField] Image bgImg;
 
+    private void OnDisable()
+    {
+        bgImg.gameObject.SetActive(false);
+        text.color = Color.white;
+    }
+
     public void OnPointerEnter(PointerEventData eventData)
     {
         bgImg.gameObject.SetActive(true);

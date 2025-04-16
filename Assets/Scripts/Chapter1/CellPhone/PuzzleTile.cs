@@ -49,7 +49,7 @@ public class PuzzleTile : MonoBehaviour, IPointerClickHandler
 
         rectTransform.anchoredPosition = end;
 
-        isCorrected = SchoolUIManager.instance.ApproximatelyEqual(corretPos, rectTransform.anchoredPosition);
+        isCorrected = board.cellPhone.schoolUIManager.ApproximatelyEqual(corretPos, rectTransform.anchoredPosition);
         
         // 이동 후 퍼즐 정답 확인
         if (board.tileList.All(tile => tile.isCorrected))
