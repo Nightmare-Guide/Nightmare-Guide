@@ -22,12 +22,6 @@ public class MainUIManager : UIUtility
         FirstSetUP();
     }
 
-    private void OnEnable()
-    {
-        // CommonUIManager.instance.mainUIManager = this;
-        // optionUI = CommonUIManager.instance.optionUI;
-    }
-
     private void Start()
     {
         CommonUIManager.instance.mainUIManager = this;

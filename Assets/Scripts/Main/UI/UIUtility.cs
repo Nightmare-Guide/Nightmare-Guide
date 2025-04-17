@@ -32,6 +32,8 @@ public class UIUtility : MonoBehaviour
 
         // 플레이어 움직임 멈춤
         StopPlayerController();
+
+        Debug.Log("InGameOpenUI");
     }
 
     // 인게임 UI 닫기 함수 -> Player O
@@ -47,6 +49,8 @@ public class UIUtility : MonoBehaviour
 
         // 마우스 커서 중앙에 고정
         CursorLocked();
+
+        Debug.Log("InGameCloseUI");
     }
 
     public void OpenUI(GameObject ui)

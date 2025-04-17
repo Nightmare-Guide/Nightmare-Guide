@@ -81,6 +81,10 @@ public class CommonUIManager : MonoBehaviour
         {
             SceneManager.LoadScene("Main_Map_Night");
         }
+        else if (Input.GetKeyDown(KeyCode.Keypad5))
+        {
+            SceneManager.LoadScene("UI");
+        }
     }
 
     void FirstSet()
@@ -99,7 +103,7 @@ public class CommonUIManager : MonoBehaviour
         }
         else
         {
-            // Title æ¿¿∏∑Œ ¿Ãµø
+            SceneManager.LoadScene("Title Scene");
         }
     }
 
