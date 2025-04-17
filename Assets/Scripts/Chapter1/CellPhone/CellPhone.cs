@@ -90,7 +90,17 @@ public class CellPhone : MonoBehaviour
 
         phoneBlurMat.SetFloat("_Size", 0); // 휴대폰 Blur Spacing 값 초기화
 
+        CharacterPhoneInfo targetPhone = this.gameObject.name.Contains("Steven") ? CommonUIManager.instance.phoneInfos : schoolUIManager.phoneInfos
+                                .Find(info => this.gameObject.name.Contains(info.name));
+
+        if (targetPhone.isUnlocked)
+                return;
+    
+
+        Debug.Log("CellPhone SetFirst");
+
         var uiManager = this.gameObject.name.Contains("Steven") ? (UIUtility)mainUIManager : (UIUtility)schoolUIManager;
+
 
         // 휴대폰 잠금 해제 여부 확인 후 잠금화면 초기화
         sliderUI.SetActive(true); // 슬라이더 활성화
@@ -202,7 +212,7 @@ public class CellPhone : MonoBehaviour
             else
             {
                 // 스티븐 휴대폰은 슬라이더로 잠금 해제 후, 바로 잠금해제
-                mainUIManager.phoneInfos.isUnlocked = true;
+                CommonUIManager.instance.phoneInfos.isUnlocked = true;
 
                 // App Screen UI 활성화
                 appScreenUI.SetActive(true);

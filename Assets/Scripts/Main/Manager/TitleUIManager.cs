@@ -1,15 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TitleUIManager : UIUtility
 {
     [SerializeField] GameObject titleUI;
 
-    private void OnEnable()
+
+    private void Awake()
     {
-        // CommonUIManager.instance.TitleUIManager = this;
-        // optionUI = CommonUIManager.instance.optionUI;
+        //마우스 커서 활성화
+        UnityEngine.Cursor.lockState = CursorLockMode.None;
+        UnityEngine.Cursor.visible = true;  // 커서를 보이게 하기
     }
 
     private void Start()
@@ -45,7 +48,7 @@ public class TitleUIManager : UIUtility
 
     public void NewGameBtn()
     {
-        
+        SceneManager.LoadScene("Main_Map");
     }
 
     public void LoadGameBtn()
@@ -60,6 +63,6 @@ public class TitleUIManager : UIUtility
 
     public void ExitGameBtn()
     {
-
+        Application.Quit();
     }
 }

@@ -44,12 +44,6 @@ public class SchoolUIManager : UIUtility
         inventory = new List<Item>();
     }
 
-    private void OnEnable()
-    {
-        // CommonUIManager.instance.schoolUIManager = this;
-        // optionUI = CommonUIManager.instance.optionUI;
-    }
-
     private void Start()
     {
         optionUI = CommonUIManager.instance.optionUI;

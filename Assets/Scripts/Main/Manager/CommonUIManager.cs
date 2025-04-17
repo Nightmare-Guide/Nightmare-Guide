@@ -5,8 +5,10 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityStandardAssets.Characters.FirstPerson;
+using static SchoolUIManager;
 using static System.Net.Mime.MediaTypeNames;
 using static UnityEditor.Progress;
 
@@ -26,6 +28,9 @@ public class CommonUIManager : MonoBehaviour
     // 언어 변경 무한 루프 방지용 타이머
     float timeout = 120f; // 최대 120초 대기
     float timer = 0f;
+
+    // CellPhone
+    public CharacterPhoneInfo phoneInfos;
 
     [Header("# UIManagers")]
     public TitleUIManager TitleUIManager;
@@ -53,6 +58,35 @@ public class CommonUIManager : MonoBehaviour
         LanguageDropdown.value = 0;
     }
 
+    private void Start()
+    {
+        phoneInfos = new CharacterPhoneInfo { name = "Steven", hasPhone = false, isUnlocked = false }; // cellPhoneObj 랑 cellPhoneUI 는 MainUIManager 에서 초기화
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Keypad1))
+        {
+            SceneManager.LoadScene("Title Scene");
+        }
+        else if (Input.GetKeyDown(KeyCode.Keypad2))
+        {
+            SceneManager.LoadScene("Main_Map");
+        }
+        else if (Input.GetKeyDown(KeyCode.Keypad3))
+        {
+            SceneManager.LoadScene("School_Scene");
+        }
+        else if (Input.GetKeyDown(KeyCode.Keypad4))
+        {
+            SceneManager.LoadScene("Main_Map_Night");
+        }
+        else if (Input.GetKeyDown(KeyCode.Keypad5))
+        {
+            SceneManager.LoadScene("UI");
+        }
+    }
+
     void FirstSet()
     {
         commonUICanvas.SetActive(true);
@@ -69,7 +103,7 @@ public class CommonUIManager : MonoBehaviour
         }
         else
         {
-            // Title 씬으로 이동
+            SceneManager.LoadScene("Title Scene");
         }
     }
 
@@ -137,4 +171,14 @@ public class CommonUIManager : MonoBehaviour
         _ when text.text.Any(c => c is >= 'A' and <= 'Z' || c is >= 'a' and <= 'z') => "en", // 영어
         _ => "unKnown"
     };
+
+    // 휴대폰 정보 Class
+    public class StevenPhoneInfo
+    {
+        public string name;
+        public bool hasPhone;
+        public bool isUnlocked;
+        public GameObject cellPhoneObj;
+        public GameObject cellPhoneUI;
+    }
 }

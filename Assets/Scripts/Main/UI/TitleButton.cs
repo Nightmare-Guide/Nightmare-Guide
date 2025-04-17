@@ -19,12 +19,16 @@ public class TitleButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        Debug.Log("OnPointerEnter");
+
         bgImg.gameObject.SetActive(true);
         text.color = Color.black;
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        Debug.Log("OnPointerExit");
+
         bgImg.gameObject.SetActive(false);
         text.color = Color.white;
     }
