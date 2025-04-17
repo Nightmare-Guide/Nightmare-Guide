@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TitleUIManager : UIUtility
 {
@@ -45,7 +46,7 @@ public class TitleUIManager : UIUtility
 
     public void NewGameBtn()
     {
-        
+        SceneManager.LoadScene("Main_Map");
     }
 
     public void LoadGameBtn()
@@ -60,6 +61,6 @@ public class TitleUIManager : UIUtility
 
     public void ExitGameBtn()
     {
-
+        Application.Quit();
     }
 }

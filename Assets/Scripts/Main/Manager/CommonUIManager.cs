@@ -5,6 +5,7 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityStandardAssets.Characters.FirstPerson;
 using static SchoolUIManager;
@@ -60,6 +61,26 @@ public class CommonUIManager : MonoBehaviour
     private void Start()
     {
         phoneInfos = new CharacterPhoneInfo { name = "Steven", hasPhone = false, isUnlocked = false }; // cellPhoneObj 랑 cellPhoneUI 는 MainUIManager 에서 초기화
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Keypad1))
+        {
+            SceneManager.LoadScene("Title Scene");
+        }
+        else if (Input.GetKeyDown(KeyCode.Keypad2))
+        {
+            SceneManager.LoadScene("Main_Map");
+        }
+        else if (Input.GetKeyDown(KeyCode.Keypad3))
+        {
+            SceneManager.LoadScene("School_Scene");
+        }
+        else if (Input.GetKeyDown(KeyCode.Keypad4))
+        {
+            SceneManager.LoadScene("Main_Map_Night");
+        }
     }
 
     void FirstSet()
