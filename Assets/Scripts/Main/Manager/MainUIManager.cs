@@ -10,7 +10,6 @@ public class MainUIManager : UIUtility
     public List<VerticalLayoutGroup> textBoxLayouts;
 
     public GameObject cellPhoneObjs;
-    public CharacterPhoneInfo phoneInfos; // 휴대폰 정보를 담는 변수
 
     [Header("# Main Inventory")]
     public List<Sprite> itemImgs; // 인벤토리에 들어갈 이미지들
@@ -35,7 +34,8 @@ public class MainUIManager : UIUtility
         optionUI = CommonUIManager.instance.optionUI;
         uiObjects.Add(optionUI);
 
-        phoneInfos = new CharacterPhoneInfo { name = "Steven", hasPhone = false, isUnlocked = false, cellPhoneObj = cellPhoneObjs, cellPhoneUI = uiObjects[2] };
+        CommonUIManager.instance.phoneInfos.cellPhoneObj = cellPhoneObjs;
+        CommonUIManager.instance.phoneInfos.cellPhoneUI = uiObjects[2];
     }
 
     private void Update()
@@ -77,11 +77,11 @@ public class MainUIManager : UIUtility
         }
 
         // I 키 -> 휴대폰
-        if (Input.GetKeyDown(KeyCode.I) && phoneInfos.hasPhone)
+        if (Input.GetKeyDown(KeyCode.I) && CommonUIManager.instance.phoneInfos.hasPhone)
         {
             if (AreAllObjectsDisabled(uiObjects))
             {
-                OpenCellPhoneItem(phoneInfos);
+                OpenCellPhoneItem(CommonUIManager.instance.phoneInfos);
             }
             else if (uiObjects[2].activeInHierarchy)
             {
@@ -140,16 +140,6 @@ public class MainUIManager : UIUtility
         }
 
 
-    }
-
-    // 휴대폰 정보 Class
-    public class CharacterPhoneInfo
-    {
-        public string name;
-        public bool hasPhone;
-        public bool isUnlocked;
-        public GameObject cellPhoneObj;
-        public GameObject cellPhoneUI;
     }
 
     public class Item

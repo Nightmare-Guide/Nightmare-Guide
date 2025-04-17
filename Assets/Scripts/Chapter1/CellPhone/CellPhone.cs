@@ -202,7 +202,7 @@ public class CellPhone : MonoBehaviour
             else
             {
                 // 스티븐 휴대폰은 슬라이더로 잠금 해제 후, 바로 잠금해제
-                mainUIManager.phoneInfos.isUnlocked = true;
+                CommonUIManager.instance.phoneInfos.isUnlocked = true;
 
                 // App Screen UI 활성화
                 appScreenUI.SetActive(true);
