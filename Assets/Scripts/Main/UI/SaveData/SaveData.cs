@@ -9,6 +9,7 @@ public class GameData
     public string storyProgress ="0_0_0";
     public bool getSmartPhone = false;
     public Vector3 playerPosition;
+    public int sanchi = 0;
 }
 
 
@@ -34,7 +35,7 @@ public class SaveData : MonoBehaviour
         Debug.Log($"게임 저장됨: {FilePath}");
     }
 
-    // JSON 불러와서 PD에 반영
+    // JSON 불러와서 LocalData에 반영
     public void LoadGame()
     {
         if (File.Exists(FilePath))
