@@ -6,8 +6,15 @@ namespace TheKiwiCoder
 {
     public class Detected_Check : DecoratorNode
     {
+        public float stopDistance = 0.5f;  // 플레이어와 닿았다고 판단할 거리
+
+        private Transform player;
+        private Transform enemy;
+
         protected override void OnStart()
         {
+            player = Chapter1_Mgr.instance.player.transform;
+            enemy = context.transform;
         }
 
         protected override void OnStop()
@@ -16,21 +23,30 @@ namespace TheKiwiCoder
 
         protected override State OnUpdate()
         {
-            // 블랙보드에서 isDetected 값 실시간으로 가져오기
-            bool isDetected = blackboard.Get<bool>("isDetected");
-
-            if (isDetected)
+            if (player == null || enemy == null)
             {
-                return child.Update();  // isDetected가 true이면 Success 반환
-            }
-
-            if (child == null)
-            {
-                Debug.LogWarning("[Detected_Check] Child node is missing!");
+                Debug.LogWarning("[Detected_Check] 플레이어나 적 트랜스폼이 없습니다!");
                 return State.Failure;
             }
 
-            return child.Update();  // 자식 노드가 있으면 자식 노드 실행
+            float distance = Vector3.Distance(enemy.position, player.position);
+
+            // 닿았다면 트리 중단
+            if (distance <= stopDistance)
+            {
+                Debug.Log("[Detected_Check] 플레이어와 닿았으므로 트리 중단");
+                return State.Failure;
+            }
+
+            // isDetected 값 확인
+            bool isDetected = blackboard.Get<bool>("isDetected");
+
+            if (isDetected && child != null)
+            {
+                return child.Update();  // 추적이나 공격 같은 자식 노드 실행
+            }
+
+            return State.Failure;  // 감지되지 않았거나 자식이 없으면 실패
         }
     }
 }

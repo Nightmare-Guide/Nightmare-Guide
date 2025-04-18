@@ -50,6 +50,15 @@ public class ChaseNode : ActionNode
             return State.Success;
         }
 
-        return State.Running;
+/*        if (distance < 0.5f)
+        {
+            if (animator != null)
+            {
+                animator.SetTrigger("Attack");
+                Debug.Log("🔥 Attack 트리거 발동!");
+            }
+        }*/
+
+            return State.Running;
     }
 }

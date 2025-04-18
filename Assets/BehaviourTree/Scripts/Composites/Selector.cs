@@ -8,53 +8,76 @@ namespace TheKiwiCoder
     {
         protected int current;
 
+        public float stopDistance = 0.5f;  // 플레이어와 닿았다고 판단할 거리
+
+        private Transform player;
+        private Transform enemy;
+
         protected override void OnStart()
         {
-            current = 0; // 실행할 자식 노드 인덱스 초기화
+            current = 0;
+
+            // 트랜스폼 캐싱
+            if (Chapter1_Mgr.instance != null)
+            {
+                player = Chapter1_Mgr.instance.player?.transform;
+            }
+            enemy = context.transform;
         }
 
         protected override void OnStop() { }
 
         protected override State OnUpdate()
         {
-            bool isDetected = blackboard.Get<bool>("isDetected"); // 🔥 실시간 감지값 가져오기
+            // 1. 유효성 검사
+            if (player == null || enemy == null)
+            {
+                Debug.LogWarning("[Selector] player 또는 enemy 트랜스폼이 없습니다.");
+                return State.Failure;
+            }
+
+            // 2. 거리 체크
+            float distance = Vector3.Distance(player.position, enemy.position);
+            if (distance <= stopDistance)
+            {
+                Debug.Log("[Selector] 플레이어와 닿음 - 트리 중단 (Failure)");
+                return State.Failure;
+            }
+
+            // 3. 감지 여부 확인
+            bool isDetected = blackboard.Get<bool>("isDetected");
             Debug.Log($"[Selector] 현재 isDetected 값: {isDetected}");
 
-            // 🔹 `isDetected` 값이 true면 오른쪽(1), false면 왼쪽(0) 실행
             int targetIndex = isDetected ? 1 : 0;
 
-            // 🔥 예외 처리: 실행할 노드가 존재하는지 확인
             if (targetIndex >= children.Count)
             {
                 Debug.LogError($"[Selector] 실행할 노드가 없습니다! (targetIndex: {targetIndex}, childrenCount: {children.Count})");
                 return State.Failure;
             }
 
-            // 🔥 선택한 노드 실행 후 상태 체크
+            // 4. 선택된 자식 노드 실행
             State result = children[targetIndex].Update();
             Debug.Log($"[Selector] 실행된 노드 {targetIndex} 결과: {result}");
 
             if (result == State.Success)
             {
-                // 성공적으로 실행된 경우, 해당 노드를 성공으로 처리
                 return State.Success;
             }
             else if (result == State.Failure)
             {
-                // 실패한 경우, 다음 노드로 진행
-                Debug.Log($"[Selector] 실패, 다른 노드를 시도합니다.");
                 current++;
                 if (current < children.Count)
                 {
-                    return State.Running;  // 아직 실행할 자식 노드가 남아있으므로 Running 상태 반환
+                    return State.Running;
                 }
                 else
                 {
-                    return State.Failure; // 모든 자식 노드가 실패하면 최종적으로 실패 반환
+                    return State.Failure;
                 }
             }
 
-            return State.Running;  // 노드가 아직 실행 중인 경우
+            return State.Running;
         }
     }
 }
