@@ -49,18 +49,6 @@ public class ChaseNode : ActionNode
         {
             return State.Success;
         }
-<<<<<<< HEAD
-=======
-        else if (distance < 2f)
-        {
-            // 🥊 어택 애니메이션 트리거 발동
-            if (animator != null)
-            {
-                animator.SetTrigger("Attack");
-                Debug.Log("Attack 트리거 발동!");
-            }      
-        }
->>>>>>> main
 
         return State.Running;
     }
