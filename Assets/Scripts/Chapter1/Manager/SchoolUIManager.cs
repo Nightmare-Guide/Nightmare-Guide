@@ -10,15 +10,22 @@ using UnityStandardAssets.Characters.FirstPerson;
 using System.Runtime.InteropServices;
 using System.Linq;
 using UnityEngine.Rendering.HighDefinition;
-using static UnityEngine.Rendering.DebugUI;
 using System.Drawing;
+using Unity.VisualScripting;
+using UnityEngine.Localization.SmartFormat.Utilities;
 
 public class SchoolUIManager : UIUtility
 {
-    [Header("# Object")]
+    [Header("# School Object")]
     public GameObject[] cellPhoneObjs;
     public List<CharacterPhoneInfo> phoneInfos; // 각각 휴대폰 정보를 담는 list
     public List<VerticalLayoutGroup> textBoxLayouts;
+
+    [Header("# School Inventory")]
+    public List<Sprite> itemImgs; // 인벤토리에 들어갈 이미지들
+    public List<Item> inventory; // 플레이어 인벤토리 데이터
+    private List<Item> items; // 인게임 아이템 데이터
+    public List<ItemSlot> inventorySlots; // 실제 UI Slot 들
 
     // Windows의 마우스 입력을 시뮬레이션하는 API
     [DllImport("user32.dll")]
@@ -33,21 +40,25 @@ public class SchoolUIManager : UIUtility
         FirstSetUP();
 
         phoneInfos = new List<CharacterPhoneInfo>();
-    }
-
-    private void OnEnable()
-    {
-        CommonUIManager.instance.schoolUIManager = this;
+        items = new List<Item>();
+        inventory = new List<Item>();
     }
 
     private void Start()
     {
-        phoneInfos.Add(new CharacterPhoneInfo { name = "Ethan", hasPhone = false, isUnlocked = false, cellPhoneObj = cellPhoneObjs[0], cellPhoneUI = uiObjects[2] });
-        phoneInfos.Add(new CharacterPhoneInfo { name = "David", hasPhone = false, isUnlocked = false, cellPhoneObj = cellPhoneObjs[1], cellPhoneUI = uiObjects[3] });
-        phoneInfos.Add(new CharacterPhoneInfo { name = "Steven", hasPhone = false, isUnlocked = false, cellPhoneObj = cellPhoneObjs[2], cellPhoneUI = uiObjects[4] });
-
         optionUI = CommonUIManager.instance.optionUI;
         uiObjects.Add(optionUI);
+
+        // 휴대폰 데이터 입력
+        phoneInfos.Add(new CharacterPhoneInfo { name = "Ethan", hasPhone = false, isUnlocked = false, cellPhoneObj = cellPhoneObjs[0], cellPhoneUI = uiObjects[2] });
+        phoneInfos.Add(new CharacterPhoneInfo { name = "David", hasPhone = false, isUnlocked = false, cellPhoneObj = cellPhoneObjs[1], cellPhoneUI = uiObjects[3] });
+
+        // 아이템 데이터 입력
+        items.Add(new Item { name = "Locker Key", itemImg = itemImgs[0], uiObj = null, schoolUIManager = this});
+        items.Add(new Item { name = "Ethan CellPhone", itemImg = itemImgs[1], uiObj = uiObjects[2], schoolUIManager = this });
+        items.Add(new Item { name = "David CellPhone", itemImg = itemImgs[2], uiObj = uiObjects[3], schoolUIManager = this });
+
+        CommonUIManager.instance.schoolUIManager = this;
     }
 
     private void Update()
@@ -73,18 +84,20 @@ public class SchoolUIManager : UIUtility
             }
         }
 
-        // 테스트용 -> 인벤토리 휴대폰 상호작용
-        if (Input.GetKeyDown(KeyCode.Keypad1) && phoneInfos[0].hasPhone)
+
+        // Tab 키 -> 인벤토리
+        if (Input.GetKeyDown(KeyCode.Tab))
         {
-            OpenCellPhoneItem(phoneInfos[0], 2);
-        }
-        else if (Input.GetKeyDown(KeyCode.Keypad2) && phoneInfos[1].hasPhone)
-        {
-            OpenCellPhoneItem(phoneInfos[1], 3);
-        }
-        else if (Input.GetKeyDown(KeyCode.Keypad3) && phoneInfos[2].hasPhone)
-        {
-            OpenCellPhoneItem(phoneInfos[2], 4);
+            if (AreAllObjectsDisabled(uiObjects))
+            {
+                InGameOpenUI(uiObjects[0]); // blur 배경 활성화
+                InGameOpenUI(uiObjects[4]);
+            }
+            else if (uiObjects[4].activeInHierarchy)
+            {
+                InGameCloseUI(uiObjects[0]);
+                InGameCloseUI(uiObjects[4]);
+            }
         }
     }
 
@@ -105,10 +118,10 @@ public class SchoolUIManager : UIUtility
     }
 
     // 인벤토리 휴대폰 버튼 함수
-    public void OpenCellPhoneItem(CharacterPhoneInfo cellPhone, int index)
+    public void OpenCellPhoneItem(CharacterPhoneInfo cellPhone, GameObject uiObj)
     {
         InGameOpenUI(uiObjects[0]); // blur 배경 활성화
-        InGameOpenUI(uiObjects[index]);
+        InGameOpenUI(uiObj);
 
         CellPhone cpLogic = cellPhone.cellPhoneUI.GetComponent<CellPhone>();
 
@@ -135,6 +148,23 @@ public class SchoolUIManager : UIUtility
                 SetUIOpacity(text, true, 0f, 0f);
             }
         }
+
+
+    }
+
+    // 아이템 획득 함수
+    public void GetItem(GameObject obj)
+    {
+        Debug.Log("Add Item");
+
+        // obj 이름을 포함하는 items 의 데이터를 inventory 에 추가
+        inventory.Add(items.Find(info => obj.gameObject.name.Contains(info.name))); // info -> items List 의 요소
+
+        // 인벤토리 정리
+        for (int i = 0; i < inventory.Count; i++)
+        {
+            inventorySlots[i].itemData = inventory[i];
+        }
     }
 
 
@@ -146,5 +176,13 @@ public class SchoolUIManager : UIUtility
         public bool isUnlocked;
         public GameObject cellPhoneObj;
         public GameObject cellPhoneUI;
+    }
+
+    public class Item
+    {
+        public string name;
+        public Sprite itemImg;
+        public GameObject uiObj;
+        public SchoolUIManager schoolUIManager;
     }
 }

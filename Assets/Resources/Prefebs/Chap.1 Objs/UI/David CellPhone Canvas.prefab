@@ -33165,6 +33165,7 @@ MonoBehaviour:
   finalRotate: {x: 0, y: 0, z: 0}
   rotateSpeed: 0.5
   isUsing: 0
+  isCanvas: 1
   LockPhoneUI: {fileID: 4963696433886033805}
   sliderUI: {fileID: 6525344140391995398}
   sliderImage:
@@ -33190,7 +33191,6 @@ MonoBehaviour:
   pwSlider: {fileID: 3336860903001805672}
   pwText: {fileID: 7299725164416221192}
   phoneBlurMat: {fileID: 2100000, guid: cc46c222e77ac334a82010aa255c5a02, type: 2}
-  unLocked: 0
   appScreenUI: {fileID: 5991578993994914296}
   appScreenImgs:
   - {fileID: 4417964823126488527}
@@ -33215,6 +33215,7 @@ MonoBehaviour:
   - {fileID: 6152140609502216267}
   - {fileID: 735654641519407369}
   schoolUIManager: {fileID: 0}
+  mainUIManager: {fileID: 0}
 --- !u!1 &9211075605672832363
 GameObject:
   m_ObjectHideFlags: 0

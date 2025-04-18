@@ -21,6 +21,7 @@ public class CellPhone : MonoBehaviour
 
     // bool 값
     public bool isUsing = false;
+    [SerializeField] bool isCanvas;
 
     [Header("# Lock Screen")]
     public GameObject LockPhoneUI;
@@ -43,6 +44,7 @@ public class CellPhone : MonoBehaviour
 
     [Header("# ETC.")]
     public SchoolUIManager schoolUIManager;
+    public MainUIManager mainUIManager;
 
     private void Awake()
     {
@@ -61,55 +63,9 @@ public class CellPhone : MonoBehaviour
         SetFirst();
     }
 
-    private void OnDisable()
-    {
-        phoneBlurMat.SetFloat("_Size", 0); // 휴대폰 Blur Spacing 값 초기화
-    }
-
-    // 처음 세팅 함수
-    public void SetFirst()
-    {
-        phoneBlurMat.SetFloat("_Size", 0); // 휴대폰 Blur Spacing 값 초기화
-
-
-        // 휴대폰 잠금 해제 여부 확인 후 잠금화면 초기화
-        foreach (CharacterPhoneInfo cellPhone in schoolUIManager.phoneInfos)
-        {
-            if (!this.gameObject.name.Contains(cellPhone.name)) continue;
-
-            if (cellPhone.isUnlocked) break;
-
-            sliderUI.SetActive(true); // 슬라이더 활성화
-            pwSlider.value = 0;
-            PhoneSlider();
-            appScreenUI.SetActive(false);
-
-            // 휴대폰 시간, 날짜, 슬라이드바 활성화
-            sliderUI.SetActive(true);
-            timeText.gameObject.SetActive(true);
-            dateText.gameObject.SetActive(true);
-
-            schoolUIManager.SetUIOpacity(sliderImage[0], true, 0.1f, 0f);
-            schoolUIManager.SetUIOpacity(sliderImage[1], true, 0.1f, 0f);
-
-            // 마지막 퍼즐 조각 제외 이미지 투명도 천천히 조정
-            for (int i = 0; i < puzzleUI.Length; i++)
-            {
-                schoolUIManager.SetUIOpacity(puzzleUI[i], false, 0.1f, 0f);
-            }
-
-            // 퍼즐 초기화
-            if (!this.gameObject.name.Contains("Steven"))
-            {
-                puzzleUI[1].GetComponent<PuzzleBoard>().InitializationPuzzle(); // 퍼즐 초기화
-                puzzleUI[0].gameObject.SetActive(false); // 퍼즐 비활성화
-            }
-        }
-    }
-
     private void Update()
     {
-        if (this.gameObject.activeSelf)
+        if (this.gameObject.activeSelf && isCanvas)
         {
             GetDate();
         }
@@ -118,6 +74,59 @@ public class CellPhone : MonoBehaviour
         {
             isUsing = false;
             this.gameObject.SetActive(false);
+        }
+    }
+
+    private void OnDisable()
+    {
+        phoneBlurMat.SetFloat("_Size", 0); // 휴대폰 Blur Spacing 값 초기화
+    }
+
+    // 처음 세팅 함수
+    public void SetFirst()
+    {
+        if (!isCanvas)
+            return;
+
+        phoneBlurMat.SetFloat("_Size", 0); // 휴대폰 Blur Spacing 값 초기화
+
+        CharacterPhoneInfo targetPhone = this.gameObject.name.Contains("Steven") ? CommonUIManager.instance.phoneInfos : schoolUIManager.phoneInfos
+                                .Find(info => this.gameObject.name.Contains(info.name));
+
+        if (targetPhone.isUnlocked)
+                return;
+    
+
+        Debug.Log("CellPhone SetFirst");
+
+        var uiManager = this.gameObject.name.Contains("Steven") ? (UIUtility)mainUIManager : (UIUtility)schoolUIManager;
+
+
+        // 휴대폰 잠금 해제 여부 확인 후 잠금화면 초기화
+        sliderUI.SetActive(true); // 슬라이더 활성화
+        pwSlider.value = 0;
+        PhoneSlider();
+        appScreenUI.SetActive(false);
+
+        // 휴대폰 시간, 날짜, 슬라이드바 활성화
+        sliderUI.SetActive(true);
+        timeText.gameObject.SetActive(true);
+        dateText.gameObject.SetActive(true);
+
+        uiManager.SetUIOpacity(sliderImage[0], true, 0.1f, 0f);
+        uiManager.SetUIOpacity(sliderImage[1], true, 0.1f, 0f);
+
+        // 마지막 퍼즐 조각 제외 이미지 투명도 천천히 조정
+        for (int i = 0; i < puzzleUI.Length; i++)
+        {
+            uiManager.SetUIOpacity(puzzleUI[i], false, 0.1f, 0f);
+        }
+
+        // 퍼즐 초기화
+        if (!this.gameObject.name.Contains("Steven"))
+        {
+            puzzleUI[1].GetComponent<PuzzleBoard>().InitializationPuzzle(); // 퍼즐 초기화
+            puzzleUI[0].gameObject.SetActive(false); // 퍼즐 비활성화
         }
     }
 
@@ -164,7 +173,11 @@ public class CellPhone : MonoBehaviour
         // UI 텍스트에 날짜와 시간 표시
         dateText.text = formattedDate;
         timeText.text = formattedTime;
-        appScreenTexts[0].text = formattedTime;
+
+        if (this.gameObject.name.Contains("Canvas"))
+        {
+            appScreenTexts[0].text = formattedTime;
+        }
     }
 
     // 휴대폰 잠금화면 슬라이더 상호작용 함수
@@ -178,10 +191,12 @@ public class CellPhone : MonoBehaviour
         // 휴대폰 Blur
         phoneBlurMat.SetFloat("_Size", pwSlider.value / 2.5f); // Spacing 값 변경
 
+        var uiManager = this.gameObject.name.Contains("Steven") ? (UIUtility)mainUIManager : (UIUtility)schoolUIManager;
+
         if (pwSlider.value >= 1)
         {
-            schoolUIManager.SetUIOpacity(sliderImage[0], false, 0.5f, 0f);
-            schoolUIManager.SetUIOpacity(sliderImage[1], false, 0.5f, 0f);
+            uiManager.SetUIOpacity(sliderImage[0], false, 0.5f, 0f);
+            uiManager.SetUIOpacity(sliderImage[1], false, 0.5f, 0f);
 
             // 에단,데이비드 휴대폰만 슬라이드 퍼즐로 연결
             if (!this.gameObject.name.Contains("Steven"))
@@ -191,29 +206,29 @@ public class CellPhone : MonoBehaviour
                 // 마지막 퍼즐 조각 제외 이미지 투명도 천천히 조정
                 for (int i = 0; i < puzzleUI.Length - 1; i++)
                 {
-                    schoolUIManager.SetUIOpacity(puzzleUI[i], true, 0.6f, 0.2f);
+                    uiManager.SetUIOpacity(puzzleUI[i], true, 0.6f, 0.2f);
                 }
             }
             else
             {
                 // 스티븐 휴대폰은 슬라이더로 잠금 해제 후, 바로 잠금해제
-                schoolUIManager.phoneInfos[2].isUnlocked = true;
+                CommonUIManager.instance.phoneInfos.isUnlocked = true;
 
                 // App Screen UI 활성화
                 appScreenUI.SetActive(true);
 
                 foreach (Image img in appScreenImgs)
                 {
-                    schoolUIManager.SetUIOpacity(img, true, 0.5f, 0f);
+                    mainUIManager.SetUIOpacity(img, true, 0.5f, 0f);
                 }
                 foreach (TextMeshProUGUI text in appScreenTexts)
                 {
-                    schoolUIManager.SetUIOpacity(text, true, 0.5f, 0f);
+                    mainUIManager.SetUIOpacity(text, true, 0.5f, 0f);
                 }
 
                 // 시간, 날짜 text 서서히 비활성화
-                schoolUIManager.SetUIOpacity(timeText, false, 0.2f, 0f);
-                schoolUIManager.SetUIOpacity(dateText, false, 0.2f, 0f);
+                mainUIManager.SetUIOpacity(timeText, false, 0.2f, 0f);
+                mainUIManager.SetUIOpacity(dateText, false, 0.2f, 0f);
             }
         }
     }
@@ -231,10 +246,26 @@ public class CellPhone : MonoBehaviour
 
         yield return new WaitForSeconds(moveSpeed - 0.05f);
 
-        schoolUIManager.InGameOpenUI(schoolUIManager.uiObjects[1]); // null 값용 UI 오브젝트 활성화
+        var uiManager = this.gameObject.name.Contains("Steven") ? (UIUtility)mainUIManager : (UIUtility)schoolUIManager;
+
+        uiManager.InGameOpenUI(uiManager.uiObjects[1]); // null 값용 UI 오브젝트 활성화
 
         // BoxCollider 비활성화
         this.GetComponent<BoxCollider>().enabled = false;
+
+        // UI 활성화
+        if (this.gameObject.name.Contains("Ethan"))
+        {
+            uiManager.OpenUI(uiManager.uiObjects[2]);
+        }
+        else if (this.gameObject.name.Contains("David"))
+        {
+            uiManager.OpenUI(uiManager.uiObjects[3]);
+        }
+        else if (this.gameObject.name.Contains("Steven"))
+        {
+            uiManager.OpenUI(uiManager.uiObjects[2]);
+        }
     }
 
     public void AppIconButton(RectTransform appScreenRect)
