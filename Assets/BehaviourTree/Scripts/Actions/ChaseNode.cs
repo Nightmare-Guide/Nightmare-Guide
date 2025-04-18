@@ -43,20 +43,11 @@ public class ChaseNode : ActionNode
 
         agent.SetDestination(player.position);
 
-        float distance = Vector3.Distance(enemy.position, player.position);
+        float distance = Vector3.Distance(enemy.position, player.position); //플레이어와의 거리
 
         if (distance > 20f)
         {
             return State.Success;
-        }
-        else if (distance < 2.6f)
-        {
-            // 🥊 어택 애니메이션 트리거 발동
-            if (animator != null)
-            {
-                animator.SetTrigger("Attack");
-                Debug.Log("Attack 트리거 발동!");
-            }      
         }
 
         return State.Running;
