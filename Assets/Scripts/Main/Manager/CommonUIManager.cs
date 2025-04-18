@@ -67,23 +67,23 @@ public class CommonUIManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Keypad1))
         {
-            SceneManager.LoadScene("Title Scene");
+            LoadingSceneManager.LoadScene("Title Scene");
         }
         else if (Input.GetKeyDown(KeyCode.Keypad2))
         {
-            SceneManager.LoadScene("Main_Map");
+            LoadingSceneManager.LoadScene("Main_Map");
         }
         else if (Input.GetKeyDown(KeyCode.Keypad3))
         {
-            SceneManager.LoadScene("School_Scene");
+            LoadingSceneManager.LoadScene("School_Scene");
         }
         else if (Input.GetKeyDown(KeyCode.Keypad4))
         {
-            SceneManager.LoadScene("Main_Map_Night");
+            LoadingSceneManager.LoadScene("Main_Map_Night");
         }
         else if (Input.GetKeyDown(KeyCode.Keypad5))
         {
-            SceneManager.LoadScene("UI");
+            LoadingSceneManager.LoadScene("UI");
         }
     }
 
