@@ -48,7 +48,7 @@ public class TitleUIManager : UIUtility
 
     public void NewGameBtn()
     {
-        SceneManager.LoadScene("Main_Map");
+        CommonUIManager.instance.MoveScene("Main_Map");
     }
 
     public void LoadGameBtn()

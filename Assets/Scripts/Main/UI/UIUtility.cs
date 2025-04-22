@@ -131,13 +131,47 @@ public class UIUtility : MonoBehaviour
         StartCoroutine(SetOpacity(img, up, time, waitTime));
     }
 
+    public void SetUIOpacity(RawImage img, bool up, float time, float waitTime)
+    {
+        StartCoroutine(SetOpacity(img, up, time, waitTime));
+    }
+
     public void SetUIOpacity(TextMeshProUGUI text, bool up, float time, float waitTime)
     {
         StartCoroutine(SetOpacity(text, up, time, waitTime));
     }
 
+
     // Image 투명도 조절 코루틴
     private IEnumerator SetOpacity(Image img, bool up, float time, float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+
+        if (up) { img.gameObject.SetActive(true); }
+
+        float elapsed = 0f;
+
+        float start = up ? 0f : 1f;
+        float end = up ? 1f : 0f;
+
+        while (elapsed < time)
+        {
+            elapsed += Time.deltaTime;
+            UnityEngine.Color color = img.color;
+            color.a = Mathf.Lerp(start, end, elapsed / time);
+            img.color = color;
+            yield return null;
+        }
+
+        // 최종 값 보정
+        UnityEngine.Color finalColor = img.color;
+        finalColor.a = end;
+        img.color = finalColor;
+
+        if (!up) { img.gameObject.SetActive(false); }
+    }
+
+    private IEnumerator SetOpacity(RawImage img, bool up, float time, float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
 
