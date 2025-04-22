@@ -15,9 +15,13 @@ public class CommonUIManager : MonoBehaviour
 
     [SerializeField] GameObject commonUICanvas;
     public GameObject optionUI;
+    public GameObject interactionUI;
+
+    [Header("# Screen")]
     public GameObject fullScreenCheckImg;
     public GameObject windowedCheckImg;
 
+    [Header("# Language")]
     [SerializeField] private TMP_Dropdown LanguageDropdown;
     [SerializeField] bool changingLanguage = false;
     public TextMeshProUGUI text;
