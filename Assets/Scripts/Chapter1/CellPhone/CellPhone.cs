@@ -95,9 +95,6 @@ public class CellPhone : MonoBehaviour
 
         if (targetPhone.isUnlocked)
                 return;
-    
-
-        Debug.Log("CellPhone SetFirst");
 
         var uiManager = this.gameObject.name.Contains("Steven") ? (UIUtility)mainUIManager : (UIUtility)schoolUIManager;
 

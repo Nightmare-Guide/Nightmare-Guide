@@ -16,6 +16,9 @@ public class CommonUIManager : MonoBehaviour
     [SerializeField] GameObject commonUICanvas;
     public GameObject optionUI;
     public GameObject interactionUI;
+    public TextMeshProUGUI questText;
+    public TextMeshProUGUI conversationNameText;
+    public TextMeshProUGUI conversationText;
 
     [Header("# Screen")]
     public Slider bgVolumeSlider;
@@ -50,7 +53,7 @@ public class CommonUIManager : MonoBehaviour
 
     [Header("# SaveData")]
     float bgVolume;
-    float effectVolume;
+    [SerializeField] float effectVolume;
     float characterVolume;
     bool isFullScreen;
     string language;
@@ -70,7 +73,7 @@ public class CommonUIManager : MonoBehaviour
             Destroy(gameObject); // 중복 생성 방지
             Destroy(commonUICanvas);
         }
-        Debug.Log("CommonUIManager Awake");
+
         FirstSet();
 
         // 첫 언어 설정
@@ -225,7 +228,6 @@ public class CommonUIManager : MonoBehaviour
         yield return new WaitForSeconds(blinkDuration);
         // yield return null;
 
-        Debug.Log("Start LoadScene()");
         LoadingSceneManager.LoadScene(sceneName);
     }
 

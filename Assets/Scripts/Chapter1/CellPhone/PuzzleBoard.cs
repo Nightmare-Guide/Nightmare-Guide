@@ -76,7 +76,6 @@ public class PuzzleBoard : MonoBehaviour
         // 빈 자리와의 거리
         float dist = Vector3.Distance(emptyTilePosition, tile.GetComponent<RectTransform>().anchoredPosition);
         dist = Mathf.Round(dist * 1000f) / 1000f; // 소수점 3째 자리에서 반올림
-        Debug.Log($"dist : {dist}");
 
         if (neighborTileDistance.Contains(dist))
         {
