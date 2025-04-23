@@ -6,15 +6,17 @@ namespace TheKiwiCoder
 {
     public class Detected_Check : DecoratorNode
     {
-        public float stopDistance = 0.5f;  // 플레이어와 닿았다고 판단할 거리
-
         private Transform player;
         private Transform enemy;
+        private Collider playerCollider;
+        private Collider enemyCollider;
 
         protected override void OnStart()
         {
             player = Chapter1_Mgr.instance.player.transform;
             enemy = context.transform;
+            playerCollider = Chapter1_Mgr.instance.player.GetComponent<CapsuleCollider>();
+            enemyCollider = context.transform.GetComponent<CapsuleCollider>();
         }
 
         protected override void OnStop()
@@ -23,30 +25,34 @@ namespace TheKiwiCoder
 
         protected override State OnUpdate()
         {
-            if (player == null || enemy == null)
+            if (player == null || enemy == null || playerCollider == null || enemyCollider == null)
             {
-                Debug.LogWarning("[Detected_Check] 플레이어나 적 트랜스폼이 없습니다!");
-                return State.Failure;
+                Debug.LogWarning("[Detected_Check] 필수 트랜스폼 또는 콜라이더가 없습니다!");
+                return State.Success;
             }
 
             float distance = Vector3.Distance(enemy.position, player.position);
 
-            // 닿았다면 트리 중단
-            if (distance <= stopDistance)
+            // 🔸 충돌 여부 체크
+            if (playerCollider.bounds.Intersects(enemyCollider.bounds))
             {
-                Debug.Log("[Detected_Check] 플레이어와 닿았으므로 트리 중단");
+                Debug.Log("[Detected_Check] 플레이어와 적이 충돌했습니다. 사망 연출 실행!");
+                blackboard.UpdateCollisionStatus(true);
+
+                if (blackboard.IsCollidedWithPlayer())
+                {
+                    return child.Update();
+                }
                 return State.Failure;
             }
 
-            // isDetected 값 확인
             bool isDetected = blackboard.Get<bool>("isDetected");
-
             if (isDetected && child != null)
             {
-                return child.Update();  // 추적이나 공격 같은 자식 노드 실행
+                return child.Update();
             }
 
-            return State.Failure;  // 감지되지 않았거나 자식이 없으면 실패
+            return State.Failure;
         }
     }
 }

@@ -12,7 +12,8 @@ namespace TheKiwiCoder
 
         private Transform player;
         private Transform enemy;
-
+        private Collider playerCollider;
+        private Collider enemyCollider;
         protected override void OnStart()
         {
             current = 0;
@@ -23,28 +24,34 @@ namespace TheKiwiCoder
                 player = Chapter1_Mgr.instance.player?.transform;
             }
             enemy = context.transform;
+            playerCollider = Chapter1_Mgr.instance.player.GetComponent<CapsuleCollider>();
+            enemyCollider = context.transform.GetComponent<CapsuleCollider>();
         }
 
         protected override void OnStop() { }
 
         protected override State OnUpdate()
         {
-            // 1. 유효성 검사
             if (player == null || enemy == null)
             {
                 Debug.LogWarning("[Selector] player 또는 enemy 트랜스폼이 없습니다.");
                 return State.Failure;
             }
 
-            // 2. 거리 체크
-            float distance = Vector3.Distance(player.position, enemy.position);
-            if (distance <= stopDistance)
+            // 직접 충돌 체크
+            if (playerCollider != null && enemyCollider != null &&
+                playerCollider.bounds.Intersects(enemyCollider.bounds))
             {
-                Debug.Log("[Selector] 플레이어와 닿음 - 트리 중단 (Failure)");
+                Debug.Log("[Selector] 충돌 감지됨 → 사망 연출 노드 실행");
+                blackboard.Set("isCollided", true);
+                if (children.Count > 2)
+                {
+                    return children[2].Update(); // 죽음 연출용 노드
+                }
                 return State.Failure;
             }
 
-            // 3. 감지 여부 확인
+            // 감지 여부에 따라 자식 노드 선택
             bool isDetected = blackboard.Get<bool>("isDetected");
             Debug.Log($"[Selector] 현재 isDetected 값: {isDetected}");
 
@@ -56,28 +63,13 @@ namespace TheKiwiCoder
                 return State.Failure;
             }
 
-            // 4. 선택된 자식 노드 실행
             State result = children[targetIndex].Update();
             Debug.Log($"[Selector] 실행된 노드 {targetIndex} 결과: {result}");
 
-            if (result == State.Success)
-            {
-                return State.Success;
-            }
-            else if (result == State.Failure)
-            {
-                current++;
-                if (current < children.Count)
-                {
-                    return State.Running;
-                }
-                else
-                {
-                    return State.Failure;
-                }
-            }
+            if (result == State.Success) return State.Success;
 
-            return State.Running;
+            current++;
+            return current < children.Count ? State.Running : State.Failure;
         }
     }
-}
+ }
