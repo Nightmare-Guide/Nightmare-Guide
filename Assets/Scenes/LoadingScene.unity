@@ -350,7 +350,7 @@ VideoPlayer:
   m_TargetMaterialProperty: <noninit>
   m_RenderMode: 2
   m_AspectRatio: 2
-  m_DataSource: 1
+  m_DataSource: 0
   m_TimeUpdateMode: 2
   m_PlaybackSpeed: 1
   m_AudioOutputMode: 2
@@ -358,7 +358,7 @@ VideoPlayer:
   - {fileID: 0}
   m_DirectAudioVolumes:
   - 1
-  m_Url: file://D:/Git/Nightmare-Guide/Assets/StreamingAssets/Loading.mp4
+  m_Url: gAssets/Loading.mp4mare-Guide/Assets/StreamingAssets/Loading.mp4
   m_EnabledAudioTracks: 01
   m_DirectAudioMutes: 00
   m_ControlledAudioTrackCount: 1
@@ -572,6 +572,7 @@ MonoBehaviour:
   playerCamera: {fileID: 0}
   videoPlayer: {fileID: 768181950}
   videoImg: {fileID: 1339539648}
+  videoFileName: Loading.mp4
 --- !u!4 &1155391301
 Transform:
   m_ObjectHideFlags: 0
