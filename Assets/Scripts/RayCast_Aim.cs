@@ -37,7 +37,10 @@ public class RayCast_Aim : MonoBehaviour
                     Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.red); // 실제 충돌 지점까지 빨간색
 
                     Debug.Log($"Object Name : {click_object.name}");
-
+                    if (StoryCheck(click_object))
+                    {
+                        return;
+                    }
                     // 태그가 "maze_Btn"이라면 Select_Btn() 호출
                     if (click_object.CompareTag("maze_Btn"))
                     {
@@ -205,5 +208,17 @@ public class RayCast_Aim : MonoBehaviour
         arr[1] = cellPhoneRotate;
 
         return arr;
+    }
+
+
+    public bool StoryCheck(GameObject obj)
+    {
+        StoryInteractable interactable = obj.GetComponent<StoryInteractable>();
+        if (interactable != null)
+        {
+            interactable.Interact();
+            return true; // 상호작용 완료
+        }
+        return false; // 상호작용 없음
     }
 }
