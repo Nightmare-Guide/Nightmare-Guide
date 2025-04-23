@@ -18,6 +18,11 @@ public class CommonUIManager : MonoBehaviour
     public GameObject interactionUI;
 
     [Header("# Screen")]
+    public Slider bgVolumeSlider;
+    public Slider effectVolumeSlider;
+    public Slider characterVolumeSlider;
+
+    [Header("# Screen")]
     public GameObject fullScreenCheckImg;
     public GameObject windowedCheckImg;
 
@@ -42,6 +47,14 @@ public class CommonUIManager : MonoBehaviour
     public TitleUIManager TitleUIManager;
     public MainUIManager mainUIManager;
     public SchoolUIManager schoolUIManager;
+
+    [Header("# SaveData")]
+    float bgVolume;
+    float effectVolume;
+    float characterVolume;
+    bool isFullScreen;
+    string language;
+    public SaveStevenPhoneData phoneDatas;
 
 
     private void Awake()
@@ -94,6 +107,16 @@ public class CommonUIManager : MonoBehaviour
         }
     }
 
+    private void OnDisable()
+    {
+        phoneDatas = new SaveStevenPhoneData { name = phoneInfos.name, hasPhone = phoneInfos.hasPhone, isUnlocked = phoneInfos.isUnlocked };
+    }
+
+    private void OnApplicationQuit()
+    {
+        phoneDatas = new SaveStevenPhoneData { name = phoneInfos.name, hasPhone = phoneInfos.hasPhone, isUnlocked = phoneInfos.isUnlocked };
+    }
+
     void FirstSet()
     {
         commonUICanvas.SetActive(true);
@@ -121,6 +144,8 @@ public class CommonUIManager : MonoBehaviour
         // 전체 화면 코드 필요
         fullScreenCheckImg.SetActive(true);
         windowedCheckImg.SetActive(false);
+
+        isFullScreen = true;
     }
 
     public void WindowedBtn()
@@ -128,6 +153,8 @@ public class CommonUIManager : MonoBehaviour
         // 창모드 화면 코드 필요
         fullScreenCheckImg.SetActive(false);
         windowedCheckImg.SetActive(true);
+
+        isFullScreen = false;
     }
 
     // DropDown 에 들어가는 값 변경 함수
@@ -140,6 +167,9 @@ public class CommonUIManager : MonoBehaviour
             return;
 
         changingLanguage = true;
+
+        // 언어 저장
+        language = LocalizationSettings.AvailableLocales.Locales[index].Identifier.Code;
 
         StartCoroutine(ChangeLocalization(index));
     }
@@ -235,6 +265,24 @@ public class CommonUIManager : MonoBehaviour
         blinkObj.SetActive(false);
     }
 
+    public void SetBGVolume(float value)
+    {
+        // bgAudioSource.volume = value;
+        bgVolume = value;
+    }
+
+    public void SetEffectVolume(float value)
+    {
+        // effectAudioSource.volume = value;
+        effectVolume = value;
+    }
+
+    public void SetCharacterVolume(float value)
+    {
+        // characterAudioSource.volume = value;
+        characterVolume = value;
+    }
+
     // 휴대폰 정보 Class
     public class StevenPhoneInfo
     {
@@ -243,5 +291,12 @@ public class CommonUIManager : MonoBehaviour
         public bool isUnlocked;
         public GameObject cellPhoneObj;
         public GameObject cellPhoneUI;
+    }
+
+    public class SaveStevenPhoneData
+    {
+        public string name;
+        public bool hasPhone;
+        public bool isUnlocked;
     }
 }

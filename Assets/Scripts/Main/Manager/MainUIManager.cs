@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -14,8 +15,11 @@ public class MainUIManager : UIUtility
     [Header("# Main Inventory")]
     public List<Sprite> itemImgs; // 인벤토리에 들어갈 이미지들
     public List<Item> inventory; // 플레이어 인벤토리 데이터
-    private List<Item> items; // 인게임 아이템 데이터
+    public List<Item> items; // 인게임 아이템 데이터
     public List<ItemSlot> inventorySlots; // 실제 UI Slot 들
+
+    [Header("# SaveData")]
+    public List<String> inventoryDatas;
 
     private void Awake()
     {
@@ -88,6 +92,19 @@ public class MainUIManager : UIUtility
     private void OnDisable()
     {
         CommonUIManager.instance.mainUIManager = null;
+
+        foreach (Item item in inventory)
+        {
+            inventoryDatas.Add(item.name);
+        }
+    }
+
+    private void OnApplicationQuit()
+    {
+        foreach (Item item in inventory)
+        {
+            inventoryDatas.Add(item.name);
+        }
     }
 
     // 시작 세팅 함수
@@ -142,5 +159,12 @@ public class MainUIManager : UIUtility
         public Sprite itemImg;
         public GameObject uiObj;
         public SchoolUIManager schoolUIManager;
+    }
+
+    public class SavePhoneData
+    {
+        public string name;
+        public bool hasPhone;
+        public bool isUnlocked;
     }
 }

@@ -1,4 +1,9 @@
+using System.Collections.Generic;
+using System;
 using UnityEngine;
+
+using static SchoolUIManager;
+using static CommonUIManager;
 
 [CreateAssetMenu(fileName = "ProgressData", menuName = "Game/ProgressData")]
 public class ProgressData : ScriptableObject
@@ -14,6 +19,18 @@ public class ProgressData : ScriptableObject
 
     [Header("플레이어 산치")]
     public int sanchi = 0;
+    [Header("MainUIManager")]
+    public List<String> mainInventoryDatas;
+    [Header("SchoolUIManager")]
+    public List<SavePhoneData> phoneDatas;
+    public List<String> inventoryDatas;
+    [Header("CommonUIManager")]
+    public SaveStevenPhoneData stevenPhoneDatas;
+    float bgVolume;
+    float effectVolume;
+    float characterVolume;
+    bool isFullScreen;
+    string language;
     // 초기화 기능
     public void ResetProgress()
     {

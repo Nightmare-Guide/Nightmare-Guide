@@ -24,8 +24,12 @@ public class SchoolUIManager : UIUtility
     [Header("# School Inventory")]
     public List<Sprite> itemImgs; // 인벤토리에 들어갈 이미지들
     public List<Item> inventory; // 플레이어 인벤토리 데이터
-    private List<Item> items; // 인게임 아이템 데이터
+    public List<Item> items; // 인게임 아이템 데이터
     public List<ItemSlot> inventorySlots; // 실제 UI Slot 들
+
+    [Header("# SaveData")]
+    public List<SavePhoneData> phoneDatas;
+    public List<String> inventoryDatas;
 
     // Windows의 마우스 입력을 시뮬레이션하는 API
     [DllImport("user32.dll")]
@@ -104,6 +108,25 @@ public class SchoolUIManager : UIUtility
     private void OnDisable()
     {
         CommonUIManager.instance.schoolUIManager = null;
+
+        phoneDatas.Add(new SavePhoneData { name = phoneInfos[0].name, hasPhone = phoneInfos[0].hasPhone, isUnlocked = phoneInfos[0].isUnlocked });
+        phoneDatas.Add(new SavePhoneData { name = phoneInfos[1].name, hasPhone = phoneInfos[2].hasPhone, isUnlocked = phoneInfos[3].isUnlocked });
+        
+        foreach(Item item in inventory)
+        {
+            inventoryDatas.Add(item.name);
+        }
+    }
+
+    private void OnApplicationQuit()
+    {
+        phoneDatas.Add(new SavePhoneData { name = phoneInfos[0].name, hasPhone = phoneInfos[0].hasPhone, isUnlocked = phoneInfos[0].isUnlocked });
+        phoneDatas.Add(new SavePhoneData { name = phoneInfos[1].name, hasPhone = phoneInfos[2].hasPhone, isUnlocked = phoneInfos[3].isUnlocked });
+
+        foreach (Item item in inventory)
+        {
+            inventoryDatas.Add(item.name);
+        }
     }
 
     // 시작 세팅 함수
@@ -184,5 +207,12 @@ public class SchoolUIManager : UIUtility
         public Sprite itemImg;
         public GameObject uiObj;
         public SchoolUIManager schoolUIManager;
+    }
+    [System.Serializable]
+    public class SavePhoneData
+    {
+        public string name;
+        public bool hasPhone;
+        public bool isUnlocked;
     }
 }
