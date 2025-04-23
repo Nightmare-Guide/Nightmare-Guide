@@ -1,7 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using static CommonUIManager;
+using static SchoolUIManager;
 
 [System.Serializable]
 public class GameData
@@ -9,7 +12,20 @@ public class GameData
     public string storyProgress = "0_0_0";
     public bool getSmartPhone = false;
     public Vector3 playerPosition;
+    //[Header("플레이어 산치")]
     public int sanchi = 0;
+   // [Header("MainUIManager")]
+    public List<String> mainInventoryDatas;
+   // [Header("SchoolUIManager")]
+    public List<SavePhoneData> phoneDatas;
+    public List<String> inventoryDatas;
+  //  [Header("CommonUIManager")]
+    public SaveStevenPhoneData stevenPhoneDatas;
+    float bgVolume;
+    float effectVolume;
+    float characterVolume;
+    bool isFullScreen;
+    string language;
 }
 
 public class GameDataManager : MonoBehaviour

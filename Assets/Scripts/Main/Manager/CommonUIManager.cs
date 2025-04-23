@@ -54,7 +54,7 @@ public class CommonUIManager : MonoBehaviour
     float characterVolume;
     bool isFullScreen;
     string language;
-    public SavePhoneData phoneDatas;
+    public SaveStevenPhoneData phoneDatas;
 
 
     private void Awake()
@@ -109,12 +109,12 @@ public class CommonUIManager : MonoBehaviour
 
     private void OnDisable()
     {
-        phoneDatas = new SavePhoneData { name = phoneInfos.name, hasPhone = phoneInfos.hasPhone, isUnlocked = phoneInfos.isUnlocked };
+        phoneDatas = new SaveStevenPhoneData { name = phoneInfos.name, hasPhone = phoneInfos.hasPhone, isUnlocked = phoneInfos.isUnlocked };
     }
 
     private void OnApplicationQuit()
     {
-        phoneDatas = new SavePhoneData { name = phoneInfos.name, hasPhone = phoneInfos.hasPhone, isUnlocked = phoneInfos.isUnlocked };
+        phoneDatas = new SaveStevenPhoneData { name = phoneInfos.name, hasPhone = phoneInfos.hasPhone, isUnlocked = phoneInfos.isUnlocked };
     }
 
     void FirstSet()
@@ -293,7 +293,7 @@ public class CommonUIManager : MonoBehaviour
         public GameObject cellPhoneUI;
     }
 
-    public class SavePhoneData
+    public class SaveStevenPhoneData
     {
         public string name;
         public bool hasPhone;

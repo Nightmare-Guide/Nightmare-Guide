@@ -208,7 +208,7 @@ public class SchoolUIManager : UIUtility
         public GameObject uiObj;
         public SchoolUIManager schoolUIManager;
     }
-
+    [System.Serializable]
     public class SavePhoneData
     {
         public string name;
