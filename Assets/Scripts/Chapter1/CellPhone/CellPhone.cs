@@ -280,7 +280,7 @@ public class CellPhone : MonoBehaviour
 
     public void BackButton(RectTransform appScreenRect)
     {
-        StartCoroutine(AnchorsCoroutine(appScreenRect, Vector2.zero, Vector2.one, Vector2.zero, new Vector2(1, 0), 0.08f, true));
+        StartCoroutine(AnchorsCoroutine(appScreenRect, Vector2.zero, Vector2.one, Vector2.zero, new Vector2(1, 0), 0.08f, false));
     }
 
     public void HomeButton(RectTransform appScreenRect)

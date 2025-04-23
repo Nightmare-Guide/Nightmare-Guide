@@ -12,6 +12,8 @@ public class ProgressData : ScriptableObject
     [Header("플레이어 위치")]
     public Vector3 playerPosition = Vector3.zero;
 
+    [Header("플레이어 산치")]
+    public int sanchi = 0;
     // 초기화 기능
     public void ResetProgress()
     {

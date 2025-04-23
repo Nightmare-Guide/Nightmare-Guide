@@ -16,8 +16,7 @@ public class StoryTrigger : MonoBehaviour
         }
     }
   
-    public void OnStory(string value)
-    {
-        CSVRoad_Story.instance.OnSelectChapter(value);
-    }
+   
+
+    
 }

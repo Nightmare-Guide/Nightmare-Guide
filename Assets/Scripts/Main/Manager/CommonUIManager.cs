@@ -7,10 +7,7 @@ using UnityEngine;
 using UnityEngine.Localization.Settings;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using UnityStandardAssets.Characters.FirstPerson;
 using static SchoolUIManager;
-using static System.Net.Mime.MediaTypeNames;
-using static UnityEditor.Progress;
 
 public class CommonUIManager : MonoBehaviour
 {
@@ -18,9 +15,13 @@ public class CommonUIManager : MonoBehaviour
 
     [SerializeField] GameObject commonUICanvas;
     public GameObject optionUI;
+    public GameObject interactionUI;
+
+    [Header("# Screen")]
     public GameObject fullScreenCheckImg;
     public GameObject windowedCheckImg;
 
+    [Header("# Language")]
     [SerializeField] private TMP_Dropdown LanguageDropdown;
     [SerializeField] bool changingLanguage = false;
     public TextMeshProUGUI text;
@@ -32,10 +33,16 @@ public class CommonUIManager : MonoBehaviour
     // CellPhone
     public CharacterPhoneInfo phoneInfos;
 
+    [Header("# Blink")]
+    public GameObject blinkObj;
+    public Material eyeMaterial;
+    public float blinkDuration = 1.0f;
+
     [Header("# UIManagers")]
     public TitleUIManager TitleUIManager;
     public MainUIManager mainUIManager;
     public SchoolUIManager schoolUIManager;
+
 
     private void Awake()
     {
@@ -67,23 +74,23 @@ public class CommonUIManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Keypad1))
         {
-            SceneManager.LoadScene("Title Scene");
+            MoveScene("Title Scene");
         }
         else if (Input.GetKeyDown(KeyCode.Keypad2))
         {
-            SceneManager.LoadScene("Main_Map");
+            MoveScene("Main_Map");
         }
         else if (Input.GetKeyDown(KeyCode.Keypad3))
         {
-            SceneManager.LoadScene("School_Scene");
+            MoveScene("School_Scene");
         }
         else if (Input.GetKeyDown(KeyCode.Keypad4))
         {
-            SceneManager.LoadScene("Main_Map_Night");
+            MoveScene("Main_Map_Night");
         }
         else if (Input.GetKeyDown(KeyCode.Keypad5))
         {
-            SceneManager.LoadScene("UI");
+            MoveScene("UI");
         }
     }
 
@@ -103,7 +110,9 @@ public class CommonUIManager : MonoBehaviour
         }
         else
         {
-            SceneManager.LoadScene("Title Scene");
+            MoveScene("Title Scene");
+
+            optionUI.SetActive(false);
         }
     }
 
@@ -171,6 +180,60 @@ public class CommonUIManager : MonoBehaviour
         _ when text.text.Any(c => c is >= 'A' and <= 'Z' || c is >= 'a' and <= 'z') => "en", // ¿µ¾î
         _ => "unKnown"
     };
+
+
+    // ¾À ÀÌµ¿ ÇÔ¼ö
+    public void MoveScene(string sceneName)
+    {
+        StartCoroutine(MoveSceneRoutine(sceneName));
+    }
+
+    IEnumerator MoveSceneRoutine(string sceneName)
+    {
+        Blink(false);
+
+        yield return new WaitForSeconds(blinkDuration);
+        // yield return null;
+
+        Debug.Log("Start LoadScene()");
+        LoadingSceneManager.LoadScene(sceneName);
+    }
+
+    // ´« °¨°í/¶ß´Â ¾Ö´Ï¸ÞÀÌ¼Ç ½¦ÀÌ´õ
+    public void Blink(bool open)
+    {
+        StartCoroutine(BlinkRoutine(open));
+    }
+
+    IEnumerator BlinkRoutine(bool open)
+    {
+        blinkObj.SetActive(true);
+
+        if (open)
+        {
+            // ´« ¶ß±â
+            for (float t = 0; t < blinkDuration; t += Time.deltaTime)
+            {
+                float cutoff = Mathf.Lerp(-0.1f, 0.6f, t / blinkDuration);
+                eyeMaterial.SetFloat("_Cutoff", cutoff);
+                yield return null;
+            }
+        }
+        else
+        {
+            // ´« °¨±â
+            for (float t = 0; t < blinkDuration; t += Time.deltaTime)
+            {
+                float cutoff = Mathf.Lerp(0.6f, -0.1f, t / blinkDuration);
+                eyeMaterial.SetFloat("_Cutoff", cutoff);
+                yield return null;
+            }
+        }
+
+        yield return new WaitForSeconds(blinkDuration);
+
+        blinkObj.SetActive(false);
+    }
 
     // ÈÞ´ëÆù Á¤º¸ Class
     public class StevenPhoneInfo
