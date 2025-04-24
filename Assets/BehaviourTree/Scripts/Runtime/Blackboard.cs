@@ -16,12 +16,12 @@ namespace TheKiwiCoder
         // 기본값 설정
         public Blackboard()
         {
-            // 초기값 설정
-            data["isDetected"] = false;       // 초기값 false
-            data["lockerDetected"] = false;   // 🔹 lockerDetected 추가
+            data["isDetected"] = false;
+            data["lockerDetected"] = false;
+            data["isCollidedWithPlayer"] = false;   // 🔸 새로 추가된 충돌 상태 값
         }
 
-        // 인덱서 사용 → blackboard["isDetected"] = true; 형태로 저장 가능
+        // 인덱서
         public object this[string key]
         {
             get => data.TryGetValue(key, out var value) ? value : null;
@@ -34,32 +34,22 @@ namespace TheKiwiCoder
             return data.TryGetValue(keyName, out var value) && value is T typedValue ? typedValue : default;
         }
 
-        // 데이터 저장 메서드 (제네릭)
+        // 데이터 저장 메서드
         public void Set<T>(string keyName, T value)
         {
             data[keyName] = value;
         }
 
-        // isDetected 값 관리
-        public bool IsDetected()
-        {
-            return Get<bool>("isDetected");
-        }
+        // isDetected 관련
+        public bool IsDetected() => Get<bool>("isDetected");
+        public void UpdateDetectionStatus(bool value) => Set("isDetected", value);
 
-        public void UpdateDetectionStatus(bool value)
-        {
-            Set("isDetected", value);
-        }
+        // lockerDetected 관련
+        public bool LockerDetected() => Get<bool>("lockerDetected");
+        public void UpdateLockerDetectionStatus(bool value) => Set("lockerDetected", value);
 
-        // lockerDetected 값 관리
-        public bool LockerDetected()
-        {
-            return Get<bool>("lockerDetected");
-        }
-
-        public void UpdateLockerDetectionStatus(bool value)
-        {
-            Set("lockerDetected", value);
-        }
+        // 🔸 isCollidedWithPlayer 관련
+        public bool IsCollidedWithPlayer() => Get<bool>("isCollidedWithPlayer");
+        public void UpdateCollisionStatus(bool value) => Set("isCollidedWithPlayer", value);
     }
 }

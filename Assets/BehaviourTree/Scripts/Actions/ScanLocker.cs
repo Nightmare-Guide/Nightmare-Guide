@@ -9,21 +9,24 @@ public class ScanLocker : ActionNode
 
     protected override void OnStart()
     {
-        bool lockerDetected = blackboard.Get<bool>("lockerDetected"); // 🔹 블랙보드에서 lockerDetected 값 가져오기
+        targetLocker = null; // 🔹 항상 초기화
+
+        bool lockerDetected = blackboard.Get<bool>("lockerDetected");
 
         if (!lockerDetected)
         {
-            return; // 🔹 락커가 탐지되지 않았다면 실행 안 함
+            return;
         }
 
-        targetLocker = blackboard.Get<GameObject>("detectedLocker"); // 🔹 탐지된 락커 가져오기
+        targetLocker = blackboard.Get<GameObject>("detectedLocker");
 
         if (targetLocker != null)
         {
             Vector3 lockerFront = targetLocker.transform.position + targetLocker.transform.forward * 1.0f;
-            blackboard.Set("moveToPosition", lockerFront); // 🔹 이동 목표 설정
+            blackboard.Set("moveToPosition", lockerFront);
         }
     }
+
 
 
     protected override void OnStop()
