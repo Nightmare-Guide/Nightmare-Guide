@@ -110,10 +110,6 @@ public class CommonUIManager : MonoBehaviour
         }
     }
 
-    private void OnDisable()
-    {
-        phoneDatas = new SaveStevenPhoneData { name = phoneInfos.name, hasPhone = phoneInfos.hasPhone, isUnlocked = phoneInfos.isUnlocked };
-    }
 
     private void OnApplicationQuit()
     {

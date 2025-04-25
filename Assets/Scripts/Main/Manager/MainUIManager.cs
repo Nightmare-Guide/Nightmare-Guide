@@ -92,11 +92,6 @@ public class MainUIManager : UIUtility
     private void OnDisable()
     {
         CommonUIManager.instance.mainUIManager = null;
-
-        foreach (Item item in inventory)
-        {
-            inventoryDatas.Add(item.name);
-        }
     }
 
     private void OnApplicationQuit()

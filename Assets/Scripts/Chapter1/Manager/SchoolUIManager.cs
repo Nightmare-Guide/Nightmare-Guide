@@ -44,6 +44,7 @@ public class SchoolUIManager : UIUtility
         FirstSetUP();
 
         phoneInfos = new List<CharacterPhoneInfo>();
+        phoneDatas = new List<SavePhoneData>();
         items = new List<Item>();
         inventory = new List<Item>();
     }
@@ -108,14 +109,6 @@ public class SchoolUIManager : UIUtility
     private void OnDisable()
     {
         CommonUIManager.instance.schoolUIManager = null;
-
-        phoneDatas.Add(new SavePhoneData { name = phoneInfos[0].name, hasPhone = phoneInfos[0].hasPhone, isUnlocked = phoneInfos[0].isUnlocked });
-        phoneDatas.Add(new SavePhoneData { name = phoneInfos[1].name, hasPhone = phoneInfos[2].hasPhone, isUnlocked = phoneInfos[3].isUnlocked });
-        
-        foreach(Item item in inventory)
-        {
-            inventoryDatas.Add(item.name);
-        }
     }
 
     private void OnApplicationQuit()

@@ -5286,8 +5286,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.0008544922, y: -0.00012230796}
-  m_SizeDelta: {x: 0, y: 560}
+  m_AnchoredPosition: {x: 0, y: 105.11}
+  m_SizeDelta: {x: 0, y: 810}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &7970112142921353960
 MonoBehaviour:
@@ -5309,7 +5309,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 390, y: 550}
+  m_CellSize: {x: 390, y: 800}
   m_Spacing: {x: 20, y: 20}
   m_Constraint: 0
   m_ConstraintCount: 2
@@ -5447,8 +5447,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6089541822324099175}
   m_HandleRect: {fileID: 6087591414394326300}
   m_Direction: 2
-  m_Value: 1.0000002
-  m_Size: 0
+  m_Value: 0.4999791
+  m_Size: 0.74048
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -6226,7 +6226,7 @@ RectTransform:
   m_Father: {fileID: 2802186895746994319}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0.2, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
@@ -7158,8 +7158,8 @@ RectTransform:
   - {fileID: 8266154302398430929}
   m_Father: {fileID: 1635959089606406800}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 92, y: -830}
   m_SizeDelta: {x: 180, y: 220}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -7278,8 +7278,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 197, y: -285}
-  m_SizeDelta: {x: 390, y: 550}
+  m_AnchoredPosition: {x: 197, y: -410}
+  m_SizeDelta: {x: 390, y: 800}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2748883820330923757
 CanvasRenderer:
@@ -7309,21 +7309,14 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uACB0\uAD6D \uC77C\uC774 \uD130\uC838\uBC84\uB838\uB2E4.\n\n\uBCA4\uC790\uBBFC\uC744
-    \uB3C4\uC640\uC904 \uB54C \uB370\uC774\uBE44\uB4DC\uD55C\uD14C \uB4E4\uD0A4\uACE0
-    \uB9D0\uC558\uB2E4.\n \r\n\uB370\uC774\uBE44\uB4DC\uAC00 \uB0A0 \uC555\uBC15\uD558\uBA74\uC11C
-    \uC704\uD611\uD558\uB294\uB370,\n\uC2EC\uC7A5\uC774 \uCFF5\uCF85\uAC70\uB9AC\uACE0
-    \uB108\uBB34 \uBB34\uC11C\uC6E0\uB2E4.\n \r\n\uD558\uC9C0\uB9CC\u2026 \uBB3C\uB7EC\uC11C\uACE0
-    \uC2F6\uC9C0 \uC54A\uC558\uACE0, \n\uADF8\uB9CC \uAD34\uB86D\uD788\uB77C\uACE0
-    \uC18C\uB9AC\uB97C \uCCE4\uC5C8\uB2E4.\n\r\n\uD558\uC9C0\uB9CC \uB3CC\uC544\uC628
-    \uAC83\uC740 \uB370\uC774\uBE44\uB4DC\uC758 \n\uC8FC\uBA39\uC774\uC5C8\uACE0,
-    \uB098\uB294 \uC21C\uC2DD\uAC04\uC5D0 \uC4F0\uB7EC\uC84C\uB2E4.\n \r\n\uADF8
-    \uC774\uD6C4\uB85C \uC218\uCC28\uB840 \uB450\uB4E4\uACA8 \uB9DE\uC558\uACE0,
-    \n\uBCA4\uC790\uBBFC \uB300\uC2E0 \uB0B4\uAC00 \uB370\uC774\uBE44\uB4DC \uBB34\uB9AC\uC758
-    \n\uD45C\uC801\uC774 \uB418\uC5C8\uB2E4.\n\r\n\uB108\uBB34 \uC544\uD504\uACE0,
-    \uB108\uBB34 \uBB34\uC12D\uB2E4\u2026\n\r\n\uB9CC\uC57D \uB2E4\uC2DC \uADF8 \uC21C\uAC04\uC73C\uB85C
-    \uB3CC\uC544\uAC04\uB2E4\uBA74\u2026 \n\uADF8\uB798\uB3C4 \uBCA4\uC790\uBBFC\uC744
-    \uB3C4\uC640\uC92C\uC5B4\uC57C \uD588\uC744\uAE4C?..\r"
+  m_text: "It finally happened.\n\nI got caught by David while trying to \nhelp Benjamin.\n\nHe
+    got up in my face and started \nthreatening me.\nmy heart was pounding, and I
+    was \nscared out of my mind.\n\nBut\u2026 I didn\u2019t want to back down.\nSo
+    I shouted, \u201CJust stop it already!\u201D\n\nWhat I got in return was David\u2019s
+    fist.\nI was on the ground before I even \nknew what happened.\n\nAfter that,
+    they beat me up again \nand again,\nand now, instead of Benjamin,\nI\u2019ve
+    become their new target.\n\nIt hurts so much\u2026 and I\u2019m terrified.\n\nIf
+    I could go back to that moment\u2026\nwould I still choose to help Benjamin?"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 465af517bae68d2418e447337ce36b3f, type: 2}
   m_sharedMaterial: {fileID: 7906800258845002438, guid: 465af517bae68d2418e447337ce36b3f, type: 2}
@@ -7807,8 +7800,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1301315689428199825}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0, y: 0.12975457}
+  m_AnchorMax: {x: 1, y: 0.8702346}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -8369,8 +8362,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.0008544922, y: -0.00024409742}
-  m_SizeDelta: {x: 0, y: 610}
+  m_AnchoredPosition: {x: 0, y: 210.21304}
+  m_SizeDelta: {x: 0, y: 810}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &2037804914775189369
 MonoBehaviour:
@@ -8392,7 +8385,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 390, y: 600}
+  m_CellSize: {x: 390, y: 800}
   m_Spacing: {x: 20, y: 20}
   m_Constraint: 0
   m_ConstraintCount: 2
@@ -8877,7 +8870,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 4359599282592089720}
   m_Direction: 2
   m_Value: 1.0000001
-  m_Size: 0.109052494
+  m_Size: 0.07656878
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -9807,7 +9800,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uBC00\uC5B4\uC11C \uC7A0\uAE08\uD574\uC81C"
+  m_text: Slide to Ulock
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 465af517bae68d2418e447337ce36b3f, type: 2}
   m_sharedMaterial: {fileID: 7906800258845002438, guid: 465af517bae68d2418e447337ce36b3f, type: 2}
@@ -10206,7 +10199,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7554041409582278082}
   m_HandleRect: {fileID: 8740187176751273740}
   m_Direction: 2
-  m_Value: 1.0000005
+  m_Value: 1
   m_Size: 0
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -11203,10 +11196,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 5210569305793316614}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 80.79999, y: -195}
+  m_SizeDelta: {x: 110, y: 110}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4103781603557585310
 CanvasRenderer:
@@ -12466,8 +12459,8 @@ RectTransform:
   - {fileID: 3400849044768347560}
   m_Father: {fileID: 1635959089606406800}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 92, y: -350}
   m_SizeDelta: {x: 180, y: 220}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -14556,7 +14549,7 @@ RectTransform:
   m_Father: {fileID: 750795544640327604}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.9234312}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -15285,8 +15278,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.0008544922, y: -0.00031724788}
-  m_SizeDelta: {x: -3.0140076, y: 610}
+  m_AnchoredPosition: {x: 1.5070038, y: 0}
+  m_SizeDelta: {x: -3.0140076, y: 810}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &4672761896212222925
 MonoBehaviour:
@@ -15308,7 +15301,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 390, y: 600}
+  m_CellSize: {x: 390, y: 800}
   m_Spacing: {x: 20, y: 20}
   m_Constraint: 0
   m_ConstraintCount: 2
@@ -16809,8 +16802,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 577651413830570958}
   m_HandleRect: {fileID: 5891473296383014574}
   m_Direction: 2
-  m_Value: 1.0000004
-  m_Size: 0
+  m_Value: -0.000008710548
+  m_Size: 0.7404775
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -19533,9 +19526,9 @@ RectTransform:
   m_Father: {fileID: 1310411125767033643}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 2.0461426, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &1740402705057527281
 CanvasRenderer:
@@ -19621,10 +19614,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 5210569305793316614}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 220.79999, y: -55}
+  m_SizeDelta: {x: 110, y: 110}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1273569147829381113
 CanvasRenderer:
@@ -20962,8 +20955,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 197, y: -310}
-  m_SizeDelta: {x: 390, y: 600}
+  m_AnchoredPosition: {x: 197, y: -410}
+  m_SizeDelta: {x: 390, y: 800}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7037769978723395870
 CanvasRenderer:
@@ -20993,22 +20986,16 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC624\uB298, \uC6A9\uAE30\uB97C \uB0B4\uC5B4 \uD559\uAD50 \uC120\uC0DD\uB2D8\uAED8
-    \uADF8\uB3D9\uC548 \uACAA\uC740 \uC77C\uC744 \uB9D0\uC500\uB4DC\uB838\uB2E4.\n\r\n\uD558\uC9C0\uB9CC
-    \uC120\uC0DD\uB2D8\uC758 \uB300\uB2F5\uC740 \uB0B4\uAC00 \uAE30\uB300\uD588\uB358
-    \uAC83\uACFC\uB294 \uB108\uBB34\uB098\uB3C4 \uB2EC\uB790\uB2E4.\n\r\n\"\uB124\uAC00
-    \uC0AC\uD68C\uC131\uC774 \uBD80\uC871\uD55C \uAC70 \uC544\uB2C8\uC57C? \uC880
-    \n\uB354 \uC0B4\uAC11\uAC8C \uB300\uD574\uBD10.\"\n\r\n\uC21C\uAC04 \uBA38\uB9BF\uC18D\uC774
-    \uD558\uC598\uC838 \uC544\uBB34 \uC0DD\uAC01\uC774 \n\uB4E4\uC9C0 \uC54A\uC558\uB2E4.\n\r\n\uC774\uAC8C
-    \uC815\uB9D0 \uB0B4 \uC798\uBABB\uC77C\uAE4C?..\n\r\n\uADF8\uC800 \uD3C9\uBC94\uD558\uAC8C
-    \uCE5C\uAD6C\uB97C \uC0AC\uADC0\uACE0, \uACF5\uBD80\uD558\uBA70 \n\uD559\uAD50\uB97C
-    \uB2E4\uB2C8\uACE0 \uC2F6\uC5C8\uC744 \uBFD0\uC5C8\uB294\uB370..\n\r\n\uC5C4\uB9C8\uD55C\uD14C
-    \uAC71\uC815\uC744 \uB07C\uCE58\uACE0 \uC2F6\uC9C0 \uC54A\uC544\uC11C \n\uC120\uC0DD\uB2D8\uAED8
-    \uBA3C\uC800 \uB3C4\uC6C0\uC744 \uCCAD\uD588\uC9C0\uB9CC\r\n\uB3CC\uC544\uC628
-    \uAC74, \uC624\uD788\uB824 \uB098\uB97C \uD0D3\uD558\uB294 \n\uB9D0\uBFD0\uC774\uC5C8\uB2E4.\r\n\n\uC774\uC81C\uB294
-    \uC815\uB9D0 \uBB34\uC5C7\uC744 \uBBFF\uC5B4\uC57C \uD560\uC9C0\n\uBAA8\uB974\uACA0\uB2E4.\n\r\n\uBCA4\uC790\uBBFC\uC744
-    \uB3C4\uC640\uC8FC\uC9C0 \uC54A\uC558\uB2E4\uBA74 \uBAA8\uB4E0 \uAC8C \n\uB2EC\uB77C\uC84C\uC744\uAE4C\uB77C\uB294
-    \uC0DD\uAC01\uC774 \uACC4\uC18D \uB9F4\uB3C8\uB2E4..\r"
+  m_text: "Today, I finally got the courage to \ntell a teacher about everything
+    I\u2019ve \nbeen going through.\n\nBut their response was nothing like \nwhat
+    I was hoping for.\n\n\u201CMaybe you\u2019re just not very social? \nTry being
+    a little more friendly.\u201D\n\nFor a second, my mind went \ncompletely blank.\nWas
+    this really\u2026 my fault?\n\nAll I ever wanted was to have a \nnormal school
+    life\u2014make friends, \nstudy, just\u2026 be okay.\n\nI didn\u2019t want to
+    worry my mom, so I \nreached out to a teacher first,\nhoping they could help.\nBut
+    all I got in return were words \nthat blamed me.\n\nNow\u2026 I honestly don\u2019t
+    know what \nto believe anymore.\n\nI keep wondering\u2014if I hadn\u2019t helped
+    \nBenjamin\u2026 would everything have \nbeen different?"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 465af517bae68d2418e447337ce36b3f, type: 2}
   m_sharedMaterial: {fileID: 7906800258845002438, guid: 465af517bae68d2418e447337ce36b3f, type: 2}
@@ -21614,8 +21601,8 @@ RectTransform:
   - {fileID: 1859717915200819813}
   m_Father: {fileID: 1635959089606406800}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 92, y: -110}
   m_SizeDelta: {x: 180, y: 220}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -22930,10 +22917,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 5210569305793316614}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 80.79999, y: -55}
+  m_SizeDelta: {x: 110, y: 110}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5840874884781246955
 CanvasRenderer:
@@ -24079,7 +24066,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 390, y: 450}
+  m_CellSize: {x: 390, y: 800}
   m_Spacing: {x: 20, y: 20}
   m_Constraint: 0
   m_ConstraintCount: 2
@@ -25383,8 +25370,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 197, y: -310}
-  m_SizeDelta: {x: 390, y: 600}
+  m_AnchoredPosition: {x: 197, y: -410}
+  m_SizeDelta: {x: 390, y: 800}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1732931677237789313
 CanvasRenderer:
@@ -25414,27 +25401,17 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC6B0\uB9AC \uD559\uAD50\uC5D0\uB294 \uD559\uAD50 \uD3ED\uB825\uC774
-    \uC788\uB2E4.\n\uADF8 \uC911\uC2EC\uC5D0\uB294 \uD559\uAD50 \uC774\uC0AC\uC7A5\uC758
-    \uC544\uB4E4\uC778 \n\uB370\uC774\uBE44\uB4DC\uC640 \uADF8 \uBB34\uB9AC\uC778
-    \uB8E8\uCE74\uC2A4, \uD5E8\uB9AC,\n\uB2E4\uB2C8\uC5D8\uC774 \uC788\uACE0, \uBCA4\uC790\uBBFC\uC744
-    \uB04A\uC784\uC5C6\uC774\n\uAD34\uB86D\uD788\uACE0 \uC788\uB2E4.\r\n\n\uC194\uC9C1\uD788
-    \uB108\uBB34 \uD654\uAC00 \uB098\uC9C0\uB9CC, \uB09C \uD798\uC774 \uC57D\uD574\uC11C\n\uC9C1\uC811
-    \uB098\uC124 \uC218\uAC00 \uC5C6\uB2E4.\n\uADF8\uB807\uB2E4\uACE0 \uADF8\uB0E5
-    \uBAA8\uB978 \uCC99\uD560 \uC218\uB3C4 \uC5C6\uACE0\u2026\n\n\uD788\uC5B4\uB85C
-    \u201D\uC774\uC9C0\uC2A4 \uB178\uBC14\u201D\uB77C\uBA74 \uACB0\uCF54 \uD798\uC774
-    \uC5C6\uB2E4\uB294\n\uC774\uC720\uB85C \uB204\uAD70\uAC00\uB97C \uC678\uBA74\uD558\uC9C0
-    \uC54A\uC744 \uAC83\uC774\uB2E4. \n\uC5B4\uB5A4 \uC0C1\uD669\uC5D0\uC11C\uB3C4
-    \uC57D\uD55C \uC790\uB97C \uC9C0\uD0A4\uACE0, \n\uC815\uC758\uB97C \uC2E4\uD604\uD558\uB2C8\uAE4C.\n\r\n\uB098\uB3C4
-    \uADF8\uB807\uAC8C \uB418\uACE0 \uC2F6\uC9C0\uB9CC, \uD604\uC2E4\uC740 \uC27D\uC9C0
-    \uC54A\uB2E4.\n\r\n\uADF8\uB798\uB3C4 \uB098\uB294 \uD560 \uC218 \uC788\uB294
-    \uCD5C\uC120\uC744 \uB2E4\uD558\uACE0 \uC788\uB2E4.\n\uBCA4\uC790\uBBFC\uC774
-    \uD63C\uC790 \uC788\uC744 \uB54C \uB2E4\uAC00\uAC00\uC11C \uC704\uB85C\uD574
-    \n\uC8FC\uACE0,\uC57D\uC744 \uCC59\uACA8 \uC8FC\uB294 \uC77C\uC744 \uD558\uACE0
-    \uC788\uB2E4. \n\uBE44\uB85D \uC9C0\uAE08\uC740 \uC791\uC740 \uB3C4\uC6C0\uC77C\uC9C0\uB77C\uB3C4,
-    \n\uC5B8\uC820\uAC00\uB294 \uD559\uAD50 \uD3ED\uB825\uC774 \uC0AC\uB77C\uC9C0\uACE0\n\uBCA4\uC790\uBBFC\uC774
-    \uD3C9\uBC94\uD558\uAC8C \uD559\uAD50 \uC0DD\uD65C\uC744 \n\uD560 \uC218 \uC788\uC73C\uBA74
-    \uC88B\uACA0\uB2E4.\r"
+  m_text: "There is bullying in my school.\nAt the center of it are the son of the
+    \nschool chairman, David, and his \ngroup\u2014Lucas, Henry, and \nDaniel\u2014who
+    are constantly \ntormenting Benjamin.\n\nHonestly, I\u2019m really angry, but
+    I\u2019m \ntoo weak to step in directly.\nI can\u2019t just ignore it either...\n\nIf
+    I were a hero like \"Aegis Nova,\"\nI would never turn my back on \nsomeone just
+    because they\u2019re \nweak.\nNo matter the situation, I would \nprotect the
+    weak and uphold \njustice.\n\nI want to be like that, but reality \nis not that
+    simple.\n\nStill, I am doing the best I can.\nWhen Benjamin is alone, I approach
+    \nhim to offer comfort and give him \nmedicine.\nAlthough it\u2019s a small help
+    for now,\nI hope that one day bullying will \ndisappear and Benjamin will be
+    able \nto live a normal school life."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 465af517bae68d2418e447337ce36b3f, type: 2}
   m_sharedMaterial: {fileID: 7906800258845002438, guid: 465af517bae68d2418e447337ce36b3f, type: 2}
@@ -27776,10 +27753,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 5210569305793316614}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 360.8, y: -55}
+  m_SizeDelta: {x: 110, y: 110}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2822564537358788786
 CanvasRenderer:
@@ -28458,8 +28435,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 2170798346412292432}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 0.74047726}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -29728,8 +29705,8 @@ RectTransform:
   - {fileID: 3430106487798040088}
   m_Father: {fileID: 1635959089606406800}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 92, y: -590}
   m_SizeDelta: {x: 180, y: 220}
   m_Pivot: {x: 0.5, y: 0.5}
