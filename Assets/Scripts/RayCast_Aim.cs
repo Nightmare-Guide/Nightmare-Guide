@@ -70,11 +70,11 @@ public class RayCast_Aim : MonoBehaviour
                 }
             }
         }
-        else
+/*        else
         {
             // UI 비 활성화
             CommonUIManager.instance.interactionUI.SetActive(false);
-        }
+        }*/
     }
 
     public void ElevatorButton(GameObject obj)

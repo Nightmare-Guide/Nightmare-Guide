@@ -7,7 +7,6 @@ namespace TheKiwiCoder {
 
         // The main behaviour tree asset
         public BehaviourTree tree;
-
         // Storage container object to hold game object subsystems
         Context context;
 
@@ -28,6 +27,7 @@ namespace TheKiwiCoder {
         Context CreateBehaviourTreeContext() {
             return Context.CreateFromGameObject(gameObject);
         }
+
 
         private void OnDrawGizmosSelected() {
             if (!tree) {

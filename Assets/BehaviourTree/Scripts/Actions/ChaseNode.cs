@@ -10,7 +10,6 @@ public class ChaseNode : ActionNode
     private Transform player;
     private NavMeshAgent agent;
     private Animator animator;
-
     protected override void OnStart()
     {
         enemy = context.transform;
@@ -49,7 +48,8 @@ public class ChaseNode : ActionNode
         {
             return State.Success;
         }
-           
+
+
         return State.Running;
     }
 }
