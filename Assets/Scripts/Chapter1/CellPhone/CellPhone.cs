@@ -272,12 +272,12 @@ public class CellPhone : MonoBehaviour
 
     public void UpScreenButton(RectTransform appScreenRect)
     {
-        StartCoroutine(AnchorsCoroutine(appScreenRect, Vector2.zero, new Vector2(1, 0), Vector2.zero, Vector2.one, 0.08f, true));
+        StartCoroutine(AnchorsCoroutine(appScreenRect, Vector2.zero, new Vector2(1, 0), Vector2.zero, Vector2.one, 0.15f, true));
     }
 
     public void BackButton(RectTransform appScreenRect)
     {
-        StartCoroutine(AnchorsCoroutine(appScreenRect, Vector2.zero, Vector2.one, Vector2.zero, new Vector2(1, 0), 0.08f, false));
+        StartCoroutine(AnchorsCoroutine(appScreenRect, Vector2.zero, Vector2.one, Vector2.zero, new Vector2(1, 0), 0.15f, false));
     }
 
     public void HomeButton(RectTransform appScreenRect)
