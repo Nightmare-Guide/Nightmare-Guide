@@ -114,8 +114,6 @@ public class MainUIManager : UIUtility
         aimUI.SetActive(true);
 
         CursorLocked(); // 마우스 커서 중앙에 고정
-
-        Debug.Log("UI First Setup");
     }
 
     // 휴대폰 열기 함수 -> I 키
@@ -134,8 +132,6 @@ public class MainUIManager : UIUtility
         }
         else
         {
-            Debug.Log($"name : {cellPhone.name} , isUnlocked : {cellPhone.isUnlocked}");
-
             // Lock Screen 비활성화, App Screen UI 활성화
             cpLogic.LockPhoneUI.SetActive(false);
             cpLogic.appScreenUI.SetActive(true);
@@ -159,12 +155,5 @@ public class MainUIManager : UIUtility
         public Sprite itemImg;
         public GameObject uiObj;
         public SchoolUIManager schoolUIManager;
-    }
-
-    public class SavePhoneData
-    {
-        public string name;
-        public bool hasPhone;
-        public bool isUnlocked;
     }
 }

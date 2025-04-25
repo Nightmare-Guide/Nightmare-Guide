@@ -32,8 +32,6 @@ public class UIUtility : MonoBehaviour
 
         // 플레이어 움직임 멈춤
         StopPlayerController();
-
-        Debug.Log("InGameOpenUI");
     }
 
     // 인게임 UI 닫기 함수 -> Player O
@@ -49,21 +47,15 @@ public class UIUtility : MonoBehaviour
 
         // 마우스 커서 중앙에 고정
         CursorLocked();
-
-        Debug.Log("InGameCloseUI");
     }
 
     public void OpenUI(GameObject ui)
     {
-        Debug.Log("Open UI : " + ui.name);  
-
         ui.SetActive(true);
     }
 
     public void CloseUI(GameObject ui)
     {
-        Debug.Log("Close UI : " + ui.name);
-
         ui.SetActive(false);
     }
 
@@ -79,8 +71,6 @@ public class UIUtility : MonoBehaviour
 
         //플레이어 컨트롤 OFF
         PlayerController.instance.Close_PlayerController();
-
-        Debug.Log("Pause Game");
     }
 
     // 오브젝트 상호작용 시 플레이어 움직임 멈춤 함수
@@ -95,8 +85,6 @@ public class UIUtility : MonoBehaviour
     // UI 오브젝트 모두 비활성화 상태인 지 확인
     protected bool AreAllObjectsDisabled(List<GameObject> uiObjs)
     {
-        Debug.Log("All UI Objects Disabled");
-
         return uiObjs.All(obj => !obj.activeSelf);
     }
 

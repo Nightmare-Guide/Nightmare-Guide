@@ -60,7 +60,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: 2cd36815c3e6e8b4cad02e287195cd6b
-  position: {x: 572, y: 448.00003}
+  position: {x: 594.6666, y: 447.99997}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
   description: 
@@ -150,7 +150,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: f364643ffa542c345997a4a5431890eb
-  position: {x: 771.76404, y: 448}
+  position: {x: 837.9273, y: 447.99997}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
   description: 
@@ -183,8 +183,9 @@ MonoBehaviour:
   - {fileID: -1241486821463215155}
   - {fileID: -5871075346543685677}
   - {fileID: -413136896331184212}
+  - {fileID: 675477558716384209}
   blackboard:
-    moveToPosition: {x: 0.94364643, y: -0.5, z: -166.19958}
+    moveToPosition: {x: -15.391915, y: -0.5, z: -146.5354}
 --- !u!114 &126179549495469473
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -208,6 +209,28 @@ MonoBehaviour:
   children:
   - {fileID: -5660333016957678146}
   - {fileID: 7158668878530965008}
+  stopDistance: 0.5
+--- !u!114 &675477558716384209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a41dfc30a1443184093ce74280c473c1, type: 3}
+  m_Name: DeadSequencer
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 5388659e614438c408bb8250473e20f8
+  position: {x: 1117.5197, y: 151.33325}
+  blackboard:
+    moveToPosition: {x: 0, y: 0, z: 0}
+  description: 
+  drawGizmos: 0
+  children: []
 --- !u!114 &2416129358109696888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -223,7 +246,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: 2c8b16cdc0417144f9ebe1be241fb430
-  position: {x: 377.99994, y: 448}
+  position: {x: 344.66663, y: 447.99997}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
   description: 
@@ -264,7 +287,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: 06f9a487e60e7a841974f4fc7647c4ee
-  position: {x: 572, y: 150.00003}
+  position: {x: 594.6666, y: 151.34088}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
   description: 
@@ -294,3 +317,4 @@ MonoBehaviour:
   description: 
   drawGizmos: 0
   child: {fileID: 126179549495469473}
+  stopDistance: 0.5

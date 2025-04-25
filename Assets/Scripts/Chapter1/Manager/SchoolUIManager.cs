@@ -136,8 +136,6 @@ public class SchoolUIManager : UIUtility
         aimUI.SetActive(true);
 
         CursorLocked(); // 마우스 커서 중앙에 고정
-
-        Debug.Log("UI First Setup");
     }
 
     // 인벤토리 휴대폰 버튼 함수
@@ -156,8 +154,6 @@ public class SchoolUIManager : UIUtility
         }
         else
         {
-            Debug.Log($"name : {cellPhone.name} , isUnlocked : {cellPhone.isUnlocked}");
-
             // Lock Screen 비활성화, App Screen UI 활성화
             cpLogic.LockPhoneUI.SetActive(false);
             cpLogic.appScreenUI.SetActive(true);
@@ -178,8 +174,6 @@ public class SchoolUIManager : UIUtility
     // 아이템 획득 함수
     public void GetItem(GameObject obj)
     {
-        Debug.Log("Add Item");
-
         // obj 이름을 포함하는 items 의 데이터를 inventory 에 추가
         inventory.Add(items.Find(info => obj.gameObject.name.Contains(info.name))); // info -> items List 의 요소
 

@@ -54,8 +54,6 @@ public class PuzzleTile : MonoBehaviour, IPointerClickHandler
         // 이동 후 퍼즐 정답 확인
         if (board.tileList.All(tile => tile.isCorrected))
         {
-            Debug.Log("All Correct");
-
             // 퍼즐 성공 함수 실행
             board.UnLockedPhone();
         }

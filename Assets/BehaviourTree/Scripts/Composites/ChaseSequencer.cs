@@ -30,7 +30,6 @@ namespace TheKiwiCoder
                     return State.Running;
                 }
             }
-
             return State.Success;
         }
 
