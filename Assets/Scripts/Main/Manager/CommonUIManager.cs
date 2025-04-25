@@ -125,7 +125,6 @@ public class CommonUIManager : MonoBehaviour
 
     private void OnDisable()
     {
-        phoneDatas = new SaveStevenPhoneData { name = phoneInfos.name, hasPhone = phoneInfos.hasPhone, isUnlocked = phoneInfos.isUnlocked };
         SceneManager.sceneLoaded -= OnSceneLoaded; // 이벤트 구독 해제
     }
 
