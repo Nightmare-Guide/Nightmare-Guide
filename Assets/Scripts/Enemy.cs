@@ -78,11 +78,11 @@ public class Enemy : MonoBehaviour
     public void TeleportEnemy()
     {
         // 점프 스케어 발생 시 플레이어 앞의 일정 거리로 순간이동
-        float jumpscareDistance = 12f;
+        float jumpscareDistance = 9f;
 
         // 플레이어 카메라가 바라보는 방향 계산 (수평 방향만 고려)
         Vector3 cameraForward = PlayerMainCamera.camera_single.transform.forward;
-        cameraForward.y = 0;
+        cameraForward.y = -1;
         cameraForward.Normalize();
 
         // 적의 순간이동 위치 계산
