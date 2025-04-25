@@ -139,7 +139,7 @@ public class Maze_Mgr : MonoBehaviour
         bool clear = anw.SequenceEqual(num_Answer);
         if (clear)
         {
-            Debug.Log("탈출 성공");
+           // Debug.Log("탈출 성공");
             Door door = door_Obj.GetComponent<Door>();
             door.Select_Door();
             maze_Clear = true;
@@ -147,7 +147,7 @@ public class Maze_Mgr : MonoBehaviour
         else
         {
             Btn_Clear();
-            Debug.Log("다시 선택해주세요");
+        //Debug.Log("다시 선택해주세요");
         }
         
 
