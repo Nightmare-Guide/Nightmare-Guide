@@ -6,17 +6,8 @@ namespace TheKiwiCoder
 {
     public class Detected_Check : DecoratorNode
     {
-        private Transform player;
-        private Transform enemy;
-        private Collider playerCollider;
-        private Collider enemyCollider;
-
         protected override void OnStart()
         {
-            player = Chapter1_Mgr.instance.player.transform;
-            enemy = context.transform;
-            playerCollider = Chapter1_Mgr.instance.player.GetComponent<CapsuleCollider>();
-            enemyCollider = context.transform.GetComponent<CapsuleCollider>();
         }
 
         protected override void OnStop()
@@ -25,34 +16,21 @@ namespace TheKiwiCoder
 
         protected override State OnUpdate()
         {
-            if (player == null || enemy == null || playerCollider == null || enemyCollider == null)
+            // 블랙보드에서 isDetected 값 실시간으로 가져오기
+            bool isDetected = blackboard.Get<bool>("isDetected");
+
+            if (isDetected)
             {
-                Debug.LogWarning("[Detected_Check] 필수 트랜스폼 또는 콜라이더가 없습니다!");
-                return State.Success;
+                return child.Update();  // isDetected가 true이면 Success 반환
             }
 
-            float distance = Vector3.Distance(enemy.position, player.position);
-
-            // 🔸 충돌 여부 체크
-            if (playerCollider.bounds.Intersects(enemyCollider.bounds))
+            if (child == null)
             {
-                Debug.Log("[Detected_Check] 플레이어와 적이 충돌했습니다. 사망 연출 실행!");
-                blackboard.UpdateCollisionStatus(true);
-
-                if (blackboard.IsCollidedWithPlayer())
-                {
-                    return child.Update();
-                }
+                Debug.LogWarning("[Detected_Check] Child node is missing!");
                 return State.Failure;
             }
 
-            bool isDetected = blackboard.Get<bool>("isDetected");
-            if (isDetected && child != null)
-            {
-                return child.Update();
-            }
-
-            return State.Failure;
+            return child.Update();  // 자식 노드가 있으면 자식 노드 실행
         }
     }
 }
