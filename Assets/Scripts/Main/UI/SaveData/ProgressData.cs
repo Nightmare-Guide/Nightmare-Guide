@@ -8,6 +8,8 @@ using static CommonUIManager;
 [CreateAssetMenu(fileName = "ProgressData", menuName = "Game/ProgressData")]
 public class ProgressData : ScriptableObject
 {
+    [Header("진행 씬")]
+    public string scene="0_1";
     [Header("진행도 예: 챕터_서브_노드 형식")]
     public string storyProgress = "0_0_0";
 
@@ -15,7 +17,7 @@ public class ProgressData : ScriptableObject
     public bool getSmartPhone = false;
 
     [Header("플레이어 위치")]
-    public Vector3 playerPosition = Vector3.zero;
+    public Vector3 playerPosition = new Vector3(-550, -67, 278);
 
     [Header("플레이어 산치")]
     public int sanchi = 0;
@@ -26,11 +28,11 @@ public class ProgressData : ScriptableObject
     public List<String> inventoryDatas;
     [Header("CommonUIManager")]
     public SaveStevenPhoneData stevenPhoneDatas;
-    float bgVolume;
-    float effectVolume;
-    float characterVolume;
-    bool isFullScreen;
-    string language;
+    public float bgVolume;
+    public float effectVolume;
+    public float characterVolume;
+    public bool isFullScreen;
+    public string language;
     // 초기화 기능
     public void ResetProgress()
     {

@@ -109,7 +109,7 @@ MonoBehaviour:
     moveToPosition: {x: 0, y: 0, z: 0}
   description: 
   drawGizmos: 0
-  speed: 5
+  speed: 7.5
   stoppingDistance: 0.1
   updateRotation: 1
   acceleration: 40
@@ -183,9 +183,8 @@ MonoBehaviour:
   - {fileID: -1241486821463215155}
   - {fileID: -5871075346543685677}
   - {fileID: -413136896331184212}
-  - {fileID: 675477558716384209}
   blackboard:
-    moveToPosition: {x: -15.391915, y: -0.5, z: -146.5354}
+    moveToPosition: {x: -55.493584, y: -0.5, z: -116.178635}
 --- !u!114 &126179549495469473
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -209,28 +208,6 @@ MonoBehaviour:
   children:
   - {fileID: -5660333016957678146}
   - {fileID: 7158668878530965008}
-  stopDistance: 0.5
---- !u!114 &675477558716384209
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a41dfc30a1443184093ce74280c473c1, type: 3}
-  m_Name: DeadSequencer
-  m_EditorClassIdentifier: 
-  state: 0
-  started: 0
-  guid: 5388659e614438c408bb8250473e20f8
-  position: {x: 1117.5197, y: 151.33325}
-  blackboard:
-    moveToPosition: {x: 0, y: 0, z: 0}
-  description: 
-  drawGizmos: 0
-  children: []
 --- !u!114 &2416129358109696888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -311,10 +288,9 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: eff0173a877c36e4b8207a3279431922
-  position: {x: 195.01836, y: -188.34964}
+  position: {x: 194.66666, y: -183.0013}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
   description: 
   drawGizmos: 0
   child: {fileID: 126179549495469473}
-  stopDistance: 0.5

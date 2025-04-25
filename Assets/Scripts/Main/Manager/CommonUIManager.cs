@@ -59,7 +59,9 @@ public class CommonUIManager : MonoBehaviour
     string language;
     public SaveStevenPhoneData phoneDatas;
 
-
+    [Header("# Player")]
+    [SerializeField] GameObject main_playerPrefab; // 메인씬
+    [SerializeField] GameObject chap_playerPrefab; //챕터씬
     private void Awake()
     {
         if (instance == null)
@@ -67,6 +69,7 @@ public class CommonUIManager : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(gameObject);
             DontDestroyOnLoad(commonUICanvas);
+            SceneManager.sceneLoaded += OnSceneLoaded; // 씬 로드 완료 이벤트 구독
         }
         else
         {
@@ -86,30 +89,45 @@ public class CommonUIManager : MonoBehaviour
         phoneInfos = new CharacterPhoneInfo { name = "Steven", hasPhone = false, isUnlocked = false }; // cellPhoneObj 랑 cellPhoneUI 는 MainUIManager 에서 초기화
     }
 
-    private void Update()
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (Input.GetKeyDown(KeyCode.Keypad1))
+        // 특정 씬이 로드되면 플레이어 생성 요청
+        if (scene.name == "Main_Map" || scene.name == "School_Scene")
         {
-            MoveScene("Title Scene");
-        }
-        else if (Input.GetKeyDown(KeyCode.Keypad2))
-        {
-            MoveScene("Main_Map");
-        }
-        else if (Input.GetKeyDown(KeyCode.Keypad3))
-        {
-            MoveScene("School_Scene");
-        }
-        else if (Input.GetKeyDown(KeyCode.Keypad4))
-        {
-            MoveScene("Main_Map_Night");
-        }
-        else if (Input.GetKeyDown(KeyCode.Keypad5))
-        {
-            MoveScene("UI");
+            SpawnPlayer(scene.name);
         }
     }
 
+    void SpawnPlayer(string sceneName)
+    {
+        if (main_playerPrefab != null&& chap_playerPrefab != null && ProgressManager.Instance != null && ProgressManager.Instance.progressData != null)
+        {
+           
+            Vector3 spawnPosition = ProgressManager.Instance.progressData.playerPosition; // 저장된 플레이어 위치 사용
+            GameObject player;
+            if (sceneName.Contains("Main_Map"))
+            {
+                player = Instantiate(main_playerPrefab, spawnPosition, Quaternion.identity);
+            }
+            else
+            {
+                player = Instantiate(chap_playerPrefab, spawnPosition, Quaternion.identity);
+            }
+     
+            player.SetActive(true);
+            Debug.Log($"{sceneName} 씬에 플레이어 생성 성공! 위치: {player.transform.position}");
+        }
+        else
+        {
+            Debug.LogError("플레이어 생성 실패! 프리팹 또는 진행 데이터가 없음.");
+        }
+    }
+
+    private void OnDisable()
+    {
+        phoneDatas = new SaveStevenPhoneData { name = phoneInfos.name, hasPhone = phoneInfos.hasPhone, isUnlocked = phoneInfos.isUnlocked };
+        SceneManager.sceneLoaded -= OnSceneLoaded; // 이벤트 구독 해제
+    }
 
     private void OnApplicationQuit()
     {
@@ -126,14 +144,13 @@ public class CommonUIManager : MonoBehaviour
 
     public void BackToTitleBtn()
     {
-        if(TitleUIManager != null)
+        if (TitleUIManager != null)
         {
             optionUI.SetActive(false);
         }
         else
         {
             MoveScene("Title Scene");
-
             optionUI.SetActive(false);
         }
     }

@@ -31,7 +31,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         [SerializeField] private AudioClip[] m_FootstepSounds;    // an array of footstep sounds that will be randomly selected from.
         [SerializeField] private AudioClip m_JumpSound;           // the sound played when character leaves the ground.
         [SerializeField] private AudioClip m_LandSound;           // the sound played when character touches back on ground.
-        [SerializeField] private GameObject flashlight;
+
         [SerializeField] private Camera m_Camera;
         private bool m_Jump;
         private float m_YRotation;
@@ -45,7 +45,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private float m_NextStep;
         private bool m_Jumping;
         private AudioSource m_AudioSource;
-        private bool flash = false; //true면 on false면 off
 
         public enum PlayerState
         {
@@ -89,8 +88,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
         {
             //RotateView(); // 기존 회전 함수가 있다면 여기에 포함
             HandleJump();
-            OnOffFlash();
-
         }
 
         private void HandleJump()
@@ -115,27 +112,12 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_PreviouslyGrounded = m_CharacterController.isGrounded;
         }
 
-        private void OnOffFlash()
-        {
-            if (Input.GetKeyDown(KeyCode.F))
-            {
-                if (flash)
-                {
-                    flashlight.SetActive(false);
-                    flash = false;
-                }
-                else if (!flash)
-                {
-                    flashlight.SetActive(true);
-                    flash = true;
-                }
-            }
 
-        }
 
         public void DisableInput() // 플레이어 움직임 제거
         {
             GetComponent<PlayerController>().enabled = false;
+            Camera_Rt.instance.Close_Camera();
         }
 
 
@@ -149,7 +131,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         private void FixedUpdate()
         {
-
             float speed;
             GetInput(out speed);
             // always move along the camera forward as it is the direction that it being aimed at
@@ -191,8 +172,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
             ProgressStepCycle(speed);
             UpdateCameraPosition(speed);
-
-
         }
 
 
