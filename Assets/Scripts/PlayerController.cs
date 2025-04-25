@@ -88,7 +88,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
         {
             //RotateView(); // 기존 회전 함수가 있다면 여기에 포함
             HandleJump();
-
         }
 
         private void HandleJump()
@@ -118,6 +117,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         public void DisableInput() // 플레이어 움직임 제거
         {
             GetComponent<PlayerController>().enabled = false;
+            Camera_Rt.instance.Close_Camera();
         }
 
 
@@ -131,7 +131,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         private void FixedUpdate()
         {
-
             float speed;
             GetInput(out speed);
             // always move along the camera forward as it is the direction that it being aimed at
@@ -173,8 +172,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
             ProgressStepCycle(speed);
             UpdateCameraPosition(speed);
-
-
         }
 
 
