@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class TitleUIManager : UIUtility
 {
     [SerializeField] GameObject titleUI;
-
+    // [SerializeField] GameObject playerPrefab; // 이제 CommonUIManager에서 관리
 
     private void Awake()
     {
@@ -48,12 +49,40 @@ public class TitleUIManager : UIUtility
 
     public void NewGameBtn()
     {
-        CommonUIManager.instance.MoveScene("Main_Map");
+        if (GameDataManager.instance.StartNewGame())
+        {
+            string currentScene = ProgressManager.Instance.progressData.scene;
+
+            if (currentScene.Equals("0_1")) // 집 [낮]
+            {
+                CommonUIManager.instance.MoveScene("Main_Map");
+                // StartCoroutine(WaitForSceneLoadAndSpawnPlayer()); // 제거
+            }
+            else
+            {
+                Debug.Log("Unknown scene");
+            }
+        }
     }
 
     public void LoadGameBtn()
     {
+        string currentScene = ProgressManager.Instance.progressData.scene;
 
+        if (currentScene.Equals("0_1") || currentScene.Equals("0_2") || currentScene.Equals("1_1") || currentScene.Equals("1_2") || currentScene.Equals("2_1") || currentScene.Equals("2_2") || currentScene.Equals("3_2"))
+        {
+            CommonUIManager.instance.MoveScene("Main_Map");
+            // StartCoroutine(WaitForSceneLoadAndSpawnPlayer()); // 제거
+        }
+        else if (currentScene.Equals("3_1")) // 챕터 1
+        {
+            CommonUIManager.instance.MoveScene("School_Scene");
+            // StartCoroutine(WaitForSceneLoadAndSpawnPlayer()); // 제거
+        }
+        else
+        {
+            Debug.Log("Unknown scene");
+        }
     }
 
     public void OptionBtn()
@@ -65,4 +94,5 @@ public class TitleUIManager : UIUtility
     {
         Application.Quit();
     }
+  
 }
