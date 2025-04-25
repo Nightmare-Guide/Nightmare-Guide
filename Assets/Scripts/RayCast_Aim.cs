@@ -34,10 +34,13 @@ public class RayCast_Aim : MonoBehaviour
                 if (Physics.Raycast(ray, out hit, maxRayDistance, LayerMask.GetMask("ActiveObject")))
                 {
                     GameObject click_object = hit.transform.gameObject;
-                    Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.red); // 실제 충돌 지점까지 빨간색
+                   // Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.red); // 실제 충돌 지점까지 빨간색
 
-                    Debug.Log($"Object Name : {click_object.name}");
-
+                   // Debug.Log($"Object Name : {click_object.name}");
+                    if (StoryCheck(click_object))
+                    {
+                        return;
+                    }
                     // 태그가 "maze_Btn"이라면 Select_Btn() 호출
                     if (click_object.CompareTag("maze_Btn"))
                     {
@@ -50,18 +53,18 @@ public class RayCast_Aim : MonoBehaviour
 
                     if (click_object.CompareTag("Door"))
                     {
-                        Debug.Log("Door");
+                     //   Debug.Log("Door");
                         DoorCheck(click_object);
                     }
 
                     if (click_object.CompareTag("CellPhone"))
                     {
-                        Debug.Log("CellPhone");
+                      //  Debug.Log("CellPhone");
                         TouchCellPhone(click_object);
                     }
                     if (click_object.CompareTag("ElevatorButton"))
                     {
-                        Debug.Log("ElevatorButton");
+                      //  Debug.Log("ElevatorButton");
                         ElevatorButton(click_object);
                     }
                 }
@@ -90,18 +93,18 @@ public class RayCast_Aim : MonoBehaviour
         if (mazeButton != null)
         {
             mazeButton.Select_Btn(); // 클릭한 오브젝트의 Select_Btn 호출
-            Debug.Log(obj.name + "색상 변경");
+         //   Debug.Log(obj.name + "색상 변경");
         }
         else
         {
-            Debug.Log("색상없음");
+         //   Debug.Log("색상없음");
         }
     }
 
     public void Locker(GameObject obj)
     {
 
-        Debug.Log("락커 인식" + obj.name);
+      //  Debug.Log("락커 인식" + obj.name);
         Locker lockerObj = obj.GetComponent<Locker>();
         if (lockerObj.isMovingToLocker || lockerObj.outMovingToLocker)
         {
@@ -205,5 +208,17 @@ public class RayCast_Aim : MonoBehaviour
         arr[1] = cellPhoneRotate;
 
         return arr;
+    }
+
+
+    public bool StoryCheck(GameObject obj)
+    {
+        StoryInteractable interactable = obj.GetComponent<StoryInteractable>();
+        if (interactable != null)
+        {
+            interactable.Interact();
+            return true; // 상호작용 완료
+        }
+        return false; // 상호작용 없음
     }
 }

@@ -27,18 +27,18 @@ public class CSVRoad_Story : MonoBehaviour
         data = CSVReader.Read("Story/"+go_Story);
         if (data != null && data.Count > 0)
         {
-            Debug.Log($"CSV 데이터 로드 성공: 총 {data.Count}개 항목");
+          //  Debug.Log($"CSV 데이터 로드 성공: 총 {data.Count}개 항목");
         }
         else
         {
-            Debug.LogWarning("CSV 데이터가 비어 있습니다.");
+           // Debug.LogWarning("CSV 데이터가 비어 있습니다.");
         }
         if (instance == null) { instance = this; }
     }
 
     public void OnSelectChapter(string subChapterKey)
     {
-        Debug.Log($"SubChapter {subChapterKey} 선택됨");
+      //  Debug.Log($"SubChapter {subChapterKey} 선택됨");
 
         int start = -1, end = -1;
 
@@ -59,7 +59,7 @@ public class CSVRoad_Story : MonoBehaviour
 
         if (start == -1)
         {
-            Debug.LogWarning($"{subChapterKey}에 해당하는 데이터가 없습니다.");
+          //  Debug.LogWarning($"{subChapterKey}에 해당하는 데이터가 없습니다.");
             return;
         }
 
@@ -80,7 +80,7 @@ public class CSVRoad_Story : MonoBehaviour
             if (data[i].ContainsKey("ReturnPoint") && data[i]["ReturnPoint"].ToString() == "point")
             {
                 returnPoint = i; // 현재 진행도를 ReturnPoint로 저장
-                Debug.Log($"ReturnPoint 저장됨: {returnPoint}");
+             //   Debug.Log($"ReturnPoint 저장됨: {returnPoint}");
             }
 
             // 선택지 활성화 처리
@@ -126,13 +126,13 @@ public class CSVRoad_Story : MonoBehaviour
         {
             if (returnPoint != -1)
             {
-                Debug.Log("선택지 1 선택: ReturnPoint로 이동");
+             //   Debug.Log("선택지 1 선택: ReturnPoint로 이동");
                 StartCoroutine(DisplayChapterDialogue(returnPoint, data.Count - 1)); // ReturnPoint부터 다시 출력
                 returnPoint = -1; // ReturnPoint 초기화
             }
             else
             {
-                Debug.LogWarning("ReturnPoint가 설정되지 않았습니다.");
+               // Debug.LogWarning("ReturnPoint가 설정되지 않았습니다.");
             }
         }
         else if (choice == 2) // 선택지 2: 다음 대사 진행

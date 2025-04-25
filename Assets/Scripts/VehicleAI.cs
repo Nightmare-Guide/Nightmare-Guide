@@ -219,7 +219,7 @@ public class VehicleAI : MonoBehaviour
                 }
                 else
                 {
-                    Debug.LogWarning(transform.GetChild(i).name+" 에 애니메이터 없음!");
+                    //Debug.LogWarning(transform.GetChild(i).name+" 에 애니메이터 없음!");
                 }
             }
         }

@@ -65,7 +65,7 @@ public class GameDataManager : MonoBehaviour
 
         string json = JsonUtility.ToJson(saveData, true);
         File.WriteAllText(FilePath, json);
-        Debug.Log($"게임 저장 완료: {FilePath}");
+       // Debug.Log($"게임 저장 완료: {FilePath}");
     }
 
     // 게임 데이터 불러오기
@@ -81,11 +81,11 @@ public class GameDataManager : MonoBehaviour
             progressData.playerPosition = loadData.playerPosition;
             progressData.sanchi = loadData.sanchi;
 
-            Debug.Log("게임 불러오기 완료");
+            //Debug.Log("게임 불러오기 완료");
         }
         else
         {
-            Debug.Log("저장된 게임 데이터가 없습니다. 새 게임으로 시작합니다.");
+           // Debug.Log("저장된 게임 데이터가 없습니다. 새 게임으로 시작합니다.");
         }
     }
     public void UpdatePlayerPosition(Vector3 newPos)
