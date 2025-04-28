@@ -27,7 +27,11 @@ public class RayCast_Aim : MonoBehaviour
         if (Physics.Raycast(ray, out hit, maxRayDistance, LayerMask.GetMask("ActiveObject")))
         {
             // UI È°¼ºÈ­
-            CommonUIManager.instance.interactionUI.SetActive(true);
+            if (CommonUIManager.instance != null)
+            {
+                CommonUIManager.instance.interactionUI.SetActive(true);
+            }
+            
 
             if (Input.GetKeyDown(KeyCode.E))
             {

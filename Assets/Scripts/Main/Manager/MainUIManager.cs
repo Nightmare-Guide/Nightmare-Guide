@@ -28,12 +28,17 @@ public class MainUIManager : UIUtility
 
     private void Start()
     {
-        CommonUIManager.instance.mainUIManager = this;
-        optionUI = CommonUIManager.instance.optionUI;
-        uiObjects.Add(optionUI);
+        if (CommonUIManager.instance != null)
+        {
+            CommonUIManager.instance.mainUIManager = this;
+            optionUI = CommonUIManager.instance.optionUI;
+            uiObjects.Add(optionUI);
 
-        CommonUIManager.instance.phoneInfos.cellPhoneObj = cellPhoneObjs;
-        CommonUIManager.instance.phoneInfos.cellPhoneUI = uiObjects[2];
+            CommonUIManager.instance.phoneInfos.cellPhoneObj = cellPhoneObjs;
+            CommonUIManager.instance.phoneInfos.cellPhoneUI = uiObjects[2];
+        }
+       
+       
     }
 
     private void Update()
@@ -41,7 +46,7 @@ public class MainUIManager : UIUtility
         // ESC 키
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (AreAllObjectsDisabled(uiObjects))
+            if (AreAllObjectsDisabled(uiObjects) && CommonUIManager.instance != null)
             {
                 // 일시정지 UI 활성화
                 PauseGame(uiObjects[0]);
@@ -91,7 +96,11 @@ public class MainUIManager : UIUtility
 
     private void OnDisable()
     {
-        CommonUIManager.instance.mainUIManager = null;
+        if (CommonUIManager.instance != null)
+        {
+            CommonUIManager.instance.mainUIManager = null;
+        }
+       
     }
 
     private void OnApplicationQuit()
