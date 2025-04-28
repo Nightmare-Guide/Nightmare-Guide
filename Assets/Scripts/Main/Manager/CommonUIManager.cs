@@ -92,7 +92,7 @@ public class CommonUIManager : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         // 특정 씬이 로드되면 플레이어 생성 요청
-        if (scene.name == "Main_Map" || scene.name == "School_Scene")
+        if (scene.name != "LoadingScene")
         {
             SpawnPlayer(scene.name);
         }
@@ -104,17 +104,19 @@ public class CommonUIManager : MonoBehaviour
         {
            
             Vector3 spawnPosition = ProgressManager.Instance.progressData.playerPosition; // 저장된 플레이어 위치 사용
-            GameObject player;
-            if (sceneName.Contains("Main_Map"))
+            GameObject player = null;
+            if (sceneName.Contains("Main_Map")|| sceneName.Contains("House") || sceneName.Contains("Hospital"))
             {
                 player = Instantiate(main_playerPrefab, spawnPosition, Quaternion.identity);
             }
-            else
+            else if(sceneName.Contains("School"))
             {
                 player = Instantiate(chap_playerPrefab, spawnPosition, Quaternion.identity);
             }
-     
-            player.SetActive(true);
+            if (player != null)
+            {
+                player.SetActive(true);
+            }
             Debug.Log($"{sceneName} 씬에 플레이어 생성 성공! 위치: {player.transform.position}");
         }
         else

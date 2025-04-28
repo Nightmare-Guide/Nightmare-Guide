@@ -55,7 +55,7 @@ public class TitleUIManager : UIUtility
             //Debug.Log(currentScene + "현재 씬" + GameDataManager.instance.progressData.scene+"저장씬");
             if (currentScene.Equals("0_1")) // 집 [낮]
             {
-                CommonUIManager.instance.MoveScene("Main_Map");
+                CommonUIManager.instance.MoveScene("DayHouse");
             }
             else
             {
@@ -67,7 +67,7 @@ public class TitleUIManager : UIUtility
     public void LoadGameBtn()
     {
         string currentScene = ProgressManager.Instance.progressData.scene;
-
+        
         //플레이어 하우스
         if (currentScene.Equals("0_1") ){CommonUIManager.instance.MoveScene("DayHouse");}
         //플레이어 하우스
