@@ -67,21 +67,22 @@ public class TitleUIManager : UIUtility
     public void LoadGameBtn()
     {
         string currentScene = ProgressManager.Instance.progressData.scene;
-       
-        if (currentScene.Equals("0_1") || currentScene.Equals("0_2") || currentScene.Equals("1_1") || currentScene.Equals("1_2") || currentScene.Equals("2_1") || currentScene.Equals("2_2") || currentScene.Equals("3_2"))
-        {
-            CommonUIManager.instance.MoveScene("Main_Map");
-            // StartCoroutine(WaitForSceneLoadAndSpawnPlayer()); // 제거
-        }
-        else if (currentScene.Equals("3_1")) // 챕터 1
-        {
-            CommonUIManager.instance.MoveScene("School_Scene");
-            // StartCoroutine(WaitForSceneLoadAndSpawnPlayer()); // 제거
-        }
-        else
-        {
-            Debug.Log("Unknown scene");
-        }
+
+        //플레이어 하우스
+        if (currentScene.Equals("0_1") ){CommonUIManager.instance.MoveScene("DayHouse");}
+        //플레이어 하우스
+        else if (currentScene.Equals("0_2")) { CommonUIManager.instance.MoveScene("NightHouse"); }
+        //플레이어 하우스
+        else if (currentScene.Equals("1_1")) { CommonUIManager.instance.MoveScene("Main_Map"); }
+        //플레이어 하우스
+        else if (currentScene.Equals("1_2")) { CommonUIManager.instance.MoveScene("Main_Map_Night"); }
+        //플레이어 하우스
+        else if (currentScene.Equals("2_1")) { CommonUIManager.instance.MoveScene("DayHospital"); }
+        //플레이어 하우스
+        else if (currentScene.Equals("2_2")) { CommonUIManager.instance.MoveScene("NightHospital"); }
+        //챕터1
+        else if (currentScene.Equals("3_1")) { CommonUIManager.instance.MoveScene("School_Scene"); }
+        else {   Debug.Log("Unknown scene");   }
     }
 
     public void OptionBtn()
