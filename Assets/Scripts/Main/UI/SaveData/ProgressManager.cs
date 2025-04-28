@@ -1,16 +1,20 @@
+using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using static SchoolUIManager;
 
 
-
+//게임 진행도 관리
 public class ProgressManager : MonoBehaviour
 {
     public static ProgressManager Instance { get; private set; }
 
     [Header("진행도 데이터")]
     public ProgressData progressData;
+    public ProgressData defaultData;
 
-    private const string ProgressKey = "GameProgress";
-    private string defaultProgress = "0_0_0";
+ 
+    
 
     void Awake()
     {
@@ -23,9 +27,16 @@ public class ProgressManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        LoadProgress();
+       
     }
-
+    private void Start()
+    {
+        if(GameDataManager.instance != null)
+        {
+            LoadProgress();
+        }
+        
+    }
     /// <summary>
     /// PlayerPrefs에서 저장된 진행도 불러옴
     /// </summary>
@@ -33,21 +44,30 @@ public class ProgressManager : MonoBehaviour
     {
         if (progressData == null)
         {
-            Debug.LogError("ProgressData가 연결되지 않았습니다!");
+            //Debug.LogError("ProgressData가 연결되지 않았습니다!");
             return;
         }
+        else//게임 데이터 매니저에서 진행도 불러오기
+        {
+            progressData.scene = GameDataManager.instance.progressData.scene;
+            progressData.storyProgress = GameDataManager.instance.progressData.storyProgress;
+            progressData.getSmartPhone = GameDataManager.instance.progressData.getSmartPhone;
+            progressData.playerPosition = GameDataManager.instance.progressData.playerPosition;
+            progressData.sanchi = GameDataManager.instance.progressData.sanchi;
 
-        if (PlayerPrefs.HasKey(ProgressKey))
-        {
-            string saved = PlayerPrefs.GetString(ProgressKey);
-            progressData.storyProgress = saved;
-            Debug.Log($"진행도 로드 완료: {saved}");
+            progressData.mainInventoryDatas = new List<string>(GameDataManager.instance.progressData.mainInventoryDatas);
+            progressData.phoneDatas = new List<SavePhoneData>(GameDataManager.instance.progressData.phoneDatas);
+            progressData.inventoryDatas = new List<string>(GameDataManager.instance.progressData.inventoryDatas);
+            progressData.stevenPhoneDatas = GameDataManager.instance.progressData.stevenPhoneDatas;
+
+            progressData.bgVolume = GameDataManager.instance.progressData.bgVolume;
+            progressData.effectVolume = GameDataManager.instance.progressData.effectVolume;
+            progressData.characterVolume = GameDataManager.instance.progressData.characterVolume;
+            progressData.isFullScreen = GameDataManager.instance.progressData.isFullScreen;
+            progressData.language = GameDataManager.instance.progressData.language;
         }
-        else
-        {
-            progressData.storyProgress = defaultProgress;
-            Debug.Log("저장된 진행도가 없어 기본값으로 설정됨");
-        }
+        
+
     }
 
     /// <summary>
@@ -57,38 +77,67 @@ public class ProgressManager : MonoBehaviour
     {
         if (progressData != null)
         {
-            PlayerPrefs.SetString(ProgressKey, progressData.storyProgress);
-            PlayerPrefs.Save();
-            Debug.Log($"진행도 저장됨: {progressData.storyProgress}");
+            GameDataManager.instance.progressData.scene = progressData.scene;
+            GameDataManager.instance.progressData.storyProgress = progressData.storyProgress;
+            GameDataManager.instance.progressData.getSmartPhone = progressData.getSmartPhone ;
+            GameDataManager.instance.progressData.playerPosition = progressData.playerPosition;
+            GameDataManager.instance.progressData.sanchi= progressData.sanchi;
+
+            GameDataManager.instance.progressData.mainInventoryDatas= progressData.mainInventoryDatas;
+            GameDataManager.instance.progressData.phoneDatas= progressData.phoneDatas;
+            GameDataManager.instance.progressData.inventoryDatas= progressData.inventoryDatas;
+            GameDataManager.instance.progressData.stevenPhoneDatas= progressData.stevenPhoneDatas;
+
+            GameDataManager.instance.progressData.bgVolume= progressData.bgVolume;
+            GameDataManager.instance.progressData.effectVolume= progressData.effectVolume;
+            GameDataManager.instance.progressData.characterVolume= progressData.characterVolume;
+            GameDataManager.instance.progressData.isFullScreen= progressData.isFullScreen;
+            GameDataManager.instance.progressData.language= progressData.language;
+            GameDataManager.instance.SaveGame();
         }
         else
         {
-            Debug.LogError("진행도를 저장할 수 없습니다. ProgressData가 없음");
+         //   Debug.LogError("진행도를 저장할 수 없습니다. ProgressData가 없음");
         }
     }
 
     /// <summary>
     /// 진행도 수동 갱신
     /// </summary>
-    public void UpdateProgress(string newProgress)
+    public void UpdateProgress(string newScene, string newProgress)
     {
         if (progressData != null)
         {
+            progressData.scene = newScene;
             progressData.storyProgress = newProgress;
-            Debug.Log($"진행도 업데이트됨: {newProgress}");
+           // Debug.Log("진행도 업데이트 : " + newScene +" :: "+newProgress);
         }
     }
 
     /// <summary>
-    /// 진행도 초기화 (새 게임 시작 등)
+    /// 진행도 초기화 (새 게임 시작 등)a
     /// </summary>
     public void ResetProgress()
     {
-        if (progressData != null)
+        if (progressData != null && defaultData !=null)
         {
-            progressData.storyProgress = defaultProgress;
-            PlayerPrefs.DeleteKey(ProgressKey);
-            Debug.Log("진행도 초기화됨");
+            progressData.scene = defaultData.scene;
+            progressData.storyProgress = defaultData.storyProgress;
+            progressData.getSmartPhone = defaultData.getSmartPhone;
+            progressData.playerPosition = defaultData.playerPosition;
+            progressData.sanchi = defaultData.sanchi;
+
+            progressData.mainInventoryDatas = new List<string>(defaultData.mainInventoryDatas);
+            progressData.phoneDatas = new List<SavePhoneData>(defaultData.phoneDatas);
+            progressData.inventoryDatas = new List<string>(defaultData.inventoryDatas);
+            progressData.stevenPhoneDatas = defaultData.stevenPhoneDatas;
+
+            progressData.bgVolume = defaultData.bgVolume;
+            progressData.effectVolume = defaultData.effectVolume;
+            progressData.characterVolume = defaultData.characterVolume;
+            progressData.isFullScreen = defaultData.isFullScreen;
+            progressData.language = defaultData.language;
+            //Debug.Log("진행도 초기화됨");
         }
     }
 }

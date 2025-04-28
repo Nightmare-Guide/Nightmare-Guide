@@ -9,6 +9,7 @@ using static SchoolUIManager;
 [System.Serializable]
 public class GameData
 {
+    public string scene = "0_1";
     public string storyProgress = "0_0_0";
     public bool getSmartPhone = false;
     public Vector3 playerPosition = new Vector3(-550, -67, 278);
@@ -54,6 +55,7 @@ public class GameDataManager : MonoBehaviour
     {
         GameData saveData = new GameData
         {
+            scene = progressData.scene,
             storyProgress = progressData.storyProgress,
             getSmartPhone = progressData.getSmartPhone,
             playerPosition = progressData.playerPosition,
@@ -83,6 +85,7 @@ public class GameDataManager : MonoBehaviour
             string json = File.ReadAllText(FilePath);
             GameData loadData = JsonUtility.FromJson<GameData>(json);
 
+            progressData.scene = loadData.scene;
             progressData.storyProgress = loadData.storyProgress;
             progressData.getSmartPhone = loadData.getSmartPhone;
             progressData.playerPosition = loadData.playerPosition;
@@ -115,6 +118,7 @@ public class GameDataManager : MonoBehaviour
 
     public bool StartNewGame()
     {
+        progressData.scene = newGame.scene;
         progressData.storyProgress = newGame.storyProgress;
         progressData.getSmartPhone = newGame.getSmartPhone;
         progressData.playerPosition = newGame.playerPosition;
@@ -131,9 +135,9 @@ public class GameDataManager : MonoBehaviour
         progressData.isFullScreen = newGame.isFullScreen;
         progressData.language = newGame.language;
 
-        SaveGame();
+        ProgressManager.Instance.ResetProgress();
 
-        Debug.Log("새 게임이 시작되었습니다. 초기화된 데이터를 저장했습니다.");
+        //Debug.Log("새 게임이 시작되었습니다. 초기화된 데이터를 저장했습니다.");
         return true;
     }
 

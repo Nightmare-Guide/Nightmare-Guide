@@ -52,11 +52,10 @@ public class TitleUIManager : UIUtility
         if (GameDataManager.instance.StartNewGame())
         {
             string currentScene = ProgressManager.Instance.progressData.scene;
-
+            //Debug.Log(currentScene + "ÇöÀç ¾À" + GameDataManager.instance.progressData.scene+"ÀúÀå¾À");
             if (currentScene.Equals("0_1")) // Áý [³·]
             {
                 CommonUIManager.instance.MoveScene("Main_Map");
-                // StartCoroutine(WaitForSceneLoadAndSpawnPlayer()); // Á¦°Å
             }
             else
             {
@@ -68,7 +67,7 @@ public class TitleUIManager : UIUtility
     public void LoadGameBtn()
     {
         string currentScene = ProgressManager.Instance.progressData.scene;
-
+       
         if (currentScene.Equals("0_1") || currentScene.Equals("0_2") || currentScene.Equals("1_1") || currentScene.Equals("1_2") || currentScene.Equals("2_1") || currentScene.Equals("2_2") || currentScene.Equals("3_2"))
         {
             CommonUIManager.instance.MoveScene("Main_Map");
