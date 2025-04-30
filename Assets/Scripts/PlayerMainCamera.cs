@@ -9,8 +9,6 @@ public class PlayerMainCamera : MonoBehaviour
 {
     [SerializeField] Camera mainCamera;
     [SerializeField] PostProcessingBehaviour postProcessingBehaviour;
-    [SerializeField] PostProcessingProfile day_Scene;
-    [SerializeField] PostProcessingProfile night_Scene;
 
 
     public static PlayerMainCamera camera_single {  get; private set; }

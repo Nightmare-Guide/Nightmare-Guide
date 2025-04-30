@@ -14,14 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scene: 0_1
   storyProgress: 0_0_0
-  getSmartPhone: 0
   playerPosition: {x: -487, y: 71, z: 138}
   sanchi: 0
-  mainInventoryDatas: []
-  phoneDatas: []
-  inventoryDatas: []
-  bgVolume: 0
-  effectVolume: 0
-  characterVolume: 0
-  isFullScreen: 0
-  language: 
+  mainInventoryDatas:
+  - 
+  phoneDatas:
+  - name: 
+    hasPhone: 0
+    isUnlocked: 0
+  inventoryDatas:
+  - 
+  bgVolume: 50
+  effectVolume: 50
+  characterVolume: 50
+  isFullScreen: 1
+  language: en

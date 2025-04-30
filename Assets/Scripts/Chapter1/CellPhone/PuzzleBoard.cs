@@ -27,7 +27,7 @@ public class PuzzleBoard : MonoBehaviour
     private void Update()
     {
         // 테스트용 바로 정답 맞추기
-        if(Input.GetKey(KeyCode.Keypad8)) 
+        if(Input.GetKey(KeyCode.Keypad0)) 
         {
 
             suffleButton.SetActive(false);
