@@ -5,11 +5,14 @@ using TheKiwiCoder;
 using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityStandardAssets.Characters.FirstPerson;
 using static UnityEngine.GraphicsBuffer;
 
 public class Enemy : MonoBehaviour
 {
+
+    public EnemyState currentState = EnemyState.Normal;
     public BehaviourTree blackboard;
     // 싱글턴 패턴을 사용하여 하나의 Enemy 인스턴스만 존재하도록 설정
     public static Enemy enemy_single { get; private set; }
@@ -40,6 +43,12 @@ public class Enemy : MonoBehaviour
 
         // GameManager에서 플레이어 Transform을 받아오는 코드 (주석 처리됨)
         // targetPlayer = GameManager.instance.player_tr;
+    }
+
+    public enum EnemyState
+    {
+        Normal,
+        Frozen
     }
 
     private void OnTriggerEnter(Collider other)
@@ -78,11 +87,11 @@ public class Enemy : MonoBehaviour
     public void TeleportEnemy()
     {
         // 점프 스케어 발생 시 플레이어 앞의 일정 거리로 순간이동
-        float jumpscareDistance = 9f;
+        float jumpscareDistance = 7f;
 
         // 플레이어 카메라가 바라보는 방향 계산 (수평 방향만 고려)
         Vector3 cameraForward = PlayerMainCamera.camera_single.transform.forward;
-        cameraForward.y = -1;
+        cameraForward.y = 0;
         cameraForward.Normalize();
 
         // 적의 순간이동 위치 계산
@@ -102,7 +111,42 @@ public class Enemy : MonoBehaviour
         Vector3 fixedEuler = transform.rotation.eulerAngles;
         fixedEuler.x = 30f;
         transform.rotation = Quaternion.Euler(fixedEuler);
+
+
+        Invoke("FreezeEnemy", 0.7f); // 1초 뒤에 FreezeEnemy() 호출
+
     }
+    public void FreezeEnemy()
+    {
+        currentState = EnemyState.Frozen;
+
+        // Rigidbody 멈춤
+        Rigidbody rb = GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.isKinematic = true;
+            rb.constraints = RigidbodyConstraints.FreezeAll;
+        }
+
+        // 애니메이터 정지
+        Animator anim = GetComponent<Animator>();
+        if (anim != null)
+        {
+            anim.enabled = false;
+        }
+
+        NavMeshAgent agent = GetComponent<NavMeshAgent>();
+        if (agent != null)
+        {
+            agent.isStopped = true;
+            agent.updatePosition = false;
+            agent.updateRotation = false;
+        }
+
+        // 필요 시 콜라이더도 끄기
+        // GetComponent<Collider>().enabled = false;
+    }
+
 
     // 기본 Object 클래스의 메서드를 재정의 (필요하지 않다면 삭제 가능)
     public override int GetHashCode()
