@@ -45,6 +45,10 @@ public class RayCast_Aim : MonoBehaviour
                     {
                         return;
                     }
+                    if (click_object.CompareTag("NextScene"))
+                    {
+                        CommonUIManager.instance.MoveScene("Main_Map");
+                    }
                     // 태그가 "maze_Btn"이라면 Select_Btn() 호출
                     if (click_object.CompareTag("maze_Btn"))
                     {

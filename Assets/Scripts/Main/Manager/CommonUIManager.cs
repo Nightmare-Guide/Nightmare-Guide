@@ -107,24 +107,45 @@ public class CommonUIManager : MonoBehaviour
 
 
     }
- /*   private void Update()
+    private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.H))
+        if (Input.GetKeyDown(KeyCode.Keypad1))
         {
-            if (ProgressManager.Instance != null && ProgressManager.Instance.defaultData != null && ProgressManager.Instance.progressData != null)
-            {
-                defaultPhone.text = ProgressManager.Instance.defaultData.stevenPhoneDatas.hasPhone.ToString() + " - " +
-                                    ProgressManager.Instance.defaultData.stevenPhoneDatas.isUnlocked.ToString();
-                updatePhone.text = ProgressManager.Instance.progressData.stevenPhoneDatas.hasPhone.ToString() +
-                                    " - " +
-                                    ProgressManager.Instance.progressData.stevenPhoneDatas.isUnlocked.ToString();
-            }
-            else
-            {
-                Debug.LogError("ProgressManager instance or its data is null in CommonUIManager Update()");
-            }
+            MoveScene("Title Scene");
         }
-    }*/
+        else if (Input.GetKeyDown(KeyCode.Keypad2))
+        {
+            MoveScene("DayHouse");
+        }
+        else if (Input.GetKeyDown(KeyCode.Keypad3))
+        {
+            MoveScene("Main_Map");
+        }
+        else if (Input.GetKeyDown(KeyCode.Keypad4))
+        {
+            MoveScene("DayHospital");
+        }
+        else if (Input.GetKeyDown(KeyCode.Keypad5))
+        {
+            MoveScene("School_Scene");
+        }
+        else if (Input.GetKeyDown(KeyCode.Keypad6))
+        {
+            MoveScene("NightHospital");
+        }
+        else if (Input.GetKeyDown(KeyCode.Keypad7))
+        {
+            MoveScene("Main_Map_Night");
+        }
+        else if (Input.GetKeyDown(KeyCode.Keypad8))
+        {
+            MoveScene("Main_Map_Night");
+        }
+        else if (Input.GetKeyDown(KeyCode.Keypad9))
+        {
+            MoveScene("NightHouse");
+        }
+    }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
