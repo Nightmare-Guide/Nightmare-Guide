@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -37,8 +38,12 @@ public class MainUIManager : UIUtility
             CommonUIManager.instance.phoneInfos.cellPhoneObj = cellPhoneObjs;
             CommonUIManager.instance.phoneInfos.cellPhoneUI = uiObjects[2];
         }
-       
-       
+
+        if (CommonUIManager.instance.phoneInfos.hasPhone)
+        {
+            cellPhoneObjs.SetActive(false);
+        }
+
     }
 
     private void Update()

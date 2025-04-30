@@ -51,7 +51,6 @@ public class ProgressManager : MonoBehaviour
         {
             progressData.scene = GameDataManager.instance.progressData.scene;
             progressData.storyProgress = GameDataManager.instance.progressData.storyProgress;
-            progressData.getSmartPhone = GameDataManager.instance.progressData.getSmartPhone;
             progressData.playerPosition = GameDataManager.instance.progressData.playerPosition;
             progressData.sanchi = GameDataManager.instance.progressData.sanchi;
 
@@ -79,7 +78,6 @@ public class ProgressManager : MonoBehaviour
         {
             GameDataManager.instance.progressData.scene = progressData.scene;
             GameDataManager.instance.progressData.storyProgress = progressData.storyProgress;
-            GameDataManager.instance.progressData.getSmartPhone = progressData.getSmartPhone ;
             GameDataManager.instance.progressData.playerPosition = progressData.playerPosition;
             GameDataManager.instance.progressData.sanchi= progressData.sanchi;
 
@@ -123,7 +121,6 @@ public class ProgressManager : MonoBehaviour
         {
             progressData.scene = defaultData.scene;
             progressData.storyProgress = defaultData.storyProgress;
-            progressData.getSmartPhone = defaultData.getSmartPhone;
             progressData.playerPosition = defaultData.playerPosition;
             progressData.sanchi = defaultData.sanchi;
 

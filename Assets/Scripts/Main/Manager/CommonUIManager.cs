@@ -8,6 +8,7 @@ using UnityEngine.Localization.Settings;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using static SchoolUIManager;
+using System.IO;
 
 public class CommonUIManager : MonoBehaviour
 {
@@ -62,6 +63,10 @@ public class CommonUIManager : MonoBehaviour
     [Header("# Player")]
     [SerializeField] GameObject main_playerPrefab; // 메인씬
     [SerializeField] GameObject chap_playerPrefab; //챕터씬
+
+    [Header("# 정보 저장 확인 테스트")]
+    public TextMeshProUGUI defaultPhone;
+    public TextMeshProUGUI updatePhone;
     private void Awake()
     {
         if (instance == null)
@@ -87,7 +92,39 @@ public class CommonUIManager : MonoBehaviour
     private void Start()
     {
         phoneInfos = new CharacterPhoneInfo { name = "Steven", hasPhone = false, isUnlocked = false }; // cellPhoneObj 랑 cellPhoneUI 는 MainUIManager 에서 초기화
+        string path = Application.streamingAssetsPath + "/data.json";
+        if (File.Exists(path))
+        {
+            string json = File.ReadAllText(path);
+            // Debug.Log("파일이 존재합니다.");
+            phoneInfos.hasPhone = ProgressManager.Instance.progressData.stevenPhoneDatas.hasPhone;
+            phoneInfos.isUnlocked = ProgressManager.Instance.progressData.stevenPhoneDatas.isUnlocked;
+        }
+        else
+        {
+            //Debug.Log("파일이 존재하지 않습니다.");
+        }
+
+
     }
+ /*   private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            if (ProgressManager.Instance != null && ProgressManager.Instance.defaultData != null && ProgressManager.Instance.progressData != null)
+            {
+                defaultPhone.text = ProgressManager.Instance.defaultData.stevenPhoneDatas.hasPhone.ToString() + " - " +
+                                    ProgressManager.Instance.defaultData.stevenPhoneDatas.isUnlocked.ToString();
+                updatePhone.text = ProgressManager.Instance.progressData.stevenPhoneDatas.hasPhone.ToString() +
+                                    " - " +
+                                    ProgressManager.Instance.progressData.stevenPhoneDatas.isUnlocked.ToString();
+            }
+            else
+            {
+                Debug.LogError("ProgressManager instance or its data is null in CommonUIManager Update()");
+            }
+        }
+    }*/
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
@@ -117,7 +154,7 @@ public class CommonUIManager : MonoBehaviour
             {
                 player.SetActive(true);
             }
-            Debug.Log($"{sceneName} 씬에 플레이어 생성 성공! 위치: {player.transform.position}");
+          //  Debug.Log($"{sceneName} 씬에 플레이어 생성 성공! 위치: {player.transform.position}");
         }
         else
         {
