@@ -13,9 +13,6 @@ public class ProgressData : ScriptableObject
     [Header("진행도 예: 챕터_서브_노드 형식")]
     public string storyProgress = "0_0_0";
 
-    [Header("아이템 소지 여부")]
-    public bool getSmartPhone = false;
-
     [Header("플레이어 위치")]
     public Vector3 playerPosition = new Vector3(-550, -67, 278);
 
@@ -28,16 +25,15 @@ public class ProgressData : ScriptableObject
     public List<String> inventoryDatas;
     [Header("CommonUIManager")]
     public SaveStevenPhoneData stevenPhoneDatas;
-    public float bgVolume;
-    public float effectVolume;
-    public float characterVolume;
-    public bool isFullScreen;
-    public string language;
+    public float bgVolume = 50.0f;
+    public float effectVolume = 50.0f;
+    public float characterVolume=50.0f;
+    public bool isFullScreen = true;
+    public string language = "en";
     // 초기화 기능
     public void ResetProgress()
     {
         storyProgress = "0_0_0";
-        getSmartPhone = false;
         playerPosition = Vector3.zero;
     }
 }

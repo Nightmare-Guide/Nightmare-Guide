@@ -13,6 +13,7 @@ using UnityEngine.Rendering.HighDefinition;
 using System.Drawing;
 using Unity.VisualScripting;
 using UnityEngine.Localization.SmartFormat.Utilities;
+using System.IO;
 
 public class SchoolUIManager : UIUtility
 {
@@ -59,9 +60,34 @@ public class SchoolUIManager : UIUtility
         phoneInfos.Add(new CharacterPhoneInfo { name = "David", hasPhone = false, isUnlocked = false, cellPhoneObj = cellPhoneObjs[1], cellPhoneUI = uiObjects[3] });
 
         // 아이템 데이터 입력
-        items.Add(new Item { name = "Locker Key", itemImg = itemImgs[0], uiObj = null, schoolUIManager = this});
+        items.Add(new Item { name = "Locker Key", itemImg = itemImgs[0], uiObj = null, schoolUIManager = this });
         items.Add(new Item { name = "Ethan CellPhone", itemImg = itemImgs[1], uiObj = uiObjects[2], schoolUIManager = this });
         items.Add(new Item { name = "David CellPhone", itemImg = itemImgs[2], uiObj = uiObjects[3], schoolUIManager = this });
+
+        string path = Application.streamingAssetsPath + "/data.json";
+        if (File.Exists(path))
+            if (File.Exists(path))
+            {
+                string json = File.ReadAllText(path);
+                // Debug.Log("파일이 존재합니다.");
+                phoneInfos[0].hasPhone = ProgressManager.Instance.progressData.phoneDatas[0].hasPhone;
+                phoneInfos[0].isUnlocked = ProgressManager.Instance.progressData.phoneDatas[0].isUnlocked;
+                phoneInfos[1].hasPhone = ProgressManager.Instance.progressData.phoneDatas[1].hasPhone;
+                phoneInfos[1].isUnlocked = ProgressManager.Instance.progressData.phoneDatas[1].isUnlocked;
+
+                if (phoneInfos[0].hasPhone)
+                {
+                    cellPhoneObjs[0].SetActive(true);
+                }
+                if (phoneInfos[1].hasPhone)
+                {
+                    cellPhoneObjs[1].SetActive(true);
+                }
+            }
+            else
+            {
+                //Debug.Log("파일이 존재하지 않습니다.");
+            }
 
         CommonUIManager.instance.schoolUIManager = this;
     }

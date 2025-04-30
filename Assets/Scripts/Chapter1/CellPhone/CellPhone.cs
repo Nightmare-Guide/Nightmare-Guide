@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using System.Globalization;
 using System;
 using static SchoolUIManager;
+using System.IO;
 
 public class CellPhone : MonoBehaviour
 {

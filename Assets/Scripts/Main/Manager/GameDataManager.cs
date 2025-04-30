@@ -9,22 +9,23 @@ using static SchoolUIManager;
 [System.Serializable]
 public class GameData
 {
+
     public string scene = "0_1";
     public string storyProgress = "0_0_0";
-    public bool getSmartPhone = false;
-    public Vector3 playerPosition = new Vector3(-550, -67, 278);
-    public int sanchi = 0;
 
-    public List<string> mainInventoryDatas;
+    public Vector3 playerPosition = new Vector3(-550, -67, 278);
+
+    public int sanchi = 0;
+    public List<String> mainInventoryDatas;
     public List<SavePhoneData> phoneDatas;
-    public List<string> inventoryDatas;
+    public List<String> inventoryDatas;
     public SaveStevenPhoneData stevenPhoneDatas;
 
-    public float bgVolume;
-    public float effectVolume;
-    public float characterVolume;
-    public bool isFullScreen;
-    public string language;
+    public float bgVolume = 50.0f;
+    public float effectVolume = 50.0f;
+    public float characterVolume = 50.0f;
+    public bool isFullScreen = true;
+    public string language = "en";
 }
 
 public class GameDataManager : MonoBehaviour
@@ -50,6 +51,15 @@ public class GameDataManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    //테스트용 저장 기능
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            SaveGame();
+        }
+       
+    }
 
     public void SaveGame()
     {
@@ -57,7 +67,6 @@ public class GameDataManager : MonoBehaviour
         {
             scene = progressData.scene,
             storyProgress = progressData.storyProgress,
-            getSmartPhone = progressData.getSmartPhone,
             playerPosition = progressData.playerPosition,
             sanchi = progressData.sanchi,
 
@@ -87,7 +96,6 @@ public class GameDataManager : MonoBehaviour
 
             progressData.scene = loadData.scene;
             progressData.storyProgress = loadData.storyProgress;
-            progressData.getSmartPhone = loadData.getSmartPhone;
             progressData.playerPosition = loadData.playerPosition;
             progressData.sanchi = loadData.sanchi;
 
@@ -120,7 +128,6 @@ public class GameDataManager : MonoBehaviour
     {
         progressData.scene = newGame.scene;
         progressData.storyProgress = newGame.storyProgress;
-        progressData.getSmartPhone = newGame.getSmartPhone;
         progressData.playerPosition = newGame.playerPosition;
         progressData.sanchi = newGame.sanchi;
 
