@@ -80,8 +80,12 @@ public class RayCast_Aim : MonoBehaviour
         }
         else
         {
-            // UI 비 활성화
-            CommonUIManager.instance.interactionUI.SetActive(false);
+            if (CommonUIManager.instance != null)
+            {
+                // UI 비 활성화
+                CommonUIManager.instance.interactionUI.SetActive(false);
+            }
+          
         }
     }
 
