@@ -73,7 +73,7 @@ public class CSVRoad_Story : MonoBehaviour
         for (int i = start; i <= end; i++)
         {
             // CSV 데이터의 현재 대사를 가져옴
-            string text = FormatDialogue(data[i]["Dialogue_Korean"].ToString());
+            string text = FormatDialogue(data[i]["ko"].ToString());
             dialogue.text = text;
 
             // ReturnPoint가 있으면 저장
@@ -111,8 +111,8 @@ public class CSVRoad_Story : MonoBehaviour
 
         if (optionStartIndex < data.Count)
         {
-            option1.text = FormatDialogue(data[optionStartIndex]["Dialogue_Korean"].ToString());
-            option2.text = FormatDialogue(data[optionStartIndex + 1]["Dialogue_Korean"].ToString());
+            option1.text = FormatDialogue(data[optionStartIndex]["ko"].ToString());
+            option2.text = FormatDialogue(data[optionStartIndex + 1]["ko"].ToString());
         }
         else
         {
