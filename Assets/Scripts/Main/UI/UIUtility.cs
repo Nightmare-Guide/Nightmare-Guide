@@ -68,14 +68,14 @@ public class UIUtility : MonoBehaviour
 
         // 플레이어 움직임 멈춤
         StopPlayerController();
-
-        //플레이어 컨트롤 OFF
-        PlayerController.instance.Close_PlayerController();
     }
 
     // 오브젝트 상호작용 시 플레이어 움직임 멈춤 함수
     protected void StopPlayerController()
     {
+        //플레이어 컨트롤 OFF
+        PlayerController.instance.Close_PlayerController();
+
         //카메라 회전 정지
         Camera_Rt.instance.Close_Camera();
 
