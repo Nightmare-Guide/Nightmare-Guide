@@ -234,6 +234,9 @@ public class CellPhone : MonoBehaviour
     // DoTween 에셋을 활용한 이동함수
     IEnumerator DoTween()
     {
+        // BoxCollider 비활성화
+        this.GetComponent<BoxCollider>().enabled = false;
+
         // InQuad : 시작할 때 빠르게 가속, 끝날 때 감속
         // OutQuad : 시작할 때 감속, 끝날 때 가속
         transform.DOMove(finalPos, moveSpeed).SetEase(Ease.InOutQuad);
@@ -247,9 +250,6 @@ public class CellPhone : MonoBehaviour
         var uiManager = this.gameObject.name.Contains("Steven") ? (UIUtility)mainUIManager : (UIUtility)schoolUIManager;
 
         uiManager.InGameOpenUI(uiManager.uiObjects[1]); // null 값용 UI 오브젝트 활성화
-
-        // BoxCollider 비활성화
-        this.GetComponent<BoxCollider>().enabled = false;
 
         // UI 활성화
         if (this.gameObject.name.Contains("Ethan"))
