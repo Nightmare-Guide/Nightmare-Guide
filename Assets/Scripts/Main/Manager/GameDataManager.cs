@@ -109,7 +109,7 @@ public class GameDataManager : MonoBehaviour
             progressData.characterVolume = loadData.characterVolume;
             progressData.isFullScreen = loadData.isFullScreen;
             progressData.language = loadData.language;
-
+            CommonUIManager.instance.SmartPhoneData();
             // Debug.Log("게임 불러오기 완료");
         }
         else
@@ -144,6 +144,7 @@ public class GameDataManager : MonoBehaviour
 
         ProgressManager.Instance.ResetProgress();
         CommonUIManager.instance.SmartPhoneData();
+        SaveGame();
         //Debug.Log("새 게임이 시작되었습니다. 초기화된 데이터를 저장했습니다.");
         return true;
     }
