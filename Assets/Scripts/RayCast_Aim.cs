@@ -38,8 +38,11 @@ public class RayCast_Aim : MonoBehaviour
                 if (Physics.Raycast(ray, out hit, maxRayDistance, LayerMask.GetMask("ActiveObject")))
                 {
                     GameObject click_object = hit.transform.gameObject;
+
+                    // 콜라이더 비활성화
                     click_object.GetComponent<Collider>().enabled = false;
-                   // Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.red); // 실제 충돌 지점까지 빨간색
+
+                    // Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.red); // 실제 충돌 지점까지 빨간색
 
                     // Debug.Log($"Object Name : {click_object.name}");
                     if (StoryCheck(click_object))
@@ -48,13 +51,11 @@ public class RayCast_Aim : MonoBehaviour
                     }
                     if (click_object.CompareTag("NextScene"))
                     {
-                        //플레이어 컨트롤 OFF
+                        // 플레이어 못 움직이게
                         PlayerController.instance.Close_PlayerController();
-
-                        //카메라 회전 정지
                         Camera_Rt.instance.Close_Camera();
 
-                        CommonUIManager.instance.MoveScene("Main_Map");
+                        NextScene.instance.Next_Scene();
                     }
                     // 태그가 "maze_Btn"이라면 Select_Btn() 호출
                     if (click_object.CompareTag("maze_Btn"))

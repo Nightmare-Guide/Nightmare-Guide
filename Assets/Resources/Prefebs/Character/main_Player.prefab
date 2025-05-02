@@ -497,7 +497,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4235032173555325522
 Transform:
   m_ObjectHideFlags: 0
@@ -1356,7 +1356,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 2000
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -1418,8 +1418,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 694136378683529783}
   postProcessingBehaviour: {fileID: 4747415434099735434}
-  day_Scene: {fileID: 11400000, guid: afeeda4c8d290e844a0ef30ba081f8be, type: 2}
-  night_Scene: {fileID: 11400000, guid: 641f0d14b2988f24ba36706cc0f70813, type: 2}
   rotationDuration: 0.2
 --- !u!114 &4260355715494167753
 MonoBehaviour:
@@ -1433,7 +1431,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdae42ddcf63e87429a4e4abc08bd14a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxRayDistance: 1.1
+  maxRayDistance: 10
 --- !u!1 &5320919109234143622
 GameObject:
   m_ObjectHideFlags: 0
