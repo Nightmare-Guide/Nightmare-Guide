@@ -89,12 +89,7 @@ public class CommonUIManager : MonoBehaviour
         LanguageDropdown.value = 0;
     }
 
-    private void Start()
-    {
-
-        SmartPhoneData();
-
-    }
+ 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Keypad1))
@@ -278,16 +273,12 @@ public class CommonUIManager : MonoBehaviour
     public void SmartPhoneData()
     {
         phoneInfos = new CharacterPhoneInfo { name = "Steven", hasPhone = false, isUnlocked = false }; // cellPhoneObj 랑 cellPhoneUI 는 MainUIManager 에서 초기화
-        //string path = Application.streamingAssetsPath + "/save.json";
-        string path = Path.Combine(Application.streamingAssetsPath, "save.json");
-        if (File.Exists(path))
+        
+        if (ProgressManager.Instance!=null)
         {
-            string json = File.ReadAllText(path);
-            Debug.Log("파일이 존재합니다.");
-            Debug.Log("폰 보유 여부 " + phoneInfos.hasPhone);
-            phoneInfos.hasPhone = ProgressManager.Instance.progressData.stevenPhoneDatas.hasPhone;
-            phoneInfos.isUnlocked = ProgressManager.Instance.progressData.stevenPhoneDatas.isUnlocked;
-            Debug.Log("폰 보유 여부 " + phoneInfos.hasPhone);
+
+            phoneInfos.hasPhone = ProgressManager.Instance.progressData.phoneDatas[0].hasPhone;
+            phoneInfos.isUnlocked = ProgressManager.Instance.progressData.phoneDatas[0].isUnlocked;
         }
         else
         {

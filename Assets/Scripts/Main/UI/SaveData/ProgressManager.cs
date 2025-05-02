@@ -29,7 +29,7 @@ public class ProgressManager : MonoBehaviour
     {
         if(GameDataManager.instance != null)
         {
-           // LoadProgress();
+           LoadProgress();
         }
         
     }
@@ -40,7 +40,7 @@ public class ProgressManager : MonoBehaviour
     {
         if (progressData == null)
         {
-            //Debug.LogError("ProgressData가 연결되지 않았습니다!");
+            Debug.LogError("ProgressData가 연결되지 않았습니다!");
             return;
         }
         else//게임 데이터 매니저에서 진행도 불러오기
@@ -60,6 +60,7 @@ public class ProgressManager : MonoBehaviour
             progressData.characterVolume = GameDataManager.instance.progressData.characterVolume;
             progressData.isFullScreen = GameDataManager.instance.progressData.isFullScreen;
             progressData.language = GameDataManager.instance.progressData.language;
+            Debug.Log("ProgressData가 연결되었 습니다!");
         }
         
 
