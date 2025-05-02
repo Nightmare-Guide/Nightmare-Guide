@@ -164,7 +164,8 @@ public class RayCast_Aim : MonoBehaviour
         // ÇØ´ç ÈÞ´ëÆù È¹µæ bool °ª º¯°æ
         if (obj.name.Contains("Steven"))
         {
-            CommonUIManager.instance.phoneInfos.hasPhone = true;
+            ProgressManager.Instance.progressData.phoneDatas[0].hasPhone = true;
+            CommonUIManager.instance.SmartPhoneData();
         }
         else
         {

@@ -84,7 +84,7 @@ public class GameDataManager : MonoBehaviour
 
         string json = JsonUtility.ToJson(saveData, true);
         File.WriteAllText(FilePath, json);
-        // Debug.Log($"게임 저장 완료: {FilePath}");
+        Debug.Log($"게임 저장 완료: {FilePath}");
     }
 
     public void LoadGame()
@@ -143,7 +143,7 @@ public class GameDataManager : MonoBehaviour
         progressData.language = newGame.language;
 
         ProgressManager.Instance.ResetProgress();
-
+        CommonUIManager.instance.SmartPhoneData();
         //Debug.Log("새 게임이 시작되었습니다. 초기화된 데이터를 저장했습니다.");
         return true;
     }
