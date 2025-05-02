@@ -1,0 +1,27 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class NextScene : MonoBehaviour
+{
+    public static NextScene instance{get; private set;}
+    public string scene_Name;
+    public string storyprogress;
+
+    private void Start()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+    }
+    public void Next_Scene()
+    {
+        CommonUIManager.instance.MoveScene(scene_Name);
+        //if (ProgressManager.Instance.progressData.storyProgress == storyprogress)
+        //{
+        //    CommonUIManager.instance.MoveScene(scene_Name);
+        //}
+    }
+
+}
