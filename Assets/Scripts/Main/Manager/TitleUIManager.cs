@@ -18,6 +18,7 @@ public class TitleUIManager : UIUtility
 
     private void Start()
     {
+        Cursor.visible = true; // 커서 보이게 하기
         titleUI.SetActive(true); // Start UI 활성화
 
         optionUI = CommonUIManager.instance.optionUI;
@@ -55,7 +56,7 @@ public class TitleUIManager : UIUtility
             //Debug.Log(currentScene + "현재 씬" + GameDataManager.instance.progressData.scene+"저장씬");
             if (currentScene.Equals("0_1")) // 집 [낮]
             {
-                CommonUIManager.instance.MoveScene("DayHouse");
+                CommonUIManager.instance.StartNarrationScene();
             }
             else
             {

@@ -21,6 +21,7 @@ public class LoadingSceneManager : UIUtility
 
     private void Start()
     {
+        Cursor.visible = false; // 커서 안보이게 하기
         videoImg.gameObject.SetActive(false);
 
         // Loading 영상 url 찾기
