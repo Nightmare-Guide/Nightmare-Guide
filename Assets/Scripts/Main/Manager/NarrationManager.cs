@@ -19,8 +19,6 @@ public class NarrationManager : MonoBehaviour
 
     private void Start()
     {
-        CommonUIManager.instance.Blink(true);
-
         Cursor.visible = false; // 커서 안보이게 하기
         videoImg.gameObject.SetActive(false);
         text.gameObject.SetActive(false);
@@ -38,9 +36,8 @@ public class NarrationManager : MonoBehaviour
 
         videoPlayer.Play();
 
-        SetUIOpacity(videoImg, true, 2f, 0f);
+        SetUIOpacity(videoImg, true, 1f, 1f);
 
-        videoImg.gameObject.SetActive(true);
         text.gameObject.SetActive(true);
 
         StartCoroutine(PrintDialogue());
@@ -73,7 +70,7 @@ public class NarrationManager : MonoBehaviour
 
     IEnumerator PrintDialogue()
     {
-        yield return new WaitForSeconds(CommonUIManager.instance.blinkDuration + 1.5f);
+        yield return new WaitForSeconds(CommonUIManager.instance.blinkDuration + 2.5f);
 
         if (CSVRoad_Story.instance != null)
         {

@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
+using UnityEngine.SceneManagement;
 
 public class CSVRoad_Story : MonoBehaviour
 {
@@ -174,12 +176,19 @@ public class CSVRoad_Story : MonoBehaviour
         switch (chapter)
         {
             case "0_0_0":
-                narrationManager.SetUIOpacity(narrationManager.videoImg, false, 2f, 0f);
-                if (CommonUIManager.instance != null)
-                {
-                    CommonUIManager.instance.MoveScene("DayHouse");
-                }
+                StartCoroutine(FinishNarration());
                 break;
         }
+    }
+
+    IEnumerator FinishNarration()
+    {
+        narrationManager.SetUIOpacity(narrationManager.videoImg, false, 1f, 0f);
+
+        yield return new WaitForSeconds(1.2f);
+
+        SceneManager.LoadScene("DayHouse");
+
+        CommonUIManager.instance.Blink(true);
     }
 }
