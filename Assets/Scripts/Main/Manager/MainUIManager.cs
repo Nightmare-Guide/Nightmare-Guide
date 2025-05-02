@@ -37,10 +37,11 @@ public class MainUIManager : UIUtility
 
             CommonUIManager.instance.phoneInfos.cellPhoneObj = cellPhoneObjs;
             CommonUIManager.instance.phoneInfos.cellPhoneUI = uiObjects[2];
-
+            Debug.Log("폰 보유 여부 "+CommonUIManager.instance.phoneInfos.hasPhone);
             if (CommonUIManager.instance.phoneInfos.hasPhone)
             {
                 cellPhoneObjs.SetActive(false);
+                Debug.Log("폰 보유 여부 " + CommonUIManager.instance.phoneInfos.hasPhone);
             }
         }
 

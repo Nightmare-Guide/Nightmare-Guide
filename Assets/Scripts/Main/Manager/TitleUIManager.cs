@@ -68,7 +68,10 @@ public class TitleUIManager : UIUtility
     public void LoadGameBtn()
     {
         string currentScene = ProgressManager.Instance.progressData.scene;
-        
+        if (ProgressManager.Instance != null)
+        {
+            ProgressManager.Instance.progressData.scene = currentScene;
+        }
         //플레이어 하우스
         if (currentScene.Equals("0_1") ){CommonUIManager.instance.MoveScene("DayHouse");}
         //플레이어 하우스

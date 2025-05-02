@@ -13,9 +13,6 @@ public class ProgressManager : MonoBehaviour
     public ProgressData progressData;
     public ProgressData defaultData;
 
- 
-    
-
     void Awake()
     {
         // ΩÃ±€≈Ê √≥∏Æ
@@ -26,14 +23,13 @@ public class ProgressManager : MonoBehaviour
         }
         Instance = this;
         DontDestroyOnLoad(gameObject);
-
        
     }
     private void Start()
     {
         if(GameDataManager.instance != null)
         {
-            LoadProgress();
+           // LoadProgress();
         }
         
     }
