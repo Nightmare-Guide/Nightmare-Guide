@@ -298,6 +298,7 @@ public class CommonUIManager : MonoBehaviour
     // 씬 이동 함수
     public void MoveScene(string sceneName)
     {
+        interactionUI.SetActive(false);
         StartCoroutine(MoveSceneRoutine(sceneName));
     }
 
