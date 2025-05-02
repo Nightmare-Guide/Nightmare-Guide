@@ -91,20 +91,8 @@ public class CommonUIManager : MonoBehaviour
 
     private void Start()
     {
-        phoneInfos = new CharacterPhoneInfo { name = "Steven", hasPhone = false, isUnlocked = false }; // cellPhoneObj 랑 cellPhoneUI 는 MainUIManager 에서 초기화
-        string path = Application.streamingAssetsPath + "/data.json";
-        if (File.Exists(path))
-        {
-            string json = File.ReadAllText(path);
-            // Debug.Log("파일이 존재합니다.");
-            phoneInfos.hasPhone = ProgressManager.Instance.progressData.stevenPhoneDatas.hasPhone;
-            phoneInfos.isUnlocked = ProgressManager.Instance.progressData.stevenPhoneDatas.isUnlocked;
-        }
-        else
-        {
-            //Debug.Log("파일이 존재하지 않습니다.");
-        }
 
+        SmartPhoneData();
 
     }
     private void Update()
@@ -209,6 +197,7 @@ public class CommonUIManager : MonoBehaviour
         }
         else
         {
+            Time.timeScale = 1;
             MoveScene("Title Scene");
             optionUI.SetActive(false);
         }
@@ -286,6 +275,25 @@ public class CommonUIManager : MonoBehaviour
         _ => "unKnown"
     };
 
+    public void SmartPhoneData()
+    {
+        phoneInfos = new CharacterPhoneInfo { name = "Steven", hasPhone = false, isUnlocked = false }; // cellPhoneObj 랑 cellPhoneUI 는 MainUIManager 에서 초기화
+        //string path = Application.streamingAssetsPath + "/save.json";
+        string path = Path.Combine(Application.streamingAssetsPath, "save.json");
+        if (File.Exists(path))
+        {
+            string json = File.ReadAllText(path);
+            Debug.Log("파일이 존재합니다.");
+            Debug.Log("폰 보유 여부 " + phoneInfos.hasPhone);
+            phoneInfos.hasPhone = ProgressManager.Instance.progressData.stevenPhoneDatas.hasPhone;
+            phoneInfos.isUnlocked = ProgressManager.Instance.progressData.stevenPhoneDatas.isUnlocked;
+            Debug.Log("폰 보유 여부 " + phoneInfos.hasPhone);
+        }
+        else
+        {
+            Debug.Log("파일이 존재하지 않습니다.");
+        }
+    }
 
     // 씬 이동 함수
     public void MoveScene(string sceneName)
@@ -301,6 +309,20 @@ public class CommonUIManager : MonoBehaviour
         // yield return null;
 
         LoadingSceneManager.LoadScene(sceneName);
+    }
+    public void StartNarrationScene()
+    {
+        StartCoroutine(NarrationSceneRoutine());
+    }
+
+    IEnumerator NarrationSceneRoutine()
+    {
+        Blink(false);
+
+        yield return new WaitForSeconds(blinkDuration);
+        // yield return null;
+
+        SceneManager.LoadScene("Narration");
     }
 
     // 눈 감고/뜨는 애니메이션 쉐이더
@@ -356,6 +378,8 @@ public class CommonUIManager : MonoBehaviour
         // characterAudioSource.volume = value;
         characterVolume = value;
     }
+
+
 
     // 휴대폰 정보 Class
     public class StevenPhoneInfo
