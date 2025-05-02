@@ -34,11 +34,13 @@ public class PlayerMainCamera : MonoBehaviour
         StartCoroutine(RotateTargetCamera());
     }
 
-    private IEnumerator RotateTargetCamera() // 카메라 돌리는 코드
+    private IEnumerator RotateTargetCamera()
     {
         DeathCamera();
+
+        Vector3 lookTarget = death_Camera_Target.position + Vector3.up * 0.3f; // 보정된 시선
         Quaternion initialRotation = transform.rotation;
-        Quaternion targetRotation = Quaternion.LookRotation(death_Camera_Target.position - transform.position);
+        Quaternion targetRotation = Quaternion.LookRotation(lookTarget - transform.position);
         float elapsedTime = 0f;
 
         while (elapsedTime < rotationDuration)
@@ -49,9 +51,13 @@ public class PlayerMainCamera : MonoBehaviour
             yield return null;
         }
 
+        // 마지막에 정확하게 고정
         transform.rotation = targetRotation;
+        // 또는 transform.LookAt(lookTarget);
+
         rotationCoroutine = null;
     }
+
 
     public void CameraEffect() // 에너미에서 작동시키려고 메소드화
     {

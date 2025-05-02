@@ -13,7 +13,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
     public class PlayerController : MonoBehaviour
     {
         public static PlayerController instance;
-
+        
         [SerializeField] private bool m_IsWalking;
         [SerializeField] private float m_WalkSpeed;
         [SerializeField] private float m_RunSpeed;
@@ -48,7 +48,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         public enum PlayerState
         {
-
             Idle,
             Hide,
             Hiding,
@@ -266,7 +265,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 {
                     m_IsWalking = true;
                 }
-
             }
             // set the desired speed to be walking or running
             speed = m_IsWalking ? m_WalkSpeed : m_RunSpeed;

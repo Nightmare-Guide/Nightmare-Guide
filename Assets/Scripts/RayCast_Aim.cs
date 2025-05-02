@@ -78,11 +78,11 @@ public class RayCast_Aim : MonoBehaviour
                 }
             }
         }
-        else
+       /* else
         {
             // UI 비 활성화
             CommonUIManager.instance.interactionUI.SetActive(false);
-        }
+        }*/
     }
 
     public void ElevatorButton(GameObject obj)
@@ -111,7 +111,6 @@ public class RayCast_Aim : MonoBehaviour
 
     public void Locker(GameObject obj)
     {
-
       //  Debug.Log("락커 인식" + obj.name);
         Locker lockerObj = obj.GetComponent<Locker>();
         if (lockerObj.isMovingToLocker || lockerObj.outMovingToLocker)
@@ -136,8 +135,6 @@ public class RayCast_Aim : MonoBehaviour
             // DoorCheck(obj);
 
         }
-
-
     }
 
     public void DoorCheck(GameObject obj)

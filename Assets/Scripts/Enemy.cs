@@ -11,7 +11,6 @@ using static UnityEngine.GraphicsBuffer;
 
 public class Enemy : MonoBehaviour
 {
-
     public EnemyState currentState = EnemyState.Normal;
     public BehaviourTree blackboard;
     // 싱글턴 패턴을 사용하여 하나의 Enemy 인스턴스만 존재하도록 설정
@@ -37,7 +36,6 @@ public class Enemy : MonoBehaviour
             enemy_single = this;
         }
     
-
         // Animator 컴포넌트 가져오기
         animator = GetComponent<Animator>();
 
@@ -87,7 +85,7 @@ public class Enemy : MonoBehaviour
     public void TeleportEnemy()
     {
         // 점프 스케어 발생 시 플레이어 앞의 일정 거리로 순간이동
-        float jumpscareDistance = 7f;
+        float jumpscareDistance = 1.0f;
 
         // 플레이어 카메라가 바라보는 방향 계산 (수평 방향만 고려)
         Vector3 cameraForward = PlayerMainCamera.camera_single.transform.forward;
@@ -98,7 +96,7 @@ public class Enemy : MonoBehaviour
         Vector3 jumpscarePosition = targetPlayer.position + (cameraForward * jumpscareDistance);
 
         // 적의 높이를 조정하여 자연스러운 연출 구현
-        float heightOffset = -3f;
+        float heightOffset = -1f;
         jumpscarePosition.y = targetPlayer.position.y + heightOffset;
 
         // 적을 순간이동 위치로 이동
@@ -112,9 +110,9 @@ public class Enemy : MonoBehaviour
         fixedEuler.x = 30f;
         transform.rotation = Quaternion.Euler(fixedEuler);
 
+        FreezeEnemy();
 
-        Invoke("FreezeEnemy", 0.7f); // 1초 뒤에 FreezeEnemy() 호출
-
+        /*Invoke("FreezeEnemy", 0.1f); // 1초 뒤에 FreezeEnemy() 호출*/
     }
     public void FreezeEnemy()
     {
@@ -142,11 +140,9 @@ public class Enemy : MonoBehaviour
             agent.updatePosition = false;
             agent.updateRotation = false;
         }
-
         // 필요 시 콜라이더도 끄기
         // GetComponent<Collider>().enabled = false;
     }
-
 
     // 기본 Object 클래스의 메서드를 재정의 (필요하지 않다면 삭제 가능)
     public override int GetHashCode()
