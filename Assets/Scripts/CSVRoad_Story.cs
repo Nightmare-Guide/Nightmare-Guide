@@ -23,6 +23,8 @@ public class CSVRoad_Story : MonoBehaviour
     private int returnPoint = -1; // 리턴 포인트 저장 (-1은 초기화 상태)
     private int chapterEnd = 0;
 
+    public NarrationManager narrationManager;
+
     void Awake()
     {
         data = CSVReader.Read("Story/" + go_Story);
@@ -172,7 +174,7 @@ public class CSVRoad_Story : MonoBehaviour
         switch (chapter)
         {
             case "0_0_0":
-                // 나레이션을 다 봤다는 데이터 저장 코드 필요
+                narrationManager.SetUIOpacity(narrationManager.videoImg, false, 2f, 0f);
                 if (CommonUIManager.instance != null)
                 {
                     CommonUIManager.instance.MoveScene("DayHouse");

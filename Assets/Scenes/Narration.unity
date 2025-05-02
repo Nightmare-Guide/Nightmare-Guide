@@ -787,6 +787,7 @@ MonoBehaviour:
   dialogueOptions: {fileID: 1947358493}
   option1: {fileID: 1476664489}
   option2: {fileID: 1687276218}
+  narrationManager: {fileID: 988082162}
 --- !u!4 &1070229839
 Transform:
   m_ObjectHideFlags: 0
@@ -1691,7 +1692,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 2094085524}
   - {fileID: 992428887}
-  - {fileID: 988082163}
   - {fileID: 1454299464}
   - {fileID: 1070229839}
   - {fileID: 2146581275}
+  - {fileID: 988082163}
