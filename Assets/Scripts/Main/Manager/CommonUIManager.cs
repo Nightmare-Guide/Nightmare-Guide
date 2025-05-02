@@ -9,6 +9,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using static SchoolUIManager;
 using System.IO;
+using System.Runtime.InteropServices;
 
 public class CommonUIManager : MonoBehaviour
 {
@@ -67,6 +68,14 @@ public class CommonUIManager : MonoBehaviour
     [Header("# 정보 저장 확인 테스트")]
     public TextMeshProUGUI defaultPhone;
     public TextMeshProUGUI updatePhone;
+
+    // Windows의 마우스 입력을 시뮬레이션하는 API
+    [DllImport("user32.dll")]
+    private static extern void mouse_event(int dwFlags, int dx, int dy, int cButtons, int dwExtraInfo);
+
+    private const int MOUSEEVENTF_LEFTDOWN = 0x02; // 마우스 왼쪽 버튼 누름
+    private const int MOUSEEVENTF_LEFTUP = 0x04; // 마우스 왼쪽 버튼 뗌
+
     private void Awake()
     {
         if (instance == null)
@@ -299,6 +308,11 @@ public class CommonUIManager : MonoBehaviour
     public void MoveScene(string sceneName)
     {
         interactionUI.SetActive(false);
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        // 화면 중앙을 클릭하는 효과를 발생시킴 (Windows 전용)
+        mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
+        mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
         StartCoroutine(MoveSceneRoutine(sceneName));
     }
 

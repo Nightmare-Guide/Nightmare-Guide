@@ -40,14 +40,6 @@ public class LoadingSceneManager : UIUtility
         StartCoroutine(LoadScene());
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Cursor.visible = false; // 커서 안 보이게 하기
-        }
-    }
-
 
     public static void LoadScene(string sceneName)
     {
