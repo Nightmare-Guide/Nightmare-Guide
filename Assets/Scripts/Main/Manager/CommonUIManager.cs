@@ -298,6 +298,7 @@ public class CommonUIManager : MonoBehaviour
     // ¾À ÀÌµ¿ ÇÔ¼ö
     public void MoveScene(string sceneName)
     {
+        if (ProgressManager.Instance != null) { ProgressManager.Instance.progressData.scene = sceneName; }// ¾À ÀúÀå
         interactionUI.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;

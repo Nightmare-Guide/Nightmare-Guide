@@ -9,16 +9,15 @@ using static SchoolUIManager;
 [System.Serializable]
 public class GameData
 {
-
     public string scene = "0_1";
     public string storyProgress = "0_0_0";
 
     public Vector3 playerPosition = new Vector3(-550, -67, 278);
 
     public int sanchi = 0;
-    public List<String> mainInventoryDatas;
+    public List<string> mainInventoryDatas;
     public List<SavePhoneData> phoneDatas;
-    public List<String> inventoryDatas;
+    public List<string> inventoryDatas;
     public SaveStevenPhoneData stevenPhoneDatas;
 
     public float bgVolume = 50.0f;
@@ -31,9 +30,7 @@ public class GameData
 public class GameDataManager : MonoBehaviour
 {
     public static GameDataManager instance;
-
-    public ProgressData progressData; // ScriptableObject 연결 (에디터에서)
-    public ProgressData newGame;      // 새로 시작하기용 초기 값
+    // public ProgressData newGame; // 더 이상 필요 없음
 
     private string fileName = "save.json";
     private string FilePath => Path.Combine(Application.persistentDataPath, fileName);
@@ -58,28 +55,38 @@ public class GameDataManager : MonoBehaviour
         {
             SaveGame();
         }
-       
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            StartNewGame();
+        }
+
     }
 
     public void SaveGame()
     {
+        if (ProgressManager.Instance == null || ProgressManager.Instance.progressData == null)
+        {
+            Debug.LogError("ProgressManager 인스턴스 또는 progressData가 없습니다.");
+            return;
+        }
+
         GameData saveData = new GameData
         {
-            scene = progressData.scene,
-            storyProgress = progressData.storyProgress,
-            playerPosition = progressData.playerPosition,
-            sanchi = progressData.sanchi,
+            scene = ProgressManager.Instance.progressData.scene,
+            storyProgress = ProgressManager.Instance.progressData.storyProgress,
+            playerPosition = ProgressManager.Instance.progressData.playerPosition,
+            sanchi = ProgressManager.Instance.progressData.sanchi,
 
-            mainInventoryDatas = progressData.mainInventoryDatas,
-            phoneDatas = progressData.phoneDatas,
-            inventoryDatas = progressData.inventoryDatas,
-            stevenPhoneDatas = progressData.stevenPhoneDatas,
+            mainInventoryDatas = ProgressManager.Instance.progressData.mainInventoryDatas,
+            phoneDatas = ProgressManager.Instance.progressData.phoneDatas,
+            inventoryDatas = ProgressManager.Instance.progressData.inventoryDatas,
+            stevenPhoneDatas = ProgressManager.Instance.progressData.stevenPhoneDatas,
 
-            bgVolume = progressData.bgVolume,
-            effectVolume = progressData.effectVolume,
-            characterVolume = progressData.characterVolume,
-            isFullScreen = progressData.isFullScreen,
-            language = progressData.language
+            bgVolume = ProgressManager.Instance.progressData.bgVolume,
+            effectVolume = ProgressManager.Instance.progressData.effectVolume,
+            characterVolume = ProgressManager.Instance.progressData.characterVolume,
+            isFullScreen = ProgressManager.Instance.progressData.isFullScreen,
+            language = ProgressManager.Instance.progressData.language
         };
 
         string json = JsonUtility.ToJson(saveData, true);
@@ -94,23 +101,38 @@ public class GameDataManager : MonoBehaviour
             string json = File.ReadAllText(FilePath);
             GameData loadData = JsonUtility.FromJson<GameData>(json);
 
-            progressData.scene = loadData.scene;
-            progressData.storyProgress = loadData.storyProgress;
-            progressData.playerPosition = loadData.playerPosition;
-            progressData.sanchi = loadData.sanchi;
+            if (ProgressManager.Instance != null && ProgressManager.Instance.progressData != null)
+            {
+                ProgressManager.Instance.progressData.scene = loadData.scene;
+                ProgressManager.Instance.progressData.storyProgress = loadData.storyProgress;
+                ProgressManager.Instance.progressData.playerPosition = loadData.playerPosition;
+                ProgressManager.Instance.progressData.sanchi = loadData.sanchi;
 
-            progressData.mainInventoryDatas = loadData.mainInventoryDatas;
-            progressData.phoneDatas = loadData.phoneDatas;
-            progressData.inventoryDatas = loadData.inventoryDatas;
-            progressData.stevenPhoneDatas = loadData.stevenPhoneDatas;
+                ProgressManager.Instance.progressData.mainInventoryDatas = loadData.mainInventoryDatas;
+                ProgressManager.Instance.progressData.phoneDatas = loadData.phoneDatas;
+                ProgressManager.Instance.progressData.inventoryDatas = loadData.inventoryDatas;
+                ProgressManager.Instance.progressData.stevenPhoneDatas = loadData.stevenPhoneDatas;
 
-            progressData.bgVolume = loadData.bgVolume;
-            progressData.effectVolume = loadData.effectVolume;
-            progressData.characterVolume = loadData.characterVolume;
-            progressData.isFullScreen = loadData.isFullScreen;
-            progressData.language = loadData.language;
-            CommonUIManager.instance.SmartPhoneData();
-            // Debug.Log("게임 불러오기 완료");
+                ProgressManager.Instance.progressData.bgVolume = loadData.bgVolume;
+                ProgressManager.Instance.progressData.effectVolume = loadData.effectVolume;
+                ProgressManager.Instance.progressData.characterVolume = loadData.characterVolume;
+                ProgressManager.Instance.progressData.isFullScreen = loadData.isFullScreen;
+                ProgressManager.Instance.progressData.language = loadData.language;
+
+                ProgressManager.Instance.LoadProgress();
+                CommonUIManager.instance.SmartPhoneData();
+                Debug.Log("progressData.scene : " + ProgressManager.Instance.progressData.scene);
+                Debug.Log("progressData.storyProgress : " + ProgressManager.Instance.progressData.storyProgress);
+                if (ProgressManager.Instance.progressData.phoneDatas != null && ProgressManager.Instance.progressData.phoneDatas.Count > 0)
+                {
+                    Debug.Log("progressData.phoneDatas[0].hasPhone : " + ProgressManager.Instance.progressData.phoneDatas[0].hasPhone);
+                    Debug.Log("progressData.phoneDatas[0].isUnlocked : " + ProgressManager.Instance.progressData.phoneDatas[0].isUnlocked);
+                }
+            }
+            else
+            {
+                Debug.LogError("ProgressManager 인스턴스 또는 progressData가 없습니다.");
+            }
         }
         else
         {
@@ -120,33 +142,38 @@ public class GameDataManager : MonoBehaviour
 
     public void UpdatePlayerPosition(Vector3 newPos)
     {
-        progressData.playerPosition = newPos;
-        SaveGame();
+        if (ProgressManager.Instance != null && ProgressManager.Instance.progressData != null)
+        {
+            ProgressManager.Instance.progressData.playerPosition = newPos;
+            SaveGame();
+        }
     }
 
     public bool StartNewGame()
     {
-        progressData.scene = newGame.scene;
-        progressData.storyProgress = newGame.storyProgress;
-        progressData.playerPosition = newGame.playerPosition;
-        progressData.sanchi = newGame.sanchi;
+        if (ProgressManager.Instance != null && ProgressManager.Instance.defaultData != null && ProgressManager.Instance.progressData != null)
+        {
+            ProgressManager.Instance.progressData.scene = ProgressManager.Instance.defaultData.scene;
+            ProgressManager.Instance.progressData.storyProgress = ProgressManager.Instance.defaultData.storyProgress;
+            ProgressManager.Instance.progressData.playerPosition = ProgressManager.Instance.defaultData.playerPosition;
+            ProgressManager.Instance.progressData.sanchi = ProgressManager.Instance.defaultData.sanchi;
 
-        progressData.mainInventoryDatas = new List<string>(newGame.mainInventoryDatas);
-        progressData.phoneDatas = new List<SavePhoneData>(newGame.phoneDatas);
-        progressData.inventoryDatas = new List<string>(newGame.inventoryDatas);
-        progressData.stevenPhoneDatas = newGame.stevenPhoneDatas;
+            ProgressManager.Instance.progressData.mainInventoryDatas = new List<string>(ProgressManager.Instance.defaultData.mainInventoryDatas);
+            ProgressManager.Instance.progressData.phoneDatas = new List<SavePhoneData>(ProgressManager.Instance.defaultData.phoneDatas);
+            ProgressManager.Instance.progressData.inventoryDatas = new List<string>(ProgressManager.Instance.defaultData.inventoryDatas);
+            ProgressManager.Instance.progressData.stevenPhoneDatas = ProgressManager.Instance.defaultData.stevenPhoneDatas;
 
-        progressData.bgVolume = newGame.bgVolume;
-        progressData.effectVolume = newGame.effectVolume;
-        progressData.characterVolume = newGame.characterVolume;
-        progressData.isFullScreen = newGame.isFullScreen;
-        progressData.language = newGame.language;
+            ProgressManager.Instance.progressData.bgVolume = ProgressManager.Instance.defaultData.bgVolume;
+            ProgressManager.Instance.progressData.effectVolume = ProgressManager.Instance.defaultData.effectVolume;
+            ProgressManager.Instance.progressData.characterVolume = ProgressManager.Instance.defaultData.characterVolume;
+            ProgressManager.Instance.progressData.isFullScreen = ProgressManager.Instance.defaultData.isFullScreen;
+            ProgressManager.Instance.progressData.language = ProgressManager.Instance.defaultData.language;
 
-        ProgressManager.Instance.ResetProgress();
-        CommonUIManager.instance.SmartPhoneData();
-        SaveGame();
-        //Debug.Log("새 게임이 시작되었습니다. 초기화된 데이터를 저장했습니다.");
-        return true;
+            ProgressManager.Instance.ResetProgress();
+            CommonUIManager.instance.SmartPhoneData();
+            SaveGame();
+            return true;
+        }
+        return false;
     }
-
 }

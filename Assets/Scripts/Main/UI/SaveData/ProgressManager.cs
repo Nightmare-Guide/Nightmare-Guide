@@ -23,16 +23,9 @@ public class ProgressManager : MonoBehaviour
         }
         Instance = this;
         DontDestroyOnLoad(gameObject);
-       
+
     }
-    private void Start()
-    {
-        if(GameDataManager.instance != null)
-        {
-           LoadProgress();
-        }
-        
-    }
+
     /// <summary>
     /// PlayerPrefs에서 저장된 진행도 불러옴
     /// </summary>
@@ -43,69 +36,21 @@ public class ProgressManager : MonoBehaviour
             Debug.LogError("ProgressData가 연결되지 않았습니다!");
             return;
         }
-        else//게임 데이터 매니저에서 진행도 불러오기
-        {
-            progressData.scene = GameDataManager.instance.progressData.scene;
-            progressData.storyProgress = GameDataManager.instance.progressData.storyProgress;
-            progressData.playerPosition = GameDataManager.instance.progressData.playerPosition;
-            progressData.sanchi = GameDataManager.instance.progressData.sanchi;
-
-            progressData.mainInventoryDatas = new List<string>(GameDataManager.instance.progressData.mainInventoryDatas);
-            progressData.phoneDatas = new List<SavePhoneData>(GameDataManager.instance.progressData.phoneDatas);
-            progressData.inventoryDatas = new List<string>(GameDataManager.instance.progressData.inventoryDatas);
-            progressData.stevenPhoneDatas = GameDataManager.instance.progressData.stevenPhoneDatas;
-
-            progressData.bgVolume = GameDataManager.instance.progressData.bgVolume;
-            progressData.effectVolume = GameDataManager.instance.progressData.effectVolume;
-            progressData.characterVolume = GameDataManager.instance.progressData.characterVolume;
-            progressData.isFullScreen = GameDataManager.instance.progressData.isFullScreen;
-            progressData.language = GameDataManager.instance.progressData.language;
-            Debug.Log("ProgressData가 연결되었 습니다!");
-        }
-        
-
+        // GameDataManager에서 진행도 데이터를 이미 progressData에 로드했으므로,
+        // 여기서는 추가적인 로딩 로직이 필요하다면 구현합니다.
+        // 예: 씬에 따른 초기 설정 등
+        Debug.Log("ProgressData 로드 완료 (GameDataManager에서 데이터 로드)");
     }
 
-    /// <summary>
-    /// 현재 진행도를 저장함
-    /// </summary>
-    public void SaveProgress()
-    {
-        if (progressData != null)
-        {
-            GameDataManager.instance.progressData.scene = progressData.scene;
-            GameDataManager.instance.progressData.storyProgress = progressData.storyProgress;
-            GameDataManager.instance.progressData.playerPosition = progressData.playerPosition;
-            GameDataManager.instance.progressData.sanchi= progressData.sanchi;
 
-            GameDataManager.instance.progressData.mainInventoryDatas= progressData.mainInventoryDatas;
-            GameDataManager.instance.progressData.phoneDatas= progressData.phoneDatas;
-            GameDataManager.instance.progressData.inventoryDatas= progressData.inventoryDatas;
-            GameDataManager.instance.progressData.stevenPhoneDatas= progressData.stevenPhoneDatas;
-
-            GameDataManager.instance.progressData.bgVolume= progressData.bgVolume;
-            GameDataManager.instance.progressData.effectVolume= progressData.effectVolume;
-            GameDataManager.instance.progressData.characterVolume= progressData.characterVolume;
-            GameDataManager.instance.progressData.isFullScreen= progressData.isFullScreen;
-            GameDataManager.instance.progressData.language= progressData.language;
-            GameDataManager.instance.SaveGame();
-        }
-        else
-        {
-         //   Debug.LogError("진행도를 저장할 수 없습니다. ProgressData가 없음");
-        }
-    }
-
-    /// <summary>
-    /// 진행도 수동 갱신
-    /// </summary>
+   
     public void UpdateProgress(string newScene, string newProgress)
     {
         if (progressData != null)
         {
             progressData.scene = newScene;
             progressData.storyProgress = newProgress;
-           // Debug.Log("진행도 업데이트 : " + newScene +" :: "+newProgress);
+            // Debug.Log("진행도 업데이트 : " + newScene +" :: "+newProgress);
         }
     }
 
@@ -114,7 +59,7 @@ public class ProgressManager : MonoBehaviour
     /// </summary>
     public void ResetProgress()
     {
-        if (progressData != null && defaultData !=null)
+        if (progressData != null && defaultData != null)
         {
             progressData.scene = defaultData.scene;
             progressData.storyProgress = defaultData.storyProgress;
@@ -131,6 +76,13 @@ public class ProgressManager : MonoBehaviour
             progressData.characterVolume = defaultData.characterVolume;
             progressData.isFullScreen = defaultData.isFullScreen;
             progressData.language = defaultData.language;
+            Debug.Log("progressData.scene : " + progressData.scene);
+            Debug.Log("progressData.storyProgress : " + progressData.storyProgress);
+            if (progressData.phoneDatas != null && progressData.phoneDatas.Count > 0)
+            {
+                Debug.Log("progressData.phoneDatas[0].hasPhone : " + progressData.phoneDatas[0].hasPhone);
+                Debug.Log("progressData.phoneDatas[0].isUnlocked : " + progressData.phoneDatas[0].isUnlocked);
+            }
             //Debug.Log("진행도 초기화됨");
         }
     }
