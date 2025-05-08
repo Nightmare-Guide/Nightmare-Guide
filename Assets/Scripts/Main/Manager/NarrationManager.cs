@@ -7,6 +7,7 @@ using TMPro;
 using static UnityEditor.Progress;
 using UnityStandardAssets.ImageEffects;
 using UnityEngine.SocialPlatforms;
+using Unity.VisualScripting;
 
 public class NarrationManager : MonoBehaviour
 {
@@ -70,7 +71,8 @@ public class NarrationManager : MonoBehaviour
 
     IEnumerator PrintDialogue()
     {
-        yield return new WaitForSeconds(CommonUIManager.instance.blinkDuration + 2.5f);
+        float waitTime = CommonUIManager.instance == null ? 2.5f : CommonUIManager.instance.blinkDuration + 2.5f;
+        yield return new WaitForSeconds(waitTime);
 
         if (CSVRoad_Story.instance != null)
         {
