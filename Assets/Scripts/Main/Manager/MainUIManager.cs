@@ -39,9 +39,10 @@ public class MainUIManager : UIUtility
             {
                 CommonUIManager.instance.phoneInfos.cellPhoneObj = cellPhoneObjs;
             }
-   
+
             CommonUIManager.instance.phoneInfos.cellPhoneUI = uiObjects[2];
-      
+            Debug.Log(CommonUIManager.instance.phoneInfos.cellPhoneUI.name);
+
             if (CommonUIManager.instance.phoneInfos.hasPhone&& cellPhoneObjs != null)
             {
                 cellPhoneObjs.SetActive(false);
@@ -60,6 +61,8 @@ public class MainUIManager : UIUtility
 
     private void Update()
     {
+        Debug.Log(CommonUIManager.instance.phoneInfos.cellPhoneUI.name);
+
         // ESC 키
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -101,7 +104,16 @@ public class MainUIManager : UIUtility
         {
             if (AreAllObjectsDisabled(uiObjects))
             {
-                OpenCellPhoneItem(CommonUIManager.instance.phoneInfos);
+                
+                if (CommonUIManager.instance.phoneInfos.cellPhoneUI == null)
+                {
+                    Debug.LogError("cellPhoneUI is NULL in Update at time: " + Time.time);
+                }
+                else
+                {
+                    Debug.Log(CommonUIManager.instance.phoneInfos.cellPhoneUI.name);
+                    OpenCellPhoneItem(CommonUIManager.instance.phoneInfos);
+                }
             }
             else if (uiObjects[2].activeInHierarchy)
             {
@@ -122,6 +134,9 @@ public class MainUIManager : UIUtility
 
     private void OnApplicationQuit()
     {
+        if (inventory.Count <= 0 || inventory == null)
+            return;
+
         foreach (Item item in inventory)
         {
             inventoryDatas.Add(item.name);
@@ -143,6 +158,8 @@ public class MainUIManager : UIUtility
         InGameOpenUI(uiObjects[0]); // blur 배경 활성화
         InGameOpenUI(uiObjects[2]);
 
+        Debug.Log(cellPhone.name);
+        Debug.Log(cellPhone.cellPhoneUI.name);
         CellPhone cpLogic = cellPhone.cellPhoneUI.GetComponent<CellPhone>();
 
 

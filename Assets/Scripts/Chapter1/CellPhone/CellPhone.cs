@@ -211,6 +211,7 @@ public class CellPhone : MonoBehaviour
             {
                 // 스티븐 휴대폰은 슬라이더로 잠금 해제 후, 바로 잠금해제
                 CommonUIManager.instance.phoneInfos.isUnlocked = true;
+                ProgressManager.Instance.progressData.phoneDatas[0].isUnlocked = true;
 
                 // App Screen UI 활성화
                 appScreenUI.SetActive(true);
@@ -264,6 +265,10 @@ public class CellPhone : MonoBehaviour
         {
             uiManager.OpenUI(uiManager.uiObjects[2]);
         }
+
+        yield return new WaitForSeconds(0.5f);
+
+        this.gameObject.SetActive(false);
     }
 
     public void AppIconButton(RectTransform appScreenRect)
