@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using Unity.VisualScripting;
 using UnityEngine;
 using static CommonUIManager;
 using static SchoolUIManager;
@@ -9,7 +10,9 @@ using static SchoolUIManager;
 [System.Serializable]
 public class GameData
 {
-    public string scene = "0_1";
+    
+    public bool newGame = true;
+    public string scene = "DayHouse";
     public string storyProgress = "0_0_0";
 
     public Vector3 playerPosition = new Vector3(-550, -67, 278);
@@ -72,6 +75,7 @@ public class GameDataManager : MonoBehaviour
 
         GameData saveData = new GameData
         {
+            newGame = ProgressManager.Instance.progressData.newGame,
             scene = ProgressManager.Instance.progressData.scene,
             storyProgress = ProgressManager.Instance.progressData.storyProgress,
             playerPosition = ProgressManager.Instance.progressData.playerPosition,
@@ -103,6 +107,7 @@ public class GameDataManager : MonoBehaviour
 
             if (ProgressManager.Instance != null && ProgressManager.Instance.progressData != null)
             {
+                ProgressManager.Instance.progressData.newGame = loadData.newGame;
                 ProgressManager.Instance.progressData.scene = loadData.scene;
                 ProgressManager.Instance.progressData.storyProgress = loadData.storyProgress;
                 ProgressManager.Instance.progressData.playerPosition = loadData.playerPosition;
@@ -121,13 +126,13 @@ public class GameDataManager : MonoBehaviour
 
                 ProgressManager.Instance.LoadProgress();
                 CommonUIManager.instance.SmartPhoneData();
-                Debug.Log("progressData.scene : " + ProgressManager.Instance.progressData.scene);
+              /*  Debug.Log("progressData.scene : " + ProgressManager.Instance.progressData.scene);
                 Debug.Log("progressData.storyProgress : " + ProgressManager.Instance.progressData.storyProgress);
                 if (ProgressManager.Instance.progressData.phoneDatas != null && ProgressManager.Instance.progressData.phoneDatas.Count > 0)
                 {
                     Debug.Log("progressData.phoneDatas[0].hasPhone : " + ProgressManager.Instance.progressData.phoneDatas[0].hasPhone);
                     Debug.Log("progressData.phoneDatas[0].isUnlocked : " + ProgressManager.Instance.progressData.phoneDatas[0].isUnlocked);
-                }
+                }*/
             }
             else
             {
