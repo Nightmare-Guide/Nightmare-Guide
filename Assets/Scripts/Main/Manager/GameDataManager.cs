@@ -153,22 +153,6 @@ public class GameDataManager : MonoBehaviour
     {
         if (ProgressManager.Instance != null && ProgressManager.Instance.defaultData != null && ProgressManager.Instance.progressData != null)
         {
-            ProgressManager.Instance.progressData.scene = ProgressManager.Instance.defaultData.scene;
-            ProgressManager.Instance.progressData.storyProgress = ProgressManager.Instance.defaultData.storyProgress;
-            ProgressManager.Instance.progressData.playerPosition = ProgressManager.Instance.defaultData.playerPosition;
-            ProgressManager.Instance.progressData.sanchi = ProgressManager.Instance.defaultData.sanchi;
-
-            ProgressManager.Instance.progressData.mainInventoryDatas = new List<string>(ProgressManager.Instance.defaultData.mainInventoryDatas);
-            ProgressManager.Instance.progressData.phoneDatas = new List<SavePhoneData>(ProgressManager.Instance.defaultData.phoneDatas);
-            ProgressManager.Instance.progressData.inventoryDatas = new List<string>(ProgressManager.Instance.defaultData.inventoryDatas);
-            ProgressManager.Instance.progressData.stevenPhoneDatas = ProgressManager.Instance.defaultData.stevenPhoneDatas;
-
-            ProgressManager.Instance.progressData.bgVolume = ProgressManager.Instance.defaultData.bgVolume;
-            ProgressManager.Instance.progressData.effectVolume = ProgressManager.Instance.defaultData.effectVolume;
-            ProgressManager.Instance.progressData.characterVolume = ProgressManager.Instance.defaultData.characterVolume;
-            ProgressManager.Instance.progressData.isFullScreen = ProgressManager.Instance.defaultData.isFullScreen;
-            ProgressManager.Instance.progressData.language = ProgressManager.Instance.defaultData.language;
-
             ProgressManager.Instance.ResetProgress();
             CommonUIManager.instance.SmartPhoneData();
             SaveGame();
