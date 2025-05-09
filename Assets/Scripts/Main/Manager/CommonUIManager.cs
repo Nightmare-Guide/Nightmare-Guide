@@ -60,7 +60,7 @@ public class CommonUIManager : MonoBehaviour
     float characterVolume;
     bool isFullScreen;
     string language;
-    public SaveStevenPhoneData phoneDatas;
+    public SaveStevenPhoneData stevenPhoneData;
 
     [Header("# Player")]
     [SerializeField] GameObject main_playerPrefab; // ¸ÞÀÎ¾À
@@ -183,13 +183,14 @@ public class CommonUIManager : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        phoneDatas = new SaveStevenPhoneData { name = phoneInfos.name, hasPhone = phoneInfos.hasPhone, isUnlocked = phoneInfos.isUnlocked };
+        stevenPhoneData = new SaveStevenPhoneData { name = phoneInfos.name, hasPhone = phoneInfos.hasPhone, isUnlocked = phoneInfos.isUnlocked };
     }
 
     void FirstSet()
     {
         commonUICanvas.SetActive(true);
         optionUI.SetActive(false);
+        phoneInfos = new CharacterPhoneInfo();
 
         FullScreenBtn();
     }
@@ -287,8 +288,10 @@ public class CommonUIManager : MonoBehaviour
 
     public void SmartPhoneData()
     {
-        phoneInfos = new CharacterPhoneInfo { name = "Steven", hasPhone = false, isUnlocked = false }; // cellPhoneObj ¶û cellPhoneUI ´Â MainUIManager ¿¡¼­ ÃÊ±âÈ­
-        
+        phoneInfos.name = "Steven";
+        phoneInfos.hasPhone = false;
+        phoneInfos.isUnlocked = false;
+
         if (ProgressManager.Instance!=null)
         {
 
