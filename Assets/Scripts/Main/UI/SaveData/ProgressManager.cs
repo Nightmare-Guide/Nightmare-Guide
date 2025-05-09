@@ -67,7 +67,16 @@ public class ProgressManager : MonoBehaviour
             progressData.sanchi = defaultData.sanchi;
 
             progressData.mainInventoryDatas = new List<string>(defaultData.mainInventoryDatas);
-            progressData.phoneDatas = new List<SavePhoneData>(defaultData.phoneDatas);
+            // progressData.phoneDatas = new List<SavePhoneData>(defaultData.phoneDatas);
+            ProgressManager.Instance.progressData.phoneDatas = new List<SavePhoneData>();
+
+            for (int i = 0; i < ProgressManager.Instance.defaultData.phoneDatas.Count; i++)
+            {
+                ProgressManager.Instance.progressData.phoneDatas.Add(new SavePhoneData());
+                ProgressManager.Instance.progressData.phoneDatas[0].name = ProgressManager.Instance.defaultData.phoneDatas[0].name;
+                ProgressManager.Instance.progressData.phoneDatas[0].hasPhone = ProgressManager.Instance.defaultData.phoneDatas[0].hasPhone;
+                ProgressManager.Instance.progressData.phoneDatas[0].isUnlocked = ProgressManager.Instance.defaultData.phoneDatas[0].isUnlocked;
+            }
             progressData.inventoryDatas = new List<string>(defaultData.inventoryDatas);
             progressData.stevenPhoneDatas = defaultData.stevenPhoneDatas;
 
