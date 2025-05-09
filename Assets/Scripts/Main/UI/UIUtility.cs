@@ -39,6 +39,8 @@ public class UIUtility : MonoBehaviour
     {
         CloseUI(ui);
 
+        Time.timeScale = 1;
+
         //카메라 회전 활성화
         Camera_Rt.instance.Open_Camera();
 
@@ -68,6 +70,9 @@ public class UIUtility : MonoBehaviour
 
         // 플레이어 움직임 멈춤
         StopPlayerController();
+
+        // 시간 정지
+        Time.timeScale = 0;
     }
 
     // 오브젝트 상호작용 시 플레이어 움직임 멈춤 함수
