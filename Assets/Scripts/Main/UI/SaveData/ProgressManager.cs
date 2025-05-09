@@ -61,6 +61,7 @@ public class ProgressManager : MonoBehaviour
     {
         if (progressData != null && defaultData != null)
         {
+            progressData.newGame = defaultData.newGame;
             progressData.scene = defaultData.scene;
             progressData.storyProgress = defaultData.storyProgress;
             progressData.playerPosition = defaultData.playerPosition;
@@ -85,13 +86,13 @@ public class ProgressManager : MonoBehaviour
             progressData.characterVolume = defaultData.characterVolume;
             progressData.isFullScreen = defaultData.isFullScreen;
             progressData.language = defaultData.language;
-            Debug.Log("progressData.scene : " + progressData.scene);
+           /* Debug.Log("progressData.scene : " + progressData.scene);
             Debug.Log("progressData.storyProgress : " + progressData.storyProgress);
             if (progressData.phoneDatas != null && progressData.phoneDatas.Count > 0)
             {
                 Debug.Log("progressData.phoneDatas[0].hasPhone : " + progressData.phoneDatas[0].hasPhone);
                 Debug.Log("progressData.phoneDatas[0].isUnlocked : " + progressData.phoneDatas[0].isUnlocked);
-            }
+            }*/
             //Debug.Log("진행도 초기화됨");
         }
     }

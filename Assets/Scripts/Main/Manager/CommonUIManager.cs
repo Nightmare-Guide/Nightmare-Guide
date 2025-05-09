@@ -62,10 +62,6 @@ public class CommonUIManager : MonoBehaviour
     string language;
     public SaveStevenPhoneData stevenPhoneData;
 
-    [Header("# Player")]
-    [SerializeField] GameObject main_playerPrefab; // 메인씬
-    [SerializeField] GameObject chap_playerPrefab; //챕터씬
-
     [Header("# 정보 저장 확인 테스트")]
     public TextMeshProUGUI defaultPhone;
     public TextMeshProUGUI updatePhone;
@@ -145,34 +141,24 @@ public class CommonUIManager : MonoBehaviour
         // 특정 씬이 로드되면 플레이어 생성 요청
         if (scene.name != "LoadingScene")
         {
-            //SpawnPlayer(scene.name);
+            MovePlayer();
         }
     }
 
-    void SpawnPlayer(string sceneName)
+    void MovePlayer()
     {
-        if (main_playerPrefab != null&& chap_playerPrefab != null && ProgressManager.Instance != null && ProgressManager.Instance.progressData != null)
+        if (ProgressManager.Instance != null && PlayerController.instance!=null)
         {
-           
-            Vector3 spawnPosition = ProgressManager.Instance.progressData.playerPosition; // 저장된 플레이어 위치 사용
-            GameObject player = null;
-            if (sceneName.Contains("Main_Map")|| sceneName.Contains("House") || sceneName.Contains("Hospital"))
+            if (!ProgressManager.Instance.progressData.newGame)
             {
-                player = Instantiate(main_playerPrefab, spawnPosition, Quaternion.identity);
+                PlayerController.instance.Close_PlayerController();
+                PlayerController.instance.transform.position = ProgressManager.Instance.progressData.playerPosition;
+                PlayerController.instance.Open_PlayerController();
             }
-            else if(sceneName.Contains("School"))
-            {
-                player = Instantiate(chap_playerPrefab, spawnPosition, Quaternion.identity);
-            }
-            if (player != null)
-            {
-                player.SetActive(true);
-            }
-          //  Debug.Log($"{sceneName} 씬에 플레이어 생성 성공! 위치: {player.transform.position}");
         }
         else
         {
-            Debug.LogError("플레이어 생성 실패! 프리팹 또는 진행 데이터가 없음.");
+           Debug.Log("플레이어 위치를 이동시키지 못했습니다.");
         }
     }
 
@@ -184,6 +170,10 @@ public class CommonUIManager : MonoBehaviour
     private void OnApplicationQuit()
     {
         stevenPhoneData = new SaveStevenPhoneData { name = phoneInfos.name, hasPhone = phoneInfos.hasPhone, isUnlocked = phoneInfos.isUnlocked };
+        if (GameDataManager.instance != null && PlayerController.instance!=null) {
+            ProgressManager.Instance.progressData.playerPosition = PlayerController.instance.transform.position;
+            ProgressManager.Instance.progressData.newGame = false;
+            GameDataManager.instance.SaveGame(); }
     }
 
     void FirstSet()
@@ -207,6 +197,7 @@ public class CommonUIManager : MonoBehaviour
             if (GameDataManager.instance != null && PlayerController.instance!=null && ProgressManager.Instance!=null) {
                 Vector3 playerTr = PlayerController.instance.transform.position;
                 ProgressManager.Instance.progressData.playerPosition = playerTr;
+                ProgressManager.Instance.progressData.newGame = false;
                 GameDataManager.instance.SaveGame();
             }
             MoveScene("Title Scene");

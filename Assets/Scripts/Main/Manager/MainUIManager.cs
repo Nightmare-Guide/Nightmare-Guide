@@ -41,17 +41,14 @@ public class MainUIManager : UIUtility
             }
 
             CommonUIManager.instance.phoneInfos.cellPhoneUI = uiObjects[2];
-            Debug.Log(CommonUIManager.instance.phoneInfos.cellPhoneUI.name);
+            //Debug.Log(CommonUIManager.instance.phoneInfos.cellPhoneUI.name);
 
             if (CommonUIManager.instance.phoneInfos.hasPhone&& cellPhoneObjs != null)
             {
                 cellPhoneObjs.SetActive(false);
 
             }
-            else
-            {
-                Debug.Log("폰 보유 여부 " + CommonUIManager.instance.phoneInfos.hasPhone);
-            }
+          
         }
 
 
@@ -61,7 +58,7 @@ public class MainUIManager : UIUtility
 
     private void Update()
     {
-        Debug.Log(CommonUIManager.instance.phoneInfos.cellPhoneUI.name);
+       // Debug.Log(CommonUIManager.instance.phoneInfos.cellPhoneUI.name);
 
         // ESC 키
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -186,7 +183,12 @@ public class MainUIManager : UIUtility
 
 
     }
+    public void StartGame()
+    {
+        SetUIOpacity(uiObjects[4].GetComponent<Image>(), true, 1f, 0f);
 
+        SetUIOpacity(uiObjects[4].GetComponent<Image>(), false, 1f, 2f);
+    }
     public class Item
     {
         public string name;
