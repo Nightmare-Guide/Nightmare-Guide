@@ -62,6 +62,9 @@ public class CommonUIManager : MonoBehaviour
     string language;
     public SaveStevenPhoneData stevenPhoneData;
 
+    public GameObject main_playerPrefab;
+    public GameObject chap_playerPrefab;
+
     [Header("# 정보 저장 확인 테스트")]
     public TextMeshProUGUI defaultPhone;
     public TextMeshProUGUI updatePhone;
@@ -141,24 +144,22 @@ public class CommonUIManager : MonoBehaviour
         // 특정 씬이 로드되면 플레이어 생성 요청
         if (scene.name != "LoadingScene")
         {
-            MovePlayer();
+            //SpawnPlayer(scene.name);
         }
     }
 
-    void MovePlayer()
+    void SpawnPlayer(string sceneName)
     {
-        if (ProgressManager.Instance != null && PlayerController.instance!=null)
+        if (PlayerController.instance != null && ProgressManager.Instance != null && ProgressManager.Instance.progressData != null)
         {
-            if (!ProgressManager.Instance.progressData.newGame)
-            {
-                PlayerController.instance.Close_PlayerController();
-                PlayerController.instance.transform.position = ProgressManager.Instance.progressData.playerPosition;
-                PlayerController.instance.Open_PlayerController();
-            }
+            
+
+            Vector3 spawnPosition = ProgressManager.Instance.progressData.playerPosition; // 저장된 플레이어 위치 사용
+            PlayerController.instance.transform.position = spawnPosition;
         }
         else
         {
-           Debug.Log("플레이어 위치를 이동시키지 못했습니다.");
+            Debug.Log("플레이어 생성 실패! 프리팹 또는 진행 데이터가 없음.");
         }
     }
 

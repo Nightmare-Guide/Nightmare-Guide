@@ -67,6 +67,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
             {
                 Destroy(gameObject); // 중복된 인스턴스 제거
             }
+         
+
 
             m_CharacterController = GetComponent<CharacterController>();
             m_Camera = Camera.main;
@@ -78,7 +80,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_Jumping = false;
             m_AudioSource = GetComponent<AudioSource>();
             m_MouseLook.Init(transform, m_Camera.transform);
-
+            if (!ProgressManager.Instance.progressData.newGame) { SpawnSet(); }
 
         }
 
@@ -88,6 +90,16 @@ namespace UnityStandardAssets.Characters.FirstPerson
         {
             //RotateView(); // 기존 회전 함수가 있다면 여기에 포함
             HandleJump();
+        }
+        public void SpawnSet()
+        {
+            Close_PlayerController();
+            if (ProgressManager.Instance != null)
+            {
+                transform.position = ProgressManager.Instance.progressData.playerPosition;
+            }
+            Open_PlayerController();
+          
         }
 
         private void HandleJump()
