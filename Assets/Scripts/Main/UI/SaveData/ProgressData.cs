@@ -9,7 +9,7 @@ using static CommonUIManager;
 public class ProgressData : ScriptableObject
 {
     [Header("진행 씬")]
-    public string scene="0_1";
+    public string scene= "DayHouse";
     [Header("진행도 예: 챕터_서브_노드 형식")]
     public string storyProgress = "0_0_0";
 

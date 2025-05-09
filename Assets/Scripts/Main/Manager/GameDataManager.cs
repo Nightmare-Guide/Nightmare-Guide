@@ -9,7 +9,7 @@ using static SchoolUIManager;
 [System.Serializable]
 public class GameData
 {
-    public string scene = "0_1";
+    public string scene = "DayHouse";
     public string storyProgress = "0_0_0";
 
     public Vector3 playerPosition = new Vector3(-550, -67, 278);

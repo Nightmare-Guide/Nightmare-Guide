@@ -10,6 +10,7 @@ using UnityEngine.UI;
 using static SchoolUIManager;
 using System.IO;
 using System.Runtime.InteropServices;
+using UnityStandardAssets.Characters.FirstPerson;
 
 public class CommonUIManager : MonoBehaviour
 {
@@ -144,7 +145,7 @@ public class CommonUIManager : MonoBehaviour
         // 특정 씬이 로드되면 플레이어 생성 요청
         if (scene.name != "LoadingScene")
         {
-            SpawnPlayer(scene.name);
+            //SpawnPlayer(scene.name);
         }
     }
 
@@ -202,6 +203,11 @@ public class CommonUIManager : MonoBehaviour
         else
         {
             Time.timeScale = 1;
+            if (GameDataManager.instance != null && PlayerController.instance!=null && ProgressManager.Instance!=null) {
+                Vector3 playerTr = PlayerController.instance.transform.position;
+                ProgressManager.Instance.progressData.playerPosition = playerTr;
+                GameDataManager.instance.SaveGame();
+            }
             MoveScene("Title Scene");
             optionUI.SetActive(false);
         }
@@ -298,7 +304,8 @@ public class CommonUIManager : MonoBehaviour
     // 씬 이동 함수
     public void MoveScene(string sceneName)
     {
-        if (ProgressManager.Instance != null) { ProgressManager.Instance.progressData.scene = sceneName; }// 씬 저장
+        if (ProgressManager.Instance != null && !sceneName.Equals("Title Scene"))
+            { ProgressManager.Instance.progressData.scene = sceneName; }// 씬 저장
         interactionUI.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
