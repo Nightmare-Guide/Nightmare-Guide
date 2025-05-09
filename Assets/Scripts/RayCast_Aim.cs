@@ -38,16 +38,24 @@ public class RayCast_Aim : MonoBehaviour
                 if (Physics.Raycast(ray, out hit, maxRayDistance, LayerMask.GetMask("ActiveObject")))
                 {
                     GameObject click_object = hit.transform.gameObject;
-                   // Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.red); // 실제 충돌 지점까지 빨간색
 
-                   // Debug.Log($"Object Name : {click_object.name}");
+                    // 콜라이더 비활성화
+                    click_object.GetComponent<Collider>().enabled = false;
+
+                    // Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.red); // 실제 충돌 지점까지 빨간색
+
+                    // Debug.Log($"Object Name : {click_object.name}");
                     if (StoryCheck(click_object))
                     {
                         return;
                     }
                     if (click_object.CompareTag("NextScene"))
                     {
-                        CommonUIManager.instance.MoveScene("Main_Map");
+                        // 플레이어 못 움직이게
+                        PlayerController.instance.Close_PlayerController();
+                        Camera_Rt.instance.Close_Camera();
+
+                        NextScene.instance.Next_Scene();
                     }
                     // 태그가 "maze_Btn"이라면 Select_Btn() 호출
                     if (click_object.CompareTag("maze_Btn"))
@@ -78,11 +86,15 @@ public class RayCast_Aim : MonoBehaviour
                 }
             }
         }
-       /* else
+        else
         {
-            // UI 비 활성화
-            CommonUIManager.instance.interactionUI.SetActive(false);
-        }*/
+            if (CommonUIManager.instance != null)
+            {
+                // UI 비 활성화
+                CommonUIManager.instance.interactionUI.SetActive(false);
+            }
+          
+        }
     }
 
     public void ElevatorButton(GameObject obj)
@@ -111,6 +123,7 @@ public class RayCast_Aim : MonoBehaviour
 
     public void Locker(GameObject obj)
     {
+
       //  Debug.Log("락커 인식" + obj.name);
         Locker lockerObj = obj.GetComponent<Locker>();
         if (lockerObj.isMovingToLocker || lockerObj.outMovingToLocker)
@@ -135,6 +148,8 @@ public class RayCast_Aim : MonoBehaviour
             // DoorCheck(obj);
 
         }
+
+
     }
 
     public void DoorCheck(GameObject obj)
@@ -157,7 +172,9 @@ public class RayCast_Aim : MonoBehaviour
         // 해당 휴대폰 획득 bool 값 변경
         if (obj.name.Contains("Steven"))
         {
-            CommonUIManager.instance.phoneInfos.hasPhone = true;
+            ProgressManager.Instance.progressData.phoneDatas[0].hasPhone = true;
+            CommonUIManager.instance.SmartPhoneData();
+            Debug.Log("현재 폰 데이터" + ProgressManager.Instance.progressData.phoneDatas[0].hasPhone);
         }
         else
         {
@@ -165,6 +182,9 @@ public class RayCast_Aim : MonoBehaviour
                                             .Find(info => obj.gameObject.name.Contains(info.name));
 
             targetPhone.hasPhone = true;
+            Debug.Log("현재 폰 데이터 디폴트" + ProgressManager.Instance.defaultData.phoneDatas[0].hasPhone);
+            Debug.Log("현재 폰 데이터 진행" + ProgressManager.Instance.progressData.phoneDatas[0].hasPhone);
+            Debug.Log("타겟 데이터 디폴트" + targetPhone.hasPhone +"이름 " + targetPhone.name);
         }
 
         // CellPhone 위치 변경 함수 실행

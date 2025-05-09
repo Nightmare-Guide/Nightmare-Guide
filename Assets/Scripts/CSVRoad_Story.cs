@@ -1,7 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEngine.Localization.Settings;
+using UnityEngine.SceneManagement;
 
 public class CSVRoad_Story : MonoBehaviour
 {
@@ -9,6 +12,7 @@ public class CSVRoad_Story : MonoBehaviour
 
     [SerializeField] private string go_Story;
 
+    [SerializeField] private TextMeshProUGUI nameText; // 기본 자막 이름
     [SerializeField] private TextMeshProUGUI dialogue; // 기본 자막
     [SerializeField] private GameObject dialogueBox;  // 대화창
     [SerializeField] private GameObject dialogueOptions; // 선택지
@@ -22,23 +26,25 @@ public class CSVRoad_Story : MonoBehaviour
     private int returnPoint = -1; // 리턴 포인트 저장 (-1은 초기화 상태)
     private int chapterEnd = 0;
 
-    void Start()
+    public NarrationManager narrationManager;
+
+    void Awake()
     {
-        data = CSVReader.Read("Story/"+go_Story);
+        data = CSVReader.Read("Story/" + go_Story);
         if (data != null && data.Count > 0)
         {
-          //  Debug.Log($"CSV 데이터 로드 성공: 총 {data.Count}개 항목");
+            //  Debug.Log($"CSV 데이터 로드 성공: 총 {data.Count}개 항목");
         }
         else
         {
-           // Debug.LogWarning("CSV 데이터가 비어 있습니다.");
+            // Debug.LogWarning("CSV 데이터가 비어 있습니다.");
         }
         if (instance == null) { instance = this; }
     }
 
     public void OnSelectChapter(string subChapterKey)
     {
-      //  Debug.Log($"SubChapter {subChapterKey} 선택됨");
+        //  Debug.Log($"SubChapter {subChapterKey} 선택됨");
 
         int start = -1, end = -1;
 
@@ -59,7 +65,7 @@ public class CSVRoad_Story : MonoBehaviour
 
         if (start == -1)
         {
-          //  Debug.LogWarning($"{subChapterKey}에 해당하는 데이터가 없습니다.");
+            //  Debug.LogWarning($"{subChapterKey}에 해당하는 데이터가 없습니다.");
             return;
         }
 
@@ -73,14 +79,19 @@ public class CSVRoad_Story : MonoBehaviour
         for (int i = start; i <= end; i++)
         {
             // CSV 데이터의 현재 대사를 가져옴
-            string text = FormatDialogue(data[i]["Dialogue_Korean"].ToString());
+            if(nameText != null)
+            {
+                string name = FormatDialogue(data[i][$"{LocalizationSettings.SelectedLocale.Identifier.Code}_name"].ToString() + " :");
+                nameText.text = name;
+            }
+            string text = FormatDialogue(data[i][LocalizationSettings.SelectedLocale.Identifier.Code].ToString());
             dialogue.text = text;
 
             // ReturnPoint가 있으면 저장
             if (data[i].ContainsKey("ReturnPoint") && data[i]["ReturnPoint"].ToString() == "point")
             {
                 returnPoint = i; // 현재 진행도를 ReturnPoint로 저장
-             //   Debug.Log($"ReturnPoint 저장됨: {returnPoint}");
+                                 //   Debug.Log($"ReturnPoint 저장됨: {returnPoint}");
             }
 
             // 선택지 활성화 처리
@@ -96,6 +107,8 @@ public class CSVRoad_Story : MonoBehaviour
             if (i == end)
             {
                 Debug.Log($"SubChapter {data[start]["Chapter"]} 끝");
+                string chap = data[i - 1]["Chapter"].ToString();
+                NextAction(chap);
                 chapterEnd = 0;
                 break;
             }
@@ -111,8 +124,8 @@ public class CSVRoad_Story : MonoBehaviour
 
         if (optionStartIndex < data.Count)
         {
-            option1.text = FormatDialogue(data[optionStartIndex]["Dialogue_Korean"].ToString());
-            option2.text = FormatDialogue(data[optionStartIndex + 1]["Dialogue_Korean"].ToString());
+            option1.text = FormatDialogue(data[optionStartIndex][LocalizationSettings.SelectedLocale.Identifier.Code].ToString());
+            option2.text = FormatDialogue(data[optionStartIndex + 1][LocalizationSettings.SelectedLocale.Identifier.Code].ToString());
         }
         else
         {
@@ -126,13 +139,13 @@ public class CSVRoad_Story : MonoBehaviour
         {
             if (returnPoint != -1)
             {
-             //   Debug.Log("선택지 1 선택: ReturnPoint로 이동");
+                //   Debug.Log("선택지 1 선택: ReturnPoint로 이동");
                 StartCoroutine(DisplayChapterDialogue(returnPoint, data.Count - 1)); // ReturnPoint부터 다시 출력
                 returnPoint = -1; // ReturnPoint 초기화
             }
             else
             {
-               // Debug.LogWarning("ReturnPoint가 설정되지 않았습니다.");
+                // Debug.LogWarning("ReturnPoint가 설정되지 않았습니다.");
             }
         }
         else if (choice == 2) // 선택지 2: 다음 대사 진행
@@ -162,5 +175,26 @@ public class CSVRoad_Story : MonoBehaviour
     {
         // 대사에 있는 @@를 줄바꿈(\n)으로 변환
         return text.Replace("@@", "\n");
+    }
+
+    void NextAction(string chapter)
+    {
+        switch (chapter)
+        {
+            case "0_0_0":
+                StartCoroutine(FinishNarration());
+                break;
+        }
+    }
+
+    IEnumerator FinishNarration()
+    {
+        narrationManager.SetUIOpacity(narrationManager.videoImg, false, 1f, 0f);
+
+        yield return new WaitForSeconds(1.2f);
+
+        SceneManager.LoadScene("DayHouse");
+
+        CommonUIManager.instance.Blink(true);
     }
 }

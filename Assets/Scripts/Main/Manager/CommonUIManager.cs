@@ -9,6 +9,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using static SchoolUIManager;
 using System.IO;
+using System.Runtime.InteropServices;
 
 public class CommonUIManager : MonoBehaviour
 {
@@ -67,6 +68,14 @@ public class CommonUIManager : MonoBehaviour
     [Header("# 정보 저장 확인 테스트")]
     public TextMeshProUGUI defaultPhone;
     public TextMeshProUGUI updatePhone;
+
+    // Windows의 마우스 입력을 시뮬레이션하는 API
+    [DllImport("user32.dll")]
+    private static extern void mouse_event(int dwFlags, int dx, int dy, int cButtons, int dwExtraInfo);
+
+    private const int MOUSEEVENTF_LEFTDOWN = 0x02; // 마우스 왼쪽 버튼 누름
+    private const int MOUSEEVENTF_LEFTUP = 0x04; // 마우스 왼쪽 버튼 뗌
+
     private void Awake()
     {
         if (instance == null)
@@ -89,24 +98,7 @@ public class CommonUIManager : MonoBehaviour
         LanguageDropdown.value = 0;
     }
 
-    private void Start()
-    {
-        phoneInfos = new CharacterPhoneInfo { name = "Steven", hasPhone = false, isUnlocked = false }; // cellPhoneObj 랑 cellPhoneUI 는 MainUIManager 에서 초기화
-        string path = Application.streamingAssetsPath + "/data.json";
-        if (File.Exists(path))
-        {
-            string json = File.ReadAllText(path);
-            // Debug.Log("파일이 존재합니다.");
-            phoneInfos.hasPhone = ProgressManager.Instance.progressData.stevenPhoneDatas.hasPhone;
-            phoneInfos.isUnlocked = ProgressManager.Instance.progressData.stevenPhoneDatas.isUnlocked;
-        }
-        else
-        {
-            //Debug.Log("파일이 존재하지 않습니다.");
-        }
-
-
-    }
+ 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Keypad1))
@@ -209,6 +201,7 @@ public class CommonUIManager : MonoBehaviour
         }
         else
         {
+            Time.timeScale = 1;
             MoveScene("Title Scene");
             optionUI.SetActive(false);
         }
@@ -286,10 +279,32 @@ public class CommonUIManager : MonoBehaviour
         _ => "unKnown"
     };
 
+    public void SmartPhoneData()
+    {
+        phoneInfos = new CharacterPhoneInfo { name = "Steven", hasPhone = false, isUnlocked = false }; // cellPhoneObj 랑 cellPhoneUI 는 MainUIManager 에서 초기화
+        
+        if (ProgressManager.Instance!=null)
+        {
+
+            phoneInfos.hasPhone = ProgressManager.Instance.progressData.phoneDatas[0].hasPhone;
+            phoneInfos.isUnlocked = ProgressManager.Instance.progressData.phoneDatas[0].isUnlocked;
+        }
+        else
+        {
+            Debug.Log("파일이 존재하지 않습니다.");
+        }
+    }
 
     // 씬 이동 함수
     public void MoveScene(string sceneName)
     {
+        if (ProgressManager.Instance != null) { ProgressManager.Instance.progressData.scene = sceneName; }// 씬 저장
+        interactionUI.SetActive(false);
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        // 화면 중앙을 클릭하는 효과를 발생시킴 (Windows 전용)
+        mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
+        mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
         StartCoroutine(MoveSceneRoutine(sceneName));
     }
 
@@ -301,6 +316,20 @@ public class CommonUIManager : MonoBehaviour
         // yield return null;
 
         LoadingSceneManager.LoadScene(sceneName);
+    }
+    public void StartNarrationScene()
+    {
+        StartCoroutine(NarrationSceneRoutine());
+    }
+
+    IEnumerator NarrationSceneRoutine()
+    {
+        Blink(false);
+
+        yield return new WaitForSeconds(blinkDuration);
+        // yield return null;
+
+        SceneManager.LoadScene("Narration");
     }
 
     // 눈 감고/뜨는 애니메이션 쉐이더
@@ -356,6 +385,8 @@ public class CommonUIManager : MonoBehaviour
         // characterAudioSource.volume = value;
         characterVolume = value;
     }
+
+
 
     // 휴대폰 정보 Class
     public class StevenPhoneInfo

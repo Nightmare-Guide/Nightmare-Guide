@@ -35,14 +35,26 @@ public class MainUIManager : UIUtility
             optionUI = CommonUIManager.instance.optionUI;
             uiObjects.Add(optionUI);
 
-            CommonUIManager.instance.phoneInfos.cellPhoneObj = cellPhoneObjs;
+            if (cellPhoneObjs != null)
+            {
+                CommonUIManager.instance.phoneInfos.cellPhoneObj = cellPhoneObjs;
+            }
+   
             CommonUIManager.instance.phoneInfos.cellPhoneUI = uiObjects[2];
+      
+            if (CommonUIManager.instance.phoneInfos.hasPhone&& cellPhoneObjs != null)
+            {
+                cellPhoneObjs.SetActive(false);
+
+            }
+            else
+            {
+                Debug.Log("폰 보유 여부 " + CommonUIManager.instance.phoneInfos.hasPhone);
+            }
         }
 
-        if (CommonUIManager.instance.phoneInfos.hasPhone)
-        {
-            cellPhoneObjs.SetActive(false);
-        }
+
+      
 
     }
 

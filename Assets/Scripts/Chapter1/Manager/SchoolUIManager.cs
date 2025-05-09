@@ -52,9 +52,10 @@ public class SchoolUIManager : UIUtility
 
     private void Start()
     {
-        optionUI = CommonUIManager.instance.optionUI;
-        uiObjects.Add(optionUI);
-
+        if (CommonUIManager.instance != null) { 
+            optionUI = CommonUIManager.instance.optionUI; 
+            uiObjects.Add(optionUI);
+        }
         // 휴대폰 데이터 입력
         phoneInfos.Add(new CharacterPhoneInfo { name = "Ethan", hasPhone = false, isUnlocked = false, cellPhoneObj = cellPhoneObjs[0], cellPhoneUI = uiObjects[2] });
         phoneInfos.Add(new CharacterPhoneInfo { name = "David", hasPhone = false, isUnlocked = false, cellPhoneObj = cellPhoneObjs[1], cellPhoneUI = uiObjects[3] });
@@ -88,8 +89,11 @@ public class SchoolUIManager : UIUtility
             {
                 //Debug.Log("파일이 존재하지 않습니다.");
             }
-
-        CommonUIManager.instance.schoolUIManager = this;
+        if (CommonUIManager.instance != null)
+        {
+            CommonUIManager.instance.schoolUIManager = this;
+        }
+       
     }
 
     private void Update()
