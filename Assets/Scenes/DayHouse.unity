@@ -37374,19 +37374,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2150530462596424511, guid: 0eee449d6f02a014c80f3b4813fa8f6e, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4235032173555325522, guid: 0eee449d6f02a014c80f3b4813fa8f6e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -489.22
+      value: -488
       objectReference: {fileID: 0}
     - target: {fileID: 4235032173555325522, guid: 0eee449d6f02a014c80f3b4813fa8f6e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 71.96
+      value: 72
       objectReference: {fileID: 0}
     - target: {fileID: 4235032173555325522, guid: 0eee449d6f02a014c80f3b4813fa8f6e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 133.41
+      value: 140
       objectReference: {fileID: 0}
     - target: {fileID: 4235032173555325522, guid: 0eee449d6f02a014c80f3b4813fa8f6e, type: 3}
       propertyPath: m_LocalRotation.w
@@ -38599,7 +38599,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   go_Story: Story 1
-  nameText: {fileID: 2112981170}
   dialogue: {fileID: 600502764}
   dialogueBox: {fileID: 1468529926}
   dialogueOptions: {fileID: 1662338141}
@@ -41276,7 +41275,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4000013054727334, guid: 0bd829886aa0b724a8bba2a525fc638f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -487.5
+      value: -488.67
       objectReference: {fileID: 0}
     - target: {fileID: 4000013054727334, guid: 0bd829886aa0b724a8bba2a525fc638f, type: 3}
       propertyPath: m_LocalPosition.y
