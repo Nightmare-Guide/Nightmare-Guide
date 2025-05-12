@@ -173,6 +173,7 @@ public class RayCast_Aim : MonoBehaviour
         if (obj.name.Contains("Steven"))
         {
             ProgressManager.Instance.progressData.phoneDatas[0].hasPhone = true;
+            ProgressManager.Instance.progressData.storyProgress = "clear";
             CommonUIManager.instance.SmartPhoneData();
         }
         else

@@ -54,7 +54,7 @@ public class TitleUIManager : UIUtility
         {
             string currentScene = ProgressManager.Instance.progressData.scene;
             //Debug.Log(currentScene + "ÇöÀç ¾À" + GameDataManager.instance.progressData.scene+"ÀúÀå¾À");
-            if (currentScene.Equals("0_1")) // Áý [³·]
+            if (currentScene.Equals("DayHouse")) // Áý [³·]
             {
                 CommonUIManager.instance.StartNarrationScene();
             }
