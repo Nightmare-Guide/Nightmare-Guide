@@ -134,13 +134,15 @@ public class MainUIManager : UIUtility
 
     private void OnApplicationQuit()
     {
-        if (inventory.Count <= 0 || inventory == null)
+        if (inventory == null || inventory.Count <= 0 )
             return;
 
         foreach (Item item in inventory)
         {
-            inventoryDatas.Add(item.name);
+            if (item != null)
+                inventoryDatas.Add(item.name);
         }
+
     }
 
     // 시작 세팅 함수
