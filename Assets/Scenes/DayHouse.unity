@@ -4021,9 +4021,9 @@ MonoBehaviour:
   - {fileID: 1977004578}
   - {fileID: 615279078}
   - {fileID: 2114304278}
-  - {fileID: 1670902868}
   aimUI: {fileID: 296318759}
   optionUI: {fileID: 0}
+  fadeInOutImg: {fileID: 1670902870}
   playerCamera: {fileID: 1412871864}
   textBoxLayouts:
   - {fileID: 615279089}
@@ -4079,12 +4079,27 @@ MonoBehaviour:
   m_Events:
     m_Signals:
     - {fileID: 11400000, guid: 7385f0d230e71c143a290b919d05c19b, type: 2}
+    - {fileID: 11400000, guid: a89de03ed429a274499c98909fc2b7b9, type: 2}
     m_Events:
     - m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 132048519}
-          m_TargetAssemblyTypeName: MainUIManager, Assembly-CSharp
-          m_MethodName: StartGame
+          m_TargetAssemblyTypeName: UIUtility, Assembly-CSharp
+          m_MethodName: FadeIn
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 1
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 132048519}
+          m_TargetAssemblyTypeName: UIUtility, Assembly-CSharp
+          m_MethodName: FadeOut
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -8426,6 +8441,8 @@ PlayableDirector:
     value: {fileID: 1064406222}
   - key: {fileID: -3400552540657464844, guid: 7b92d5d0140aa964d848587042cc1f8a, type: 2}
     value: {fileID: 296318759}
+  - key: {fileID: -7640427298372778397, guid: 7b92d5d0140aa964d848587042cc1f8a, type: 2}
+    value: {fileID: 132048521}
   m_ExposedReferences:
     m_References:
     - 5a0eae80be4959745a663556a4134713: {fileID: 1529890400}
@@ -38599,8 +38616,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   go_Story: Story 1
-  nameText: {fileID: 2112981170}
   dialogue: {fileID: 600502764}
+  dialogueName: {fileID: 2112981170}
   dialogueBox: {fileID: 1468529926}
   dialogueOptions: {fileID: 1662338141}
   option1: {fileID: 1857770429}
@@ -44475,7 +44492,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

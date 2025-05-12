@@ -14,6 +14,7 @@ public class UIUtility : MonoBehaviour
     public List<GameObject> uiObjects;
     public GameObject aimUI;
     public GameObject optionUI;
+    public Image fadeInOutImg;
 
     [Header("# Object")]
     [SerializeField] Camera playerCamera;
@@ -239,5 +240,16 @@ public class UIUtility : MonoBehaviour
         {
             LayoutRebuilder.MarkLayoutForRebuild(group.GetComponent<RectTransform>());
         }
+    }
+
+    public void FadeIn()
+    {
+        fadeInOutImg.gameObject.SetActive(true);
+        SetUIOpacity(fadeInOutImg, false, 1f, 0f);
+    }
+
+    public void FadeOut()
+    {
+        SetUIOpacity(fadeInOutImg, true, 1f, 0f);
     }
 }

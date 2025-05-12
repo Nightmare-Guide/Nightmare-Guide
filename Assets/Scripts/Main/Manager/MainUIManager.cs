@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Playables;
 using UnityEngine.UI;
 using static SchoolUIManager;
 
@@ -19,8 +20,14 @@ public class MainUIManager : UIUtility
     public List<Item> items; // 인게임 아이템 데이터
     public List<ItemSlot> inventorySlots; // 실제 UI Slot 들
 
+    [Header("# Time Line")]
+
+    PlayableDirector playerDirector;
+
     [Header("# SaveData")]
     public List<String> inventoryDatas;
+
+
 
     private void Awake()
     {
@@ -50,10 +57,6 @@ public class MainUIManager : UIUtility
             }
           
         }
-
-
-      
-
     }
 
     private void Update()
@@ -183,12 +186,7 @@ public class MainUIManager : UIUtility
 
 
     }
-    public void StartGame()
-    {
-        SetUIOpacity(uiObjects[4].GetComponent<Image>(), true, 1f, 0f);
 
-        SetUIOpacity(uiObjects[4].GetComponent<Image>(), false, 1f, 2f);
-    }
     public class Item
     {
         public string name;
