@@ -59,7 +59,7 @@ public class ProgressManager : MonoBehaviour
     /// </summary>
     public void ResetProgress()
     {
-        if (progressData != null && defaultData != null)
+        if (progressData != null && defaultData != null && CommonUIManager.instance!=null)
         {
             progressData.newGame = defaultData.newGame;
             progressData.scene = defaultData.scene;
@@ -86,6 +86,7 @@ public class ProgressManager : MonoBehaviour
             progressData.characterVolume = defaultData.characterVolume;
             progressData.isFullScreen = defaultData.isFullScreen;
             progressData.language = defaultData.language;
+            CommonUIManager.instance.ResetSoudVolume();
            /* Debug.Log("progressData.scene : " + progressData.scene);
             Debug.Log("progressData.storyProgress : " + progressData.storyProgress);
             if (progressData.phoneDatas != null && progressData.phoneDatas.Count > 0)
