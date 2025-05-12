@@ -18,13 +18,18 @@ public class TitleUIManager : UIUtility
 
     private void Start()
     {
+        if (CommonUIManager.instance != null)
+            commonUIManager = CommonUIManager.instance;
+        if (TimeLineManager.instance != null)
+            timeLineManager = TimeLineManager.instance;
+
         Cursor.visible = true; // 커서 보이게 하기
         titleUI.SetActive(true); // Start UI 활성화
 
-        optionUI = CommonUIManager.instance.optionUI;
+        optionUI = commonUIManager.optionUI;
         uiObjects.Add(optionUI);
 
-        CommonUIManager.instance.TitleUIManager = this;
+        commonUIManager.TitleUIManager = this;
     }
 
     private void Update()
@@ -45,7 +50,7 @@ public class TitleUIManager : UIUtility
 
     private void OnDisable()
     {
-        CommonUIManager.instance.TitleUIManager = null;
+        commonUIManager.TitleUIManager = null;
     }
 
     public void NewGameBtn()
@@ -56,7 +61,7 @@ public class TitleUIManager : UIUtility
             //Debug.Log(currentScene + "현재 씬" + GameDataManager.instance.progressData.scene+"저장씬");
             if (currentScene.Equals("DayHouse")) // 집 [낮]
             {
-                CommonUIManager.instance.StartNarrationScene();
+                commonUIManager.StartNarrationScene();
             }
             else
             {
@@ -73,7 +78,7 @@ public class TitleUIManager : UIUtility
             ProgressManager.Instance.progressData.scene = currentScene;
         }
         //플레이어 하우스
-        CommonUIManager.instance.MoveScene(currentScene);
+        commonUIManager.MoveScene(currentScene);
         
        
     }

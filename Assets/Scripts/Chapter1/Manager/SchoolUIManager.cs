@@ -52,8 +52,13 @@ public class SchoolUIManager : UIUtility
 
     private void Start()
     {
-        if (CommonUIManager.instance != null) { 
-            optionUI = CommonUIManager.instance.optionUI; 
+        if (CommonUIManager.instance != null)
+            commonUIManager = CommonUIManager.instance;
+        if (TimeLineManager.instance != null)
+            timeLineManager = TimeLineManager.instance;
+
+        if (commonUIManager != null) { 
+            optionUI = commonUIManager.optionUI; 
             uiObjects.Add(optionUI);
         }
         // 휴대폰 데이터 입력
@@ -89,9 +94,9 @@ public class SchoolUIManager : UIUtility
             {
                 //Debug.Log("파일이 존재하지 않습니다.");
             }
-        if (CommonUIManager.instance != null)
+        if (commonUIManager != null)
         {
-            CommonUIManager.instance.schoolUIManager = this;
+            commonUIManager.schoolUIManager = this;
         }
        
     }
@@ -138,7 +143,7 @@ public class SchoolUIManager : UIUtility
 
     private void OnDisable()
     {
-        CommonUIManager.instance.schoolUIManager = null;
+        commonUIManager.schoolUIManager = null;
     }
 
     private void OnApplicationQuit()

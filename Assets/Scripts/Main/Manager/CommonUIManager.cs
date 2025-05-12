@@ -63,9 +63,6 @@ public class CommonUIManager : MonoBehaviour
     string language;
     public SaveStevenPhoneData stevenPhoneData;
 
-
-   
-
     // Windows의 마우스 입력을 시뮬레이션하는 API
     [DllImport("user32.dll")]
     private static extern void mouse_event(int dwFlags, int dx, int dy, int cButtons, int dwExtraInfo);
