@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fadef4205c7b67342aa1e9c079046fc7, type: 3}
   m_Name: NewGame
   m_EditorClassIdentifier: 
+  newGame: 1
   scene: 0_1
   storyProgress: 0_0_0
   playerPosition: {x: -487, y: 71, z: 138}
@@ -20,7 +21,7 @@ MonoBehaviour:
   - 
   phoneDatas:
   - name: 
-    hasPhone: 1
+    hasPhone: 0
     isUnlocked: 0
   inventoryDatas:
   - 

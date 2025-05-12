@@ -11,6 +11,7 @@ using static SchoolUIManager;
 using System.IO;
 using System.Runtime.InteropServices;
 using UnityStandardAssets.Characters.FirstPerson;
+using static UnityEngine.Rendering.DebugUI;
 
 public class CommonUIManager : MonoBehaviour
 {
@@ -62,12 +63,8 @@ public class CommonUIManager : MonoBehaviour
     string language;
     public SaveStevenPhoneData stevenPhoneData;
 
-    public GameObject main_playerPrefab;
-    public GameObject chap_playerPrefab;
 
-    [Header("# 정보 저장 확인 테스트")]
-    public TextMeshProUGUI defaultPhone;
-    public TextMeshProUGUI updatePhone;
+   
 
     // Windows의 마우스 입력을 시뮬레이션하는 API
     [DllImport("user32.dll")]
@@ -194,6 +191,11 @@ public class CommonUIManager : MonoBehaviour
         }
         else
         {
+            string currentSceneName = SceneManager.GetActiveScene().name;
+            if (currentSceneName.Contains("Title"))
+            {
+                return;
+            }
             Time.timeScale = 1;
             if (GameDataManager.instance != null && PlayerController.instance!=null && ProgressManager.Instance!=null) {
                 Vector3 playerTr = PlayerController.instance.transform.position;
@@ -372,24 +374,56 @@ public class CommonUIManager : MonoBehaviour
 
     public void SetBGVolume(float value)
     {
-        // bgAudioSource.volume = value;
+        //bgAudioSource.volume = value;
         bgVolume = value;
+        bgVolumeSlider.value = value;
+        if (ProgressManager.Instance != null)
+        {
+            ProgressManager.Instance.progressData.bgVolume = value;
+        }
     }
 
     public void SetEffectVolume(float value)
     {
-        // effectAudioSource.volume = value;
+        //effectAudioSource.volume = value;
         effectVolume = value;
+        effectVolumeSlider.value = value;
+        if (ProgressManager.Instance != null)
+        {
+            ProgressManager.Instance.progressData.effectVolume = value;
+        }
+
     }
 
     public void SetCharacterVolume(float value)
     {
-        // characterAudioSource.volume = value;
+        //characterAudioSource.volume = value;
         characterVolume = value;
+        characterVolumeSlider.value = value;
+        if (ProgressManager.Instance != null)
+        {
+            ProgressManager.Instance.progressData.characterVolume = value;
+        }
     }
 
-
-
+    public void ResetSoudVolume()
+    {
+        if (ProgressManager.Instance != null)
+        {
+            SetBGVolume(ProgressManager.Instance.defaultData.bgVolume);
+            SetEffectVolume(ProgressManager.Instance.defaultData.effectVolume);
+            SetCharacterVolume(ProgressManager.Instance.defaultData.characterVolume);
+        }
+    }
+    public void LoadSoudVolume()
+    {
+        if (ProgressManager.Instance != null)
+        {
+            SetBGVolume(ProgressManager.Instance.progressData.bgVolume);
+            SetEffectVolume(ProgressManager.Instance.progressData.effectVolume);
+            SetCharacterVolume(ProgressManager.Instance.progressData.characterVolume);
+        }
+    }
     // 휴대폰 정보 Class
     public class StevenPhoneInfo
     {

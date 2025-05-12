@@ -91,6 +91,7 @@ public class GameDataManager : MonoBehaviour
             characterVolume = ProgressManager.Instance.progressData.characterVolume,
             isFullScreen = ProgressManager.Instance.progressData.isFullScreen,
             language = ProgressManager.Instance.progressData.language
+            
         };
 
         string json = JsonUtility.ToJson(saveData, true);
@@ -126,6 +127,7 @@ public class GameDataManager : MonoBehaviour
 
                 ProgressManager.Instance.LoadProgress();
                 CommonUIManager.instance.SmartPhoneData();
+                CommonUIManager.instance.LoadSoudVolume();
               /*  Debug.Log("progressData.scene : " + ProgressManager.Instance.progressData.scene);
                 Debug.Log("progressData.storyProgress : " + ProgressManager.Instance.progressData.storyProgress);
                 if (ProgressManager.Instance.progressData.phoneDatas != null && ProgressManager.Instance.progressData.phoneDatas.Count > 0)

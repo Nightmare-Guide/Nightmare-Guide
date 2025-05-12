@@ -73,20 +73,9 @@ public class TitleUIManager : UIUtility
             ProgressManager.Instance.progressData.scene = currentScene;
         }
         //플레이어 하우스
-        if (currentScene.Equals("0_1") ){CommonUIManager.instance.MoveScene("DayHouse");}
-        //플레이어 하우스
-        else if (currentScene.Equals("0_2")) { CommonUIManager.instance.MoveScene("NightHouse"); }
-        //플레이어 하우스
-        else if (currentScene.Equals("1_1")) { CommonUIManager.instance.MoveScene("Main_Map"); }
-        //플레이어 하우스
-        else if (currentScene.Equals("1_2")) { CommonUIManager.instance.MoveScene("Main_Map_Night"); }
-        //플레이어 하우스
-        else if (currentScene.Equals("2_1")) { CommonUIManager.instance.MoveScene("DayHospital"); }
-        //플레이어 하우스
-        else if (currentScene.Equals("2_2")) { CommonUIManager.instance.MoveScene("NightHospital"); }
-        //챕터1
-        else if (currentScene.Equals("3_1")) { CommonUIManager.instance.MoveScene("School_Scene"); }
-        else {   Debug.Log("Unknown scene");   }
+        CommonUIManager.instance.MoveScene(currentScene);
+        
+       
     }
 
     public void OptionBtn()
