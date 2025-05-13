@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Playables;
 using static SchoolUIManager;
 
 
@@ -69,14 +70,14 @@ public class ProgressManager : MonoBehaviour
 
             progressData.mainInventoryDatas = new List<string>(defaultData.mainInventoryDatas);
             // progressData.phoneDatas = new List<SavePhoneData>(defaultData.phoneDatas);
-            ProgressManager.Instance.progressData.phoneDatas = new List<SavePhoneData>();
+            progressData.phoneDatas = new List<SavePhoneData>();
 
-            for (int i = 0; i < ProgressManager.Instance.defaultData.phoneDatas.Count; i++)
+            for (int i = 0; i < defaultData.phoneDatas.Count; i++)
             {
-                ProgressManager.Instance.progressData.phoneDatas.Add(new SavePhoneData());
-                ProgressManager.Instance.progressData.phoneDatas[0].name = ProgressManager.Instance.defaultData.phoneDatas[0].name;
-                ProgressManager.Instance.progressData.phoneDatas[0].hasPhone = ProgressManager.Instance.defaultData.phoneDatas[0].hasPhone;
-                ProgressManager.Instance.progressData.phoneDatas[0].isUnlocked = ProgressManager.Instance.defaultData.phoneDatas[0].isUnlocked;
+                progressData.phoneDatas.Add(new SavePhoneData());
+                progressData.phoneDatas[0].name = defaultData.phoneDatas[0].name;
+                progressData.phoneDatas[0].hasPhone = defaultData.phoneDatas[0].hasPhone;
+                progressData.phoneDatas[0].isUnlocked = defaultData.phoneDatas[0].isUnlocked;
             }
             progressData.inventoryDatas = new List<string>(defaultData.inventoryDatas);
             progressData.stevenPhoneDatas = defaultData.stevenPhoneDatas;
@@ -86,6 +87,12 @@ public class ProgressManager : MonoBehaviour
             progressData.characterVolume = defaultData.characterVolume;
             progressData.isFullScreen = defaultData.isFullScreen;
             progressData.language = defaultData.language;
+
+            // 타임라인
+            InitTimeLine(defaultData.timelineWatchedList);
+
+
+
             CommonUIManager.instance.ResetSoudVolume();
            /* Debug.Log("progressData.scene : " + progressData.scene);
             Debug.Log("progressData.storyProgress : " + progressData.storyProgress);
@@ -95,6 +102,30 @@ public class ProgressManager : MonoBehaviour
                 Debug.Log("progressData.phoneDatas[0].isUnlocked : " + progressData.phoneDatas[0].isUnlocked);
             }*/
             //Debug.Log("진행도 초기화됨");
+        }
+    }
+
+    public void InitTimeline()
+    {
+        TimeLineManager.instance.timelineWatched = new Dictionary<string, bool>();
+        ProgressManager.Instance.progressData.timelineWatchedList = new List<TimelineEntry>();
+
+        foreach (var playableAsset in TimeLineManager.instance.playableAssets)
+        {
+            TimeLineManager.instance.timelineWatched.Add(playableAsset.name, false);
+            ProgressManager.Instance.progressData.timelineWatchedList.Add(new TimelineEntry { key = playableAsset.name, value = false });
+        }
+    }
+
+    public void InitTimeLine(List<TimelineEntry> list)
+    {
+        ProgressManager.Instance.progressData.timelineWatchedList = new List<TimelineEntry>();
+        TimeLineManager.instance.timelineWatched = new Dictionary<string, bool>();
+
+        foreach (var data in list)
+        {
+            ProgressManager.Instance.progressData.timelineWatchedList.Add(new TimelineEntry { key = data.key, value = data.value });
+            TimeLineManager.instance.timelineWatched.Add(data.key, data.value);
         }
     }
 }

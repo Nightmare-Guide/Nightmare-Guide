@@ -64,12 +64,18 @@ public class MainUIManager : UIUtility
         // 타임라인 실행
         if (timeLineManager.playableAssets.Count > 0 && playableDirector != null)
         {
-            if (timeLineManager.timelineWatched[timeLineManager.playableAssets[0].name] == true)
+            string assetsName = timeLineManager.playableAssets[0].name;
+
+            if (timeLineManager.timelineWatched[assetsName] == true)
                 return;
 
+            // 타임라인 실행
             playableDirector.playableAsset = timeLineManager.playableAssets[0];
-            timeLineManager.timelineWatched[playableDirector.playableAsset.name] = true;
             playableDirector.Play();
+
+            // 데이터 key 값으로 찾아서 저장
+            timeLineManager.timelineWatched[playableDirector.playableAsset.name] = true;
+            ProgressManager.Instance.progressData.timelineWatchedList.Find(e => e.key == assetsName).value = true;
         }
     }
 
@@ -183,8 +189,6 @@ public class MainUIManager : UIUtility
         InGameOpenUI(uiObjects[0]); // blur 배경 활성화
         InGameOpenUI(uiObjects[2]);
 
-        Debug.Log(cellPhone.name);
-        Debug.Log(cellPhone.cellPhoneUI.name);
         CellPhone cpLogic = cellPhone.cellPhoneUI.GetComponent<CellPhone>();
 
 

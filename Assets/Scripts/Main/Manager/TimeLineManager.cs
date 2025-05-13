@@ -22,16 +22,27 @@ public class TimeLineManager : MonoBehaviour
         {
             Destroy(gameObject); // 중복 생성 방지
         }
+    }
 
-        // 초기화 -> 데이터 로드 or 초기화 필요
-        timelineWatched = new Dictionary<string, bool>();
+    private void Start()
+    {
+        // defaultData 의 timelineWatched 초기화
+        ProgressManager.Instance.defaultData.timelineWatchedList = new List<TimelineEntry>();
 
         if (playableAssets.Count == 0)
             return;
 
         foreach (PlayableAsset playableAsset in playableAssets)
         {
-            timelineWatched.Add(playableAsset.name, true);
+            ProgressManager.Instance.defaultData.timelineWatchedList.Add(new TimelineEntry { key = playableAsset.name, value = false});
         }
     }
+
+}
+
+[System.Serializable]
+public class TimelineEntry
+{
+    public string key;
+    public bool value;
 }

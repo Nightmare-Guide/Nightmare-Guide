@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.IO;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Playables;
+using UnityEngine.UIElements;
 using static CommonUIManager;
 using static SchoolUIManager;
 
@@ -28,6 +30,8 @@ public class GameData
     public float characterVolume = 50.0f;
     public bool isFullScreen = true;
     public string language = "en";
+
+    public List<TimelineEntry> timelineWatchedList;
 }
 
 public class GameDataManager : MonoBehaviour
@@ -44,12 +48,16 @@ public class GameDataManager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
-            LoadGame(); // 게임 시작 시 불러오기
         }
         else
         {
             Destroy(gameObject);
         }
+    }
+
+    private void Start()
+    {
+        LoadGame(); // 게임 시작 시 불러오기
     }
     //테스트용 저장 기능
     private void Update()
@@ -73,6 +81,8 @@ public class GameDataManager : MonoBehaviour
             return;
         }
 
+        Debug.Log(ProgressManager.Instance.progressData.timelineWatchedList.Count);
+
         GameData saveData = new GameData
         {
             newGame = ProgressManager.Instance.progressData.newGame,
@@ -90,8 +100,9 @@ public class GameDataManager : MonoBehaviour
             effectVolume = ProgressManager.Instance.progressData.effectVolume,
             characterVolume = ProgressManager.Instance.progressData.characterVolume,
             isFullScreen = ProgressManager.Instance.progressData.isFullScreen,
-            language = ProgressManager.Instance.progressData.language
-            
+            language = ProgressManager.Instance.progressData.language,
+
+            timelineWatchedList = ProgressManager.Instance.progressData.timelineWatchedList
         };
 
         string json = JsonUtility.ToJson(saveData, true);
@@ -99,7 +110,7 @@ public class GameDataManager : MonoBehaviour
         Debug.Log($"게임 저장 완료: {FilePath}");
     }
 
-    public void LoadGame()
+    public void LoadGame() // 게임 실행 시 불러오는 설정값들.
     {
         if (File.Exists(FilePath))
         {
@@ -125,6 +136,11 @@ public class GameDataManager : MonoBehaviour
                 ProgressManager.Instance.progressData.isFullScreen = loadData.isFullScreen;
                 ProgressManager.Instance.progressData.language = loadData.language;
 
+                if (loadData.timelineWatchedList.Count != 0)
+                {
+                    ProgressManager.Instance.InitTimeLine(loadData.timelineWatchedList);
+                }
+
                 ProgressManager.Instance.LoadProgress();
                 CommonUIManager.instance.SmartPhoneData();
                 CommonUIManager.instance.LoadSoudVolume();
@@ -143,7 +159,8 @@ public class GameDataManager : MonoBehaviour
         }
         else
         {
-            // Debug.Log("저장된 게임 데이터가 없습니다.");
+            Debug.Log("저장된 게임 데이터가 없습니다.");
+            ProgressManager.Instance.InitTimeline();
         }
     }
 
