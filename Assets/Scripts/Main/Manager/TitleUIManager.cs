@@ -79,8 +79,6 @@ public class TitleUIManager : UIUtility
         }
         //플레이어 하우스
         commonUIManager.MoveScene(currentScene);
-        
-       
     }
 
     public void OptionBtn()
