@@ -18,7 +18,7 @@ public class StoryInteractable : MonoBehaviour
     public bool progressType=true;
 
     // 인터랙트 실행
-    public void Interact()
+    public bool Interact()
     {
         //현재 스토리 진행도
         string currentProgress = ProgressManager.Instance.progressData.storyProgress;
@@ -38,16 +38,24 @@ public class StoryInteractable : MonoBehaviour
                 {
                     //Debug.Log("대사 없음");
                 }
+                return true;
             }
             else
-            {   //반복대사
+            {
+                //반복대사
                 CSVRoad_Story.instance.OnSelectChapter(failDialogue);
+                return false;
             }
         }
         else
-        {       //아이템 획득 여부로 진행 진행 가능 판별
-
+        {
+            //아이템 획득 여부로 진행 진행 가능 판별
+            // 여기에 아이템 획득 여부 확인 로직을 추가하고,
+            // 그 결과에 따라 return true; 또는 return false; 를 작성해야 합니다.
+            return false; // 임시로 false 반환
         }
-        
+
+        // 이 위치에는 더 이상 도달하지 않지만, 만약을 위해 기본 반환 값을 추가할 수도 있습니다.
+        // return false;
     }
 }
