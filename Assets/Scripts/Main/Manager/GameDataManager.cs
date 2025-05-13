@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using Unity.VisualScripting;
 using UnityEngine;
 using static CommonUIManager;
 using static SchoolUIManager;
@@ -9,7 +10,9 @@ using static SchoolUIManager;
 [System.Serializable]
 public class GameData
 {
-    public string scene = "0_1";
+    
+    public bool newGame = true;
+    public string scene = "DayHouse";
     public string storyProgress = "0_0_0";
 
     public Vector3 playerPosition = new Vector3(-550, -67, 278);
@@ -72,6 +75,7 @@ public class GameDataManager : MonoBehaviour
 
         GameData saveData = new GameData
         {
+            newGame = ProgressManager.Instance.progressData.newGame,
             scene = ProgressManager.Instance.progressData.scene,
             storyProgress = ProgressManager.Instance.progressData.storyProgress,
             playerPosition = ProgressManager.Instance.progressData.playerPosition,
@@ -87,6 +91,7 @@ public class GameDataManager : MonoBehaviour
             characterVolume = ProgressManager.Instance.progressData.characterVolume,
             isFullScreen = ProgressManager.Instance.progressData.isFullScreen,
             language = ProgressManager.Instance.progressData.language
+            
         };
 
         string json = JsonUtility.ToJson(saveData, true);
@@ -103,6 +108,7 @@ public class GameDataManager : MonoBehaviour
 
             if (ProgressManager.Instance != null && ProgressManager.Instance.progressData != null)
             {
+                ProgressManager.Instance.progressData.newGame = loadData.newGame;
                 ProgressManager.Instance.progressData.scene = loadData.scene;
                 ProgressManager.Instance.progressData.storyProgress = loadData.storyProgress;
                 ProgressManager.Instance.progressData.playerPosition = loadData.playerPosition;
@@ -121,13 +127,14 @@ public class GameDataManager : MonoBehaviour
 
                 ProgressManager.Instance.LoadProgress();
                 CommonUIManager.instance.SmartPhoneData();
-                Debug.Log("progressData.scene : " + ProgressManager.Instance.progressData.scene);
+                CommonUIManager.instance.LoadSoudVolume();
+              /*  Debug.Log("progressData.scene : " + ProgressManager.Instance.progressData.scene);
                 Debug.Log("progressData.storyProgress : " + ProgressManager.Instance.progressData.storyProgress);
                 if (ProgressManager.Instance.progressData.phoneDatas != null && ProgressManager.Instance.progressData.phoneDatas.Count > 0)
                 {
                     Debug.Log("progressData.phoneDatas[0].hasPhone : " + ProgressManager.Instance.progressData.phoneDatas[0].hasPhone);
                     Debug.Log("progressData.phoneDatas[0].isUnlocked : " + ProgressManager.Instance.progressData.phoneDatas[0].isUnlocked);
-                }
+                }*/
             }
             else
             {
@@ -153,22 +160,6 @@ public class GameDataManager : MonoBehaviour
     {
         if (ProgressManager.Instance != null && ProgressManager.Instance.defaultData != null && ProgressManager.Instance.progressData != null)
         {
-            ProgressManager.Instance.progressData.scene = ProgressManager.Instance.defaultData.scene;
-            ProgressManager.Instance.progressData.storyProgress = ProgressManager.Instance.defaultData.storyProgress;
-            ProgressManager.Instance.progressData.playerPosition = ProgressManager.Instance.defaultData.playerPosition;
-            ProgressManager.Instance.progressData.sanchi = ProgressManager.Instance.defaultData.sanchi;
-
-            ProgressManager.Instance.progressData.mainInventoryDatas = new List<string>(ProgressManager.Instance.defaultData.mainInventoryDatas);
-            ProgressManager.Instance.progressData.phoneDatas = new List<SavePhoneData>(ProgressManager.Instance.defaultData.phoneDatas);
-            ProgressManager.Instance.progressData.inventoryDatas = new List<string>(ProgressManager.Instance.defaultData.inventoryDatas);
-            ProgressManager.Instance.progressData.stevenPhoneDatas = ProgressManager.Instance.defaultData.stevenPhoneDatas;
-
-            ProgressManager.Instance.progressData.bgVolume = ProgressManager.Instance.defaultData.bgVolume;
-            ProgressManager.Instance.progressData.effectVolume = ProgressManager.Instance.defaultData.effectVolume;
-            ProgressManager.Instance.progressData.characterVolume = ProgressManager.Instance.defaultData.characterVolume;
-            ProgressManager.Instance.progressData.isFullScreen = ProgressManager.Instance.defaultData.isFullScreen;
-            ProgressManager.Instance.progressData.language = ProgressManager.Instance.defaultData.language;
-
             ProgressManager.Instance.ResetProgress();
             CommonUIManager.instance.SmartPhoneData();
             SaveGame();

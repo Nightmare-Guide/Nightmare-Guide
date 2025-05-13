@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -12,8 +13,8 @@ public class CSVRoad_Story : MonoBehaviour
 
     [SerializeField] private string go_Story;
 
-    [SerializeField] private TextMeshProUGUI nameText; // 기본 자막 이름
     [SerializeField] private TextMeshProUGUI dialogue; // 기본 자막
+    [SerializeField] private TextMeshProUGUI dialogueName; // 기본 자막 이름
     [SerializeField] private GameObject dialogueBox;  // 대화창
     [SerializeField] private GameObject dialogueOptions; // 선택지
     [SerializeField] private TextMeshProUGUI option1; // 선택지 1
@@ -79,13 +80,14 @@ public class CSVRoad_Story : MonoBehaviour
         for (int i = start; i <= end; i++)
         {
             // CSV 데이터의 현재 대사를 가져옴
-            if(nameText != null)
-            {
-                string name = FormatDialogue(data[i][$"{LocalizationSettings.SelectedLocale.Identifier.Code}_name"].ToString() + " :");
-                nameText.text = name;
-            }
             string text = FormatDialogue(data[i][LocalizationSettings.SelectedLocale.Identifier.Code].ToString());
             dialogue.text = text;
+
+            if(!string.IsNullOrEmpty(FormatDialogue(data[i][$"{LocalizationSettings.SelectedLocale.Identifier.Code}_name"].ToString())))
+            {
+                string name = FormatDialogue(data[i][$"{LocalizationSettings.SelectedLocale.Identifier.Code}_name"].ToString());
+                dialogueName.text = name + " : ";
+            }
 
             // ReturnPoint가 있으면 저장
             if (data[i].ContainsKey("ReturnPoint") && data[i]["ReturnPoint"].ToString() == "point")

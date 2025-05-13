@@ -8,8 +8,11 @@ using static CommonUIManager;
 [CreateAssetMenu(fileName = "ProgressData", menuName = "Game/ProgressData")]
 public class ProgressData : ScriptableObject
 {
+
+    [Header("새 게임인지 판별")]
+    public bool newGame = true;
     [Header("진행 씬")]
-    public string scene="0_1";
+    public string scene= "DayHouse";
     [Header("진행도 예: 챕터_서브_노드 형식")]
     public string storyProgress = "0_0_0";
 

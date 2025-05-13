@@ -59,15 +59,25 @@ public class ProgressManager : MonoBehaviour
     /// </summary>
     public void ResetProgress()
     {
-        if (progressData != null && defaultData != null)
+        if (progressData != null && defaultData != null && CommonUIManager.instance!=null)
         {
+            progressData.newGame = defaultData.newGame;
             progressData.scene = defaultData.scene;
             progressData.storyProgress = defaultData.storyProgress;
             progressData.playerPosition = defaultData.playerPosition;
             progressData.sanchi = defaultData.sanchi;
 
             progressData.mainInventoryDatas = new List<string>(defaultData.mainInventoryDatas);
-            progressData.phoneDatas = new List<SavePhoneData>(defaultData.phoneDatas);
+            // progressData.phoneDatas = new List<SavePhoneData>(defaultData.phoneDatas);
+            ProgressManager.Instance.progressData.phoneDatas = new List<SavePhoneData>();
+
+            for (int i = 0; i < ProgressManager.Instance.defaultData.phoneDatas.Count; i++)
+            {
+                ProgressManager.Instance.progressData.phoneDatas.Add(new SavePhoneData());
+                ProgressManager.Instance.progressData.phoneDatas[0].name = ProgressManager.Instance.defaultData.phoneDatas[0].name;
+                ProgressManager.Instance.progressData.phoneDatas[0].hasPhone = ProgressManager.Instance.defaultData.phoneDatas[0].hasPhone;
+                ProgressManager.Instance.progressData.phoneDatas[0].isUnlocked = ProgressManager.Instance.defaultData.phoneDatas[0].isUnlocked;
+            }
             progressData.inventoryDatas = new List<string>(defaultData.inventoryDatas);
             progressData.stevenPhoneDatas = defaultData.stevenPhoneDatas;
 
@@ -76,13 +86,14 @@ public class ProgressManager : MonoBehaviour
             progressData.characterVolume = defaultData.characterVolume;
             progressData.isFullScreen = defaultData.isFullScreen;
             progressData.language = defaultData.language;
-            Debug.Log("progressData.scene : " + progressData.scene);
+            CommonUIManager.instance.ResetSoudVolume();
+           /* Debug.Log("progressData.scene : " + progressData.scene);
             Debug.Log("progressData.storyProgress : " + progressData.storyProgress);
             if (progressData.phoneDatas != null && progressData.phoneDatas.Count > 0)
             {
                 Debug.Log("progressData.phoneDatas[0].hasPhone : " + progressData.phoneDatas[0].hasPhone);
                 Debug.Log("progressData.phoneDatas[0].isUnlocked : " + progressData.phoneDatas[0].isUnlocked);
-            }
+            }*/
             //Debug.Log("진행도 초기화됨");
         }
     }

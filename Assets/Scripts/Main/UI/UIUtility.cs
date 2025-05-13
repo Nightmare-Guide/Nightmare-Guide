@@ -7,6 +7,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using UnityStandardAssets.Characters.FirstPerson;
 using Unity.VisualScripting;
+using UnityEngine.Playables;
 
 public class UIUtility : MonoBehaviour
 {
@@ -14,9 +15,17 @@ public class UIUtility : MonoBehaviour
     public List<GameObject> uiObjects;
     public GameObject aimUI;
     public GameObject optionUI;
+    public Image fadeInOutImg;
 
     [Header("# Object")]
     [SerializeField] Camera playerCamera;
+
+    [Header("# TimeLine")]
+    public PlayableDirector playableDirector;
+
+    [Header("# Singleton")]
+    public CommonUIManager commonUIManager;
+    public TimeLineManager timeLineManager;
 
     // Windows의 마우스 입력을 시뮬레이션하는 API
     [DllImport("user32.dll")]
@@ -38,6 +47,8 @@ public class UIUtility : MonoBehaviour
     public void InGameCloseUI(GameObject ui)
     {
         CloseUI(ui);
+
+        Time.timeScale = 1;
 
         //카메라 회전 활성화
         Camera_Rt.instance.Open_Camera();
@@ -62,12 +73,22 @@ public class UIUtility : MonoBehaviour
     // 게임 일시 정지 함수
     protected void PauseGame(GameObject blur)
     {
-        // 일시 정지 UI 활성화
-        blur.SetActive(true);
-        optionUI.SetActive(true);
+        Debug.Log("PauseGame");
+        // TimeLine 이 실행 중이면 정지
+        if (playableDirector != null && playableDirector.state == PlayState.Playing)
+        {
+            playableDirector.Pause();
+        }
 
         // 플레이어 움직임 멈춤
         StopPlayerController();
+
+        // 시간 정지
+        Time.timeScale = 0;
+
+        // 일시 정지 UI 활성화
+        blur.SetActive(true);
+        optionUI.SetActive(true);
     }
 
     // 오브젝트 상호작용 시 플레이어 움직임 멈춤 함수
@@ -234,5 +255,23 @@ public class UIUtility : MonoBehaviour
         {
             LayoutRebuilder.MarkLayoutForRebuild(group.GetComponent<RectTransform>());
         }
+    }
+
+
+    // TimeLine
+    public void FadeIn()
+    {
+        fadeInOutImg.gameObject.SetActive(true);
+        SetUIOpacity(fadeInOutImg, false, 0.4f, 0f);
+    }
+
+    public void FadeOut()
+    {
+        SetUIOpacity(fadeInOutImg, true, 0.4f, 0f);
+    }
+
+    public void FinishedTimeLine()
+    {
+        playableDirector.playableAsset = null;
     }
 }

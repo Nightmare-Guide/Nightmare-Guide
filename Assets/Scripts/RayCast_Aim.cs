@@ -173,8 +173,8 @@ public class RayCast_Aim : MonoBehaviour
         if (obj.name.Contains("Steven"))
         {
             ProgressManager.Instance.progressData.phoneDatas[0].hasPhone = true;
+            ProgressManager.Instance.progressData.storyProgress = "clear";
             CommonUIManager.instance.SmartPhoneData();
-            Debug.Log("현재 폰 데이터" + ProgressManager.Instance.progressData.phoneDatas[0].hasPhone);
         }
         else
         {
@@ -182,9 +182,6 @@ public class RayCast_Aim : MonoBehaviour
                                             .Find(info => obj.gameObject.name.Contains(info.name));
 
             targetPhone.hasPhone = true;
-            Debug.Log("현재 폰 데이터 디폴트" + ProgressManager.Instance.defaultData.phoneDatas[0].hasPhone);
-            Debug.Log("현재 폰 데이터 진행" + ProgressManager.Instance.progressData.phoneDatas[0].hasPhone);
-            Debug.Log("타겟 데이터 디폴트" + targetPhone.hasPhone +"이름 " + targetPhone.name);
         }
 
         // CellPhone 위치 변경 함수 실행

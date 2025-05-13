@@ -8,6 +8,12 @@ public class StoryTrigger : MonoBehaviour
     [SerializeField] string story;
     [SerializeField] enum progress { 
     }
+
+    public void PrintDialogue(string chapter)
+    {
+        CSVRoad_Story.instance.OnSelectChapter(chapter);
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -15,8 +21,4 @@ public class StoryTrigger : MonoBehaviour
             CSVRoad_Story.instance.OnSelectChapter(story);
         }
     }
-  
-   
-
-    
 }

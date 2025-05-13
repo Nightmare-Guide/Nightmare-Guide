@@ -10,6 +10,8 @@ using UnityEngine.UI;
 using static SchoolUIManager;
 using System.IO;
 using System.Runtime.InteropServices;
+using UnityStandardAssets.Characters.FirstPerson;
+using static UnityEngine.Rendering.DebugUI;
 
 public class CommonUIManager : MonoBehaviour
 {
@@ -59,15 +61,7 @@ public class CommonUIManager : MonoBehaviour
     float characterVolume;
     bool isFullScreen;
     string language;
-    public SaveStevenPhoneData phoneDatas;
-
-    [Header("# Player")]
-    [SerializeField] GameObject main_playerPrefab; // 메인씬
-    [SerializeField] GameObject chap_playerPrefab; //챕터씬
-
-    [Header("# 정보 저장 확인 테스트")]
-    public TextMeshProUGUI defaultPhone;
-    public TextMeshProUGUI updatePhone;
+    public SaveStevenPhoneData stevenPhoneData;
 
     // Windows의 마우스 입력을 시뮬레이션하는 API
     [DllImport("user32.dll")]
@@ -144,34 +138,22 @@ public class CommonUIManager : MonoBehaviour
         // 특정 씬이 로드되면 플레이어 생성 요청
         if (scene.name != "LoadingScene")
         {
-            SpawnPlayer(scene.name);
+            //SpawnPlayer(scene.name);
         }
     }
 
     void SpawnPlayer(string sceneName)
     {
-        if (main_playerPrefab != null&& chap_playerPrefab != null && ProgressManager.Instance != null && ProgressManager.Instance.progressData != null)
+        if (PlayerController.instance != null && ProgressManager.Instance != null && ProgressManager.Instance.progressData != null)
         {
-           
+            
+
             Vector3 spawnPosition = ProgressManager.Instance.progressData.playerPosition; // 저장된 플레이어 위치 사용
-            GameObject player = null;
-            if (sceneName.Contains("Main_Map")|| sceneName.Contains("House") || sceneName.Contains("Hospital"))
-            {
-                player = Instantiate(main_playerPrefab, spawnPosition, Quaternion.identity);
-            }
-            else if(sceneName.Contains("School"))
-            {
-                player = Instantiate(chap_playerPrefab, spawnPosition, Quaternion.identity);
-            }
-            if (player != null)
-            {
-                player.SetActive(true);
-            }
-          //  Debug.Log($"{sceneName} 씬에 플레이어 생성 성공! 위치: {player.transform.position}");
+            PlayerController.instance.transform.position = spawnPosition;
         }
         else
         {
-            Debug.LogError("플레이어 생성 실패! 프리팹 또는 진행 데이터가 없음.");
+            Debug.Log("플레이어 생성 실패! 프리팹 또는 진행 데이터가 없음.");
         }
     }
 
@@ -182,13 +164,18 @@ public class CommonUIManager : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        phoneDatas = new SaveStevenPhoneData { name = phoneInfos.name, hasPhone = phoneInfos.hasPhone, isUnlocked = phoneInfos.isUnlocked };
+        stevenPhoneData = new SaveStevenPhoneData { name = phoneInfos.name, hasPhone = phoneInfos.hasPhone, isUnlocked = phoneInfos.isUnlocked };
+        if (GameDataManager.instance != null && PlayerController.instance!=null) {
+            ProgressManager.Instance.progressData.playerPosition = PlayerController.instance.transform.position;
+            ProgressManager.Instance.progressData.newGame = false;
+            GameDataManager.instance.SaveGame(); }
     }
 
     void FirstSet()
     {
         commonUICanvas.SetActive(true);
         optionUI.SetActive(false);
+        phoneInfos = new CharacterPhoneInfo();
 
         FullScreenBtn();
     }
@@ -201,7 +188,18 @@ public class CommonUIManager : MonoBehaviour
         }
         else
         {
+            string currentSceneName = SceneManager.GetActiveScene().name;
+            if (currentSceneName.Contains("Title"))
+            {
+                return;
+            }
             Time.timeScale = 1;
+            if (GameDataManager.instance != null && PlayerController.instance!=null && ProgressManager.Instance!=null) {
+                Vector3 playerTr = PlayerController.instance.transform.position;
+                ProgressManager.Instance.progressData.playerPosition = playerTr;
+                ProgressManager.Instance.progressData.newGame = false;
+                GameDataManager.instance.SaveGame();
+            }
             MoveScene("Title Scene");
             optionUI.SetActive(false);
         }
@@ -281,8 +279,10 @@ public class CommonUIManager : MonoBehaviour
 
     public void SmartPhoneData()
     {
-        phoneInfos = new CharacterPhoneInfo { name = "Steven", hasPhone = false, isUnlocked = false }; // cellPhoneObj 랑 cellPhoneUI 는 MainUIManager 에서 초기화
-        
+        phoneInfos.name = "Steven";
+        phoneInfos.hasPhone = false;
+        phoneInfos.isUnlocked = false;
+
         if (ProgressManager.Instance!=null)
         {
 
@@ -298,7 +298,8 @@ public class CommonUIManager : MonoBehaviour
     // 씬 이동 함수
     public void MoveScene(string sceneName)
     {
-        if (ProgressManager.Instance != null) { ProgressManager.Instance.progressData.scene = sceneName; }// 씬 저장
+        if (ProgressManager.Instance != null && !sceneName.Equals("Title Scene"))
+            { ProgressManager.Instance.progressData.scene = sceneName; }// 씬 저장
         interactionUI.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -370,24 +371,56 @@ public class CommonUIManager : MonoBehaviour
 
     public void SetBGVolume(float value)
     {
-        // bgAudioSource.volume = value;
+        //bgAudioSource.volume = value;
         bgVolume = value;
+        bgVolumeSlider.value = value;
+        if (ProgressManager.Instance != null)
+        {
+            ProgressManager.Instance.progressData.bgVolume = value;
+        }
     }
 
     public void SetEffectVolume(float value)
     {
-        // effectAudioSource.volume = value;
+        //effectAudioSource.volume = value;
         effectVolume = value;
+        effectVolumeSlider.value = value;
+        if (ProgressManager.Instance != null)
+        {
+            ProgressManager.Instance.progressData.effectVolume = value;
+        }
+
     }
 
     public void SetCharacterVolume(float value)
     {
-        // characterAudioSource.volume = value;
+        //characterAudioSource.volume = value;
         characterVolume = value;
+        characterVolumeSlider.value = value;
+        if (ProgressManager.Instance != null)
+        {
+            ProgressManager.Instance.progressData.characterVolume = value;
+        }
     }
 
-
-
+    public void ResetSoudVolume()
+    {
+        if (ProgressManager.Instance != null)
+        {
+            SetBGVolume(ProgressManager.Instance.defaultData.bgVolume);
+            SetEffectVolume(ProgressManager.Instance.defaultData.effectVolume);
+            SetCharacterVolume(ProgressManager.Instance.defaultData.characterVolume);
+        }
+    }
+    public void LoadSoudVolume()
+    {
+        if (ProgressManager.Instance != null)
+        {
+            SetBGVolume(ProgressManager.Instance.progressData.bgVolume);
+            SetEffectVolume(ProgressManager.Instance.progressData.effectVolume);
+            SetCharacterVolume(ProgressManager.Instance.progressData.characterVolume);
+        }
+    }
     // 휴대폰 정보 Class
     public class StevenPhoneInfo
     {

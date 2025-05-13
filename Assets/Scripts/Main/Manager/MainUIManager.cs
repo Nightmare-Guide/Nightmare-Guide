@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Playables;
 using UnityEngine.UI;
 using static SchoolUIManager;
 
@@ -19,8 +20,12 @@ public class MainUIManager : UIUtility
     public List<Item> items; // 인게임 아이템 데이터
     public List<ItemSlot> inventorySlots; // 실제 UI Slot 들
 
+    [Header("# Time Line")]
+    PlayableAsset playableAsset;
+
     [Header("# SaveData")]
     public List<String> inventoryDatas;
+
 
     private void Awake()
     {
@@ -30,32 +35,42 @@ public class MainUIManager : UIUtility
     private void Start()
     {
         if (CommonUIManager.instance != null)
+            commonUIManager = CommonUIManager.instance;
+        if (TimeLineManager.instance != null)
+            timeLineManager = TimeLineManager.instance;
+
+        if (commonUIManager != null)
         {
-            CommonUIManager.instance.mainUIManager = this;
-            optionUI = CommonUIManager.instance.optionUI;
+            commonUIManager.mainUIManager = this;
+            optionUI = commonUIManager.optionUI;
             uiObjects.Add(optionUI);
 
             if (cellPhoneObjs != null)
             {
-                CommonUIManager.instance.phoneInfos.cellPhoneObj = cellPhoneObjs;
+                commonUIManager.phoneInfos.cellPhoneObj = cellPhoneObjs;
             }
-   
-            CommonUIManager.instance.phoneInfos.cellPhoneUI = uiObjects[2];
-      
-            if (CommonUIManager.instance.phoneInfos.hasPhone&& cellPhoneObjs != null)
+
+            commonUIManager.phoneInfos.cellPhoneUI = uiObjects[2];
+            //Debug.Log(commonUIManager.phoneInfos.cellPhoneUI.name);
+
+            if (commonUIManager.phoneInfos.hasPhone && cellPhoneObjs != null)
             {
                 cellPhoneObjs.SetActive(false);
 
             }
-            else
-            {
-                Debug.Log("폰 보유 여부 " + CommonUIManager.instance.phoneInfos.hasPhone);
-            }
+
         }
 
+        // 타임라인 실행
+        if (timeLineManager.playableAssets.Count > 0 && playableDirector != null)
+        {
+            if (timeLineManager.timelineWatched[timeLineManager.playableAssets[0].name] == true)
+                return;
 
-      
-
+            playableDirector.playableAsset = timeLineManager.playableAssets[0];
+            timeLineManager.timelineWatched[playableDirector.playableAsset.name] = true;
+            playableDirector.Play();
+        }
     }
 
     private void Update()
@@ -63,7 +78,12 @@ public class MainUIManager : UIUtility
         // ESC 키
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (AreAllObjectsDisabled(uiObjects) && CommonUIManager.instance != null)
+            //if (AreAllObjectsDisabled(uiObjects) && commonUIManager != null)
+            //{
+            //    // 일시정지 UI 활성화
+            //    PauseGame(uiObjects[0]);
+            //}
+            if (AreAllObjectsDisabled(uiObjects))
             {
                 // 일시정지 UI 활성화
                 PauseGame(uiObjects[0]);
@@ -77,6 +97,12 @@ public class MainUIManager : UIUtility
                     {
                         InGameCloseUI(uiObj);
                     }
+                }
+
+                // TimeLine 이 정지 중이면 다시 재생
+                if (playableDirector != null && playableDirector.state == PlayState.Paused && playableDirector.playableAsset != null)
+                {
+                    playableDirector.Play();
                 }
             }
         }
@@ -97,11 +123,20 @@ public class MainUIManager : UIUtility
         }
 
         // I 키 -> 휴대폰
-        if (Input.GetKeyDown(KeyCode.I) && CommonUIManager.instance.phoneInfos.hasPhone)
+        if (Input.GetKeyDown(KeyCode.I) && commonUIManager.phoneInfos.hasPhone)
         {
             if (AreAllObjectsDisabled(uiObjects))
             {
-                OpenCellPhoneItem(CommonUIManager.instance.phoneInfos);
+
+                if (commonUIManager.phoneInfos.cellPhoneUI == null)
+                {
+                    Debug.LogError("cellPhoneUI is NULL in Update at time: " + Time.time);
+                }
+                else
+                {
+                    Debug.Log(commonUIManager.phoneInfos.cellPhoneUI.name);
+                    OpenCellPhoneItem(commonUIManager.phoneInfos);
+                }
             }
             else if (uiObjects[2].activeInHierarchy)
             {
@@ -113,19 +148,24 @@ public class MainUIManager : UIUtility
 
     private void OnDisable()
     {
-        if (CommonUIManager.instance != null)
+        if (commonUIManager != null)
         {
-            CommonUIManager.instance.mainUIManager = null;
+            commonUIManager.mainUIManager = null;
         }
-       
+
     }
 
     private void OnApplicationQuit()
     {
+        if (inventory == null || inventory.Count <= 0)
+            return;
+
         foreach (Item item in inventory)
         {
-            inventoryDatas.Add(item.name);
+            if (item != null)
+                inventoryDatas.Add(item.name);
         }
+
     }
 
     // 시작 세팅 함수
@@ -143,6 +183,8 @@ public class MainUIManager : UIUtility
         InGameOpenUI(uiObjects[0]); // blur 배경 활성화
         InGameOpenUI(uiObjects[2]);
 
+        Debug.Log(cellPhone.name);
+        Debug.Log(cellPhone.cellPhoneUI.name);
         CellPhone cpLogic = cellPhone.cellPhoneUI.GetComponent<CellPhone>();
 
 
