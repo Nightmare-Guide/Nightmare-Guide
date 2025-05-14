@@ -38,13 +38,13 @@ public class StoryInteractable : MonoBehaviour
                 {
                     //Debug.Log("대사 없음");
                 }
-                return true;
+                return false;
             }
             else
             {
                 //반복대사
                 CSVRoad_Story.instance.OnSelectChapter(failDialogue);
-                return false;
+                return true;
             }
         }
         else
