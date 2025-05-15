@@ -13,20 +13,30 @@ MonoBehaviour:
   m_Name: ProgressData
   m_EditorClassIdentifier: 
   newGame: 0
-  scene: DayHouse
-  storyProgress: 0_0_0
-  playerPosition: {x: -531.89, y: 71.92001, z: 164.10771}
+  scene: School_Scene
+  storyProgress: clear
+  playerPosition: {x: 14.100178, y: 3.8560004, z: -64.00068}
   sanchi: 0
   mainInventoryDatas:
   - 
+  schoolInventoryDatas:
+  - Ethan CellPhone
+  - David CellPhone
   phoneDatas:
-  - name: 
-    hasPhone: 0
+  - name: Steven
+    hasPhone: 1
+    isUnlocked: 1
+  - name: Ethan
+    hasPhone: 1
+    isUnlocked: 1
+  - name: David
+    hasPhone: 1
     isUnlocked: 0
-  inventoryDatas:
-  - 
-  bgVolume: 0.51055497
-  effectVolume: 0.47999886
-  characterVolume: 0.32721895
+  bgVolume: 50
+  effectVolume: 50
+  characterVolume: 50
   isFullScreen: 1
   language: en
+  timelineWatchedList:
+  - key: StartFirstDay
+    value: 1

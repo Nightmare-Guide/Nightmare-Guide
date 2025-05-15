@@ -273,4 +273,21 @@ public class UIUtility : MonoBehaviour
     {
         playableDirector.playableAsset = null;
     }
+
+    public void StartTimeLine(PlayableAsset asset)
+    {
+        if (timeLineManager.playableAssets.Count > 0 && playableDirector != null)
+        {
+            // 이미 실행된 적 있으면 return
+            if (ProgressManager.Instance.progressData.timelineWatchedList.Find(e => e.key == asset.name).value)
+                return;
+
+            // 타임라인 실행
+            playableDirector.playableAsset = asset;
+            playableDirector.Play();
+
+            // 데이터 key 값으로 찾아서 저장
+            ProgressManager.Instance.progressData.timelineWatchedList.Find(e => e.key == asset.name).value = true;
+        }
+    }
 }

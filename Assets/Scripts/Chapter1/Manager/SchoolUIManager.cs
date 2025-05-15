@@ -14,12 +14,13 @@ using System.Drawing;
 using Unity.VisualScripting;
 using UnityEngine.Localization.SmartFormat.Utilities;
 using System.IO;
+using static CommonUIManager;
 
 public class SchoolUIManager : UIUtility
 {
     [Header("# School Object")]
     public GameObject[] cellPhoneObjs;
-    public List<CharacterPhoneInfo> phoneInfos; // 각각 휴대폰 정보를 담는 list
+    public List<PhoneInfos> phoneInfos; // 각각 휴대폰 정보를 담는 list
     public List<VerticalLayoutGroup> textBoxLayouts;
 
     [Header("# School Inventory")]
@@ -27,10 +28,6 @@ public class SchoolUIManager : UIUtility
     public List<Item> inventory; // 플레이어 인벤토리 데이터
     public List<Item> items; // 인게임 아이템 데이터
     public List<ItemSlot> inventorySlots; // 실제 UI Slot 들
-
-    [Header("# SaveData")]
-    public List<SavePhoneData> phoneDatas;
-    public List<String> inventoryDatas;
 
     // Windows의 마우스 입력을 시뮬레이션하는 API
     [DllImport("user32.dll")]
@@ -44,8 +41,7 @@ public class SchoolUIManager : UIUtility
     {
         FirstSetUP();
 
-        phoneInfos = new List<CharacterPhoneInfo>();
-        phoneDatas = new List<SavePhoneData>();
+        phoneInfos = new List<PhoneInfos>();
         items = new List<Item>();
         inventory = new List<Item>();
     }
@@ -57,48 +53,21 @@ public class SchoolUIManager : UIUtility
         if (TimeLineManager.instance != null)
             timeLineManager = TimeLineManager.instance;
 
-        if (commonUIManager != null) { 
-            optionUI = commonUIManager.optionUI; 
+        if (commonUIManager != null)
+        {
+            optionUI = commonUIManager.optionUI;
             uiObjects.Add(optionUI);
         }
-        // 휴대폰 데이터 입력
-        phoneInfos.Add(new CharacterPhoneInfo { name = "Ethan", hasPhone = false, isUnlocked = false, cellPhoneObj = cellPhoneObjs[0], cellPhoneUI = uiObjects[2] });
-        phoneInfos.Add(new CharacterPhoneInfo { name = "David", hasPhone = false, isUnlocked = false, cellPhoneObj = cellPhoneObjs[1], cellPhoneUI = uiObjects[3] });
 
-        // 아이템 데이터 입력
-        items.Add(new Item { name = "Locker Key", itemImg = itemImgs[0], uiObj = null, schoolUIManager = this });
-        items.Add(new Item { name = "Ethan CellPhone", itemImg = itemImgs[1], uiObj = uiObjects[2], schoolUIManager = this });
-        items.Add(new Item { name = "David CellPhone", itemImg = itemImgs[2], uiObj = uiObjects[3], schoolUIManager = this });
+        InitItemDatas(); // 아이템 데이터 초기화
+        GetProgressData(); // 저장된 데이터 가져오기
 
-        string path = Application.streamingAssetsPath + "/data.json";
-        if (File.Exists(path))
-            if (File.Exists(path))
-            {
-                string json = File.ReadAllText(path);
-                // Debug.Log("파일이 존재합니다.");
-                phoneInfos[0].hasPhone = ProgressManager.Instance.progressData.phoneDatas[0].hasPhone;
-                phoneInfos[0].isUnlocked = ProgressManager.Instance.progressData.phoneDatas[0].isUnlocked;
-                phoneInfos[1].hasPhone = ProgressManager.Instance.progressData.phoneDatas[1].hasPhone;
-                phoneInfos[1].isUnlocked = ProgressManager.Instance.progressData.phoneDatas[1].isUnlocked;
 
-                if (phoneInfos[0].hasPhone)
-                {
-                    cellPhoneObjs[0].SetActive(true);
-                }
-                if (phoneInfos[1].hasPhone)
-                {
-                    cellPhoneObjs[1].SetActive(true);
-                }
-            }
-            else
-            {
-                //Debug.Log("파일이 존재하지 않습니다.");
-            }
         if (commonUIManager != null)
         {
             commonUIManager.schoolUIManager = this;
         }
-       
+
     }
 
     private void Update()
@@ -146,17 +115,6 @@ public class SchoolUIManager : UIUtility
         commonUIManager.schoolUIManager = null;
     }
 
-    private void OnApplicationQuit()
-    {
-        phoneDatas.Add(new SavePhoneData { name = phoneInfos[0].name, hasPhone = phoneInfos[0].hasPhone, isUnlocked = phoneInfos[0].isUnlocked });
-        phoneDatas.Add(new SavePhoneData { name = phoneInfos[1].name, hasPhone = phoneInfos[2].hasPhone, isUnlocked = phoneInfos[3].isUnlocked });
-
-        foreach (Item item in inventory)
-        {
-            inventoryDatas.Add(item.name);
-        }
-    }
-
     // 시작 세팅 함수
     void FirstSetUP()
     {
@@ -167,7 +125,7 @@ public class SchoolUIManager : UIUtility
     }
 
     // 인벤토리 휴대폰 버튼 함수
-    public void OpenCellPhoneItem(CharacterPhoneInfo cellPhone, GameObject uiObj)
+    public void OpenCellPhoneItem(PhoneInfos cellPhone, GameObject uiObj)
     {
         InGameOpenUI(uiObjects[0]); // blur 배경 활성화
         InGameOpenUI(uiObj);
@@ -204,6 +162,7 @@ public class SchoolUIManager : UIUtility
     {
         // obj 이름을 포함하는 items 의 데이터를 inventory 에 추가
         inventory.Add(items.Find(info => obj.gameObject.name.Contains(info.name))); // info -> items List 의 요소
+        ProgressManager.Instance.progressData.schoolInventoryDatas.Add(items.Find(info => obj.gameObject.name.Contains(info.name)).name);
 
         // 인벤토리 정리
         for (int i = 0; i < inventory.Count; i++)
@@ -212,29 +171,51 @@ public class SchoolUIManager : UIUtility
         }
     }
 
-
-    // 휴대폰 정보 Class
-    public class CharacterPhoneInfo
+    void InitItemDatas()
     {
-        public string name;
-        public bool hasPhone;
-        public bool isUnlocked;
-        public GameObject cellPhoneObj;
-        public GameObject cellPhoneUI;
+        // 휴대폰 데이터 입력
+        phoneInfos.Add(new PhoneInfos { name = "Ethan", hasPhone = false, isUnlocked = false, cellPhoneObj = cellPhoneObjs[0], cellPhoneUI = uiObjects[2] });
+        phoneInfos.Add(new PhoneInfos { name = "David", hasPhone = false, isUnlocked = false, cellPhoneObj = cellPhoneObjs[1], cellPhoneUI = uiObjects[3] });
+
+        // 아이템 데이터 입력
+        items.Add(new Item { name = "Locker Key", itemImg = itemImgs[0], uiObj = null, schoolUIManager = this });
+        items.Add(new Item { name = "Ethan CellPhone", itemImg = itemImgs[1], uiObj = uiObjects[2], schoolUIManager = this });
+        items.Add(new Item { name = "David CellPhone", itemImg = itemImgs[2], uiObj = uiObjects[3], schoolUIManager = this });
     }
 
-    public class Item
+    void GetProgressData()
     {
-        public string name;
-        public Sprite itemImg;
-        public GameObject uiObj;
-        public SchoolUIManager schoolUIManager;
-    }
-    [System.Serializable]
-    public class SavePhoneData
-    {
-        public string name;
-        public bool hasPhone;
-        public bool isUnlocked;
+        string path = Path.Combine(Application.persistentDataPath, "save.json");
+        if (File.Exists(path))
+        {
+            string json = File.ReadAllText(path);
+
+            // 휴대폰
+            phoneInfos[0].hasPhone = ProgressManager.Instance.progressData.phoneDatas[1].hasPhone;
+            phoneInfos[0].isUnlocked = ProgressManager.Instance.progressData.phoneDatas[1].isUnlocked;
+            phoneInfos[1].hasPhone = ProgressManager.Instance.progressData.phoneDatas[2].hasPhone;
+            phoneInfos[1].isUnlocked = ProgressManager.Instance.progressData.phoneDatas[2].isUnlocked;
+
+            if (phoneInfos[0].hasPhone) { cellPhoneObjs[0].SetActive(false); }
+            if (phoneInfos[1].hasPhone) { cellPhoneObjs[1].SetActive(false); }
+
+            inventory = new List<Item>();
+
+            // 아이템
+            foreach (string itemName in ProgressManager.Instance.progressData.schoolInventoryDatas)
+            {
+                inventory.Add(items.Find(info => info.name.Contains(itemName)));
+            }
+
+            // 인벤토리 정리
+            for (int i = 0; i < inventory.Count; i++)
+            {
+                inventorySlots[i].itemData = inventory[i];
+            }
+        }
+        else
+        {
+            //Debug.Log("파일이 존재하지 않습니다.");
+        }
     }
 }

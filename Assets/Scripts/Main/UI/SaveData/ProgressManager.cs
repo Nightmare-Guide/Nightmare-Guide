@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Playables;
+using static CommonUIManager;
 using static SchoolUIManager;
 
 
@@ -44,7 +45,7 @@ public class ProgressManager : MonoBehaviour
     }
 
 
-   
+
     public void UpdateProgress(string newScene, string newProgress)
     {
         if (progressData != null)
@@ -60,7 +61,7 @@ public class ProgressManager : MonoBehaviour
     /// </summary>
     public void ResetProgress()
     {
-        if (progressData != null && defaultData != null && CommonUIManager.instance!=null)
+        if (progressData != null && defaultData != null && CommonUIManager.instance != null)
         {
             progressData.newGame = defaultData.newGame;
             progressData.scene = defaultData.scene;
@@ -69,18 +70,9 @@ public class ProgressManager : MonoBehaviour
             progressData.sanchi = defaultData.sanchi;
 
             progressData.mainInventoryDatas = new List<string>(defaultData.mainInventoryDatas);
-            // progressData.phoneDatas = new List<SavePhoneData>(defaultData.phoneDatas);
-            progressData.phoneDatas = new List<SavePhoneData>();
+            DeepCopy(defaultData.phoneDatas); // 휴대폰 정보
 
-            for (int i = 0; i < defaultData.phoneDatas.Count; i++)
-            {
-                progressData.phoneDatas.Add(new SavePhoneData());
-                progressData.phoneDatas[0].name = defaultData.phoneDatas[0].name;
-                progressData.phoneDatas[0].hasPhone = defaultData.phoneDatas[0].hasPhone;
-                progressData.phoneDatas[0].isUnlocked = defaultData.phoneDatas[0].isUnlocked;
-            }
-            progressData.inventoryDatas = new List<string>(defaultData.inventoryDatas);
-            progressData.stevenPhoneDatas = defaultData.stevenPhoneDatas;
+            progressData.schoolInventoryDatas = new List<string>(defaultData.schoolInventoryDatas);
 
             progressData.bgVolume = defaultData.bgVolume;
             progressData.effectVolume = defaultData.effectVolume;
@@ -89,43 +81,49 @@ public class ProgressManager : MonoBehaviour
             progressData.language = defaultData.language;
 
             // 타임라인
-            InitTimeLine(defaultData.timelineWatchedList);
+            DeepCopy(defaultData.timelineWatchedList);
 
 
 
             CommonUIManager.instance.ResetSoudVolume();
-           /* Debug.Log("progressData.scene : " + progressData.scene);
-            Debug.Log("progressData.storyProgress : " + progressData.storyProgress);
-            if (progressData.phoneDatas != null && progressData.phoneDatas.Count > 0)
-            {
-                Debug.Log("progressData.phoneDatas[0].hasPhone : " + progressData.phoneDatas[0].hasPhone);
-                Debug.Log("progressData.phoneDatas[0].isUnlocked : " + progressData.phoneDatas[0].isUnlocked);
-            }*/
+            /* Debug.Log("progressData.scene : " + progressData.scene);
+             Debug.Log("progressData.storyProgress : " + progressData.storyProgress);
+             if (progressData.phoneDatas != null && progressData.phoneDatas.Count > 0)
+             {
+                 Debug.Log("progressData.phoneDatas[0].hasPhone : " + progressData.phoneDatas[0].hasPhone);
+                 Debug.Log("progressData.phoneDatas[0].isUnlocked : " + progressData.phoneDatas[0].isUnlocked);
+             }*/
             //Debug.Log("진행도 초기화됨");
         }
     }
 
     public void InitTimeline()
     {
-        TimeLineManager.instance.timelineWatched = new Dictionary<string, bool>();
-        ProgressManager.Instance.progressData.timelineWatchedList = new List<TimelineEntry>();
+        progressData.timelineWatchedList = new List<TimelineEntry>();
 
         foreach (var playableAsset in TimeLineManager.instance.playableAssets)
         {
-            TimeLineManager.instance.timelineWatched.Add(playableAsset.name, false);
-            ProgressManager.Instance.progressData.timelineWatchedList.Add(new TimelineEntry { key = playableAsset.name, value = false });
+            progressData.timelineWatchedList.Add(new TimelineEntry { key = playableAsset.name, value = false });
         }
     }
 
-    public void InitTimeLine(List<TimelineEntry> list)
+    public void DeepCopy(List<TimelineEntry> list)
     {
-        ProgressManager.Instance.progressData.timelineWatchedList = new List<TimelineEntry>();
-        TimeLineManager.instance.timelineWatched = new Dictionary<string, bool>();
+        progressData.timelineWatchedList = new List<TimelineEntry>();
 
         foreach (var data in list)
         {
-            ProgressManager.Instance.progressData.timelineWatchedList.Add(new TimelineEntry { key = data.key, value = data.value });
-            TimeLineManager.instance.timelineWatched.Add(data.key, data.value);
+            progressData.timelineWatchedList.Add(new TimelineEntry { key = data.key, value = data.value });
+        }
+    }
+
+    public void DeepCopy(List<SavePhoneData> list)
+    {
+        progressData.phoneDatas = new List<SavePhoneData>();
+
+        foreach (var data in list)
+        {
+            progressData.phoneDatas.Add(new SavePhoneData { name = data.name, hasPhone = false, isUnlocked = false }) ;
         }
     }
 }

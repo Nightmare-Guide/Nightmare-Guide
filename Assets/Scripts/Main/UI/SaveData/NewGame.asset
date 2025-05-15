@@ -19,14 +19,22 @@ MonoBehaviour:
   sanchi: 0
   mainInventoryDatas:
   - 
+  schoolInventoryDatas: []
   phoneDatas:
-  - name: 
+  - name: Steven
     hasPhone: 0
     isUnlocked: 0
-  inventoryDatas:
-  - 
+  - name: Ethan
+    hasPhone: 0
+    isUnlocked: 0
+  - name: David
+    hasPhone: 0
+    isUnlocked: 0
   bgVolume: 50
   effectVolume: 50
   characterVolume: 50
   isFullScreen: 1
   language: en
+  timelineWatchedList:
+  - key: StartFirstDay
+    value: 0

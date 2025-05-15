@@ -22,8 +22,7 @@ public class GameData
     public int sanchi = 0;
     public List<string> mainInventoryDatas;
     public List<SavePhoneData> phoneDatas;
-    public List<string> inventoryDatas;
-    public SaveStevenPhoneData stevenPhoneDatas;
+    public List<string> schoolInventoryDatas;
 
     public float bgVolume = 50.0f;
     public float effectVolume = 50.0f;
@@ -81,8 +80,6 @@ public class GameDataManager : MonoBehaviour
             return;
         }
 
-        Debug.Log(ProgressManager.Instance.progressData.timelineWatchedList.Count);
-
         GameData saveData = new GameData
         {
             newGame = ProgressManager.Instance.progressData.newGame,
@@ -93,8 +90,7 @@ public class GameDataManager : MonoBehaviour
 
             mainInventoryDatas = ProgressManager.Instance.progressData.mainInventoryDatas,
             phoneDatas = ProgressManager.Instance.progressData.phoneDatas,
-            inventoryDatas = ProgressManager.Instance.progressData.inventoryDatas,
-            stevenPhoneDatas = ProgressManager.Instance.progressData.stevenPhoneDatas,
+            schoolInventoryDatas = ProgressManager.Instance.progressData.schoolInventoryDatas,
 
             bgVolume = ProgressManager.Instance.progressData.bgVolume,
             effectVolume = ProgressManager.Instance.progressData.effectVolume,
@@ -127,8 +123,7 @@ public class GameDataManager : MonoBehaviour
 
                 ProgressManager.Instance.progressData.mainInventoryDatas = loadData.mainInventoryDatas;
                 ProgressManager.Instance.progressData.phoneDatas = loadData.phoneDatas;
-                ProgressManager.Instance.progressData.inventoryDatas = loadData.inventoryDatas;
-                ProgressManager.Instance.progressData.stevenPhoneDatas = loadData.stevenPhoneDatas;
+                ProgressManager.Instance.progressData.schoolInventoryDatas = loadData.schoolInventoryDatas;
 
                 ProgressManager.Instance.progressData.bgVolume = loadData.bgVolume;
                 ProgressManager.Instance.progressData.effectVolume = loadData.effectVolume;
@@ -138,11 +133,10 @@ public class GameDataManager : MonoBehaviour
 
                 if (loadData.timelineWatchedList.Count != 0)
                 {
-                    ProgressManager.Instance.InitTimeLine(loadData.timelineWatchedList);
+                    ProgressManager.Instance.DeepCopy(loadData.timelineWatchedList);
                 }
 
                 ProgressManager.Instance.LoadProgress();
-                CommonUIManager.instance.SmartPhoneData();
                 CommonUIManager.instance.LoadSoudVolume();
               /*  Debug.Log("progressData.scene : " + ProgressManager.Instance.progressData.scene);
                 Debug.Log("progressData.storyProgress : " + ProgressManager.Instance.progressData.storyProgress);
@@ -178,7 +172,6 @@ public class GameDataManager : MonoBehaviour
         if (ProgressManager.Instance != null && ProgressManager.Instance.defaultData != null && ProgressManager.Instance.progressData != null)
         {
             ProgressManager.Instance.ResetProgress();
-            CommonUIManager.instance.SmartPhoneData();
             SaveGame();
             return true;
         }

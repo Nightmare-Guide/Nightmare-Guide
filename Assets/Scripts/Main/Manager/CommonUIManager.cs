@@ -43,7 +43,7 @@ public class CommonUIManager : MonoBehaviour
     float timer = 0f;
 
     // CellPhone
-    public CharacterPhoneInfo phoneInfos;
+    public PhoneInfos stevenPhone;
 
     [Header("# Blink")]
     public GameObject blinkObj;
@@ -61,7 +61,6 @@ public class CommonUIManager : MonoBehaviour
     float characterVolume;
     bool isFullScreen;
     string language;
-    public SaveStevenPhoneData stevenPhoneData;
 
     // Windows의 마우스 입력을 시뮬레이션하는 API
     [DllImport("user32.dll")]
@@ -164,7 +163,6 @@ public class CommonUIManager : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        stevenPhoneData = new SaveStevenPhoneData { name = phoneInfos.name, hasPhone = phoneInfos.hasPhone, isUnlocked = phoneInfos.isUnlocked };
         if (GameDataManager.instance != null && PlayerController.instance!=null) {
             ProgressManager.Instance.progressData.playerPosition = PlayerController.instance.transform.position;
             ProgressManager.Instance.progressData.newGame = false;
@@ -175,7 +173,7 @@ public class CommonUIManager : MonoBehaviour
     {
         commonUICanvas.SetActive(true);
         optionUI.SetActive(false);
-        phoneInfos = new CharacterPhoneInfo();
+        stevenPhone = new PhoneInfos();
 
         FullScreenBtn();
     }
@@ -279,20 +277,8 @@ public class CommonUIManager : MonoBehaviour
 
     public void SmartPhoneData()
     {
-        phoneInfos.name = "Steven";
-        phoneInfos.hasPhone = false;
-        phoneInfos.isUnlocked = false;
-
-        if (ProgressManager.Instance!=null)
-        {
-
-            phoneInfos.hasPhone = ProgressManager.Instance.progressData.phoneDatas[0].hasPhone;
-            phoneInfos.isUnlocked = ProgressManager.Instance.progressData.phoneDatas[0].isUnlocked;
-        }
-        else
-        {
-            Debug.Log("파일이 존재하지 않습니다.");
-        }
+        stevenPhone.hasPhone = ProgressManager.Instance.progressData.phoneDatas[0].hasPhone;
+        stevenPhone.isUnlocked = ProgressManager.Instance.progressData.phoneDatas[0].isUnlocked;
     }
 
     // 씬 이동 함수
@@ -422,7 +408,7 @@ public class CommonUIManager : MonoBehaviour
         }
     }
     // 휴대폰 정보 Class
-    public class StevenPhoneInfo
+    public class PhoneInfos
     {
         public string name;
         public bool hasPhone;
@@ -431,10 +417,19 @@ public class CommonUIManager : MonoBehaviour
         public GameObject cellPhoneUI;
     }
 
-    public class SaveStevenPhoneData
+    [System.Serializable]
+    public class SavePhoneData
     {
         public string name;
         public bool hasPhone;
         public bool isUnlocked;
+    }
+
+    public class Item
+    {
+        public string name;
+        public Sprite itemImg;
+        public GameObject uiObj;
+        public SchoolUIManager schoolUIManager;
     }
 }

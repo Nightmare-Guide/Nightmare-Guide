@@ -26,10 +26,9 @@ public class ProgressData : ScriptableObject
     [Header("MainUIManager")]
     public List<String> mainInventoryDatas;
     [Header("SchoolUIManager")]
-    public List<SavePhoneData> phoneDatas;
-    public List<String> inventoryDatas;
+    public List<String> schoolInventoryDatas;
     [Header("CommonUIManager")]
-    public SaveStevenPhoneData stevenPhoneDatas;
+    public List<SavePhoneData> phoneDatas;
     public float bgVolume = 50.0f;
     public float effectVolume = 50.0f;
     public float characterVolume=50.0f;
