@@ -65,7 +65,7 @@ public class SchoolUIManager : UIUtility
 
         if (commonUIManager != null)
         {
-            commonUIManager.schoolUIManager = this;
+            commonUIManager.uiManager = this;
         }
 
     }
@@ -112,7 +112,7 @@ public class SchoolUIManager : UIUtility
 
     private void OnDisable()
     {
-        commonUIManager.schoolUIManager = null;
+        commonUIManager.uiManager = null;
     }
 
     // 시작 세팅 함수

@@ -119,9 +119,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
   m_Name: BMJUA_otf SDF
   m_EditorClassIdentifier: 
-  hashCode: 0
+  hashCode: 683712802
   material: {fileID: -2222793225746400006}
-  materialHashCode: 0
+  materialHashCode: -1252591166
   m_Version: 1.1.0
   m_SourceFontFileGUID: 174dcaa61e10b254d8c21f27b14eae47
   m_SourceFontFile_EditorRef: {fileID: 12800000, guid: 174dcaa61e10b254d8c21f27b14eae47, type: 3}
@@ -195,7 +195,8 @@ MonoBehaviour:
   m_FontFeatureTable:
     m_GlyphPairAdjustmentRecords: []
   fallbackFontAssets: []
-  m_FallbackFontAssetTable: []
+  m_FallbackFontAssetTable:
+  - {fileID: 11400000, guid: 4c3daecb34884644facbbe33a857aca5, type: 2}
   m_CreationSettings:
     sourceFontFileName: 
     sourceFontFileGUID: 174dcaa61e10b254d8c21f27b14eae47

@@ -51,13 +51,11 @@ public class CommonUIManager : MonoBehaviour
     public float blinkDuration = 1.0f;
 
     [Header("# UIManagers")]
-    public TitleUIManager TitleUIManager;
-    public MainUIManager mainUIManager;
-    public SchoolUIManager schoolUIManager;
+    public UIUtility uiManager;
 
     [Header("# SaveData")]
     float bgVolume;
-    [SerializeField] float effectVolume;
+    float effectVolume;
     float characterVolume;
     bool isFullScreen;
     string language;
@@ -180,7 +178,7 @@ public class CommonUIManager : MonoBehaviour
 
     public void BackToTitleBtn()
     {
-        if (TitleUIManager != null)
+        if (uiManager is TitleUIManager)
         {
             optionUI.SetActive(false);
         }
@@ -259,8 +257,8 @@ public class CommonUIManager : MonoBehaviour
         }
 
         // UI Manager 가 null 값이 아닐 경우 실행
-        schoolUIManager?.RebuildVerticalLayout(schoolUIManager.textBoxLayouts);
-        mainUIManager?.RebuildVerticalLayout(mainUIManager.textBoxLayouts);
+        if(uiManager is SchoolUIManager schoolUIManager) { schoolUIManager.RebuildVerticalLayout(schoolUIManager.textBoxLayouts); }
+        if(uiManager is MainUIManager mainUIManager) { mainUIManager.RebuildVerticalLayout(mainUIManager.textBoxLayouts); }
 
         changingLanguage = false;
     }

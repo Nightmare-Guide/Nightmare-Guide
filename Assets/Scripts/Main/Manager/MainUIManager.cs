@@ -42,7 +42,7 @@ public class MainUIManager : UIUtility
 
         if (commonUIManager != null)
         {
-            commonUIManager.mainUIManager = this;
+            commonUIManager.uiManager = this;
             optionUI = commonUIManager.optionUI;
             uiObjects.Add(optionUI);
 
@@ -143,7 +143,7 @@ public class MainUIManager : UIUtility
     {
         if (commonUIManager != null)
         {
-            commonUIManager.mainUIManager = null;
+            commonUIManager.uiManager = null;
         }
 
     }
