@@ -16,6 +16,28 @@ MonoBehaviour:
   scene: DayHouse
   storyProgress: 0_0_0
   playerPosition: {x: -487, y: 71, z: 138}
+  playerTr:
+  - scene_Name: DayHouse
+    tr: {x: -488, y: 72, z: 140}
+    rt: {x: 0, y: 0, z: 0}
+  - scene_Name: DayHouseNight
+    tr: {x: -605, y: 72, z: 173}
+    rt: {x: 0, y: -90, z: 0}
+  - scene_Name: DayHaspital
+    tr: {x: -261, y: 6, z: -689}
+    rt: {x: 0, y: -90, z: 0}
+  - scene_Name: DayHaspitalNight
+    tr: {x: 285, y: 30, z: -810}
+    rt: {x: 0, y: 180, z: 0}
+  - scene_Name: School
+    tr: {x: 0, y: 0, z: 0}
+    rt: {x: 0, y: 0, z: 0}
+  - scene_Name: MainMap
+    tr: {x: -376, y: 5, z: -355}
+    rt: {x: 0, y: 90, z: 0}
+  - scene_Name: MainMapNight
+    tr: {x: -180, y: 5, z: -723}
+    rt: {x: 0, y: 90, z: 0}
   sanchi: 0
   mainInventoryDatas:
   - 

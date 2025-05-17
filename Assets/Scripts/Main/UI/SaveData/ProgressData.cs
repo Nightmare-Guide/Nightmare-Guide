@@ -20,6 +20,8 @@ public class ProgressData : ScriptableObject
 
     [Header("플레이어 위치")]
     public Vector3 playerPosition = new Vector3(-550, -67, 278);
+    public Vector3 playerEulerAngles;
+    public List<PlayerTr> playerTr;
 
     [Header("플레이어 산치")]
     public int sanchi = 0;

@@ -135,7 +135,7 @@ public class CommonUIManager : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         // 특정 씬이 로드되면 플레이어 생성 요청
-        if (scene.name != "LoadingScene")
+        if (!scene.name.Equals("LoadingScene")&& !ProgressManager.Instance.progressData.newGame && !scene.name.Equals("Title Scene"))
         {
             //SpawnPlayer(scene.name);
         }
@@ -145,10 +145,11 @@ public class CommonUIManager : MonoBehaviour
     {
         if (PlayerController.instance != null && ProgressManager.Instance != null && ProgressManager.Instance.progressData != null)
         {
-            
 
-            Vector3 spawnPosition = ProgressManager.Instance.progressData.playerPosition; // 저장된 플레이어 위치 사용
-            PlayerController.instance.transform.position = spawnPosition;
+            PlayerController.instance.Close_PlayerController();
+            PlayerController.instance.transform.position = ProgressManager.Instance.progressData.playerPosition; 
+            PlayerController.instance.transform.eulerAngles = ProgressManager.Instance.progressData.playerEulerAngles;
+            PlayerController.instance.Open_PlayerController();
         }
         else
         {
@@ -284,8 +285,13 @@ public class CommonUIManager : MonoBehaviour
     // 씬 이동 함수
     public void MoveScene(string sceneName)
     {
-        if (ProgressManager.Instance != null && !sceneName.Equals("Title Scene"))
-            { ProgressManager.Instance.progressData.scene = sceneName; }// 씬 저장
+        
+        if (ProgressManager.Instance != null && !sceneName.Equals("Title Scene")) {
+           // ProgressManager.Instance.SavePlayerTr();
+            Debug.Log(sceneName);
+            ProgressManager.Instance.progressData.scene = sceneName;
+            Debug.Log(sceneName);
+        }// 씬 저장
         interactionUI.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -294,6 +300,7 @@ public class CommonUIManager : MonoBehaviour
         mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
         StartCoroutine(MoveSceneRoutine(sceneName));
     }
+ 
 
     IEnumerator MoveSceneRoutine(string sceneName)
     {

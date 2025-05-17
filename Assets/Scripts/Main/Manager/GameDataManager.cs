@@ -18,6 +18,7 @@ public class GameData
     public string storyProgress = "0_0_0";
 
     public Vector3 playerPosition = new Vector3(-550, -67, 278);
+    public Vector3 playerEulerAngles;
 
     public int sanchi = 0;
     public List<string> mainInventoryDatas;
@@ -31,6 +32,7 @@ public class GameData
     public string language = "en";
 
     public List<TimelineEntry> timelineWatchedList;
+    public List<PlayerTr> playerTr;
 }
 
 public class GameDataManager : MonoBehaviour
@@ -86,6 +88,7 @@ public class GameDataManager : MonoBehaviour
             scene = ProgressManager.Instance.progressData.scene,
             storyProgress = ProgressManager.Instance.progressData.storyProgress,
             playerPosition = ProgressManager.Instance.progressData.playerPosition,
+            playerEulerAngles= ProgressManager.Instance.progressData.playerEulerAngles,
             sanchi = ProgressManager.Instance.progressData.sanchi,
 
             mainInventoryDatas = ProgressManager.Instance.progressData.mainInventoryDatas,
@@ -98,7 +101,8 @@ public class GameDataManager : MonoBehaviour
             isFullScreen = ProgressManager.Instance.progressData.isFullScreen,
             language = ProgressManager.Instance.progressData.language,
 
-            timelineWatchedList = ProgressManager.Instance.progressData.timelineWatchedList
+            timelineWatchedList = ProgressManager.Instance.progressData.timelineWatchedList,
+            playerTr = ProgressManager.Instance.progressData.playerTr
         };
 
         string json = JsonUtility.ToJson(saveData, true);
@@ -119,6 +123,7 @@ public class GameDataManager : MonoBehaviour
                 ProgressManager.Instance.progressData.scene = loadData.scene;
                 ProgressManager.Instance.progressData.storyProgress = loadData.storyProgress;
                 ProgressManager.Instance.progressData.playerPosition = loadData.playerPosition;
+                ProgressManager.Instance.progressData.playerEulerAngles = loadData.playerEulerAngles;
                 ProgressManager.Instance.progressData.sanchi = loadData.sanchi;
 
                 ProgressManager.Instance.progressData.mainInventoryDatas = loadData.mainInventoryDatas;
@@ -135,7 +140,10 @@ public class GameDataManager : MonoBehaviour
                 {
                     ProgressManager.Instance.DeepCopy(loadData.timelineWatchedList);
                 }
-
+                if (loadData.playerTr.Count != 0)
+                {
+                    ProgressManager.Instance.DeepCopy(loadData.playerTr);
+                }
                 ProgressManager.Instance.LoadProgress();
                 CommonUIManager.instance.LoadSoudVolume();
               /*  Debug.Log("progressData.scene : " + ProgressManager.Instance.progressData.scene);
