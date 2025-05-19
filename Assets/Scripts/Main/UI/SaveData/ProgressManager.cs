@@ -166,7 +166,7 @@ public class ProgressManager : MonoBehaviour
 
         if (existingData != null)
         {
-            // 기존 데이터 업데이트
+            //기존 데이터 업데이트
             existingData.tr = position;
             existingData.rt = rotation;
             Debug.Log($"[{sceneName}] 플레이어 위치/회전 정보 업데이트: {position}, {rotation}");

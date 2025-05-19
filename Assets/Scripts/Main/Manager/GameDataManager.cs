@@ -14,7 +14,7 @@ public class GameData
 {
     
     public bool newGame = true;
-    public string scene = "DayHouse";
+    public string scene;
     public string storyProgress = "0_0_0";
 
     public Vector3 playerPosition = new Vector3(-550, -67, 278);

@@ -14,7 +14,7 @@ public class ProgressData : ScriptableObject
     [Header("새 게임인지 판별")]
     public bool newGame = true;
     [Header("진행 씬")]
-    public string scene= "DayHouse";
+    public string scene;
     [Header("진행도 예: 챕터_서브_노드 형식")]
     public string storyProgress = "0_0_0";
 
