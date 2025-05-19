@@ -180,6 +180,7 @@ public class RayCast_Aim : MonoBehaviour
             CommonUIManager.instance.stevenPhone.hasPhone = true;
             ProgressManager.Instance.progressData.phoneDatas[0].hasPhone = true;
             ProgressManager.Instance.progressData.storyProgress = "clear";
+            ProgressManager.Instance.progressData.newGame = false;
         }
         else
         {
