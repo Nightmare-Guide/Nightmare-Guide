@@ -4106,6 +4106,8 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 7385f0d230e71c143a290b919d05c19b, type: 2}
     - {fileID: 11400000, guid: a89de03ed429a274499c98909fc2b7b9, type: 2}
     - {fileID: 11400000, guid: 55734ca129e8ea74ab351851df79b1e0, type: 2}
+    - {fileID: 11400000, guid: ae854216170366a4b8e15af15341f4c2, type: 2}
+    - {fileID: 11400000, guid: ce306f61b8378f542b35ec064a92726a, type: 2}
     m_Events:
     - m_PersistentCalls:
         m_Calls:
@@ -4144,6 +4146,34 @@ MonoBehaviour:
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 132048519}
+          m_TargetAssemblyTypeName: UIUtility, Assembly-CSharp
+          m_MethodName: EnableCollider
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 8886268834406011577}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Collider, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 132048519}
+          m_TargetAssemblyTypeName: UIUtility, Assembly-CSharp
+          m_MethodName: DisableCollider
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 8886268834406011577}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Collider, UnityEngine
             m_IntArgument: 0
             m_FloatArgument: 0
             m_StringArgument: 
@@ -8484,6 +8514,8 @@ PlayableDirector:
   - key: {fileID: -7640427298372778397, guid: 7b92d5d0140aa964d848587042cc1f8a, type: 2}
     value: {fileID: 132048521}
   - key: {fileID: -4187702182073564403, guid: 7b92d5d0140aa964d848587042cc1f8a, type: 2}
+    value: {fileID: 132048521}
+  - key: {fileID: -5944297176231800889, guid: 7b92d5d0140aa964d848587042cc1f8a, type: 2}
     value: {fileID: 132048521}
   m_ExposedReferences:
     m_References:
@@ -41562,6 +41594,20 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: -0.07495248
       objectReference: {fileID: 0}
+    - target: {fileID: 95000013138710908, guid: 0bd829886aa0b724a8bba2a525fc638f, type: 3}
+      propertyPath: m_WarningMessage
+      value: "\nBinding warning: Some generic clip(s) animate transforms that are
+        already bound by a Humanoid avatar. These transforms can only be changed
+        by Humanoid clips.\n\tTransform 'Bip01 L UpperArm'\n\tTransform 'Bip01 R
+        Finger31'\n\tTransform 'Bip01 L Finger01'\n\tTransform 'Bip01 R UpperArm'\n\tTransform
+        'Bip01 L Finger21'\n\tTransform 'Bip01 R Finger11'\n\tTransform 'Bip01 L
+        Foot'\n\tTransform 'Bip01 Head'\n\tTransform 'Bip01 L Calf'\n\tTransform
+        'Bip01 L Clavicle'\n\tand more ...\n\tFrom animation clip 'idle1'\n\tFrom
+        animation clip 'idle2'\n\tFrom animation clip 'listen'\n\tFrom animation
+        clip 'run'\n\tFrom animation clip 'talk1'\n\tFrom animation clip 'talk2'\n\tFrom
+        animation clip 'walk'\n\tFrom animation clip 'claphands'\n\tFrom animation
+        clip 'cheer'"
+      objectReference: {fileID: 0}
     - target: {fileID: 137000013127470632, guid: 0bd829886aa0b724a8bba2a525fc638f, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -57937,6 +57983,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: House
       objectReference: {fileID: 0}
+    - target: {fileID: 5262268133726551244, guid: 85482ec0bdbc65242a3733db773a5e91, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7639278088737170168, guid: 85482ec0bdbc65242a3733db773a5e91, type: 3}
       propertyPath: mainUIManager
       value: 
@@ -57971,6 +58021,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scene_Name: Main_map
   storyprogress: 0_0_1
+--- !u!65 &8886268834406011577 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 5262268133726551244, guid: 85482ec0bdbc65242a3733db773a5e91, type: 3}
+  m_PrefabInstance: {fileID: 8886268834406011574}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

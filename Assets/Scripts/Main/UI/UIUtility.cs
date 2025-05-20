@@ -274,6 +274,17 @@ public class UIUtility : MonoBehaviour
         playableDirector.playableAsset = null;
     }
 
+    public void EnableCollider(Collider col)
+    {
+        col.enabled = true;
+    }
+
+    public void DisableCollider(Collider col)
+    {
+        col.enabled = false;
+    }
+
+
     public void StartTimeLine(PlayableAsset asset)
     {
         if (timeLineManager.playableAssets.Count > 0 && playableDirector != null)

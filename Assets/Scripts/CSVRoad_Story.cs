@@ -79,9 +79,6 @@ public class CSVRoad_Story : MonoBehaviour
 
         for (int i = start; i <= end; i++)
         {
-            dialogue.text = "";
-            dialogueName.text = "";
-
             // CSV 데이터의 현재 대사를 가져옴
             string text = FormatDialogue(data[i][LocalizationSettings.SelectedLocale.Identifier.Code].ToString());
             dialogue.text = text;
