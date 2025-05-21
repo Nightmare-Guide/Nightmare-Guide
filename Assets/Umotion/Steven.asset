@@ -40,7 +40,7 @@ MonoBehaviour:
     FramesZoom:
       valueInternal: 0.06914855
     PropertiesScrollPosition:
-      valueInternal: 242
+      valueInternal: 750
     PropertiesZoom:
       valueInternal: 1
     CurveYScrollPosition:
@@ -133,7 +133,7 @@ MonoBehaviour:
     AnimationLayersVisible:
       valueInternal: 0
     MuscleAssistantTab:
-      valueInternal: 0
+      valueInternal: 2
     MuscleAssistantLeftLegKeepPos:
       valueInternal: 0
     MuscleAssistantRightLegKeepPos:
@@ -260,14 +260,14 @@ MonoBehaviour:
       valueInternal: 0
     LocalPositionChannelList:
     - CurrentValue:
-        valueInternal: -370.4938
+        valueInternal: -370.83
       ReferencePoseValue:
-        valueInternal: -370.4938
+        valueInternal: -370.83
       PoseValueList: []
       ChannelPerClipList:
       - LayerList:
         - CurrentOriginalValue:
-            valueInternal: -370.4938
+            valueInternal: -370.83
           newKeyListSerialized: 00000000
     - CurrentValue:
         valueInternal: 0.81
@@ -280,14 +280,14 @@ MonoBehaviour:
             valueInternal: 0.81
           newKeyListSerialized: 00000000
     - CurrentValue:
-        valueInternal: -348.61047
+        valueInternal: -348.88
       ReferencePoseValue:
-        valueInternal: -348.61047
+        valueInternal: -348.88
       PoseValueList: []
       ChannelPerClipList:
       - LayerList:
         - CurrentOriginalValue:
-            valueInternal: -348.61047
+            valueInternal: -348.88
           newKeyListSerialized: 00000000
     LocalRotationSelected:
       valueInternal: 0
@@ -4716,45 +4716,45 @@ MonoBehaviour:
     - valueInternal: 0
     LocalRotationChannelList:
     - CurrentValue:
-        valueInternal: 0.015892306
+        valueInternal: -0.5276239
       ReferencePoseValue:
         valueInternal: 0.015892306
       PoseValueList: []
       ChannelPerClipList:
       - LayerList:
         - CurrentOriginalValue:
-            valueInternal: 0.015892306
-          newKeyListSerialized: 070000000000000000009530823c0000000000000000abaaaa3eabaaaa3e44010000001d00000000005ce3bd018154bbd28d34baabaaaa3eabaaaa3e44010000003c00000000af6400be25ec7ab98347113aabaaaa3eabaaaa3e440100000078000000003ca7ddbda0de473a2d3be2b9abaaaa3eabaaaa3e44010000009600000000629910be0000000000000000abaaaa3eabaaaa3e4401000000a000000000629910be0000000000000000abaaaa3eabaaaa3e4401000000d70000000022e904bd0000000000000000abaaaa3eabaaaa3e44010000
+            valueInternal: -0.5276239
+          newKeyListSerialized: 070000000000000000005c1207bf0000000000000000abaaaa3eabaaaa3e44010000001d00000000005ce3bdb8f6933bd48d34baabaaaa3eabaaaa3e44010000003c00000000af6400be27ec7ab98847113aabaaaa3eabaaaa3e440100000078000000003ca7ddbda6de473a2d3be2b9abaaaa3eabaaaa3e44010000009600000000629910be0000000000000000abaaaa3eabaaaa3e4401000000a000000000629910be0000000000000000abaaaa3eabaaaa3e4401000000d70000000022e904bd0000000000000000abaaaa3eabaaaa3e44010000
     - CurrentValue:
-        valueInternal: -0.4797492
+        valueInternal: -0.5951546
       ReferencePoseValue:
         valueInternal: -0.4797492
       PoseValueList: []
       ChannelPerClipList:
       - LayerList:
         - CurrentOriginalValue:
-            valueInternal: -0.4797492
-          newKeyListSerialized: 07000000000000000000b0a1f5be0000000000000000abaaaa3eabaaaa3e44010000001d000000006c1aefbe80ceaa391438aa3babaaaa3eabaaaa3e44010000003c000000001c9eb7be428fec3a5ccf05bbabaaaa3eabaaaa3e440100000078000000002ffad7be2e1738bb6e008fbaabaaaa3eabaaaa3e440100000096000000001e5601bf0000008000000080abaaaa3eabaaaa3e4401000000a0000000001e5601bf0000008000000080abaaaa3eabaaaa3e4401000000d700000000a411bbbe0000000000000000abaaaa3eabaaaa3e44010000
+            valueInternal: -0.5951546
+          newKeyListSerialized: 070000000000000000000d5c18bf0000000000000000abaaaa3eabaaaa3e44010000001d000000006c1aefbea410b63a1538aa3babaaaa3eabaaaa3e44010000003c000000001c9eb7be448fec3a60cf05bbabaaaa3eabaaaa3e440100000078000000002ffad7be341738bb6e008fbaabaaaa3eabaaaa3e440100000096000000001e5601bf0000008000000080abaaaa3eabaaaa3e4401000000a0000000001e5601bf0000008000000080abaaaa3eabaaaa3e4401000000d700000000a411bbbe0000000000000000abaaaa3eabaaaa3e44010000
     - CurrentValue:
-        valueInternal: 0.031817004
+        valueInternal: -0.10466159
       ReferencePoseValue:
         valueInternal: 0.031817004
       PoseValueList: []
       ChannelPerClipList:
       - LayerList:
         - CurrentOriginalValue:
-            valueInternal: 0.031817004
-          newKeyListSerialized: 070000000000000000008c52023d0000000000000000abaaaa3eabaaaa3e44010000001d0000000072ed853e355dc03b4bff42bbabaaaa3eabaaaa3e44010000003c00000000e84a4c3e547f87bac4fa5bbaabaaaa3eabaaaa3e4401000000780000000086b1313ed35197bad4b72a3babaaaa3eabaaaa3e44010000009600000000c2c9be3e0000000000000000abaaaa3eabaaaa3e4401000000a000000000c2c9be3e0000000000000000abaaaa3eabaaaa3e4401000000d70000000062ffb23e0000000000000000abaaaa3eabaaaa3e44010000
+            valueInternal: -0.10466159
+          newKeyListSerialized: 07000000000000000000d158d6bd0000000000000000abaaaa3eabaaaa3e44010000001d0000000072ed853e0413823b4dff42bbabaaaa3eabaaaa3e44010000003c00000000e84a4c3e557f87bacbfa5bbaabaaaa3eabaaaa3e4401000000780000000086b1313ed75197bad4b72a3babaaaa3eabaaaa3e44010000009600000000c2c9be3e0000000000000000abaaaa3eabaaaa3e4401000000a000000000c2c9be3e0000000000000000abaaaa3eabaaaa3e4401000000d70000000062ffb23e0000000000000000abaaaa3eabaaaa3e44010000
     - CurrentValue:
-        valueInternal: 0.8766846
+        valueInternal: 0.5970349
       ReferencePoseValue:
         valueInternal: 0.8766846
       PoseValueList: []
       ChannelPerClipList:
       - LayerList:
         - CurrentOriginalValue:
-            valueInternal: 0.8766846
-          newKeyListSerialized: 07000000000000000000676e603f0000000000000000abaaaa3eabaaaa3e44010000001d00000000fb5c563f74b583ba3c014f3babaaaa3eabaaaa3e44010000003c000000007a3b673f50d78f3aafe328baabaaaa3eabaaaa3e440100000078000000008020623ff55968ba1d10cabaabaaaa3eabaaaa3e440100000096000000005cf6433f0000008000000080abaaaa3eabaaaa3e4401000000a0000000005cf6433f0000008000000080abaaaa3eabaaaa3e4401000000d70000000019b35c3f0000000000000000abaaaa3eabaaaa3e44010000
+            valueInternal: 0.5970349
+          newKeyListSerialized: 0700000000000000000047d7183f0000000000000000abaaaa3eabaaaa3e44010000001d00000000fb5c563fd0b42a3b3e014f3babaaaa3eabaaaa3e44010000003c000000007a3b673f51d78f3ab4e328baabaaaa3eabaaaa3e440100000078000000008020623ffc5968ba1d10cabaabaaaa3eabaaaa3e440100000096000000005cf6433f0000008000000080abaaaa3eabaaaa3e4401000000a0000000005cf6433f0000008000000080abaaaa3eabaaaa3e4401000000d70000000019b35c3f0000000000000000abaaaa3eabaaaa3e44010000
     - CurrentValue:
         valueInternal: 0
       ReferencePoseValue:
@@ -4764,7 +4764,7 @@ MonoBehaviour:
       - LayerList:
         - CurrentOriginalValue:
             valueInternal: 0
-          newKeyListSerialized: 07000000000000000000000000000000000000000000abaaaa3eabaaaa3e00000000001d00000000d94ff441d6c0473fd6c0473fabaaaa3eabaaaa3e00000000003c00000000c9443b425ccd8a3e5ccd8a3eabaaaa3eabaaaa3e00000000007800000000ecd55c4267f5be3e67f5be3eabaaaa3eabaaaa3e00000000009600000000816ea7420000000000000000abaaaa3eabaaaa3e0000000000a000000000816ea7420000000000000000abaaaa3eabaaaa3e0000000000d700000000de0fd6420000000000000000abaaaa3eabaaaa3e00000000
+          newKeyListSerialized: 07000000000000000000000000000000000000000000abaaaa3eabaaaa3e00000000001d0000000045fb8f423be88a3f3be88a3fabaaaa3eabaaaa3e00000000003c00000000b389b0425acd8a3e5acd8a3eabaaaa3eabaaaa3e000000000078000000004452c14260f5be3e60f5be3eabaaaa3eabaaaa3e00000000009600000000cf55fa420000000000000000abaaaa3eabaaaa3e0000000000a000000000cf55fa420000000000000000abaaaa3eabaaaa3e0000000000d700000000967b14430000000000000000abaaaa3eabaaaa3e00000000
     LocalScaleSelected:
       valueInternal: 0
     LocalScaleChannelList:
@@ -4927,45 +4927,45 @@ MonoBehaviour:
     - valueInternal: 0
     LocalRotationChannelList:
     - CurrentValue:
-        valueInternal: 0.17478043
+        valueInternal: 0.56628007
       ReferencePoseValue:
         valueInternal: 0.00000002634487
       PoseValueList: []
       ChannelPerClipList:
       - LayerList:
         - CurrentOriginalValue:
-            valueInternal: 0.17478043
-          newKeyListSerialized: 07000000000000000000a4f9323e0000000000000000abaaaa3eabaaaa3e44010000003c00000000da546f3ee023413bb24a393babaaaa3eabaaaa3e44010000005000000000a636d53ef999aa3bbe5ba8bbabaaaa3eabaaaa3e44010000007800000000fdb1933eaaae6cbbb8df59bbabaaaa3eabaaaa3e44010000009600000000ddb6313e0000000000000000abaaaa3eabaaaa3e4401000000a000000000ddb6313e0000000000000000abaaaa3eabaaaa3e4401000000d700000000e52f5a3e0000000000000000abaaaa3eabaaaa3e44010000
+            valueInternal: 0.56628007
+          newKeyListSerialized: 07000000000000000000bbf7103f0000000000000000abaaaa3eabaaaa3e44010000003c00000000da546f3ec6c417bbb14a393babaaaa3eabaaaa3e44010000005000000000a636d53ef899aa3bbd5ba8bbabaaaa3eabaaaa3e44010000007800000000fdb1933ea8ae6cbbbbdf59bbabaaaa3eabaaaa3e44010000009600000000ddb6313e0000000000000000abaaaa3eabaaaa3e4401000000a000000000ddb6313e0000000000000000abaaaa3eabaaaa3e4401000000d700000000e52f5a3e0000000000000000abaaaa3eabaaaa3e44010000
     - CurrentValue:
-        valueInternal: 0.12465099
+        valueInternal: 0.072760515
       ReferencePoseValue:
         valueInternal: 0.000000013932918
       PoseValueList: []
       ChannelPerClipList:
       - LayerList:
         - CurrentOriginalValue:
-            valueInternal: 0.12465099
-          newKeyListSerialized: 070000000000000000000549ff3d0000000000000000abaaaa3eabaaaa3e44010000003c000000007976e53d804325ba7b4027baabaaaa3eabaaaa3e44010000005000000000d605913de6fd99ba965eda3aabaaaa3eabaaaa3e44010000007800000000d700e63d9b7e993a8df7ae39abaaaa3eabaaaa3e44010000009600000000f3a0fd3d0000000000000000abaaaa3eabaaaa3e4401000000a000000000f3a0fd3d0000000000000000abaaaa3eabaaaa3e4401000000d7000000009ba7b93d0000000000000000abaaaa3eabaaaa3e44010000
+            valueInternal: 0.072760515
+          newKeyListSerialized: 070000000000000000007703953d0000000000000000abaaaa3eabaaaa3e44010000003c000000007976e53d6d6a8f397a4027baabaaaa3eabaaaa3e44010000005000000000d605913de6fd99ba955eda3aabaaaa3eabaaaa3e44010000007800000000d700e63d9a7e993a90f7ae39abaaaa3eabaaaa3e44010000009600000000f3a0fd3d0000000000000000abaaaa3eabaaaa3e4401000000a000000000f3a0fd3d0000000000000000abaaaa3eabaaaa3e4401000000d7000000009ba7b93d0000000000000000abaaaa3eabaaaa3e44010000
     - CurrentValue:
-        valueInternal: 0.9560937
+        valueInternal: 0.7219489
       ReferencePoseValue:
         valueInternal: 0.46751118
       PoseValueList: []
       ChannelPerClipList:
       - LayerList:
         - CurrentOriginalValue:
-            valueInternal: 0.9560937
-          newKeyListSerialized: 070000000000000000008fc2743f0000000000000000abaaaa3eabaaaa3e44010000003c00000000e683713fcd2126ba7f0587baabaaaa3eabaaaa3e440100000050000000002779603f23a2f8baf014d33aabaaaa3eabaaaa3e44010000007800000000c6bd6a3f375f943a54dc9e3aabaaaa3eabaaaa3e440100000096000000007477753f0000000000000000abaaaa3eabaaaa3e4401000000a0000000007477753f0000000000000000abaaaa3eabaaaa3e4401000000d70000000077bf733f0000000000000000abaaaa3eabaaaa3e44010000
+            valueInternal: 0.7219489
+          newKeyListSerialized: 07000000000000000000a5d1383f0000000000000000abaaaa3eabaaaa3e44010000003c00000000e683713fb424ca3a7e0587baabaaaa3eabaaaa3e440100000050000000002779603f22a2f8baee14d33aabaaaa3eabaaaa3e44010000007800000000c6bd6a3f365f943a57dc9e3aabaaaa3eabaaaa3e440100000096000000007477753f0000000000000000abaaaa3eabaaaa3e4401000000a0000000007477753f0000000000000000abaaaa3eabaaaa3e4401000000d70000000077bf733f0000000000000000abaaaa3eabaaaa3e44010000
     - CurrentValue:
-        valueInternal: 0.19949643
+        valueInternal: 0.3909253
       ReferencePoseValue:
         valueInternal: 0.8839872
       PoseValueList: []
       ChannelPerClipList:
       - LayerList:
         - CurrentOriginalValue:
-            valueInternal: 0.19949643
-          newKeyListSerialized: 07000000000000000000cb484c3e0000000000000000abaaaa3eabaaaa3e44010000003c000000002bce533e9a89c039a77ab839abaaaa3eabaaaa3e44010000005000000000f7166b3e6cda293a96fe683aabaaaa3eabaaaa3e44010000007800000000fce0803e4fc6233a819ff3baabaaaa3eabaaaa3e4401000000960000000043f73f3e0000000000000000abaaaa3eabaaaa3e4401000000a00000000043f73f3e0000000000000000abaaaa3eabaaaa3e4401000000d70000000039514c3e0000000000000000abaaaa3eabaaaa3e44010000
+            valueInternal: 0.3909253
+          newKeyListSerialized: 070000000000000000005c27c83e0000000000000000abaaaa3eabaaaa3e44010000003c000000002bce533e2105a8baa67ab839abaaaa3eabaaaa3e44010000005000000000f7166b3e6bda293a94fe683aabaaaa3eabaaaa3e44010000007800000000fce0803e4dc6233a859ff3baabaaaa3eabaaaa3e4401000000960000000043f73f3e0000000000000000abaaaa3eabaaaa3e4401000000a00000000043f73f3e0000000000000000abaaaa3eabaaaa3e4401000000d70000000039514c3e0000000000000000abaaaa3eabaaaa3e44010000
     - CurrentValue:
         valueInternal: 0
       ReferencePoseValue:
@@ -4975,7 +4975,7 @@ MonoBehaviour:
       - LayerList:
         - CurrentOriginalValue:
             valueInternal: 0
-          newKeyListSerialized: 07000000000000000000000000000000000000000000abaaaa3eabaaaa3e00000000003c00000000a76fe340ecf2b53eecf2b53eabaaaa3eabaaaa3e000000000050000000004194f0410c86273f0c86273fabaaaa3eabaaaa3e00000000007800000000a07b39423e82eb3e3e82eb3eabaaaa3eabaaaa3e000000000096000000005b1579420000000000000000abaaaa3eabaaaa3e0000000000a0000000005b1579420000000000000000abaaaa3eabaaaa3e0000000000d700000000c1c888420000000000000000abaaaa3eabaaaa3e00000000
+          newKeyListSerialized: 07000000000000000000000000000000000000000000abaaaa3eabaaaa3e00000000003c0000000006214c428eca6c3f8eca6c3fabaaaa3eabaaaa3e0000000000500000000099fe93420d86273f0d86273fabaaaa3eabaaaa3e000000000078000000005997b4423e82eb3e3e82eb3eabaaaa3eabaaaa3e000000000096000000003664d4420000000000000000abaaaa3eabaaaa3e0000000000a0000000003664d4420000000000000000abaaaa3eabaaaa3e0000000000d7000000004aa2e0420000000000000000abaaaa3eabaaaa3e00000000
     LocalScaleSelected:
       valueInternal: 0
     LocalScaleChannelList:
@@ -5138,45 +5138,45 @@ MonoBehaviour:
     - valueInternal: 0
     LocalRotationChannelList:
     - CurrentValue:
-        valueInternal: -0.98456436
+        valueInternal: -0.8865126
       ReferencePoseValue:
         valueInternal: -0.6827451
       PoseValueList: []
       ChannelPerClipList:
       - LayerList:
         - CurrentOriginalValue:
-            valueInternal: -0.98456436
-          newKeyListSerialized: 01000000000000000000690c7cbf0000000000000000abaaaa3eabaaaa3e44010000
+            valueInternal: -0.8865126
+          newKeyListSerialized: 010000000000000000007df262bf0000000000000000abaaaa3eabaaaa3e44010000
     - CurrentValue:
-        valueInternal: 0.103664346
+        valueInternal: 0.030329233
       ReferencePoseValue:
         valueInternal: 0.041640494
       PoseValueList: []
       ChannelPerClipList:
       - LayerList:
         - CurrentOriginalValue:
-            valueInternal: 0.103664346
-          newKeyListSerialized: 01000000000000000000f94dd43d0000000000000000abaaaa3eabaaaa3e44010000
+            valueInternal: 0.030329233
+          newKeyListSerialized: 010000000000000000000375f83c0000000000000000abaaaa3eabaaaa3e44010000
     - CurrentValue:
-        valueInternal: -0.07731095
+        valueInternal: -0.062295593
       ReferencePoseValue:
         valueInternal: -0.07495248
       PoseValueList: []
       ChannelPerClipList:
       - LayerList:
         - CurrentOriginalValue:
-            valueInternal: -0.07731095
-          newKeyListSerialized: 0100000000000000000034559ebd0000000000000000abaaaa3eabaaaa3e44010000
+            valueInternal: -0.062295593
+          newKeyListSerialized: 01000000000000000000aa297fbd0000000000000000abaaaa3eabaaaa3e44010000
     - CurrentValue:
-        valueInternal: 0.117940135
+        valueInternal: 0.4574885
       ReferencePoseValue:
         valueInternal: 0.7256082
       PoseValueList: []
       ChannelPerClipList:
       - LayerList:
         - CurrentOriginalValue:
-            valueInternal: 0.117940135
-          newKeyListSerialized: 01000000000000000000998af13d0000000000000000abaaaa3eabaaaa3e44010000
+            valueInternal: 0.4574885
+          newKeyListSerialized: 01000000000000000000ef3bea3e0000000000000000abaaaa3eabaaaa3e44010000
     - CurrentValue:
         valueInternal: 0
       ReferencePoseValue:
@@ -8740,45 +8740,45 @@ MonoBehaviour:
     - valueInternal: 0
     LocalRotationChannelList:
     - CurrentValue:
-        valueInternal: 0.014785541
+        valueInternal: 0.15647073
       ReferencePoseValue:
         valueInternal: -0.17864214
       PoseValueList: []
       ChannelPerClipList:
       - LayerList:
         - CurrentOriginalValue:
-            valueInternal: 0.014785541
-          newKeyListSerialized: 0a0000000000000000000e3f723c0000000000000000abaaaa3eabaaaa3e44010000001d0000000088c3a23dec32123b137ff93aabaaaa3eabaaaa3e44010000003c000000009ccf0d3e5c0fa43a32842bbbabaaaa3eabaaaa3e440100000078000000001b4cc23cd01b28bb11759ab8abaaaa3eabaaaa3e44010000009600000000affda63c1c5cf0b8d08853bbabaaaa3eabaaaa3e4401000000a000000000135773bcbe313abb760cb73aabaaaa3eabaaaa3e4401000000b400000000e14e1f3cfb69da3aa127b63aabaaaa3eabaaaa3e4401000000be00000000d34afd3cc18cf83af942cdbbabaaaa3eabaaaa3e4401000000c800000000ad6dc7bc42e677bb29fc7f3babaaaa3eabaaaa3e4401000000d700000000b609853c0000000000000000abaaaa3eabaaaa3e44010000
+            valueInternal: 0.15647073
+          newKeyListSerialized: 0a000000000000000000dd39203e0000000000000000abaaaa3eabaaaa3e44010000001d0000000088c3a23d702daeba117ff93aabaaaa3eabaaaa3e44010000003c000000009ccf0d3e5b0fa43a34842bbbabaaaa3eabaaaa3e440100000078000000001b4cc23cd31b28bb13759ab8abaaaa3eabaaaa3e44010000009600000000affda63c205cf0b8d08853bbabaaaa3eabaaaa3e4401000000a000000000135773bcbe313abb760cb73aabaaaa3eabaaaa3e4401000000b400000000e14e1f3cfb69da3aa127b63aabaaaa3eabaaaa3e4401000000be00000000d34afd3cc18cf83af942cdbbabaaaa3eabaaaa3e4401000000c800000000ad6dc7bc42e677bb29fc7f3babaaaa3eabaaaa3e4401000000d700000000b609853c0000000000000000abaaaa3eabaaaa3e44010000
     - CurrentValue:
-        valueInternal: 0.5106877
+        valueInternal: 0.48711017
       ReferencePoseValue:
         valueInternal: 0.4889768
       PoseValueList: []
       ChannelPerClipList:
       - LayerList:
         - CurrentOriginalValue:
-            valueInternal: 0.5106877
-          newKeyListSerialized: 0a0000000000000000006ebc023f0000000000000000abaaaa3eabaaaa3e44010000001d000000007441d43e463f59bb95d47bbbabaaaa3eabaaaa3e44010000003c00000000e442973e429825bbf7aa003babaaaa3eabaaaa3e44010000007800000000db57c33e0d39fc3af5523d3babaaaa3eabaaaa3e440100000096000000005924033f194f933bb9e0a4baabaaaa3eabaaaa3e4401000000a000000000c040ff3e752091ba014b5ebbabaaaa3eabaaaa3e4401000000b4000000002eb1e03ec49e84bb51d50739abaaaa3eabaaaa3e4401000000be0000000025b4e13e1c5839398fb5d5baabaaaa3eabaaaa3e4401000000c800000000bc56da3e080d81ba832ddcb8abaaaa3eabaaaa3e4401000000d700000000c1c7d93e0000000000000000abaaaa3eabaaaa3e44010000
+            valueInternal: 0.48711017
+          newKeyListSerialized: 0a0000000000000000008166f93e0000000000000000abaaaa3eabaaaa3e44010000001d000000007441d43e971da4ba93d47bbbabaaaa3eabaaaa3e44010000003c00000000e442973e419825bbf9aa003babaaaa3eabaaaa3e44010000007800000000db57c33e1039fc3af7523d3babaaaa3eabaaaa3e440100000096000000005924033f1b4f933bb9e0a4baabaaaa3eabaaaa3e4401000000a000000000c040ff3e752091ba014b5ebbabaaaa3eabaaaa3e4401000000b4000000002eb1e03ec49e84bb51d50739abaaaa3eabaaaa3e4401000000be0000000025b4e13e1c5839398fb5d5baabaaaa3eabaaaa3e4401000000c800000000bc56da3e080d81ba832ddcb8abaaaa3eabaaaa3e4401000000d700000000c1c7d93e0000000000000000abaaaa3eabaaaa3e44010000
     - CurrentValue:
-        valueInternal: 0.2605585
+        valueInternal: 0.5519672
       ReferencePoseValue:
         valueInternal: 0.047706313
       PoseValueList: []
       ChannelPerClipList:
       - LayerList:
         - CurrentOriginalValue:
-            valueInternal: 0.2605585
-          newKeyListSerialized: 0a000000000000000000ec67853e0000000000000000abaaaa3eabaaaa3e44010000001d000000002f12b23e3028453b79232d3babaaaa3eabaaaa3e44010000003c000000008401dc3e18b3e33a6044d5b9abaaaa3eabaaaa3e4401000000780000000069dfd23ea407d1b98c7973baabaaaa3eabaaaa3e44010000009600000000d359bd3e4871bdbafe5c693babaaaa3eabaaaa3e4401000000a0000000000141d13e80684d3b51b643baabaaaa3eabaaaa3e4401000000b400000000fd86ca3e2c8669ba0a169bbbabaaaa3eabaaaa3e4401000000be000000008b91a53e579dd3bbc2fa533babaaaa3eabaaaa3e4401000000c800000000d82db43ea501003bbb48ecbaabaaaa3eabaaaa3e4401000000d700000000cf96aa3e0000000000000000abaaaa3eabaaaa3e44010000
+            valueInternal: 0.5519672
+          newKeyListSerialized: 0a000000000000000000b94d0d3f0000000000000000abaaaa3eabaaaa3e44010000001d000000002f12b23e4bef66bb78232d3babaaaa3eabaaaa3e44010000003c000000008401dc3e17b3e33a6344d5b9abaaaa3eabaaaa3e4401000000780000000069dfd23ea707d1b98f7973baabaaaa3eabaaaa3e44010000009600000000d359bd3e4b71bdbafe5c693babaaaa3eabaaaa3e4401000000a0000000000141d13e80684d3b51b643baabaaaa3eabaaaa3e4401000000b400000000fd86ca3e2c8669ba0a169bbbabaaaa3eabaaaa3e4401000000be000000008b91a53e579dd3bbc2fa533babaaaa3eabaaaa3e4401000000c800000000d82db43ea501003bbb48ecbaabaaaa3eabaaaa3e4401000000d700000000cf96aa3e0000000000000000abaaaa3eabaaaa3e44010000
     - CurrentValue:
-        valueInternal: 0.81920046
+        valueInternal: 0.658463
       ReferencePoseValue:
         valueInternal: 0.8524746
       PoseValueList: []
       ChannelPerClipList:
       - LayerList:
         - CurrentOriginalValue:
-            valueInternal: 0.81920046
-          newKeyListSerialized: 0a0000000000000000001fb7513f0000000000000000abaaaa3eabaaaa3e44010000001d000000001051563f957c223a1bec2139abaaaa3eabaaaa3e44010000003c00000000cf8a573fe1f2d4384f99b0b9abaaaa3eabaaaa3e44010000007800000000c2c2533f1417adb9649697baabaaaa3eabaaaa3e440100000096000000007d5c463fd6e4ebbac28c7cbaabaaaa3eabaaaa3e4401000000a0000000003aab433fe14b5ebab4f91d3babaaaa3eabaaaa3e4401000000b40000000030874e3f1c7f3c3bb8e2003babaaaa3eabaaaa3e4401000000be00000000f134563f39dd2f3b23e2e4b9abaaaa3eabaaaa3e4401000000c8000000008838553fc9368ab91455543aabaaaa3eabaaaa3e4401000000d7000000001360573f0000000000000000abaaaa3eabaaaa3e44010000
+            valueInternal: 0.658463
+          newKeyListSerialized: 0a0000000000000000000891283f0000000000000000abaaaa3eabaaaa3e44010000001d000000001051563ff6224a3b1aec2139abaaaa3eabaaaa3e44010000003c00000000cf8a573fdff2d4385199b0b9abaaaa3eabaaaa3e44010000007800000000c2c2533f1617adb9669697baabaaaa3eabaaaa3e440100000096000000007d5c463fdae4ebbac28c7cbaabaaaa3eabaaaa3e4401000000a0000000003aab433fe14b5ebab4f91d3babaaaa3eabaaaa3e4401000000b40000000030874e3f1c7f3c3bb8e2003babaaaa3eabaaaa3e4401000000be00000000f134563f39dd2f3b23e2e4b9abaaaa3eabaaaa3e4401000000c8000000008838553fc9368ab91455543aabaaaa3eabaaaa3e4401000000d7000000001360573f0000000000000000abaaaa3eabaaaa3e44010000
     - CurrentValue:
         valueInternal: 0
       ReferencePoseValue:
@@ -8788,7 +8788,7 @@ MonoBehaviour:
       - LayerList:
         - CurrentOriginalValue:
             valueInternal: 0
-          newKeyListSerialized: 0a000000000000000000000000000000000000000000abaaaa3eabaaaa3e00000000001d00000000a917864197f9133f97f9133fabaaaa3eabaaaa3e00000000003c00000000feb90a42309bc23e309bc23eabaaaa3eabaaaa3e0000000000780000000029664d425ebdbe3e5ebdbe3eabaaaa3eabaaaa3e00000000009600000000926b88421569143f1569143fabaaaa3eabaaaa3e0000000000a000000000eb139542d1a1023fd1a1023fabaaaa3eabaaaa3e0000000000b4000000007f09a742d5de1b3fd5de1b3fabaaaa3eabaaaa3e0000000000be00000000259cb94253af543f53af543fabaaaa3eabaaaa3e0000000000c800000000e444c842ae6e003fae6e003fabaaaa3eabaaaa3e0000000000d700000000c3b1d2420000000000000000abaaaa3eabaaaa3e00000000
+          newKeyListSerialized: 0a000000000000000000000000000000000000000000abaaaa3eabaaaa3e00000000001d0000000060f705423e5b5b3f3e5b5b3fabaaaa3eabaaaa3e00000000003c000000008aa54d42309bc23e309bc23eabaaaa3eabaaaa3e00000000007800000000da2888425bbdbe3e5bbdbe3eabaaaa3eabaaaa3e0000000000960000000057e1a9421369143f1369143fabaaaa3eabaaaa3e0000000000a000000000b089b642d1a1023fd1a1023fabaaaa3eabaaaa3e0000000000b400000000447fc842d5de1b3fd5de1b3fabaaaa3eabaaaa3e0000000000be00000000ea11db4253af543f53af543fabaaaa3eabaaaa3e0000000000c800000000a9bae942ae6e003fae6e003fabaaaa3eabaaaa3e0000000000d7000000008827f4420000000000000000abaaaa3eabaaaa3e00000000
     LocalScaleSelected:
       valueInternal: 0
     LocalScaleChannelList:
