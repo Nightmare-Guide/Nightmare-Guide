@@ -29,7 +29,7 @@ public class PlayerMainCamera : MonoBehaviour
         Debug.Log(death_Camera_Target);
     }
 
-    public void RotateTarget() // 에너미에서 작동시키려고 메소드화 시킨거
+    public void RotateTarget() // 에너미에서 작동시키려고 메소드화
     {
         StartCoroutine(RotateTargetCamera());
     }

@@ -109,10 +109,7 @@ public class Enemy : MonoBehaviour
         Vector3 fixedEuler = transform.rotation.eulerAngles;
         fixedEuler.x = 30f;
         transform.rotation = Quaternion.Euler(fixedEuler);
-
-        FreezeEnemy();
-
-        /*Invoke("FreezeEnemy", 0.1f); // 1초 뒤에 FreezeEnemy() 호출*/
+\
     }
     public void FreezeEnemy()
     {
