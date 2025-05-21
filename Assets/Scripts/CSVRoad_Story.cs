@@ -130,9 +130,10 @@ public class CSVRoad_Story : MonoBehaviour
         dialogueOptions.SetActive(true);
         if (PlayerController.instance != null)
         {
-            
             PlayerController.instance.Close_PlayerController();
             Camera_Rt.instance.Close_Camera();
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
         if (optionStartIndex < data.Count)
         {
@@ -151,9 +152,9 @@ public class CSVRoad_Story : MonoBehaviour
         {
             if (returnPoint != -1)
             {
-                //   Debug.Log("선택지 1 선택: ReturnPoint로 이동");
+                Debug.Log("선택지 1 선택: ReturnPoint로 이동");
                 StartCoroutine(DisplayChapterDialogue(returnPoint, data.Count - 1)); // ReturnPoint부터 다시 출력
-                returnPoint = -1; // ReturnPoint 초기화
+                
             }
             else
             {
@@ -165,6 +166,7 @@ public class CSVRoad_Story : MonoBehaviour
             Debug.Log("선택지 2 선택");
             progress += 4;
             string currentChapter = data[progress]["Chapter"].ToString();
+            returnPoint = -1; // ReturnPoint 초기화
             // progress가 업데이트된 상태에서 다시 대사 출력
             StartCoroutine(DisplayChapterDialogue(progress, chapterEnd));
         }
@@ -182,6 +184,8 @@ public class CSVRoad_Story : MonoBehaviour
         {
             PlayerController.instance.Open_PlayerController();
             Camera_Rt.instance.Open_Camera();
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
         }
         dialogueBox.SetActive(true);
     }
