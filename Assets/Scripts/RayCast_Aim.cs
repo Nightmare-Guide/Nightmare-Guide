@@ -1,6 +1,7 @@
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityStandardAssets.Characters.FirstPerson;
+using static CommonUIManager;
 using static SchoolUIManager;
 using static UnityEngine.Rendering.DebugUI;
 
@@ -56,8 +57,10 @@ public class RayCast_Aim : MonoBehaviour
                         // 플레이어 못 움직이게
                         PlayerController.instance.Close_PlayerController();
                         Camera_Rt.instance.Close_Camera();
-
-                        NextScene.instance.Next_Scene();
+                      
+                        NextScene next = click_object.GetComponent<NextScene>();
+                        next.Next_Scene();
+                       
                     }
                     // 태그가 "maze_Btn"이라면 Select_Btn() 호출
                     if (click_object.CompareTag("maze_Btn"))
@@ -174,16 +177,19 @@ public class RayCast_Aim : MonoBehaviour
         // 해당 휴대폰 획득 bool 값 변경
         if (obj.name.Contains("Steven"))
         {
+            CommonUIManager.instance.stevenPhone.hasPhone = true;
             ProgressManager.Instance.progressData.phoneDatas[0].hasPhone = true;
             ProgressManager.Instance.progressData.storyProgress = "clear";
-            CommonUIManager.instance.SmartPhoneData();
+            ProgressManager.Instance.progressData.newGame = false;
         }
         else
         {
-            CharacterPhoneInfo targetPhone = obj.GetComponent<CellPhone>().schoolUIManager.phoneInfos
+            PhoneInfos targetPhone = obj.GetComponent<CellPhone>().schoolUIManager.phoneInfos
                                             .Find(info => obj.gameObject.name.Contains(info.name));
 
             targetPhone.hasPhone = true;
+            if (targetPhone.name == "Ethan") { ProgressManager.Instance.progressData.phoneDatas[1].hasPhone = true; }
+            else if (targetPhone.name == "David") { ProgressManager.Instance.progressData.phoneDatas[2].hasPhone = true; }
         }
 
         // CellPhone 위치 변경 함수 실행

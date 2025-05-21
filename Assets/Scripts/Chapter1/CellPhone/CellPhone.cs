@@ -8,6 +8,7 @@ using System.Globalization;
 using System;
 using static SchoolUIManager;
 using System.IO;
+using static CommonUIManager;
 
 public class CellPhone : MonoBehaviour
 {
@@ -91,7 +92,7 @@ public class CellPhone : MonoBehaviour
 
         phoneBlurMat.SetFloat("_Size", 0); // 휴대폰 Blur Spacing 값 초기화
 
-        CharacterPhoneInfo targetPhone = this.gameObject.name.Contains("Steven") ? CommonUIManager.instance.phoneInfos : schoolUIManager.phoneInfos
+        PhoneInfos targetPhone = this.gameObject.name.Contains("Steven") ? CommonUIManager.instance.stevenPhone : schoolUIManager.phoneInfos
                                 .Find(info => this.gameObject.name.Contains(info.name));
 
         if (targetPhone.isUnlocked)
@@ -210,7 +211,7 @@ public class CellPhone : MonoBehaviour
             else
             {
                 // 스티븐 휴대폰은 슬라이더로 잠금 해제 후, 바로 잠금해제
-                CommonUIManager.instance.phoneInfos.isUnlocked = true;
+                CommonUIManager.instance.stevenPhone.isUnlocked = true;
                 ProgressManager.Instance.progressData.phoneDatas[0].isUnlocked = true;
 
                 // App Screen UI 활성화

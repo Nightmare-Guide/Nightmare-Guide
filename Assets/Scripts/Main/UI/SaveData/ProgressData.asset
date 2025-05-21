@@ -13,20 +13,51 @@ MonoBehaviour:
   m_Name: ProgressData
   m_EditorClassIdentifier: 
   newGame: 0
-  scene: DayHouse
-  storyProgress: 0_0_0
-  playerPosition: {x: -531.89, y: 71.92001, z: 164.10771}
+  scene: Main_map
+  storyProgress: clear
+  playerPosition: {x: -487, y: 5.5199995, z: 138}
+  playerEulerAngles: {x: 0, y: 0, z: 0}
+  playerTr:
+  - scene_Name: DayHouse
+    tr: {x: -609.27966, y: 71.80008, z: 187.84392}
+    rt: {x: -0, y: 273.49997, z: 0}
+  - scene_Name: DayHouseNight
+    tr: {x: -605, y: 72, z: 173}
+    rt: {x: 0, y: -90, z: 0}
+  - scene_Name: DayHospital
+    tr: {x: -261, y: 6, z: -689}
+    rt: {x: 0, y: -90, z: 0}
+  - scene_Name: DayHospitalNight
+    tr: {x: 285, y: 30, z: -810}
+    rt: {x: 0, y: 180, z: 0}
+  - scene_Name: School_Scene
+    tr: {x: 0, y: 0, z: 0}
+    rt: {x: 0, y: 0, z: 0}
+  - scene_Name: Main_Map
+    tr: {x: -376, y: 5, z: -355}
+    rt: {x: 0, y: 90, z: 0}
+  - scene_Name: MainMapNight
+    tr: {x: -180, y: 5, z: -723}
+    rt: {x: 0, y: 90, z: 0}
   sanchi: 0
   mainInventoryDatas:
   - 
+  schoolInventoryDatas: []
   phoneDatas:
-  - name: 
+  - name: Steven
+    hasPhone: 1
+    isUnlocked: 0
+  - name: Ethan
     hasPhone: 0
     isUnlocked: 0
-  inventoryDatas:
-  - 
-  bgVolume: 0.51055497
-  effectVolume: 0.47999886
-  characterVolume: 0.32721895
+  - name: David
+    hasPhone: 0
+    isUnlocked: 0
+  bgVolume: 50
+  effectVolume: 50
+  characterVolume: 50
   isFullScreen: 1
   language: en
+  timelineWatchedList:
+  - key: StartFirstDay
+    value: 1

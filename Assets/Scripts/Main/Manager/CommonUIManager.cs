@@ -43,7 +43,7 @@ public class CommonUIManager : MonoBehaviour
     float timer = 0f;
 
     // CellPhone
-    public CharacterPhoneInfo phoneInfos;
+    public PhoneInfos stevenPhone;
 
     [Header("# Blink")]
     public GameObject blinkObj;
@@ -51,17 +51,14 @@ public class CommonUIManager : MonoBehaviour
     public float blinkDuration = 1.0f;
 
     [Header("# UIManagers")]
-    public TitleUIManager TitleUIManager;
-    public MainUIManager mainUIManager;
-    public SchoolUIManager schoolUIManager;
+    public UIUtility uiManager;
 
     [Header("# SaveData")]
     float bgVolume;
-    [SerializeField] float effectVolume;
+    float effectVolume;
     float characterVolume;
     bool isFullScreen;
     string language;
-    public SaveStevenPhoneData stevenPhoneData;
 
     // Windows의 마우스 입력을 시뮬레이션하는 API
     [DllImport("user32.dll")]
@@ -136,20 +133,30 @@ public class CommonUIManager : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         // 특정 씬이 로드되면 플레이어 생성 요청
-        if (scene.name != "LoadingScene")
+        if (!scene.name.Equals("LoadingScene")&& !ProgressManager.Instance.progressData.newGame && !scene.name.Equals("Title Scene"))
         {
-            //SpawnPlayer(scene.name);
+            StartCoroutine(DelaySpawnPlayer());
         }
     }
-
-    void SpawnPlayer(string sceneName)
+    private IEnumerator DelaySpawnPlayer()
     {
-        if (PlayerController.instance != null && ProgressManager.Instance != null && ProgressManager.Instance.progressData != null)
-        {
-            
+        yield return null; // 1프레임 대기
+        SpawnPlayer();
+    }
 
-            Vector3 spawnPosition = ProgressManager.Instance.progressData.playerPosition; // 저장된 플레이어 위치 사용
-            PlayerController.instance.transform.position = spawnPosition;
+    void SpawnPlayer()
+    {
+        if (PlayerController.instance!=null&&ProgressManager.Instance != null && ProgressManager.Instance.progressData != null)
+        {
+            if (!ProgressManager.Instance.progressData.newGame)
+            {
+                Debug.Log(ProgressManager.Instance.progressData.scene+"씬 위치값 : "+ ProgressManager.Instance.progressData.playerPosition +"로테이션 : "+ ProgressManager.Instance.progressData.playerEulerAngles);
+                PlayerController.instance.Close_PlayerController();
+                PlayerController.instance.transform.position = ProgressManager.Instance.progressData.playerPosition;
+                PlayerController.instance.transform.eulerAngles = ProgressManager.Instance.progressData.playerEulerAngles;
+                PlayerController.instance.Open_PlayerController();
+            }
+
         }
         else
         {
@@ -164,7 +171,6 @@ public class CommonUIManager : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        stevenPhoneData = new SaveStevenPhoneData { name = phoneInfos.name, hasPhone = phoneInfos.hasPhone, isUnlocked = phoneInfos.isUnlocked };
         if (GameDataManager.instance != null && PlayerController.instance!=null) {
             ProgressManager.Instance.progressData.playerPosition = PlayerController.instance.transform.position;
             ProgressManager.Instance.progressData.newGame = false;
@@ -175,14 +181,14 @@ public class CommonUIManager : MonoBehaviour
     {
         commonUICanvas.SetActive(true);
         optionUI.SetActive(false);
-        phoneInfos = new CharacterPhoneInfo();
+        stevenPhone = new PhoneInfos();
 
         FullScreenBtn();
     }
 
     public void BackToTitleBtn()
     {
-        if (TitleUIManager != null)
+        if (uiManager is TitleUIManager)
         {
             optionUI.SetActive(false);
         }
@@ -261,8 +267,8 @@ public class CommonUIManager : MonoBehaviour
         }
 
         // UI Manager 가 null 값이 아닐 경우 실행
-        schoolUIManager?.RebuildVerticalLayout(schoolUIManager.textBoxLayouts);
-        mainUIManager?.RebuildVerticalLayout(mainUIManager.textBoxLayouts);
+        if(uiManager is SchoolUIManager schoolUIManager) { schoolUIManager.RebuildVerticalLayout(schoolUIManager.textBoxLayouts); }
+        if(uiManager is MainUIManager mainUIManager) { mainUIManager.RebuildVerticalLayout(mainUIManager.textBoxLayouts); }
 
         changingLanguage = false;
     }
@@ -279,27 +285,18 @@ public class CommonUIManager : MonoBehaviour
 
     public void SmartPhoneData()
     {
-        phoneInfos.name = "Steven";
-        phoneInfos.hasPhone = false;
-        phoneInfos.isUnlocked = false;
-
-        if (ProgressManager.Instance!=null)
-        {
-
-            phoneInfos.hasPhone = ProgressManager.Instance.progressData.phoneDatas[0].hasPhone;
-            phoneInfos.isUnlocked = ProgressManager.Instance.progressData.phoneDatas[0].isUnlocked;
-        }
-        else
-        {
-            Debug.Log("파일이 존재하지 않습니다.");
-        }
+        stevenPhone.hasPhone = ProgressManager.Instance.progressData.phoneDatas[0].hasPhone;
+        stevenPhone.isUnlocked = ProgressManager.Instance.progressData.phoneDatas[0].isUnlocked;
     }
 
     // 씬 이동 함수
     public void MoveScene(string sceneName)
     {
-        if (ProgressManager.Instance != null && !sceneName.Equals("Title Scene"))
-            { ProgressManager.Instance.progressData.scene = sceneName; }// 씬 저장
+        
+        if (ProgressManager.Instance != null && !sceneName.Equals("Title Scene")) {
+            PlayerSpawnPoint(sceneName);
+            ProgressManager.Instance.progressData.scene = sceneName;
+        }// 씬 저장
         interactionUI.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -308,6 +305,14 @@ public class CommonUIManager : MonoBehaviour
         mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
         StartCoroutine(MoveSceneRoutine(sceneName));
     }
+
+    public void PlayerSpawnPoint(string scene)//MoveScene이 실행되면서 새게임이 아닐때 플레이어 스폰 장소 설정 
+    {
+        ProgressManager.Instance.SavePlayerTr();
+        ProgressManager.Instance.LoadPlayerPositionForScene(scene);
+
+    }
+ 
 
     IEnumerator MoveSceneRoutine(string sceneName)
     {
@@ -422,7 +427,7 @@ public class CommonUIManager : MonoBehaviour
         }
     }
     // 휴대폰 정보 Class
-    public class StevenPhoneInfo
+    public class PhoneInfos
     {
         public string name;
         public bool hasPhone;
@@ -431,10 +436,19 @@ public class CommonUIManager : MonoBehaviour
         public GameObject cellPhoneUI;
     }
 
-    public class SaveStevenPhoneData
+    [System.Serializable]
+    public class SavePhoneData
     {
         public string name;
         public bool hasPhone;
         public bool isUnlocked;
+    }
+
+    public class Item
+    {
+        public string name;
+        public Sprite itemImg;
+        public GameObject uiObj;
+        public SchoolUIManager schoolUIManager;
     }
 }

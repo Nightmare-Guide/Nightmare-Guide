@@ -14,16 +14,16 @@ public class GameData
 {
     
     public bool newGame = true;
-    public string scene = "DayHouse";
+    public string scene;
     public string storyProgress = "0_0_0";
 
     public Vector3 playerPosition = new Vector3(-550, -67, 278);
+    public Vector3 playerEulerAngles;
 
     public int sanchi = 0;
     public List<string> mainInventoryDatas;
     public List<SavePhoneData> phoneDatas;
-    public List<string> inventoryDatas;
-    public SaveStevenPhoneData stevenPhoneDatas;
+    public List<string> schoolInventoryDatas;
 
     public float bgVolume = 50.0f;
     public float effectVolume = 50.0f;
@@ -32,6 +32,7 @@ public class GameData
     public string language = "en";
 
     public List<TimelineEntry> timelineWatchedList;
+    public List<PlayerTr> playerTr;
 }
 
 public class GameDataManager : MonoBehaviour
@@ -81,20 +82,18 @@ public class GameDataManager : MonoBehaviour
             return;
         }
 
-        Debug.Log(ProgressManager.Instance.progressData.timelineWatchedList.Count);
-
         GameData saveData = new GameData
         {
             newGame = ProgressManager.Instance.progressData.newGame,
             scene = ProgressManager.Instance.progressData.scene,
             storyProgress = ProgressManager.Instance.progressData.storyProgress,
             playerPosition = ProgressManager.Instance.progressData.playerPosition,
+            playerEulerAngles= ProgressManager.Instance.progressData.playerEulerAngles,
             sanchi = ProgressManager.Instance.progressData.sanchi,
 
             mainInventoryDatas = ProgressManager.Instance.progressData.mainInventoryDatas,
             phoneDatas = ProgressManager.Instance.progressData.phoneDatas,
-            inventoryDatas = ProgressManager.Instance.progressData.inventoryDatas,
-            stevenPhoneDatas = ProgressManager.Instance.progressData.stevenPhoneDatas,
+            schoolInventoryDatas = ProgressManager.Instance.progressData.schoolInventoryDatas,
 
             bgVolume = ProgressManager.Instance.progressData.bgVolume,
             effectVolume = ProgressManager.Instance.progressData.effectVolume,
@@ -102,7 +101,8 @@ public class GameDataManager : MonoBehaviour
             isFullScreen = ProgressManager.Instance.progressData.isFullScreen,
             language = ProgressManager.Instance.progressData.language,
 
-            timelineWatchedList = ProgressManager.Instance.progressData.timelineWatchedList
+            timelineWatchedList = ProgressManager.Instance.progressData.timelineWatchedList,
+            playerTr = ProgressManager.Instance.progressData.playerTr
         };
 
         string json = JsonUtility.ToJson(saveData, true);
@@ -123,12 +123,12 @@ public class GameDataManager : MonoBehaviour
                 ProgressManager.Instance.progressData.scene = loadData.scene;
                 ProgressManager.Instance.progressData.storyProgress = loadData.storyProgress;
                 ProgressManager.Instance.progressData.playerPosition = loadData.playerPosition;
+                ProgressManager.Instance.progressData.playerEulerAngles = loadData.playerEulerAngles;
                 ProgressManager.Instance.progressData.sanchi = loadData.sanchi;
 
                 ProgressManager.Instance.progressData.mainInventoryDatas = loadData.mainInventoryDatas;
                 ProgressManager.Instance.progressData.phoneDatas = loadData.phoneDatas;
-                ProgressManager.Instance.progressData.inventoryDatas = loadData.inventoryDatas;
-                ProgressManager.Instance.progressData.stevenPhoneDatas = loadData.stevenPhoneDatas;
+                ProgressManager.Instance.progressData.schoolInventoryDatas = loadData.schoolInventoryDatas;
 
                 ProgressManager.Instance.progressData.bgVolume = loadData.bgVolume;
                 ProgressManager.Instance.progressData.effectVolume = loadData.effectVolume;
@@ -138,11 +138,13 @@ public class GameDataManager : MonoBehaviour
 
                 if (loadData.timelineWatchedList.Count != 0)
                 {
-                    ProgressManager.Instance.InitTimeLine(loadData.timelineWatchedList);
+                    ProgressManager.Instance.DeepCopy(loadData.timelineWatchedList);
                 }
-
+                if (loadData.playerTr.Count != 0)
+                {
+                    ProgressManager.Instance.DeepCopy(loadData.playerTr);
+                }
                 ProgressManager.Instance.LoadProgress();
-                CommonUIManager.instance.SmartPhoneData();
                 CommonUIManager.instance.LoadSoudVolume();
               /*  Debug.Log("progressData.scene : " + ProgressManager.Instance.progressData.scene);
                 Debug.Log("progressData.storyProgress : " + ProgressManager.Instance.progressData.storyProgress);
@@ -178,7 +180,6 @@ public class GameDataManager : MonoBehaviour
         if (ProgressManager.Instance != null && ProgressManager.Instance.defaultData != null && ProgressManager.Instance.progressData != null)
         {
             ProgressManager.Instance.ResetProgress();
-            CommonUIManager.instance.SmartPhoneData();
             SaveGame();
             return true;
         }

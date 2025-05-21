@@ -6,6 +6,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.UI;
+using static CommonUIManager;
 using static SchoolUIManager;
 
 public class MainUIManager : UIUtility
@@ -41,42 +42,27 @@ public class MainUIManager : UIUtility
 
         if (commonUIManager != null)
         {
-            commonUIManager.mainUIManager = this;
+            commonUIManager.uiManager = this;
             optionUI = commonUIManager.optionUI;
             uiObjects.Add(optionUI);
 
             if (cellPhoneObjs != null)
             {
-                commonUIManager.phoneInfos.cellPhoneObj = cellPhoneObjs;
+                commonUIManager.stevenPhone.cellPhoneObj = cellPhoneObjs;
             }
 
-            commonUIManager.phoneInfos.cellPhoneUI = uiObjects[2];
+            commonUIManager.stevenPhone.cellPhoneUI = uiObjects[2];
             //Debug.Log(commonUIManager.phoneInfos.cellPhoneUI.name);
 
-            if (commonUIManager.phoneInfos.hasPhone && cellPhoneObjs != null)
+            if (commonUIManager.stevenPhone.hasPhone && cellPhoneObjs != null)
             {
                 cellPhoneObjs.SetActive(false);
 
             }
-
         }
 
         // 타임라인 실행
-        if (timeLineManager.playableAssets.Count > 0 && playableDirector != null)
-        {
-            string assetsName = timeLineManager.playableAssets[0].name;
-
-            if (timeLineManager.timelineWatched[assetsName] == true)
-                return;
-
-            // 타임라인 실행
-            playableDirector.playableAsset = timeLineManager.playableAssets[0];
-            playableDirector.Play();
-
-            // 데이터 key 값으로 찾아서 저장
-            timeLineManager.timelineWatched[playableDirector.playableAsset.name] = true;
-            ProgressManager.Instance.progressData.timelineWatchedList.Find(e => e.key == assetsName).value = true;
-        }
+        StartTimeLine(timeLineManager.playableAssets[0]);
     }
 
     private void Update()
@@ -84,7 +70,7 @@ public class MainUIManager : UIUtility
         // ESC 키
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            //if (AreAllObjectsDisabled(uiObjects) && commonUIManager != null)
+            //if (AreAllObjectsDisabled(uiObjects) && commonUIManager != null)               // -> 테스트 때문에 비활성화
             //{
             //    // 일시정지 UI 활성화
             //    PauseGame(uiObjects[0]);
@@ -129,19 +115,19 @@ public class MainUIManager : UIUtility
         }
 
         // I 키 -> 휴대폰
-        if (Input.GetKeyDown(KeyCode.I) && commonUIManager.phoneInfos.hasPhone)
+        if (Input.GetKeyDown(KeyCode.I) && commonUIManager.stevenPhone.hasPhone)
         {
             if (AreAllObjectsDisabled(uiObjects))
             {
 
-                if (commonUIManager.phoneInfos.cellPhoneUI == null)
+                if (commonUIManager.stevenPhone.cellPhoneUI == null)
                 {
                     Debug.LogError("cellPhoneUI is NULL in Update at time: " + Time.time);
                 }
                 else
                 {
-                    Debug.Log(commonUIManager.phoneInfos.cellPhoneUI.name);
-                    OpenCellPhoneItem(commonUIManager.phoneInfos);
+                    Debug.Log(commonUIManager.stevenPhone.cellPhoneUI.name);
+                    OpenCellPhoneItem(commonUIManager.stevenPhone);
                 }
             }
             else if (uiObjects[2].activeInHierarchy)
@@ -156,20 +142,7 @@ public class MainUIManager : UIUtility
     {
         if (commonUIManager != null)
         {
-            commonUIManager.mainUIManager = null;
-        }
-
-    }
-
-    private void OnApplicationQuit()
-    {
-        if (inventory == null || inventory.Count <= 0)
-            return;
-
-        foreach (Item item in inventory)
-        {
-            if (item != null)
-                inventoryDatas.Add(item.name);
+            commonUIManager.uiManager = null;
         }
 
     }
@@ -184,7 +157,7 @@ public class MainUIManager : UIUtility
     }
 
     // 휴대폰 열기 함수 -> I 키
-    public void OpenCellPhoneItem(CharacterPhoneInfo cellPhone)
+    public void OpenCellPhoneItem(PhoneInfos cellPhone)
     {
         InGameOpenUI(uiObjects[0]); // blur 배경 활성화
         InGameOpenUI(uiObjects[2]);
@@ -212,15 +185,5 @@ public class MainUIManager : UIUtility
                 SetUIOpacity(text, true, 0f, 0f);
             }
         }
-
-
-    }
-
-    public class Item
-    {
-        public string name;
-        public Sprite itemImg;
-        public GameObject uiObj;
-        public SchoolUIManager schoolUIManager;
     }
 }

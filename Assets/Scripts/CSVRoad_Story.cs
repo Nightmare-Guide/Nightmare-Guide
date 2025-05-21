@@ -83,6 +83,8 @@ public class CSVRoad_Story : MonoBehaviour
             string text = FormatDialogue(data[i][LocalizationSettings.SelectedLocale.Identifier.Code].ToString());
             dialogue.text = text;
 
+            dialogueBox.SetActive(string.IsNullOrEmpty(text) ? false : true); // text 내용이 없을 때에는 대화창 비활성화
+
             if(!string.IsNullOrEmpty(FormatDialogue(data[i][$"{LocalizationSettings.SelectedLocale.Identifier.Code}_name"].ToString())))
             {
                 string name = FormatDialogue(data[i][$"{LocalizationSettings.SelectedLocale.Identifier.Code}_name"].ToString());
@@ -185,6 +187,9 @@ public class CSVRoad_Story : MonoBehaviour
         {
             case "0_0_0":
                 StartCoroutine(FinishNarration());
+                break;
+            case "0_3_0":
+                Supervisor.instance.StartHospitalRoom();
                 break;
         }
     }

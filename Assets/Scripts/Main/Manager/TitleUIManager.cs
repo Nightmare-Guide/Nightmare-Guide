@@ -29,7 +29,7 @@ public class TitleUIManager : UIUtility
         optionUI = commonUIManager.optionUI;
         uiObjects.Add(optionUI);
 
-        commonUIManager.TitleUIManager = this;
+        commonUIManager.uiManager = this;
     }
 
     private void Update()
@@ -50,7 +50,7 @@ public class TitleUIManager : UIUtility
 
     private void OnDisable()
     {
-        commonUIManager.TitleUIManager = null;
+        commonUIManager.uiManager = null;
     }
 
     public void NewGameBtn()

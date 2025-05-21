@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering.HighDefinition;
 using UnityEngine.UI;
+using static CommonUIManager;
 using static SchoolUIManager;
 using static UnityEditor.PlayerSettings;
 
@@ -175,10 +176,12 @@ public class PuzzleBoard : MonoBehaviour
         canMovePuzzle = false;
 
         // 해당 휴대폰 잠금해제 여부 bool 값 변경
-        CharacterPhoneInfo targetPhone = cellPhone.schoolUIManager.phoneInfos
+        PhoneInfos targetPhone = cellPhone.schoolUIManager.phoneInfos
                                             .Find(info => this.cellPhone.gameObject.name.Contains(info.name));
 
         targetPhone.isUnlocked = true;
+        if(targetPhone.name == "Ethan") { ProgressManager.Instance.progressData.phoneDatas[1].isUnlocked = true; }
+        else if(targetPhone.name == "David") { ProgressManager.Instance.progressData.phoneDatas[2].isUnlocked = true; }
 
         // 마지막 퍼즐 투명도 조절
         cellPhone.schoolUIManager.SetUIOpacity(cellPhone.puzzleUI[cellPhone.puzzleUI.Length - 1], true, 1f, 0.2f); // 마지막 퍼즐 조각 투명도 조절

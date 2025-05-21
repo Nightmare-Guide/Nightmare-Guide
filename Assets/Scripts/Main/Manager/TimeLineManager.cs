@@ -9,7 +9,6 @@ public class TimeLineManager : MonoBehaviour
     public static TimeLineManager instance { get; private set; }
 
     public List<PlayableAsset> playableAssets;
-    public Dictionary<string, bool> timelineWatched;
 
     private void Awake()
     {
