@@ -59,7 +59,6 @@ public class MainUIManager : UIUtility
                 cellPhoneObjs.SetActive(false);
 
             }
-
         }
 
         // 타임라인 실행
