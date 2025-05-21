@@ -4,6 +4,8 @@ using UnityEngine;
 
 using static SchoolUIManager;
 using static CommonUIManager;
+using static TimeLineManager;
+
 
 [CreateAssetMenu(fileName = "ProgressData", menuName = "Game/ProgressData")]
 public class ProgressData : ScriptableObject
@@ -33,6 +35,9 @@ public class ProgressData : ScriptableObject
     public float characterVolume=50.0f;
     public bool isFullScreen = true;
     public string language = "en";
+    [Header("TimeLine")]
+    public List<TimelineEntry> timelineWatchedList;
+
     // 초기화 기능
     public void ResetProgress()
     {

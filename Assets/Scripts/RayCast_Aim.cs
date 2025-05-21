@@ -47,8 +47,10 @@ public class RayCast_Aim : MonoBehaviour
                     // Debug.Log($"Object Name : {click_object.name}");
                     if (StoryCheck(click_object))
                     {
+                        click_object.GetComponent<Collider>().enabled = true;
                         return;
                     }
+                   
                     if (click_object.CompareTag("NextScene"))
                     {
                         // 플레이어 못 움직이게
@@ -69,7 +71,7 @@ public class RayCast_Aim : MonoBehaviour
 
                     if (click_object.CompareTag("Door"))
                     {
-                     //   Debug.Log("Door");
+                        Debug.Log("Door");
                         DoorCheck(click_object);
                     }
 
@@ -238,8 +240,7 @@ public class RayCast_Aim : MonoBehaviour
         StoryInteractable interactable = obj.GetComponent<StoryInteractable>();
         if (interactable != null)
         {
-            interactable.Interact();
-            return true; // 상호작용 완료
+            return interactable.Interact(); // 상호작용 완료
         }
         return false; // 상호작용 없음
     }

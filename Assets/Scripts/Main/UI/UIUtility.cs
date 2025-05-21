@@ -73,7 +73,6 @@ public class UIUtility : MonoBehaviour
     // 게임 일시 정지 함수
     protected void PauseGame(GameObject blur)
     {
-        Debug.Log("PauseGame");
         // TimeLine 이 실행 중이면 정지
         if (playableDirector != null && playableDirector.state == PlayState.Playing)
         {

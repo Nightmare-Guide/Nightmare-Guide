@@ -2051,6 +2051,52 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   text: {fileID: 1267810594}
   bgImg: {fileID: 805898017}
+--- !u!1 &444086495
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 444086497}
+  - component: {fileID: 444086496}
+  m_Layer: 0
+  m_Name: Timeline Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &444086496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 444086495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e183da0e18963241bc6b27332c11ca1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playableAssets:
+  - {fileID: 11400000, guid: 7b92d5d0140aa964d848587042cc1f8a, type: 2}
+--- !u!4 &444086497
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 444086495}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -499.87332, y: 76.7719, z: 144.37083}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &464989377
 GameObject:
   m_ObjectHideFlags: 0
@@ -8526,7 +8572,11 @@ MonoBehaviour:
   - {fileID: 1107863197}
   aimUI: {fileID: 0}
   optionUI: {fileID: 0}
+  fadeInOutImg: {fileID: 0}
   playerCamera: {fileID: 0}
+  playableDirector: {fileID: 0}
+  commonUIManager: {fileID: 0}
+  timeLineManager: {fileID: 0}
   titleUI: {fileID: 499009190}
 --- !u!4 &1435699858
 Transform:
@@ -10532,10 +10582,6 @@ MonoBehaviour:
   mainUIManager: {fileID: 0}
   schoolUIManager: {fileID: 0}
   effectVolume: 0
-  main_playerPrefab: {fileID: 2150530462596424511, guid: f955ec8d07862f94fa7eb30af5f80636, type: 3}
-  chap_playerPrefab: {fileID: 2150530462596424511, guid: ddc4bea01b8b2c1499a4419384e206a7, type: 3}
-  defaultPhone: {fileID: 0}
-  updatePhone: {fileID: 0}
 --- !u!4 &1872977940
 Transform:
   m_ObjectHideFlags: 0
@@ -12918,3 +12964,4 @@ SceneRoots:
   - {fileID: 1872977940}
   - {fileID: 577526775}
   - {fileID: 1911474704}
+  - {fileID: 444086497}
