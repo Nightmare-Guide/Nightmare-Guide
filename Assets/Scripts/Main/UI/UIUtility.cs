@@ -284,6 +284,12 @@ public class UIUtility : MonoBehaviour
         col.enabled = false;
     }
 
+    public IEnumerator EnableCollider(Collider col, float time)
+    {
+        yield return time;
+        col.enabled = true;
+    }
+
 
     public void StartTimeLine(PlayableAsset asset)
     {
@@ -300,5 +306,10 @@ public class UIUtility : MonoBehaviour
             // 데이터 key 값으로 찾아서 저장
             ProgressManager.Instance.progressData.timelineWatchedList.Find(e => e.key == asset.name).value = true;
         }
+    }
+
+    public void PlayAnimation(Animator animator, string animName)
+    {
+        animator.Play(animName);
     }
 }
