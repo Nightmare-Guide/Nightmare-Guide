@@ -188,6 +188,9 @@ public class CSVRoad_Story : MonoBehaviour
             case "0_0_0":
                 StartCoroutine(FinishNarration());
                 break;
+            case "0_3_0":
+                Supervisor.instance.StartHospitalRoom();
+                break;
         }
     }
 
