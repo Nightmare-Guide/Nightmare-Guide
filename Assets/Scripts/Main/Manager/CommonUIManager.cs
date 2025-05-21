@@ -135,19 +135,28 @@ public class CommonUIManager : MonoBehaviour
         // 특정 씬이 로드되면 플레이어 생성 요청
         if (!scene.name.Equals("LoadingScene")&& !ProgressManager.Instance.progressData.newGame && !scene.name.Equals("Title Scene"))
         {
-            //SpawnPlayer(scene.name);
+            StartCoroutine(DelaySpawnPlayer());
         }
     }
-
-    void SpawnPlayer(string sceneName)
+    private IEnumerator DelaySpawnPlayer()
     {
-        if (PlayerController.instance != null && ProgressManager.Instance != null && ProgressManager.Instance.progressData != null)
-        {
+        yield return null; // 1프레임 대기
+        SpawnPlayer();
+    }
 
-            PlayerController.instance.Close_PlayerController();
-            PlayerController.instance.transform.position = ProgressManager.Instance.progressData.playerPosition; 
-            PlayerController.instance.transform.eulerAngles = ProgressManager.Instance.progressData.playerEulerAngles;
-            PlayerController.instance.Open_PlayerController();
+    void SpawnPlayer()
+    {
+        if (PlayerController.instance!=null&&ProgressManager.Instance != null && ProgressManager.Instance.progressData != null)
+        {
+            if (!ProgressManager.Instance.progressData.newGame)
+            {
+                Debug.Log(ProgressManager.Instance.progressData.scene+"씬 위치값 : "+ ProgressManager.Instance.progressData.playerPosition +"로테이션 : "+ ProgressManager.Instance.progressData.playerEulerAngles);
+                PlayerController.instance.Close_PlayerController();
+                PlayerController.instance.transform.position = ProgressManager.Instance.progressData.playerPosition;
+                PlayerController.instance.transform.eulerAngles = ProgressManager.Instance.progressData.playerEulerAngles;
+                PlayerController.instance.Open_PlayerController();
+            }
+
         }
         else
         {
@@ -285,10 +294,8 @@ public class CommonUIManager : MonoBehaviour
     {
         
         if (ProgressManager.Instance != null && !sceneName.Equals("Title Scene")) {
-           // ProgressManager.Instance.SavePlayerTr();
-            Debug.Log(sceneName);
+            PlayerSpawnPoint(sceneName);
             ProgressManager.Instance.progressData.scene = sceneName;
-            Debug.Log(sceneName);
         }// 씬 저장
         interactionUI.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
@@ -297,6 +304,13 @@ public class CommonUIManager : MonoBehaviour
         mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
         mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
         StartCoroutine(MoveSceneRoutine(sceneName));
+    }
+
+    public void PlayerSpawnPoint(string scene)//MoveScene이 실행되면서 새게임이 아닐때 플레이어 스폰 장소 설정 
+    {
+        ProgressManager.Instance.SavePlayerTr();
+        ProgressManager.Instance.LoadPlayerPositionForScene(scene);
+
     }
  
 
