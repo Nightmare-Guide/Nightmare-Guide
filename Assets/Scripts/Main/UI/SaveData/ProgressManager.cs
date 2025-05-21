@@ -3,9 +3,11 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Playables;
+using UnityEngine.UIElements;
 using UnityStandardAssets.Characters.FirstPerson;
 using static CommonUIManager;
 using static SchoolUIManager;
+using static UnityEditor.FilePathAttribute;
 
 
 //게임 진행도 관리
@@ -153,6 +155,7 @@ public class ProgressManager : MonoBehaviour
         {     
             progressData.playerPosition = playerData.tr;
             progressData.playerEulerAngles = playerData.rt;
+            Debug.Log($"[{sceneName}] Load 플레이어 위치/회전 정보 업데이트: {playerData.tr}, {playerData.rt}");
         }
         else
         {
@@ -169,7 +172,7 @@ public class ProgressManager : MonoBehaviour
             //기존 데이터 업데이트
             existingData.tr = position;
             existingData.rt = rotation;
-            Debug.Log($"[{sceneName}] 플레이어 위치/회전 정보 업데이트: {position}, {rotation}");
+            Debug.Log($"[{sceneName}] Update 플레이어 위치/회전 정보 업데이트: {position}, {rotation}");
         }
         
     }

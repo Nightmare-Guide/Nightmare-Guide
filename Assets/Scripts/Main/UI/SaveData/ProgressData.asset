@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: ProgressData
   m_EditorClassIdentifier: 
   newGame: 0
-  scene: DayHospital
+  scene: Main_map
   storyProgress: clear
-  playerPosition: {x: -261, y: 5.52, z: -689}
+  playerPosition: {x: -487, y: 5.5199995, z: 138}
   playerEulerAngles: {x: 0, y: 0, z: 0}
   playerTr:
   - scene_Name: DayHouse
-    tr: {x: -488, y: 72, z: 140}
-    rt: {x: 0, y: 0, z: 0}
+    tr: {x: -609.27966, y: 71.80008, z: 187.84392}
+    rt: {x: -0, y: 273.49997, z: 0}
   - scene_Name: DayHouseNight
     tr: {x: -605, y: 72, z: 173}
     rt: {x: 0, y: -90, z: 0}
@@ -30,10 +30,10 @@ MonoBehaviour:
   - scene_Name: DayHospitalNight
     tr: {x: 285, y: 30, z: -810}
     rt: {x: 0, y: 180, z: 0}
-  - scene_Name: School
+  - scene_Name: School_Scene
     tr: {x: 0, y: 0, z: 0}
     rt: {x: 0, y: 0, z: 0}
-  - scene_Name: MainMap
+  - scene_Name: Main_Map
     tr: {x: -376, y: 5, z: -355}
     rt: {x: 0, y: 90, z: 0}
   - scene_Name: MainMapNight
@@ -46,7 +46,7 @@ MonoBehaviour:
   phoneDatas:
   - name: Steven
     hasPhone: 1
-    isUnlocked: 1
+    isUnlocked: 0
   - name: Ethan
     hasPhone: 0
     isUnlocked: 0
