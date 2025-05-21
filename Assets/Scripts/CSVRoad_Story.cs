@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Localization.Settings;
 using UnityEngine.SceneManagement;
+using UnityStandardAssets.Characters.FirstPerson;
 
 public class CSVRoad_Story : MonoBehaviour
 {
@@ -76,7 +78,7 @@ public class CSVRoad_Story : MonoBehaviour
     private IEnumerator DisplayChapterDialogue(int start, int end)
     {
         dialogueBox.SetActive(true);
-
+       
         for (int i = start; i <= end; i++)
         {
             // CSV 데이터의 현재 대사를 가져옴
@@ -119,13 +121,19 @@ public class CSVRoad_Story : MonoBehaviour
         }
 
         dialogueBox.SetActive(false);
+     
     }
 
     private void ActivateSelection(int optionStartIndex)
     {
         dialogueBox.SetActive(false);
         dialogueOptions.SetActive(true);
-
+        if (PlayerController.instance != null)
+        {
+            
+            PlayerController.instance.Close_PlayerController();
+            Camera_Rt.instance.Close_Camera();
+        }
         if (optionStartIndex < data.Count)
         {
             option1.text = FormatDialogue(data[optionStartIndex][LocalizationSettings.SelectedLocale.Identifier.Code].ToString());
@@ -170,6 +178,11 @@ public class CSVRoad_Story : MonoBehaviour
         }
 
         dialogueOptions.SetActive(false);
+        if (PlayerController.instance != null)
+        {
+            PlayerController.instance.Open_PlayerController();
+            Camera_Rt.instance.Open_Camera();
+        }
         dialogueBox.SetActive(true);
     }
 
