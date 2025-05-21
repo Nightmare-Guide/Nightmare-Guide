@@ -57,8 +57,10 @@ public class RayCast_Aim : MonoBehaviour
                         // 플레이어 못 움직이게
                         PlayerController.instance.Close_PlayerController();
                         Camera_Rt.instance.Close_Camera();
-
-                        NextScene.instance.Next_Scene();
+                      
+                        NextScene next = click_object.GetComponent<NextScene>();
+                        next.Next_Scene();
+                       
                     }
                     // 태그가 "maze_Btn"이라면 Select_Btn() 호출
                     if (click_object.CompareTag("maze_Btn"))
@@ -178,6 +180,7 @@ public class RayCast_Aim : MonoBehaviour
             CommonUIManager.instance.stevenPhone.hasPhone = true;
             ProgressManager.Instance.progressData.phoneDatas[0].hasPhone = true;
             ProgressManager.Instance.progressData.storyProgress = "clear";
+            ProgressManager.Instance.progressData.newGame = false;
         }
         else
         {

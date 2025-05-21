@@ -1,9 +1,13 @@
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Playables;
+using UnityEngine.UIElements;
+using UnityStandardAssets.Characters.FirstPerson;
 using static CommonUIManager;
 using static SchoolUIManager;
+using static UnityEditor.FilePathAttribute;
 
 
 //게임 진행도 관리
@@ -67,6 +71,7 @@ public class ProgressManager : MonoBehaviour
             progressData.scene = defaultData.scene;
             progressData.storyProgress = defaultData.storyProgress;
             progressData.playerPosition = defaultData.playerPosition;
+            progressData.playerEulerAngles = defaultData.playerEulerAngles;
             progressData.sanchi = defaultData.sanchi;
 
             progressData.mainInventoryDatas = new List<string>(defaultData.mainInventoryDatas);
@@ -82,7 +87,8 @@ public class ProgressManager : MonoBehaviour
 
             // 타임라인
             DeepCopy(defaultData.timelineWatchedList);
-
+            //플레이어 씬별 위치값
+            DeepCopy(defaultData.playerTr);
 
 
             CommonUIManager.instance.ResetSoudVolume();
@@ -116,7 +122,15 @@ public class ProgressManager : MonoBehaviour
             progressData.timelineWatchedList.Add(new TimelineEntry { key = data.key, value = data.value });
         }
     }
+    public void DeepCopy(List<PlayerTr> list)
+    {
+        progressData.playerTr = new List<PlayerTr>();
 
+        foreach (var data in list)
+        {
+            progressData.playerTr.Add(new PlayerTr { scene_Name = data.scene_Name, tr = data.tr, rt = data.rt });
+        }
+    }
     public void DeepCopy(List<SavePhoneData> list)
     {
         progressData.phoneDatas = new List<SavePhoneData>();
@@ -126,4 +140,63 @@ public class ProgressManager : MonoBehaviour
             progressData.phoneDatas.Add(new SavePhoneData { name = data.name, hasPhone = false, isUnlocked = false }) ;
         }
     }
+
+    //LoadPlayerPositionForScene 파츠
+    public PlayerTr GetPlayerTrForScene(string sceneName)
+    {
+        return progressData.playerTr.FirstOrDefault(data => data.scene_Name == sceneName);
+    }
+
+    //ProgressData의 PlayerTr리스트의 씬이름과 매칭시켜 필요한 위치값 가져오기
+    public void LoadPlayerPositionForScene(string sceneName)
+    {
+        PlayerTr playerData = GetPlayerTrForScene(sceneName);
+        if (playerData != null)
+        {     
+            progressData.playerPosition = playerData.tr;
+            progressData.playerEulerAngles = playerData.rt;
+            Debug.Log($"[{sceneName}] Load 플레이어 위치/회전 정보 업데이트: {playerData.tr}, {playerData.rt}");
+        }
+        else
+        {
+            Debug.LogWarning($"[{sceneName}] 저장된 플레이어 위치 정보가 없습니다.");
+        }
+    }
+    // SavePlayerTr파츠
+    public void UpdatePlayerTrForScene(string sceneName, Vector3 position, Vector3 rotation)
+    {
+        PlayerTr existingData = progressData.playerTr.FirstOrDefault(data => data.scene_Name == sceneName);
+
+        if (existingData != null)
+        {
+            //기존 데이터 업데이트
+            existingData.tr = position;
+            existingData.rt = rotation;
+            Debug.Log($"[{sceneName}] Update 플레이어 위치/회전 정보 업데이트: {position}, {rotation}");
+        }
+        
+    }
+
+    // ProgressData의 각 씬별 플레이어 위치값 저장
+    public void SavePlayerTr()
+    {
+        if (PlayerController.instance != null)
+        {
+            string currentSceneName = progressData.scene;
+            Vector3 currentPosition = PlayerController.instance.transform.position;
+            Vector3 currentRotation = PlayerController.instance.transform.eulerAngles;
+
+            UpdatePlayerTrForScene(currentSceneName, currentPosition, currentRotation);
+        }
+        
+    }
+}
+
+
+[System.Serializable]
+public class PlayerTr
+{
+    public string scene_Name;
+    public Vector3 tr;
+    public Vector3 rt;
 }
