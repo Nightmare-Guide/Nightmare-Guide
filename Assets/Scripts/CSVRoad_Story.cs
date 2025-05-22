@@ -49,9 +49,7 @@ public class CSVRoad_Story : MonoBehaviour
     public void OnSelectChapter(string subChapterKey, NPC npc = null)
     {
         //  Debug.Log($"SubChapter {subChapterKey} º±≈√µ ");
-        Debug.Log(currentNPC == null ? "true" : "false");
         currentNPC = npc;
-        Debug.Log(currentNPC == null ? "true" : "false");
 
         int start = -1, end = -1;
 
@@ -210,9 +208,7 @@ public class CSVRoad_Story : MonoBehaviour
                 StartCoroutine(FinishNarration());
                 break;
             case "0_2_0":
-                Debug.Log("1");
-                Debug.Log(currentNPC == null ? "true" : "false");
-                if(currentNPC != null) { Debug.Log("2"); Michael michael = currentNPC as Michael; michael.DoSweepBroom(); }
+                if(currentNPC != null) { Michael michael = currentNPC as Michael; michael.DoSweepBroom(); }
                 break;
             case "0_3_0":
                 Supervisor.instance.StartHospitalRoom();
