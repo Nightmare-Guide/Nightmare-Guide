@@ -28,6 +28,7 @@ public class CSVRoad_Story : MonoBehaviour
     private string currentChapter = ""; // 현재 챕터
     private int returnPoint = -1; // 리턴 포인트 저장 (-1은 초기화 상태)
     private int chapterEnd = 0;
+    private NPC currentNPC;
 
     public NarrationManager narrationManager;
 
@@ -45,9 +46,12 @@ public class CSVRoad_Story : MonoBehaviour
         if (instance == null) { instance = this; }
     }
 
-    public void OnSelectChapter(string subChapterKey)
+    public void OnSelectChapter(string subChapterKey, NPC npc = null)
     {
         //  Debug.Log($"SubChapter {subChapterKey} 선택됨");
+        Debug.Log(currentNPC == null ? "true" : "false");
+        currentNPC = npc;
+        Debug.Log(currentNPC == null ? "true" : "false");
 
         int start = -1, end = -1;
 
@@ -204,6 +208,11 @@ public class CSVRoad_Story : MonoBehaviour
         {
             case "0_0_0":
                 StartCoroutine(FinishNarration());
+                break;
+            case "0_2_0":
+                Debug.Log("1");
+                Debug.Log(currentNPC == null ? "true" : "false");
+                if(currentNPC != null) { Debug.Log("2"); Michael michael = currentNPC as Michael; michael.DoSweepBroom(); }
                 break;
             case "0_3_0":
                 Supervisor.instance.StartHospitalRoom();

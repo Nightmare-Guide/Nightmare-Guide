@@ -2,11 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Michael : MonoBehaviour
+public class Michael : NPC
 {
-    [SerializeField] string story;
-    Collider col;
-    public Animator myAnim;
+    [Header ("# ETC")]
     public Animator broomAnim;
 
     private void Awake()
@@ -16,25 +14,28 @@ public class Michael : MonoBehaviour
 
     private void Start()
     {
+        story = "0_2_0";
         col.enabled = false;
         StartCoroutine(EnableCollider(col, 2f));
-        myAnim.Play("SweepBroom");
-        broomAnim.Play("Sweep");
+        AnimHelper.TryPlay(myAnim, "SweepBroom", 0);
+        AnimHelper.TryPlay(broomAnim, "Sweep", 0);
     }
 
-    IEnumerator EnableCollider(Collider col, float time)
+    public void DoSweepBroom()
     {
-        yield return new WaitForSeconds(time);
-        col.enabled = true;
+        Debug.Log("DoSweepBroom");
+        AnimHelper.TryPlay(myAnim, "SweepBroom", 0.6f);
+        AnimHelper.TryPlay(broomAnim, "Sweep", 0.6f);
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            CSVRoad_Story.instance.OnSelectChapter(story);
-            myAnim.Play("Idle_Broom");
-            broomAnim.Play("Idle");
+            CSVRoad_Story.instance.OnSelectChapter(story, this);
+            AnimHelper.TryPlay(myAnim, "Idle_Broom", 0.3f);
+            AnimHelper.TryPlay(broomAnim, "Idle", 0.3f);
+            col.enabled = false;
         }
     }
 }
