@@ -4,27 +4,17 @@ using UnityStandardAssets.Characters.FirstPerson;
 
 public class Supervisor : NPC
 {
-    public static Supervisor instance { get; private set; }
-    public Transform targetplayer; // player 위치
     public Transform hospitalroom;
-    public Animator animator;
+    public Transform workposition;
     public NavMeshAgent agent;
     public float talkDistance = 2.0f; //대화거리
     private bool isWalkingToPlayer = false;
+    public NextScene nextScene;
     //private bool isWalkingToHospitalRoom = false;
 
-    private void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-        }
-    }
     private void Start()
     {
-        animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
-
         agent.stoppingDistance = talkDistance;
         agent.updateRotation = true;
     }
@@ -33,15 +23,16 @@ public class Supervisor : NPC
     {
         if (isWalkingToPlayer)
         {
-            agent.SetDestination(targetplayer.position);
-            animator.SetBool("isWalk", true);
+            PlayerController.instance.Close_PlayerController();
+            agent.SetDestination(playerTransform.position);
+            myAnim.SetBool("isWalk", true);
 
-            float distance = Vector3.Distance(transform.position, targetplayer.position);
+            float distance = Vector3.Distance(transform.position, playerTransform.position);
             if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
             {
                 agent.ResetPath();
-                animator.SetBool("isWalk", false);
-                animator.SetTrigger("isTalk");
+                myAnim.SetBool("isWalk", false);
+                myAnim.SetTrigger("isTalk");
 
 
                 isWalkingToPlayer = false;
@@ -52,19 +43,58 @@ public class Supervisor : NPC
     
     public void StartWalkToPlayer(Transform player)
     {
-        targetplayer = player;
+        playerTransform = player;
         isWalkingToPlayer = true;
     }
-
-    public void StartHospitalRoom() //플레이어가 병실로
+    public void StartWorkPosition()
+    {
+        agent.SetDestination(workposition.position);
+        myAnim.SetBool("isWalk", true);
+    }
+    public void StartHospitalRoom() //Supervisor가 병실로
     {
         PlayerController.instance.Open_PlayerController();
         agent.SetDestination(hospitalroom.position);
-        animator.SetBool("isWalk", true);
+        myAnim.SetBool("isWalk", true);
     }
-    public void TalktoIdle() 
+    public void WalktoIdle() 
     {
-        animator.SetBool("isWalk", false);
-        animator.SetTrigger("isIdle");
+        myAnim.SetBool("isWalk", false);
+        myAnim.SetTrigger("isIdle");
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            playerTransform = other.transform;
+            FirstMeet();
+            if(story != "0_3_0")
+            {
+                ReadyChapter1();
+            }
+        }
+    }
+    public void FirstMeet()
+    {
+        story = "0_3_0";
+        CSVRoad_Story.instance.OnSelectChapter(story, this);
+        isWalkingToPlayer = true;
+        col.enabled = false;
+        LookAtPlayer();
+    }
+    public void ReadyChapter1()
+    {
+        story = "0_3_3";
+        CSVRoad_Story.instance.OnSelectChapter(story, this);
+        isWalkingToPlayer = true;
+        col.enabled = false;
+        LookAtPlayer();
+    }
+
+    public void GoNightmare()
+    {
+        PlayerController.instance.Open_PlayerController();
+        nextScene.enabled = true;
     }
 }

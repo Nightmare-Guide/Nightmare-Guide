@@ -212,7 +212,17 @@ public class CSVRoad_Story : MonoBehaviour
                 if(currentNPC != null) { Michael michael = currentNPC as Michael; michael.DoSweepBroom(); }
                 break;
             case "0_3_0":
-                Supervisor.instance.StartHospitalRoom();
+                if(currentNPC != null) { Supervisor supervisor = currentNPC as Supervisor; supervisor.StartHospitalRoom(); }
+                break;
+            case "0_3_1":
+                if(currentNPC != null) 
+                { 
+                    Supervisor supervisor = currentNPC as Supervisor; supervisor.StartWorkPosition();
+                    EthanMother ethanMother = currentNPC as EthanMother; ethanMother.WaitJames();
+                }
+                break;
+            case "0_3_3":
+                if (currentNPC != null) { Supervisor supervisor = currentNPC as Supervisor; supervisor.GoNightmare(); }
                 break;
         }
     }
