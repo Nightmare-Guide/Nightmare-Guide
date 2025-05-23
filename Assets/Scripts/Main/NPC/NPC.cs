@@ -31,6 +31,9 @@ public class NPC : MonoBehaviour
 
         //카메라 회전 정지
         Camera_Rt.instance.Close_Camera();
+
+        // 커서 활성화
+        CommonUIManager.instance.uiManager.CursorUnLocked();
     }
 
     public IEnumerator SmoothLookAt(Transform me,Transform target, float duration)
