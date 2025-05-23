@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityStandardAssets.Characters.FirstPerson;
 
-public class Supervisor : MonoBehaviour
+public class Supervisor : NPC
 {
     public static Supervisor instance { get; private set; }
     public Transform targetplayer; // player À§Ä¡
