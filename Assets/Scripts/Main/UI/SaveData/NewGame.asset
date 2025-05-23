@@ -21,14 +21,14 @@ MonoBehaviour:
   - scene_Name: DayHouse
     tr: {x: -488, y: 72, z: 140}
     rt: {x: 0, y: 0, z: 0}
-  - scene_Name: DayHouseNight
+  - scene_Name: NightHouse
     tr: {x: -605, y: 72, z: 173}
     rt: {x: 0, y: -90, z: 0}
   - scene_Name: DayHospital
     tr: {x: -261, y: 6, z: -689}
     rt: {x: 0, y: -90, z: 0}
-  - scene_Name: DayHospitalNight
-    tr: {x: 285, y: 30, z: -810}
+  - scene_Name: NightHospital
+    tr: {x: -285, y: 30, z: -810}
     rt: {x: 0, y: 180, z: 0}
   - scene_Name: School_Scene
     tr: {x: 0, y: 0, z: 0}
@@ -36,7 +36,7 @@ MonoBehaviour:
   - scene_Name: Main_Map
     tr: {x: -376, y: 5, z: -355}
     rt: {x: 0, y: 90, z: 0}
-  - scene_Name: MainMapNight
+  - scene_Name: Main_Map_Night
     tr: {x: -180, y: 5, z: -723}
     rt: {x: 0, y: 90, z: 0}
   sanchi: 0

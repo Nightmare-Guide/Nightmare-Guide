@@ -115,6 +115,7 @@ public class CSVRoad_Story : MonoBehaviour
             if (i == end)
             {
                 Debug.Log($"SubChapter {data[start]["Chapter"]} ³¡");
+                ProgressManager.Instance.progressData.storyProgress = data[start]["Chapter"].ToString();
                 string chap = data[i - 1]["Chapter"].ToString();
                 NextAction(chap);
                 chapterEnd = 0;

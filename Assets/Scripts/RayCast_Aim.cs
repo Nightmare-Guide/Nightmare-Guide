@@ -92,6 +92,7 @@ public class RayCast_Aim : MonoBehaviour
                     {
                         HintEvent(click_object);
                     }
+                   
                 }
             }
         }
@@ -250,7 +251,7 @@ public class RayCast_Aim : MonoBehaviour
         StoryInteractable interactable = obj.GetComponent<StoryInteractable>();
         if (interactable != null)
         {
-            return interactable.Interact(); // 상호작용 완료
+            return interactable.Interact(obj); // 상호작용 완료
         }
         return false; // 상호작용 없음
     }

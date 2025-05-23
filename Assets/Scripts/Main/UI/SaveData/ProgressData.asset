@@ -13,30 +13,30 @@ MonoBehaviour:
   m_Name: ProgressData
   m_EditorClassIdentifier: 
   newGame: 0
-  scene: Main_map
-  storyProgress: clear
-  playerPosition: {x: -487, y: 5.5199995, z: 138}
-  playerEulerAngles: {x: 0, y: 0, z: 0}
+  scene: DayHouse
+  storyProgress: 0_2_0
+  playerPosition: {x: -577.6163, y: 71.80007, z: 187.78218}
+  playerEulerAngles: {x: -0, y: 264.39996, z: 0}
   playerTr:
   - scene_Name: DayHouse
-    tr: {x: -609.27966, y: 71.80008, z: 187.84392}
-    rt: {x: -0, y: 273.49997, z: 0}
-  - scene_Name: DayHouseNight
+    tr: {x: -609.0832, y: 71.80008, z: 190.40906}
+    rt: {x: -0, y: 264.39996, z: 0}
+  - scene_Name: NightHouse
     tr: {x: -605, y: 72, z: 173}
     rt: {x: 0, y: -90, z: 0}
   - scene_Name: DayHospital
     tr: {x: -261, y: 6, z: -689}
     rt: {x: 0, y: -90, z: 0}
-  - scene_Name: DayHospitalNight
-    tr: {x: 285, y: 30, z: -810}
+  - scene_Name: NightHospital
+    tr: {x: -285, y: 30, z: -810}
     rt: {x: 0, y: 180, z: 0}
   - scene_Name: School_Scene
     tr: {x: 0, y: 0, z: 0}
     rt: {x: 0, y: 0, z: 0}
   - scene_Name: Main_Map
-    tr: {x: -376, y: 5, z: -355}
-    rt: {x: 0, y: 90, z: 0}
-  - scene_Name: MainMapNight
+    tr: {x: -380.57126, y: 5.52, z: -353.99573}
+    rt: {x: -0, y: 269.539, z: 0}
+  - scene_Name: Main_Map_Night
     tr: {x: -180, y: 5, z: -723}
     rt: {x: 0, y: 90, z: 0}
   sanchi: 0
