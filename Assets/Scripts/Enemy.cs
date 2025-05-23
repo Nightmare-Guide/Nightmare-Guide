@@ -85,7 +85,7 @@ public class Enemy : MonoBehaviour
 
     public void TeleportEnemy()
     {
-        float jumpscareDistance = 1.5f;
+        float jumpscareDistance = 1f;
 
         // 플레이어 카메라 기준으로 바라보는 방향 (수평만 고려)
         Vector3 cameraForward = PlayerMainCamera.camera_single.transform.forward;
