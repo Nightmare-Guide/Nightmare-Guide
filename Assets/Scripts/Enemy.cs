@@ -63,7 +63,7 @@ public class Enemy : MonoBehaviour
             other.GetComponent<PlayerController>().DisableInput();
 
             FreezeEnemy();
-
+           
             StartCoroutine(JumpscareSequence());
         }
     }
@@ -85,7 +85,7 @@ public class Enemy : MonoBehaviour
 
     public void TeleportEnemy()
     {
-        float jumpscareDistance = 1.0f;
+        float jumpscareDistance = 1.5f;
 
         // 플레이어 카메라 기준으로 바라보는 방향 (수평만 고려)
         Vector3 cameraForward = PlayerMainCamera.camera_single.transform.forward;
@@ -122,6 +122,7 @@ public class Enemy : MonoBehaviour
 
         // Rigidbody 멈춤
         Rigidbody rb = GetComponent<Rigidbody>();
+
         if (rb != null)
         {
             rb.isKinematic = true;
