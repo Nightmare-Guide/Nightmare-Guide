@@ -1,4 +1,4 @@
-using JetBrains.Annotations;
+ï»¿using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using TheKiwiCoder;
@@ -13,33 +13,33 @@ public class Enemy : MonoBehaviour
 {
     public EnemyState currentState = EnemyState.Normal;
     public BehaviourTree blackboard;
-    // ½Ì±ÛÅÏ ÆĞÅÏÀ» »ç¿ëÇÏ¿© ÇÏ³ªÀÇ Enemy ÀÎ½ºÅÏ½º¸¸ Á¸ÀçÇÏµµ·Ï ¼³Á¤
+    // ì‹±ê¸€í„´ íŒ¨í„´ì„ ì‚¬ìš©í•˜ì—¬ í•˜ë‚˜ì˜ Enemy ì¸ìŠ¤í„´ìŠ¤ë§Œ ì¡´ì¬í•˜ë„ë¡ ì„¤ì •
     public static Enemy enemy_single { get; private set; }
 
-    // ÇÃ·¹ÀÌ¾î°¡ ÀâÇû´ÂÁö ¿©ºÎ¸¦ ³ªÅ¸³»´Â º¯¼ö (±âº»°ª: false)
+    // í”Œë ˆì´ì–´ê°€ ì¡í˜”ëŠ”ì§€ ì—¬ë¶€ë¥¼ ë‚˜íƒ€ë‚´ëŠ” ë³€ìˆ˜ (ê¸°ë³¸ê°’: false)
     private bool caught_player = false;
 
-    // ÇÃ·¹ÀÌ¾î°¡ Á×¾úÀ» ¶§ Ä«¸Ş¶óÀÇ Å¸°Ù À§Ä¡
+    // í”Œë ˆì´ì–´ê°€ ì£½ì—ˆì„ ë•Œ ì¹´ë©”ë¼ì˜ íƒ€ê²Ÿ ìœ„ì¹˜
     public Transform deathCamTarget;
 
-    // ÃßÀûÇÒ ÇÃ·¹ÀÌ¾îÀÇ Transform
+    // ì¶”ì í•  í”Œë ˆì´ì–´ì˜ Transform
     public Transform targetPlayer;
 
-    // Àû Ä³¸¯ÅÍÀÇ ¾Ö´Ï¸ŞÀÌÅÍ
+    // ì  ìºë¦­í„°ì˜ ì• ë‹ˆë©”ì´í„°
     public Animator animator;
 
     private void Awake()
     {
-        // ½Ì±ÛÅÏ ÀÎ½ºÅÏ½º ¼³Á¤
+        // ì‹±ê¸€í„´ ì¸ìŠ¤í„´ìŠ¤ ì„¤ì •
         if (enemy_single == null)
         {
             enemy_single = this;
         }
     
-        // Animator ÄÄÆ÷³ÍÆ® °¡Á®¿À±â
+        // Animator ì»´í¬ë„ŒíŠ¸ ê°€ì ¸ì˜¤ê¸°
         animator = GetComponent<Animator>();
 
-        // GameManager¿¡¼­ ÇÃ·¹ÀÌ¾î TransformÀ» ¹Ş¾Æ¿À´Â ÄÚµå (ÁÖ¼® Ã³¸®µÊ)
+        // GameManagerì—ì„œ í”Œë ˆì´ì–´ Transformì„ ë°›ì•„ì˜¤ëŠ” ì½”ë“œ (ì£¼ì„ ì²˜ë¦¬ë¨)
         // targetPlayer = GameManager.instance.player_tr;
     }
 
@@ -51,71 +51,72 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        // Ãæµ¹ÇÑ °´Ã¼°¡ "Player" ÅÂ±×¸¦ °¡Áö°í ÀÖ°í, ¾ÆÁ÷ ÇÃ·¹ÀÌ¾î¸¦ ÀâÁö ¾Ê¾Ò´Ù¸é ½ÇÇà
         if (other.CompareTag("Player") && !caught_player)
         {
-            caught_player = true; // ÇÃ·¹ÀÌ¾î°¡ ÀâÈû
+            caught_player = true;
 
-            // ÇÃ·¹ÀÌ¾îÀÇ ÀÔ·ÂÀ» ºñÈ°¼ºÈ­
+            // ì ì˜ ê³µê²© ì• ë‹ˆë©”ì´ì…˜ ì‹¤í–‰
+            animator.SetTrigger("Attack");
+
+            // í”Œë ˆì´ì–´ ì…ë ¥ ë¹„í™œì„±í™”
             other.GetComponent<PlayerController>().DisableInput();
 
-            // Á¡ÇÁ ½ºÄÉ¾î(°øÆ÷ ¿¬Ãâ) ½ÃÄö½º ½ÃÀÛ
+            // âœ… Enemy ë™ì‘ ì •ì§€ (ì• ë‹ˆë©”ì´ì…˜ ì œì™¸)
+            FreezeEnemy();
+
+            // ì í”„ ìŠ¤ì¼€ì–´ ì‹¤í–‰
             StartCoroutine(JumpscareSequence());
         }
     }
 
     private IEnumerator JumpscareSequence()
     {
-        // ÇÃ·¹ÀÌ¾î Ä«¸Ş¶ó¸¦ È¸Àü½ÃÅ°´Â ¿¬Ãâ ½ÇÇà
+        // í”Œë ˆì´ì–´ ì¹´ë©”ë¼ë¥¼ íšŒì „ì‹œí‚¤ëŠ” ì—°ì¶œ ì‹¤í–‰
         PlayerMainCamera.camera_single.RotateTarget();
 
-        // È¸ÀüÀÌ ¿Ï·áµÉ ¶§±îÁö ´ë±â
+        // íšŒì „ì´ ì™„ë£Œë  ë•Œê¹Œì§€ ëŒ€ê¸°
         yield return new WaitForSeconds(PlayerMainCamera.camera_single.rotationDuration);
 
-        // ÀûÀ» ÇÃ·¹ÀÌ¾î ¾Õ¿¡ ¼ø°£ÀÌµ¿
+        // ì ì„ í”Œë ˆì´ì–´ ì•ì— ìˆœê°„ì´ë™
         TeleportEnemy();
 
-        // Ä«¸Ş¶ó ÀÌÆåÆ® ½ÇÇà (¿¹: È­¸é ±ôºıÀÓ µî)
+        // ì¹´ë©”ë¼ ì´í™íŠ¸ ì‹¤í–‰ (ì˜ˆ: í™”ë©´ ê¹œë¹¡ì„ ë“±)
         PlayerMainCamera.camera_single.CameraEffect();
-
-        // ÀûÀÇ °ø°İ ¾Ö´Ï¸ŞÀÌ¼Ç ½ÇÇà
-        animator.SetTrigger("Attack");
     }
 
     public void TeleportEnemy()
     {
-        // Á¡ÇÁ ½ºÄÉ¾î ¹ß»ı ½Ã ÇÃ·¹ÀÌ¾î ¾ÕÀÇ ÀÏÁ¤ °Å¸®·Î ¼ø°£ÀÌµ¿
+        // ì í”„ ìŠ¤ì¼€ì–´ ë°œìƒ ì‹œ í”Œë ˆì´ì–´ ì•ì˜ ì¼ì • ê±°ë¦¬ë¡œ ìˆœê°„ì´ë™
         float jumpscareDistance = 1.0f;
 
-        // ÇÃ·¹ÀÌ¾î Ä«¸Ş¶ó°¡ ¹Ù¶óº¸´Â ¹æÇâ °è»ê (¼öÆò ¹æÇâ¸¸ °í·Á)
+        // í”Œë ˆì´ì–´ ì¹´ë©”ë¼ê°€ ë°”ë¼ë³´ëŠ” ë°©í–¥ ê³„ì‚° (ìˆ˜í‰ ë°©í–¥ë§Œ ê³ ë ¤)
         Vector3 cameraForward = PlayerMainCamera.camera_single.transform.forward;
         cameraForward.y = 0;
         cameraForward.Normalize();
 
-        // ÀûÀÇ ¼ø°£ÀÌµ¿ À§Ä¡ °è»ê
+        // ì ì˜ ìˆœê°„ì´ë™ ìœ„ì¹˜ ê³„ì‚°
         Vector3 jumpscarePosition = targetPlayer.position + (cameraForward * jumpscareDistance);
 
-        // ÀûÀÇ ³ôÀÌ¸¦ Á¶Á¤ÇÏ¿© ÀÚ¿¬½º·¯¿î ¿¬Ãâ ±¸Çö
+        // ì ì˜ ë†’ì´ë¥¼ ì¡°ì •í•˜ì—¬ ìì—°ìŠ¤ëŸ¬ìš´ ì—°ì¶œ êµ¬í˜„
         float heightOffset = -1f;
         jumpscarePosition.y = targetPlayer.position.y + heightOffset;
 
-        // ÀûÀ» ¼ø°£ÀÌµ¿ À§Ä¡·Î ÀÌµ¿
+        // ì ì„ ìˆœê°„ì´ë™ ìœ„ì¹˜ë¡œ ì´ë™
         transform.position = jumpscarePosition;
 
-        // ÀûÀÌ ÇÃ·¹ÀÌ¾î¸¦ ¹Ù¶óº¸µµ·Ï È¸Àü ¼³Á¤
+        // ì ì´ í”Œë ˆì´ì–´ë¥¼ ë°”ë¼ë³´ë„ë¡ íšŒì „ ì„¤ì •
         transform.rotation = Quaternion.LookRotation(-cameraForward);
 
-        // ÀûÀÇ È¸Àü °¢µµ¸¦ ¼öÁ¤ÇÏ¿© Æ¯Á¤ÇÑ ½Ã°¢Àû ¿¬Ãâ ±¸Çö
+        // ì ì˜ íšŒì „ ê°ë„ë¥¼ ìˆ˜ì •í•˜ì—¬ íŠ¹ì •í•œ ì‹œê°ì  ì—°ì¶œ êµ¬í˜„
         Vector3 fixedEuler = transform.rotation.eulerAngles;
         fixedEuler.x = 30f;
         transform.rotation = Quaternion.Euler(fixedEuler);
-\
     }
     public void FreezeEnemy()
     {
         currentState = EnemyState.Frozen;
 
-        // Rigidbody ¸ØÃã
+        // Rigidbody ë©ˆì¶¤
         Rigidbody rb = GetComponent<Rigidbody>();
         if (rb != null)
         {
@@ -123,13 +124,7 @@ public class Enemy : MonoBehaviour
             rb.constraints = RigidbodyConstraints.FreezeAll;
         }
 
-        // ¾Ö´Ï¸ŞÀÌÅÍ Á¤Áö
-        Animator anim = GetComponent<Animator>();
-        if (anim != null)
-        {
-            anim.enabled = false;
-        }
-
+        // NavMeshAgent ì •ì§€
         NavMeshAgent agent = GetComponent<NavMeshAgent>();
         if (agent != null)
         {
@@ -137,11 +132,10 @@ public class Enemy : MonoBehaviour
             agent.updatePosition = false;
             agent.updateRotation = false;
         }
-        // ÇÊ¿ä ½Ã Äİ¶óÀÌ´õµµ ²ô±â
-        // GetComponent<Collider>().enabled = false;
+
     }
 
-    // ±âº» Object Å¬·¡½ºÀÇ ¸Ş¼­µå¸¦ ÀçÁ¤ÀÇ (ÇÊ¿äÇÏÁö ¾Ê´Ù¸é »èÁ¦ °¡´É)
+    // ê¸°ë³¸ Object í´ë˜ìŠ¤ì˜ ë©”ì„œë“œë¥¼ ì¬ì •ì˜ (í•„ìš”í•˜ì§€ ì•Šë‹¤ë©´ ì‚­ì œ ê°€ëŠ¥)
     public override int GetHashCode()
     {
         return base.GetHashCode();
