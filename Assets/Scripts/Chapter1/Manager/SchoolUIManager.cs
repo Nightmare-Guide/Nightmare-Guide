@@ -114,7 +114,17 @@ public class SchoolUIManager : UIUtility
     {
         commonUIManager.uiManager = null;
     }
-
+    public void CloseUI()
+    {
+        // 모든 UI 닫기
+        foreach (GameObject uiObj in uiObjects)
+        {
+            if (uiObj.activeInHierarchy)
+            {
+                InGameCloseUI(uiObj);
+            }
+        }
+    }
     // 시작 세팅 함수
     void FirstSetUP()
     {
