@@ -88,6 +88,11 @@ public class RayCast_Aim : MonoBehaviour
                       //  Debug.Log("ElevatorButton");
                         ElevatorButton(click_object);
                     }
+                    if (click_object.CompareTag("HintObj"))
+                    {
+                        HintEvent(click_object);
+                    }
+                   
                 }
             }
         }
@@ -246,8 +251,14 @@ public class RayCast_Aim : MonoBehaviour
         StoryInteractable interactable = obj.GetComponent<StoryInteractable>();
         if (interactable != null)
         {
-            return interactable.Interact(); // 상호작용 완료
+            return interactable.Interact(obj); // 상호작용 완료
         }
         return false; // 상호작용 없음
+    }
+
+    public void HintEvent(GameObject obj)
+    {
+        OpenHint hint_Event = obj.GetComponent<OpenHint>();
+        hint_Event.HintEvent();
     }
 }

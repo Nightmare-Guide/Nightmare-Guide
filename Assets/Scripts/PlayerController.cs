@@ -327,6 +327,11 @@ namespace UnityStandardAssets.Characters.FirstPerson
         {
             m_CharacterController.enabled = false;
         }
+
+        public Camera GetPlayerCamera()
+        {
+            return m_Camera;
+        }
     }
 
 

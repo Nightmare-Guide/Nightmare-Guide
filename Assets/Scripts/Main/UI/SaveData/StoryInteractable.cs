@@ -18,11 +18,18 @@ public class StoryInteractable : MonoBehaviour
     public bool progressType=true;
 
     // 인터랙트 실행
-    public bool Interact()
+    public bool Interact(GameObject obj)
     {
+        //토튜리얼 주인공 스마트폰 보유시 에만 문열림
+        if (ProgressManager.Instance.progressData.phoneDatas[0].hasPhone)
+        {
+            if (ProgressManager.Instance.progressData.scene.Equals("DayHouse") && obj.name.Equals("MyDoor")){
+                return false;
+            }
+        }
         //현재 스토리 진행도
         string currentProgress = ProgressManager.Instance.progressData.storyProgress;
-
+        
         //스토리 진행도나 아이템 획득여부 판별
         if (progressType)
         {

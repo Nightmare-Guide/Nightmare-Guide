@@ -152,7 +152,7 @@ public class MainUIManager : UIUtility
     {
         uiObjects[0].SetActive(false);
         aimUI.SetActive(true);
-
+        
         CursorLocked(); // 마우스 커서 중앙에 고정
     }
 
