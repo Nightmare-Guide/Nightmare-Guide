@@ -38,7 +38,7 @@ public class PlayerMainCamera : MonoBehaviour
     {
         DeathCamera();
 
-        Vector3 lookTarget = death_Camera_Target.position + Vector3.up * 0.3f; // 보정된 시선
+        Vector3 lookTarget = death_Camera_Target.position + Vector3.up * 0.3f; // 보정된 시선 데스 카메라 타겟의 포지션을 바꾸는것 추천
         Quaternion initialRotation = transform.rotation;
         Quaternion targetRotation = Quaternion.LookRotation(lookTarget - transform.position);
         float elapsedTime = 0f;
