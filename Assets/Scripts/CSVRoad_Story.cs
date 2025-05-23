@@ -118,7 +118,8 @@ public class CSVRoad_Story : MonoBehaviour
                 string chap = data[i - 1]["Chapter"].ToString();
                 NextAction(chap);
                 chapterEnd = 0;
-                CommonUIManager.instance.uiManager.CursorLocked(); // 커서 비활성화
+                UIUtility uiManager = CommonUIManager.instance.uiManager;
+                if (uiManager != null && !(uiManager is TitleUIManager)) { CommonUIManager.instance.uiManager.CursorLocked(); } // 커서 비활성화
                 break;
             }
         }
