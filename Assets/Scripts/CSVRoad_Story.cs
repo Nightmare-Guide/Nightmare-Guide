@@ -215,6 +215,9 @@ public class CSVRoad_Story : MonoBehaviour
             case "0_3_0":
                 Supervisor.instance.StartHospitalRoom();
                 break;
+            case "2_2_0":
+                if (currentNPC != null) { Alex alex = currentNPC as Alex; alex.WalkToOutSide(); }
+                break;
         }
     }
 

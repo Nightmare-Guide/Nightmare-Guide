@@ -10,6 +10,7 @@ public class NPC : MonoBehaviour
     public Transform npcTransform;
     public Transform playerTransform;
     public Animator myAnim;
+    public bool inAction = false;
 
     public IEnumerator EnableCollider(Collider col, float time)
     {
