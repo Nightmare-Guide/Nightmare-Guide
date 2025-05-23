@@ -79888,6 +79888,14 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 3466025830451229380, guid: 37491a294c4c009499bdf23c35799009, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3466025830451229380, guid: 37491a294c4c009499bdf23c35799009, type: 3}
+      propertyPath: m_TagString
+      value: NextScene
+      objectReference: {fileID: 0}
     - target: {fileID: 3549912693119172782, guid: 37491a294c4c009499bdf23c35799009, type: 3}
       propertyPath: m_Mesh
       value: 
