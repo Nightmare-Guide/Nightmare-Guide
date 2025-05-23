@@ -251,7 +251,7 @@ public class CellPhone : MonoBehaviour
 
         var uiManager = this.gameObject.name.Contains("Steven") ? (UIUtility)mainUIManager : (UIUtility)schoolUIManager;
 
-        uiManager.InGameOpenUI(uiManager.uiObjects[1]); // null 값용 UI 오브젝트 활성화
+        uiManager.InGameOpenUI(uiManager.uiObjects[0]); // null 값용 UI 오브젝트 활성화
 
         // UI 활성화
         if (this.gameObject.name.Contains("Ethan"))
