@@ -10885,7 +10885,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5490881627881613615, guid: 0eee449d6f02a014c80f3b4813fa8f6e, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8052934136907833603, guid: 0eee449d6f02a014c80f3b4813fa8f6e, type: 3}
       propertyPath: m_Enabled
@@ -12249,15 +12249,11 @@ MonoBehaviour:
   npcTransform: {fileID: 704333521}
   playerTransform: {fileID: 1016060597}
   myAnim: {fileID: 704333520}
+  inAction: 0
   targetTransform:
   - {fileID: 1790245084}
   - {fileID: 146527139286345214}
   agent: {fileID: 1994444101}
-  rayDistance: 3
-  rayRadius: 2
-  hitLayers:
-    serializedVersion: 2
-    m_Bits: 1088
 --- !u!65 &478938108
 BoxCollider:
   m_ObjectHideFlags: 0
