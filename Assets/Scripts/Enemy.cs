@@ -55,16 +55,15 @@ public class Enemy : MonoBehaviour
         {
             caught_player = true;
 
-            // 적의 공격 애니메이션 실행
+            PlayerMainCamera.camera_single.RotateTarget(); // 플레이어 카메라 회전
+            this.LookAtPlayer(targetPlayer);              // 적 회전
+
             animator.SetTrigger("Attack");
 
-            // 플레이어 입력 비활성화
             other.GetComponent<PlayerController>().DisableInput();
 
-            // ✅ Enemy 동작 정지 (애니메이션 제외)
             FreezeEnemy();
 
-            // 점프 스케어 실행
             StartCoroutine(JumpscareSequence());
         }
     }
@@ -86,31 +85,36 @@ public class Enemy : MonoBehaviour
 
     public void TeleportEnemy()
     {
-        // 점프 스케어 발생 시 플레이어 앞의 일정 거리로 순간이동
         float jumpscareDistance = 1.0f;
 
-        // 플레이어 카메라가 바라보는 방향 계산 (수평 방향만 고려)
+        // 플레이어 카메라 기준으로 바라보는 방향 (수평만 고려)
         Vector3 cameraForward = PlayerMainCamera.camera_single.transform.forward;
         cameraForward.y = 0;
         cameraForward.Normalize();
 
-        // 적의 순간이동 위치 계산
+        // 목표 위치 설정
         Vector3 jumpscarePosition = targetPlayer.position + (cameraForward * jumpscareDistance);
 
-        // 적의 높이를 조정하여 자연스러운 연출 구현
+        // 적 높이 보정
         float heightOffset = -1f;
         jumpscarePosition.y = targetPlayer.position.y + heightOffset;
 
-        // 적을 순간이동 위치로 이동
+        // 위치 이동
         transform.position = jumpscarePosition;
 
-        // 적이 플레이어를 바라보도록 회전 설정
-        transform.rotation = Quaternion.LookRotation(-cameraForward);
+        // Enemy → Player 방향을 정밀하게 계산 (회전)
+        Vector3 lookDirection = (targetPlayer.position - transform.position);
+        lookDirection.y = 0; // 수평 방향만 사용
+        lookDirection.Normalize();
 
-        // 적의 회전 각도를 수정하여 특정한 시각적 연출 구현
-        Vector3 fixedEuler = transform.rotation.eulerAngles;
-        fixedEuler.x = 30f;
-        transform.rotation = Quaternion.Euler(fixedEuler);
+        // 적이 플레이어 바라보게 회전
+        transform.rotation = Quaternion.LookRotation(lookDirection);
+
+        // 회전 보정 (X, Z축 고정)
+        Vector3 euler = transform.rotation.eulerAngles;
+        euler.x = 0f;
+        euler.z = 0f;
+        transform.rotation = Quaternion.Euler(euler);
     }
     public void FreezeEnemy()
     {
@@ -134,6 +138,31 @@ public class Enemy : MonoBehaviour
         }
 
     }
+
+    public void LookAtPlayer(Transform playerTransform, float rotationDuration = 1f)
+    {
+        StartCoroutine(RotateToFacePlayer(playerTransform, rotationDuration));
+    }
+
+    private IEnumerator RotateToFacePlayer(Transform target, float duration)
+    {
+        Quaternion initialRotation = transform.rotation;
+        Vector3 directionToTarget = (target.position - transform.position).normalized;
+        directionToTarget.y = 0; // Y축 회전만 하도록
+
+        Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            transform.rotation = Quaternion.Slerp(initialRotation, targetRotation, elapsed / duration);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        transform.rotation = targetRotation; // 최종 고정
+    }
+
 
     // 기본 Object 클래스의 메서드를 재정의 (필요하지 않다면 삭제 가능)
     public override int GetHashCode()
