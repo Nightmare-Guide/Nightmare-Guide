@@ -109,7 +109,7 @@ public class UIUtility : MonoBehaviour
     }
 
     // 커서 고정 함수
-    protected void CursorLocked()
+    public void CursorLocked()
     {
         // 에임 UI 활성화
         aimUI.SetActive(true);
@@ -123,7 +123,7 @@ public class UIUtility : MonoBehaviour
         mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
     }
 
-    protected void CursorUnLocked()
+    public void CursorUnLocked()
     {
         // 에임 UI 비활성화
         aimUI.SetActive(false);
