@@ -1732,6 +1732,10 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
+    - target: {fileID: 7933476727147803485, guid: 37491a294c4c009499bdf23c35799009, type: 3}
+      propertyPath: m_TagString
+      value: NextScene
+      objectReference: {fileID: 0}
     - target: {fileID: 8107395702860790855, guid: 37491a294c4c009499bdf23c35799009, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -1771,6 +1775,9 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 840502058}
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7933476727147803485, guid: 37491a294c4c009499bdf23c35799009, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2116804845}
     - targetCorrespondingSourceObject: {fileID: 3466025830451229380, guid: 37491a294c4c009499bdf23c35799009, type: 3}
       insertIndex: -1
       addedObject: {fileID: 32562134}
@@ -63494,6 +63501,25 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4000012984815682, guid: cb0fd6f70023b7d42a2ee4e7a3519286, type: 3}
   m_PrefabInstance: {fileID: 2115290601}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2116804843 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7933476727147803485, guid: 37491a294c4c009499bdf23c35799009, type: 3}
+  m_PrefabInstance: {fileID: 32562132}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2116804845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2116804843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3404dfd64ca7a354ab1d332afc8ef442, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scene_Name: NightHospital
+  storyprogress: 
 --- !u!1 &2118172320
 GameObject:
   m_ObjectHideFlags: 0
