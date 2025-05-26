@@ -24,6 +24,20 @@ public class ScanLocker : ActionNode
         {
             Vector3 lockerFront = targetLocker.transform.position + targetLocker.transform.forward * 1.0f;
             blackboard.Set("moveToPosition", lockerFront);
+
+            float distance = Vector3.Distance(context.transform.position, lockerFront);
+            if (targetLocker != null)
+            {
+               // Vector3 lockerFront = targetLocker.transform.position + targetLocker.transform.forward * 1.0f;
+                blackboard.Set("moveToPosition", lockerFront);
+
+                Locker lockerScript = targetLocker.GetComponent<Locker>();
+                if (lockerScript != null)
+                {
+                    lockerScript.Select_Locker(); // 🔁 Animator 트리거 대신 직접 회전 방식으로 문 열기
+                }
+            }
+
         }
     }
 
