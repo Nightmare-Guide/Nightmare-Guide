@@ -12251,8 +12251,11 @@ MonoBehaviour:
   myAnim: {fileID: 704333520}
   inAction: 0
   sphereRadius: 4
-  findRange: 70
+  findRange: 140
   detectObj: {fileID: 0}
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 0
   targetTransform:
   - {fileID: 1790245084}
   - {fileID: 146527139286345214}

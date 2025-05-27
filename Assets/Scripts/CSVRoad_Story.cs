@@ -115,18 +115,16 @@ public class CSVRoad_Story : MonoBehaviour
             if (i == end)
             {
                 Debug.Log($"SubChapter {data[start]["Chapter"]} 끝");
-                // ProgressManager.Instance.progressData.storyProgress = data[start]["Chapter"].ToString();
+                // ProgressManager.Instance.progressData.storyProgress = data[start]["Chapter"].ToString();  // 테스트때문에 잠깐 비활성화
                 string chap = data[i - 1]["Chapter"].ToString();
                 NextAction(chap);
                 chapterEnd = 0;
                 UIUtility uiManager = CommonUIManager.instance.uiManager;
                 if (uiManager != null && !(uiManager is TitleUIManager)) { CommonUIManager.instance.uiManager.CursorLocked(); } // 커서 비활성화
-                break;
+                // break;
             }
         }
-
-        dialogueBox.SetActive(false);
-     
+        dialogueBox.SetActive(false); 
     }
 
     private void ActivateSelection(int optionStartIndex)

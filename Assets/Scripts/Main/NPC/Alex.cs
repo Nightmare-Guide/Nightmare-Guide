@@ -10,7 +10,6 @@ public class Alex : NPC
     [Header("# Ray")]
     [SerializeField] private float sphereRadius = 2f;
     [SerializeField] private float findRange = 45f;
-    [SerializeField] private float rayMaxDist = 2f;
     [SerializeField] private GameObject detectObj;
     [SerializeField] private LayerMask layerMask;
 
@@ -68,11 +67,13 @@ public class Alex : NPC
         Debug.DrawRay(rayStart, leftDir * sphereRadius, Color.green);
         Debug.DrawRay(rayStart, rightDir * sphereRadius, Color.blue);
 
-        RaycastHit hit;
-        if (Physics.SphereCast(rayStart, sphereRadius, rayDir, out hit, rayMaxDist, layerMask))
-        {
-            Debug.Log("감지된 오브젝트: " + hit.collider.name);
+        RaycastHit[] hits = Physics.SphereCastAll(rayStart, sphereRadius, rayDir, 0f, layerMask);
 
+        if (hits.Length < 1) { detectObj = null; }
+
+        foreach (RaycastHit hit in hits)
+        {
+            // Debug.Log("Hit 1 : " + hit.transform.gameObject.name);
             GameObject hitObj = hit.transform.gameObject;
 
             Vector3 hitDir = (hitObj.transform.position - rayStart).normalized;
@@ -81,20 +82,68 @@ public class Alex : NPC
 
             if (hitDeg >= leftDeg && hitDeg <= rightDeg)
             {
-                //Debug.Log(hit.transform.gameObject.name);
-                detectObj = hit.transform.gameObject;
+                // Debug.Log("Hit 2 : " + hit.transform.gameObject.name);
 
-                if(detectObj.layer == LayerMask.NameToLayer("Player"))
+                if (detectObj != null)
                 {
-                    IsBlockedByPlayer();
+                    float detectObjDist = Vector3.Distance(rayStart, detectObj.transform.position);
+                    float hitDist = Vector3.Distance(rayStart, hitObj.transform.position);
+
+                    if (hitDist < detectObjDist)
+                    {
+                        Debug.Log("change " + hitObj.gameObject.name);
+                        detectObj = hitObj.gameObject;
+                    }
+                }
+                else
+                {
+                    //Debug.Log("new");
+                    detectObj = hit.transform.gameObject;
                 }
             }
             else
             {
                 detectObj = null;
-                Walk();
             }
         }
+        
+        if(detectObj != null )
+        {
+            if (detectObj.layer == LayerMask.NameToLayer("Player"))
+            {
+                IsBlockedByPlayer();
+            }
+        }
+        else
+        {
+            Walk();
+        }
+
+    }
+
+    private void OnDrawGizmos()
+    {
+        Vector3 origin = transform.position; // 살짝 뒤에서 시작
+        Vector3 forward = transform.forward;
+
+        float halfFOV = findRange * 0.5f;
+        float radius = sphereRadius;
+
+        // 중심선 (빨강)
+        Gizmos.color = Color.red;
+        Gizmos.DrawRay(origin, forward * radius);
+
+        // 왼쪽 시야선 (초록)
+        Quaternion leftRot = Quaternion.Euler(0, -halfFOV, 0);
+        Vector3 leftDir = leftRot * forward;
+        Gizmos.color = Color.green;
+        Gizmos.DrawRay(origin, leftDir * radius);
+
+        // 오른쪽 시야선 (파랑)
+        Quaternion rightRot = Quaternion.Euler(0, halfFOV, 0);
+        Vector3 rightDir = rightRot * forward;
+        Gizmos.color = Color.blue;
+        Gizmos.DrawRay(origin, rightDir * radius);
     }
 
     void FirstMeet()
