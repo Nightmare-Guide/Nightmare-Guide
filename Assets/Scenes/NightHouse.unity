@@ -12250,6 +12250,9 @@ MonoBehaviour:
   playerTransform: {fileID: 1016060597}
   myAnim: {fileID: 704333520}
   inAction: 0
+  sphereRadius: 4
+  findRange: 70
+  detectObj: {fileID: 0}
   targetTransform:
   - {fileID: 1790245084}
   - {fileID: 146527139286345214}
