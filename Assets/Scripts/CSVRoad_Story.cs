@@ -121,6 +121,7 @@ public class CSVRoad_Story : MonoBehaviour
                 chapterEnd = 0;
                 UIUtility uiManager = CommonUIManager.instance.uiManager;
                 if (uiManager != null && !(uiManager is TitleUIManager)) { CommonUIManager.instance.uiManager.CursorLocked(); } // 커서 비활성화
+                CommonUIManager.instance.isTalkingWithNPC = false;
                 // break;
             }
         }

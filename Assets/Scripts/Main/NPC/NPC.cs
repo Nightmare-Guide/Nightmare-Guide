@@ -27,14 +27,10 @@ public class NPC : MonoBehaviour
         // 플레이어 카메라 각도 변경
         StartCoroutine(SmoothRotateTo(PlayerController.instance.GetPlayerCamera().transform, Vector3.zero, 0.35f));
 
-        //플레이어 컨트롤 OFF
-        PlayerController.instance.Close_PlayerController();
+        // 플레이어 컨트롤러 비활성화
+        CommonUIManager.instance.uiManager.StopPlayerController();
 
-        //카메라 회전 정지
-        Camera_Rt.instance.Close_Camera();
-
-        // 커서 활성화
-        CommonUIManager.instance.uiManager.CursorUnLocked();
+        CommonUIManager.instance.isTalkingWithNPC = true;
     }
 
     public IEnumerator SmoothLookAt(Transform me,Transform target, float duration)
