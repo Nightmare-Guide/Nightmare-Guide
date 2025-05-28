@@ -50,14 +50,10 @@ public class UIUtility : MonoBehaviour
 
         Time.timeScale = 1;
 
-        //카메라 회전 활성화
-        Camera_Rt.instance.Open_Camera();
-
-        //플레이어 컨트롤 On
-        PlayerController.instance.Open_PlayerController();
-
-        // 마우스 커서 중앙에 고정
-        CursorLocked();
+        if (!CommonUIManager.instance.isTalkingWithNPC)
+        {
+            StartPlayerController();
+        }
     }
 
     public void OpenUI(GameObject ui)
@@ -91,7 +87,7 @@ public class UIUtility : MonoBehaviour
     }
 
     // 오브젝트 상호작용 시 플레이어 움직임 멈춤 함수
-    protected void StopPlayerController()
+    public void StopPlayerController()
     {
         //플레이어 컨트롤 OFF
         PlayerController.instance.Close_PlayerController();
@@ -100,6 +96,18 @@ public class UIUtility : MonoBehaviour
         Camera_Rt.instance.Close_Camera();
 
         CursorUnLocked();
+    }
+
+    public void StartPlayerController()
+    {
+        //카메라 회전 활성화
+        Camera_Rt.instance.Open_Camera();
+
+        //플레이어 컨트롤 On
+        PlayerController.instance.Open_PlayerController();
+
+        // 마우스 커서 중앙에 고정
+        CursorLocked();
     }
 
     // UI 오브젝트 모두 비활성화 상태인 지 확인

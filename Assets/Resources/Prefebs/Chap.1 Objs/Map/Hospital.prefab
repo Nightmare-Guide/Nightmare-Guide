@@ -38226,6 +38226,10 @@ PrefabInstance:
       value: casual06_m_highpoly
       objectReference: {fileID: 0}
     - target: {fileID: 1000012868138474, guid: baf6f77f22b5c094a8f93d7a848816a9, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 1000012868138474, guid: baf6f77f22b5c094a8f93d7a848816a9, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}

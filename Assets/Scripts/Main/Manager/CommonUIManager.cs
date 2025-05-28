@@ -17,12 +17,14 @@ public class CommonUIManager : MonoBehaviour
 {
     public static CommonUIManager instance { get; private set; }
 
+    [Header("# UI Objs")]
     [SerializeField] GameObject commonUICanvas;
     public GameObject optionUI;
     public GameObject interactionUI;
     public TextMeshProUGUI questText;
     public TextMeshProUGUI conversationNameText;
     public TextMeshProUGUI conversationText;
+    public bool isTalkingWithNPC = false;
 
     [Header("# Screen")]
     public Slider bgVolumeSlider;
