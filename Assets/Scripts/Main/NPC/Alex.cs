@@ -16,7 +16,7 @@ public class Alex : NPC
     [Header("# ETC")]
     public Transform[] targetTransform; // ∞»∞Ì ΩÕ¿∫ ∏Ò«• ¡ˆ¡°
     public NavMeshAgent agent;
-    bool openingDoor = false;
+    bool isWalking = false;
 
     private void Awake()
     {
@@ -27,18 +27,22 @@ public class Alex : NPC
     {
         col.enabled = false;
         agent.SetDestination(targetTransform[0].position);
+        isWalking = true;
         StartCoroutine(EnableCollider(col, 2f));
         AnimHelper.TryPlay(myAnim, "walk", 0);
     }
 
     void Update()
     {
-        if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
+        if (isWalking)
         {
-            if (!agent.hasPath || agent.velocity.sqrMagnitude == 0f)
+            if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
             {
-                // µµ¬¯ øœ∑·
-                Debug.Log("∏Ò«• µµ¬¯!");
+                if (!agent.hasPath || agent.velocity.sqrMagnitude == 0f)
+                {
+                    // µµ¬¯ øœ∑·
+                    npcTransform.gameObject.SetActive(false);
+                }
             }
         }
 
@@ -113,6 +117,10 @@ public class Alex : NPC
             {
                 IsBlockedByPlayer();
             }
+            else if(detectObj.layer == LayerMask.NameToLayer("ActiveObject") && detectObj.name.Contains("Door"))
+            {
+                OpenDoor(detectObj);
+            }
         }
         else
         {
@@ -182,13 +190,26 @@ public class Alex : NPC
         AnimHelper.TryPlay(myAnim, "idle1", 0f);
     }
 
-    void OpenDoor()
+    void OpenDoor(GameObject door)
     {
         inAction = true;
-        openingDoor = true;
-        AnimHelper.TryPlay(myAnim, "idle1", 0f);
-        agent.SetDestination(targetTransform[1].position);
-        Debug.Log("Open Door");
+        door.GetComponent<Collider>().enabled = false;
+        agent.isStopped = true;
+        AnimHelper.TryPlay(myAnim, "OpenDoor", 0f);
+
+        AnimHelper.TryPlay(door.GetComponent<Animator>(), "Opening_2", 0f);
+
+        StartCoroutine(CloseDoor(door));
+    }
+
+    IEnumerator CloseDoor(GameObject door)
+    {
+        yield return new WaitForSeconds(1f);
+        agent.isStopped = false;
+        AnimHelper.TryPlay(myAnim, "walk", 0f);
+        yield return new WaitForSeconds(3f);
+        AnimHelper.TryPlay(door.GetComponent<Animator>(), "Closing_2", 0f);
+        door.GetComponent<Collider>().enabled = true;
     }
 
     private void OnTriggerEnter(Collider other)

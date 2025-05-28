@@ -41,7 +41,15 @@ public class NPC : MonoBehaviour
         Quaternion startRotation = me.rotation;
         Quaternion targetRotation = Quaternion.LookRotation(direction.normalized);
         Vector3 r = targetRotation.eulerAngles;
-        r = r - new Vector3(0, 5, 0);
+
+        string meName = me.gameObject.name;
+        string targetName = target.gameObject.name;
+
+        if (meName.Contains("Michael") || targetName.Contains("Michael"))
+            r += Vector3.down * 5f;
+        else if (meName.Contains("Alex") || targetName.Contains("Alex"))
+            r += Vector3.up * 2.5f;
+
         targetRotation = Quaternion.Euler(r);
 
         float time = 0f;
