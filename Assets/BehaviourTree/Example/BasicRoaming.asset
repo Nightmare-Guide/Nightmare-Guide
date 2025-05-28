@@ -60,7 +60,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: 2cd36815c3e6e8b4cad02e287195cd6b
-  position: {x: 594.6666, y: 447.99997}
+  position: {x: 594.6666, y: 448.0001}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
   description: 
@@ -109,7 +109,7 @@ MonoBehaviour:
     moveToPosition: {x: 0, y: 0, z: 0}
   description: 
   drawGizmos: 0
-  speed: 7.5
+  speed: 1
   stoppingDistance: 0.1
   updateRotation: 1
   acceleration: 40
@@ -184,7 +184,7 @@ MonoBehaviour:
   - {fileID: -5871075346543685677}
   - {fileID: -413136896331184212}
   blackboard:
-    moveToPosition: {x: -83.91502, y: -0.5, z: -155.12946}
+    moveToPosition: {x: -47.082832, y: -0.5, z: -104.418304}
 --- !u!114 &126179549495469473
 MonoBehaviour:
   m_ObjectHideFlags: 0

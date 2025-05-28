@@ -37,7 +37,6 @@ public class ScanLocker : ActionNode
                     lockerScript.Select_Locker(); // 🔁 Animator 트리거 대신 직접 회전 방식으로 문 열기
                 }
             }
-
         }
     }
 
