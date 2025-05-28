@@ -149,7 +149,6 @@ public class Locker : MonoBehaviour
     }
     public void InLocker() //플레이어 진입후 도어 닫김
     {
-
         PlayerController.instance.stat = PlayerController.PlayerState.Hide;
         //Debug.Log("최종 회전2" + pr.rotation);
         Select_Locker(); // 플레이어 입장후 문닫기
@@ -202,12 +201,14 @@ public class Locker : MonoBehaviour
     public void istrigger_on()
     {
         boxcollider.isTrigger = true;
+       
         // 부모의 MeshCollider를 비활성화
         transform.parent.GetComponent<MeshCollider>().enabled = false;
     }
     public void istrigger_off()
     {
         boxcollider.isTrigger = false;
+       
         // 부모의 MeshCollider를 비활성화
         transform.parent.GetComponent<MeshCollider>().enabled = true;
     }
