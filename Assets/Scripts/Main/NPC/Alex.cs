@@ -204,7 +204,7 @@ public class Alex : NPC
 
     IEnumerator CloseDoor(GameObject door)
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1.6f);
         agent.isStopped = false;
         AnimHelper.TryPlay(myAnim, "walk", 0f);
         yield return new WaitForSeconds(3f);
