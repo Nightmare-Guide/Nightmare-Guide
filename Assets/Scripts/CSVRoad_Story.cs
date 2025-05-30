@@ -57,6 +57,10 @@ public class CSVRoad_Story : MonoBehaviour
         {
             OpenQuestUI(ProgressManager.Instance.progressData.quest);
         }
+        else
+        {
+            CloseQuestUI();
+        }
     }
 
     public void OnSelectChapter(string subChapterKey, NPC npc = null)
