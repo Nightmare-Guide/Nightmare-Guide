@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using TMPro;
+using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.UI;
@@ -57,12 +58,18 @@ public class MainUIManager : UIUtility
             if (commonUIManager.stevenPhone.hasPhone && cellPhoneObjs != null)
             {
                 cellPhoneObjs.SetActive(false);
-
             }
         }
 
-        // 타임라인 실행
-        StartTimeLine(timeLineManager.playableAssets[0]);
+        if(!ProgressManager.Instance.progressData.timelineWatchedList.Find(e => e.key == timeLineManager.playableAssets[0].name).value)
+        {
+            // 타임라인 실행
+            StartTimeLine(timeLineManager.playableAssets[0]);
+        }
+        else
+        {
+            playableAsset = null;   
+        }
     }
 
     private void Update()

@@ -30,6 +30,7 @@ public class GameData
     public float characterVolume = 50.0f;
     public bool isFullScreen = true;
     public string language = "en";
+    public string quest = "";
 
     public List<TimelineEntry> timelineWatchedList;
     public List<PlayerTr> playerTr;
@@ -100,6 +101,7 @@ public class GameDataManager : MonoBehaviour
             characterVolume = ProgressManager.Instance.progressData.characterVolume,
             isFullScreen = ProgressManager.Instance.progressData.isFullScreen,
             language = ProgressManager.Instance.progressData.language,
+            quest = ProgressManager.Instance.progressData.quest,
 
             timelineWatchedList = ProgressManager.Instance.progressData.timelineWatchedList,
             playerTr = ProgressManager.Instance.progressData.playerTr
@@ -135,6 +137,7 @@ public class GameDataManager : MonoBehaviour
                 ProgressManager.Instance.progressData.characterVolume = loadData.characterVolume;
                 ProgressManager.Instance.progressData.isFullScreen = loadData.isFullScreen;
                 ProgressManager.Instance.progressData.language = loadData.language;
+                ProgressManager.Instance.progressData.language = loadData.quest;
 
                 if (loadData.timelineWatchedList.Count != 0)
                 {
