@@ -42,6 +42,7 @@ public class Locker : MonoBehaviour
         OutMove,
         None
     }
+
     public LockerStat stat = LockerStat.None;
     private void Start()
     {
@@ -201,14 +202,14 @@ public class Locker : MonoBehaviour
     public void istrigger_on()
     {
         boxcollider.isTrigger = true;
-       
+        boxcollider.enabled = false;
         // 부모의 MeshCollider를 비활성화
         transform.parent.GetComponent<MeshCollider>().enabled = false;
     }
     public void istrigger_off()
     {
         boxcollider.isTrigger = false;
-       
+        boxcollider.enabled = true;
         // 부모의 MeshCollider를 비활성화
         transform.parent.GetComponent<MeshCollider>().enabled = true;
     }
