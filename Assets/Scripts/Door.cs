@@ -5,7 +5,7 @@ using UnityEngine;
 public class Door : MonoBehaviour
 {
     public int lockerIndex;
-    public bool doorState; //true면 닫힌상태 false면 열린상태 //locker는 반대로 true면 열린상태 false면 닫힌상태
+    public bool doorState; //true면 열린상태 false면 닫힌상태
     public BoxCollider boxcollider;
 
     [SerializeField] private Quaternion startRotation;

@@ -1,6 +1,7 @@
 using System;
 using Unity.Burst.CompilerServices;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityStandardAssets.CrossPlatformInput;
 using UnityStandardAssets.Utility;
 using Random = UnityEngine.Random;
@@ -45,6 +46,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private float m_NextStep;
         private bool m_Jumping;
         private AudioSource m_AudioSource;
+        public NavMeshAgent agent;
+        public Transform playerwalkposition;
 
         public enum PlayerState
         {
@@ -333,6 +336,11 @@ namespace UnityStandardAssets.Characters.FirstPerson
         public Camera GetPlayerCamera()
         {
             return m_Camera;
+        }
+        public void GoNavposition()
+        {
+            Close_PlayerController();
+            agent.SetDestination(playerwalkposition.position);
         }
     }
 
