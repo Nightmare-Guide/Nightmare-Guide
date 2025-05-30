@@ -186,6 +186,7 @@ public class RayCast_Aim : MonoBehaviour
             ProgressManager.Instance.progressData.phoneDatas[0].hasPhone = true;
             ProgressManager.Instance.progressData.storyProgress = "clear";
             ProgressManager.Instance.progressData.newGame = false;
+            CSVRoad_Story.instance.OpenQuestUI(CSVRoad_Story.instance.GetQuest("0_1_0_1"));
         }
         else
         {

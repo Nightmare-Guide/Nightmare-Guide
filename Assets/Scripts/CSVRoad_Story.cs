@@ -8,6 +8,8 @@ using UnityEngine.UI;
 using UnityEngine.Localization.Settings;
 using UnityEngine.SceneManagement;
 using UnityStandardAssets.Characters.FirstPerson;
+using Unity.VisualScripting;
+using static System.Net.Mime.MediaTypeNames;
 
 public class CSVRoad_Story : MonoBehaviour
 {
@@ -21,6 +23,8 @@ public class CSVRoad_Story : MonoBehaviour
     [SerializeField] private GameObject dialogueOptions; // 선택지
     [SerializeField] private TextMeshProUGUI option1; // 선택지 1
     [SerializeField] private TextMeshProUGUI option2; // 선택지 2
+    [SerializeField] private GameObject questUI;
+    [SerializeField] private TextMeshProUGUI questText;
 
     [Header("Story Progress")]
     private List<Dictionary<string, object>> data; // CSV 데이터
@@ -29,6 +33,7 @@ public class CSVRoad_Story : MonoBehaviour
     private int returnPoint = -1; // 리턴 포인트 저장 (-1은 초기화 상태)
     private int chapterEnd = 0;
     private NPC currentNPC;
+    private int questIndex = 0;
 
     public NarrationManager narrationManager;
 
@@ -44,6 +49,14 @@ public class CSVRoad_Story : MonoBehaviour
             // Debug.LogWarning("CSV 데이터가 비어 있습니다.");
         }
         if (instance == null) { instance = this; }
+    }
+
+    private void Start()
+    {
+        if (!String.IsNullOrEmpty(ProgressManager.Instance.progressData.quest))
+        {
+            OpenQuestUI(ProgressManager.Instance.progressData.quest);
+        }
     }
 
     public void OnSelectChapter(string subChapterKey, NPC npc = null)
@@ -75,6 +88,23 @@ public class CSVRoad_Story : MonoBehaviour
         }
 
         StartCoroutine(DisplayChapterDialogue(start, end));
+    }
+
+    public string GetQuest(string subChapterKey)
+    {
+        for (int i = questIndex; i < data.Count; i++)
+        {
+            string chapter = data[i]["Chapter"].ToString();
+
+            if (chapter == subChapterKey)
+            {
+                string text = data[i][LocalizationSettings.SelectedLocale.Identifier.Code].ToString();
+                questIndex = i;
+                return text;
+            }
+        }
+
+        return "";
     }
 
     private IEnumerator DisplayChapterDialogue(int start, int end)
@@ -202,12 +232,29 @@ public class CSVRoad_Story : MonoBehaviour
         return text.Replace("@@", "\n");
     }
 
+    public void OpenQuestUI(string text)
+    {
+        questUI.SetActive(true);
+        questText.text = text;
+        ProgressManager.Instance.progressData.quest = text;
+    }
+
+    public void CloseQuestUI()
+    {
+        questUI.SetActive(false);
+        questText.text = "";
+        ProgressManager.Instance.progressData.quest = "";
+    }
+
     void NextAction(string chapter)
     {
         switch (chapter)
         {
             case "0_0_0":
                 StartCoroutine(FinishNarration());
+                break;
+            case "0_1_0":
+                OpenQuestUI(GetQuest("0_1_0_0"));
                 break;
             case "0_2_0":
                 if(currentNPC != null) { Michael michael = currentNPC as Michael; michael.DoSweepBroom(); }

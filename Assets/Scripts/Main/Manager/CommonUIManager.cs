@@ -21,9 +21,6 @@ public class CommonUIManager : MonoBehaviour
     [SerializeField] GameObject commonUICanvas;
     public GameObject optionUI;
     public GameObject interactionUI;
-    public TextMeshProUGUI questText;
-    public TextMeshProUGUI conversationNameText;
-    public TextMeshProUGUI conversationText;
     public bool isTalkingWithNPC = false;
 
     [Header("# Screen")]
@@ -428,6 +425,7 @@ public class CommonUIManager : MonoBehaviour
             SetCharacterVolume(ProgressManager.Instance.progressData.characterVolume);
         }
     }
+
     // ÈÞ´ëÆù Á¤º¸ Class
     public class PhoneInfos
     {

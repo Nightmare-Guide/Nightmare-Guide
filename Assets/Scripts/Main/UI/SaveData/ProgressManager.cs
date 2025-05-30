@@ -84,6 +84,7 @@ public class ProgressManager : MonoBehaviour
             progressData.characterVolume = defaultData.characterVolume;
             progressData.isFullScreen = defaultData.isFullScreen;
             progressData.language = defaultData.language;
+            progressData.quest = "";
 
             // 타임라인
             DeepCopy(defaultData.timelineWatchedList);
