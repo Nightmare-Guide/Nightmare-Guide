@@ -210,10 +210,44 @@ public class CSVRoad_Story : MonoBehaviour
                 StartCoroutine(FinishNarration());
                 break;
             case "0_2_0":
-                if(currentNPC != null) { Michael michael = currentNPC as Michael; michael.DoSweepBroom(); }
+                if (currentNPC != null) { Michael michael = currentNPC as Michael; michael.DoSweepBroom(); }
                 break;
             case "0_3_0":
-                Supervisor.instance.StartHospitalRoom();
+                if (currentNPC != null) 
+                { 
+                    Supervisor supervisor = currentNPC as Supervisor;
+                    Camera_Rt.instance.Open_Camera();
+                    supervisor.GoHospitalRoom(); 
+                }
+                break;
+            case "0_3_1":
+                if (currentNPC != null) 
+                {
+                    Supervisor supervisor = currentNPC as Supervisor; 
+                    supervisor.WalktoIdle();
+                    supervisor.StartSelectBox(); // ½ÇÇà 0_3_2
+                }
+                break;
+            case "0_3_2":
+                if (currentNPC != null)
+                {
+                    Supervisor supervisor = currentNPC as Supervisor;
+                    supervisor.InHospitalRoom();
+                }
+                break;
+            case "0_3_3":
+                if (currentNPC != null)
+                {
+                    EthanMother ethanMother = currentNPC as EthanMother;
+                    ethanMother.WorktoPosition();
+                }
+                break;
+            case "0_3_4":
+                if (currentNPC != null)
+                {
+                    EthanMother ethanMother = currentNPC as EthanMother;
+                    ethanMother.supervisor.GoNightmare();
+                }
                 break;
             case "2_2_0":
                 if (currentNPC != null) { Alex alex = currentNPC as Alex; alex.WalkToOutSide(); }
