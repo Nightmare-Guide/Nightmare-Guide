@@ -36,6 +36,8 @@ public class ProgressData : ScriptableObject
     public float characterVolume=50.0f;
     public bool isFullScreen = true;
     public string language = "en";
+    [Header("CSVRoad_Story")]
+    public string quest;
     [Header("TimeLine")]
     public List<TimelineEntry> timelineWatchedList;
 
