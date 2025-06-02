@@ -8,6 +8,7 @@ using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.UI;
 using static CommonUIManager;
+using static ProgressManager;
 using static SchoolUIManager;
 
 public class MainUIManager : UIUtility
@@ -21,9 +22,6 @@ public class MainUIManager : UIUtility
     public List<Item> inventory; // 플레이어 인벤토리 데이터
     public List<Item> items; // 인게임 아이템 데이터
     public List<ItemSlot> inventorySlots; // 실제 UI Slot 들
-
-    [Header("# Time Line")]
-    PlayableAsset playableAsset;
 
     [Header("# SaveData")]
     public List<String> inventoryDatas;
@@ -40,6 +38,7 @@ public class MainUIManager : UIUtility
             commonUIManager = CommonUIManager.instance;
         if (TimeLineManager.instance != null)
             timeLineManager = TimeLineManager.instance;
+
 
         if (commonUIManager != null)
         {
@@ -61,14 +60,20 @@ public class MainUIManager : UIUtility
             }
         }
 
-        if(!ProgressManager.Instance.progressData.timelineWatchedList.Find(e => e.key == timeLineManager.playableAssets[0].name).value)
+        // Start New Day 타임라인 실행 여부 확인
+        if (!ProgressManager.Instance.progressData.actionStatuses.Find(a => a.actionType == ActionType.StartNewDay).isCompleted)
         {
             // 타임라인 실행
             StartTimeLine(timeLineManager.playableAssets[0]);
         }
         else
         {
-            playableAsset = null;   
+            if (cellPhoneObjs.activeInHierarchy && cellPhoneObjs != null)
+            {
+                cellPhoneObjs.GetComponent<Collider>().enabled = true;
+            }
+
+            playableDirector.playableAsset = null;
         }
     }
 

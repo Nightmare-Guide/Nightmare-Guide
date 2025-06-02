@@ -17,6 +17,7 @@ public class ProgressData : ScriptableObject
     public string scene;
     [Header("진행도 예: 챕터_서브_노드 형식")]
     public string storyProgress = "0_0_0";
+    public List<ActionStatus> actionStatuses;
 
     [Header("플레이어 위치")]
     public Vector3 playerPosition = new Vector3(-550, -67, 278);

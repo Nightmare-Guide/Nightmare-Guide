@@ -318,6 +318,6 @@ public class UIUtility : MonoBehaviour
 
     public void PlayAnimation(Animator animator, string animName)
     {
-        animator.Play(animName);
+        AnimHelper.TryPlay(animator, animName, 0.2f);
     }
 }

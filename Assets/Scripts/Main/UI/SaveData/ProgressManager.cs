@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
@@ -6,6 +7,7 @@ using UnityEngine.Playables;
 using UnityEngine.UIElements;
 using UnityStandardAssets.Characters.FirstPerson;
 using static CommonUIManager;
+using static ProgressManager;
 using static SchoolUIManager;
 using static UnityEditor.FilePathAttribute;
 
@@ -19,6 +21,39 @@ public class ProgressManager : MonoBehaviour
     public ProgressData progressData;
     public ProgressData defaultData;
 
+    public enum ActionType
+    {
+        // 진행 순서대로 입력 (진행 분기점 -> 연속되는 동작의 끝을 기준)
+        StartNewDay,
+        FirstMeetMichael,
+        FirstMeetJames,
+        TalkWithEthanMom,
+        EnteredSchool,
+        FirstMeetEthan,
+        GetFlashlight,
+        EnteredControlRoom,
+        GetCabinetKey,
+        FirstMeetMonster,
+        GetOutOfCabinet,
+        LeaveEthan,
+        StartSchoolNightmare,
+        SolvedPortalRoom,
+        GetDavidCellPhone,
+        SecondMeetMonster,
+        EnteredBackRoom,
+        EnteredEthanHouse,
+        GetEthanCellPhone,
+        EnteredCabinetRoom,
+        SolvedCabinetRoom,
+        StartFinalChase,
+        FinishFinalChase,
+        TalkWarmlyToEthan,
+        BackToHospital,
+        FinishFirstWork,
+        FirstMeetAlex,
+        CompleteFirstDay
+    }
+
     void Awake()
     {
         // 싱글톤 처리
@@ -30,6 +65,17 @@ public class ProgressManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
+        InitAllActions();
+    }
+
+    void InitAllActions()
+    {
+        defaultData.actionStatuses = new List<ActionStatus>();
+
+        foreach (ActionType type in Enum.GetValues(typeof(ActionType)))
+        {
+            defaultData.actionStatuses.Add(new ActionStatus { actionType = type, isCompleted = false });
+        }
     }
 
     /// <summary>
@@ -70,6 +116,7 @@ public class ProgressManager : MonoBehaviour
             progressData.newGame = defaultData.newGame;
             progressData.scene = defaultData.scene;
             progressData.storyProgress = defaultData.storyProgress;
+            DeepCopy(defaultData.actionStatuses); // 액션 상태
             progressData.playerPosition = defaultData.playerPosition;
             progressData.playerEulerAngles = defaultData.playerEulerAngles;
             progressData.sanchi = defaultData.sanchi;
@@ -142,6 +189,16 @@ public class ProgressManager : MonoBehaviour
         }
     }
 
+    public void DeepCopy(List<ActionStatus> list)
+    {
+        progressData.actionStatuses = new List<ActionStatus>();
+
+        foreach(var data in list)
+        {
+            progressData.actionStatuses.Add(new ActionStatus { actionType = data.actionType, isCompleted = data.isCompleted });
+        }
+    }
+
     //LoadPlayerPositionForScene 파츠
     public PlayerTr GetPlayerTrForScene(string sceneName)
     {
@@ -200,4 +257,11 @@ public class PlayerTr
     public string scene_Name;
     public Vector3 tr;
     public Vector3 rt;
+}
+
+[System.Serializable]
+public class ActionStatus
+{
+    public ActionType actionType;
+    public bool isCompleted;
 }

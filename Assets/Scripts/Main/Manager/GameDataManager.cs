@@ -16,6 +16,7 @@ public class GameData
     public bool newGame = true;
     public string scene;
     public string storyProgress = "0_0_0";
+    public List<ActionStatus> actionStatuses;
 
     public Vector3 playerPosition = new Vector3(-550, -67, 278);
     public Vector3 playerEulerAngles;
@@ -88,6 +89,7 @@ public class GameDataManager : MonoBehaviour
             newGame = ProgressManager.Instance.progressData.newGame,
             scene = ProgressManager.Instance.progressData.scene,
             storyProgress = ProgressManager.Instance.progressData.storyProgress,
+            actionStatuses = ProgressManager.Instance.progressData.actionStatuses,
             playerPosition = ProgressManager.Instance.progressData.playerPosition,
             playerEulerAngles= ProgressManager.Instance.progressData.playerEulerAngles,
             sanchi = ProgressManager.Instance.progressData.sanchi,
@@ -124,6 +126,7 @@ public class GameDataManager : MonoBehaviour
                 ProgressManager.Instance.progressData.newGame = loadData.newGame;
                 ProgressManager.Instance.progressData.scene = loadData.scene;
                 ProgressManager.Instance.progressData.storyProgress = loadData.storyProgress;
+                ProgressManager.Instance.progressData.actionStatuses = loadData.actionStatuses;
                 ProgressManager.Instance.progressData.playerPosition = loadData.playerPosition;
                 ProgressManager.Instance.progressData.playerEulerAngles = loadData.playerEulerAngles;
                 ProgressManager.Instance.progressData.sanchi = loadData.sanchi;

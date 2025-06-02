@@ -10,6 +10,7 @@ using UnityEngine.SceneManagement;
 using UnityStandardAssets.Characters.FirstPerson;
 using Unity.VisualScripting;
 using static System.Net.Mime.MediaTypeNames;
+using static ProgressManager;
 
 public class CSVRoad_Story : MonoBehaviour
 {
@@ -245,8 +246,12 @@ public class CSVRoad_Story : MonoBehaviour
 
     public void CloseQuestUI()
     {
-        questUI.SetActive(false);
-        questText.text = "";
+        if(questUI != null)
+        {
+            questUI.SetActive(false);
+            questText.text = "";
+        }
+
         ProgressManager.Instance.progressData.quest = "";
     }
 
@@ -258,6 +263,7 @@ public class CSVRoad_Story : MonoBehaviour
                 StartCoroutine(FinishNarration());
                 break;
             case "0_1_0":
+                ProgressManager.Instance.progressData.actionStatuses.Find(a => a.actionType == ActionType.StartNewDay).isCompleted = true;
                 OpenQuestUI(GetQuest("0_1_0_0"));
                 break;
             case "0_2_0":

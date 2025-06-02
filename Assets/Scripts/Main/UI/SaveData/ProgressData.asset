@@ -12,15 +12,72 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fadef4205c7b67342aa1e9c079046fc7, type: 3}
   m_Name: ProgressData
   m_EditorClassIdentifier: 
-  newGame: 0
+  newGame: 1
   scene: DayHouse
-  storyProgress: 0_2_0
-  playerPosition: {x: -577.6163, y: 71.80007, z: 187.78218}
-  playerEulerAngles: {x: -0, y: 264.39996, z: 0}
+  storyProgress: 0_0_0
+  actionStatuses:
+  - actionType: 0
+    isCompleted: 0
+  - actionType: 1
+    isCompleted: 0
+  - actionType: 2
+    isCompleted: 0
+  - actionType: 3
+    isCompleted: 0
+  - actionType: 4
+    isCompleted: 0
+  - actionType: 5
+    isCompleted: 0
+  - actionType: 6
+    isCompleted: 0
+  - actionType: 7
+    isCompleted: 0
+  - actionType: 8
+    isCompleted: 0
+  - actionType: 9
+    isCompleted: 0
+  - actionType: 10
+    isCompleted: 0
+  - actionType: 11
+    isCompleted: 0
+  - actionType: 12
+    isCompleted: 0
+  - actionType: 13
+    isCompleted: 0
+  - actionType: 14
+    isCompleted: 0
+  - actionType: 15
+    isCompleted: 0
+  - actionType: 16
+    isCompleted: 0
+  - actionType: 17
+    isCompleted: 0
+  - actionType: 18
+    isCompleted: 0
+  - actionType: 19
+    isCompleted: 0
+  - actionType: 20
+    isCompleted: 0
+  - actionType: 21
+    isCompleted: 0
+  - actionType: 22
+    isCompleted: 0
+  - actionType: 23
+    isCompleted: 0
+  - actionType: 24
+    isCompleted: 0
+  - actionType: 25
+    isCompleted: 0
+  - actionType: 26
+    isCompleted: 0
+  - actionType: 27
+    isCompleted: 0
+  playerPosition: {x: -487, y: 71, z: 138}
+  playerEulerAngles: {x: 0, y: 0, z: 0}
   playerTr:
   - scene_Name: DayHouse
-    tr: {x: -609.0832, y: 71.80008, z: 190.40906}
-    rt: {x: -0, y: 264.39996, z: 0}
+    tr: {x: -488, y: 72, z: 140}
+    rt: {x: 0, y: 0, z: 0}
   - scene_Name: NightHouse
     tr: {x: -605, y: 72, z: 173}
     rt: {x: 0, y: -90, z: 0}
@@ -34,8 +91,8 @@ MonoBehaviour:
     tr: {x: 0, y: 0, z: 0}
     rt: {x: 0, y: 0, z: 0}
   - scene_Name: Main_Map
-    tr: {x: -380.57126, y: 5.52, z: -353.99573}
-    rt: {x: -0, y: 269.539, z: 0}
+    tr: {x: -376, y: 5, z: -355}
+    rt: {x: 0, y: 90, z: 0}
   - scene_Name: Main_Map_Night
     tr: {x: -180, y: 5, z: -723}
     rt: {x: 0, y: 90, z: 0}
@@ -45,7 +102,7 @@ MonoBehaviour:
   schoolInventoryDatas: []
   phoneDatas:
   - name: Steven
-    hasPhone: 1
+    hasPhone: 0
     isUnlocked: 0
   - name: Ethan
     hasPhone: 0
@@ -57,7 +114,8 @@ MonoBehaviour:
   effectVolume: 50
   characterVolume: 50
   isFullScreen: 1
-  language: en
+  language: 
+  quest: 
   timelineWatchedList:
   - key: StartFirstDay
-    value: 1
+    value: 0
