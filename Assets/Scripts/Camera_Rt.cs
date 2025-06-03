@@ -4,12 +4,12 @@ using UnityEngine;
 using UnityStandardAssets.Characters.FirstPerson;
 public class Camera_Rt : MonoBehaviour
 {
-    public static Camera_Rt instance; 
-    
+    public static Camera_Rt instance;
+
     private Camera m_Camera;
     private MouseLook m_MouseLook = new MouseLook(); // 마우스 컨트롤용 객체
     private Camera_Rt rt_Camera;
-    public bool lockerCamera=true;
+    public bool lockerCamera = true;
     private void Start()
     {
         if (instance == null)
@@ -32,7 +32,7 @@ public class Camera_Rt : MonoBehaviour
         {
             RotateView(); // 마우스 회전 실행 
         }
-      
+
     }
 
     private void RotateView()
@@ -45,8 +45,7 @@ public class Camera_Rt : MonoBehaviour
         lockerCamera = true;
     }
     public void Close_Camera()
-        {
-            lockerCamera = false;
-        }
-
+    {
+        lockerCamera = false;
     }
+}

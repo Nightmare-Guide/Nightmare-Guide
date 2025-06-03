@@ -86,5 +86,38 @@ public class PlayerMainCamera : MonoBehaviour
         }
     }
 
+    public void RotateToTarget(Transform target, float time)
+    {
+        StartCoroutine(SmoothRotateToTarget(target, time));
+    }
+
+    public Quaternion GetTargetRotation(Transform target)
+    {
+        // 목표 방향 계산 (y축 회전용)
+        Vector3 directionToTarget = (target.position - transform.position).normalized;
+        float targetY = Quaternion.LookRotation(directionToTarget).eulerAngles.y;
+
+        // 최종 목표 회전값 설정 (x: -26, y: 몬스터 방향, z: 0도)
+        Quaternion targetRotation = Quaternion.Euler(-26f, targetY, 0f);
+
+        return targetRotation;
+    }
+
+    private IEnumerator SmoothRotateToTarget(Transform target, float time)
+    {
+        Quaternion startRotation = transform.rotation;
+        Quaternion targetRotation = GetTargetRotation(target);
+
+        float elapsed = 0f;
+        while (elapsed < time)
+        {
+            transform.rotation = Quaternion.Slerp(startRotation, targetRotation, elapsed / time);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        transform.rotation = targetRotation; // 정확하게 정렬 보정
+    }
+
 
 }

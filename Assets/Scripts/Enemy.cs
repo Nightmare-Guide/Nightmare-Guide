@@ -53,19 +53,62 @@ public class Enemy : MonoBehaviour
     {
         if (other.CompareTag("Player") && !caught_player)
         {
-            caught_player = true;
+            //caught_player = true;
 
-            PlayerMainCamera.camera_single.RotateTarget(); // 플레이어 카메라 회전
-            this.LookAtPlayer(targetPlayer);              // 적 회전
+            //PlayerMainCamera.camera_single.RotateTarget(); // 플레이어 카메라 회전
+            //this.LookAtPlayer(targetPlayer, 0f);              // 몬스터 회전
 
-            animator.SetTrigger("Attack");
+            //animator.SetTrigger("Attack");
 
-            other.GetComponent<PlayerController>().DisableInput();
+            //other.GetComponent<PlayerController>().DisableInput();
 
-            FreezeEnemy();
-           
-            StartCoroutine(JumpscareSequence());
+            //FreezeEnemy();
+
+            //StartCoroutine(JumpscareSequence());
+
+            MoveToPlayerForward(other.transform);
+            Jumpscare();
         }
+    }
+
+    void Jumpscare()
+    {
+        caught_player = true;
+
+        // 플레이어 움직임 멈춤
+        PlayerController.instance.Close_PlayerController();
+        Camera_Rt.instance.Close_Camera();
+
+        // 몬스터 움직임 멈춤
+        FreezeEnemy();
+
+        // 플레이어 카메라가 몬스터를 향해 회전
+        PlayerMainCamera.camera_single.RotateToTarget(this.transform, 0.2f);
+
+        // 몬스터 애니메이션 실행
+        AnimHelper.TryPlay(animator, "killPlayer2", 0f);
+    }
+
+    void MoveToPlayerForward(Transform playerObj)
+    {
+        // 1. 플레이어 카메라가 몬스터을 향해 회전할 때의 목표 회전값 가져오기
+        Quaternion monsterRotation = PlayerMainCamera.camera_single.GetTargetRotation(this.transform);
+
+        // 2. monsterRotation 기준 forward 방향 구하기
+        Vector3 forwardDir = monsterRotation * Vector3.forward;
+        forwardDir.y = 0f; // 수평 방향만 유지 (필요 시)
+
+        // 3. 플레이어 위치 기준으로 몬스터를 앞쪽으로 떨어진 곳에 배치
+        Vector3 playerPos = playerObj.position;
+        Vector3 targetPosition = playerPos + forwardDir.normalized;
+        targetPosition.y = transform.position.y;
+
+        transform.position = targetPosition;
+
+        Debug.Log("카메라 회전 기준 거리 차이 : " + Vector3.Distance(transform.position, playerPos));
+
+        // 4. 몬스터 본체가 플레이어를 바라보게 회전
+        transform.LookAt(playerObj);
     }
 
     private IEnumerator JumpscareSequence()
@@ -78,6 +121,7 @@ public class Enemy : MonoBehaviour
 
         // 적을 플레이어 앞에 순간이동
         TeleportEnemy();
+
 
         // 카메라 이펙트 실행 (예: 화면 깜빡임 등)
         PlayerMainCamera.camera_single.CameraEffect();
