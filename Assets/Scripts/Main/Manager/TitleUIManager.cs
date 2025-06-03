@@ -7,7 +7,8 @@ using UnityEngine.SceneManagement;
 public class TitleUIManager : UIUtility
 {
     [SerializeField] GameObject titleUI;
-    // [SerializeField] GameObject playerPrefab; // 이제 CommonUIManager에서 관리
+    [SerializeField] GameObject newGameAlertUI;
+    [SerializeField] GameObject loadGameAlertUI;
 
     private void Awake()
     {
@@ -55,6 +56,19 @@ public class TitleUIManager : UIUtility
 
     public void NewGameBtn()
     {
+        if (GameDataManager.instance.HasSaveData())
+        {
+            // 저장된 파일이 있습니다.
+            newGameAlertUI.SetActive(true);
+        }
+        else
+        {
+            StartNewGame();
+        }
+    }
+
+    public void StartNewGame()
+    {
         if (GameDataManager.instance.StartNewGame())
         {
             string currentScene = ProgressManager.Instance.progressData.scene;
@@ -72,13 +86,22 @@ public class TitleUIManager : UIUtility
 
     public void LoadGameBtn()
     {
-        string currentScene = ProgressManager.Instance.progressData.scene;
-        if (ProgressManager.Instance != null)
+        if (GameDataManager.instance.HasSaveData())
         {
-            ProgressManager.Instance.progressData.scene = currentScene;
+            string currentScene = ProgressManager.Instance.progressData.scene;
+            if (ProgressManager.Instance != null)
+            {
+                ProgressManager.Instance.progressData.scene = currentScene;
+            }
+            //플레이어 하우스
+            commonUIManager.MoveScene(currentScene);
         }
-        //플레이어 하우스
-        commonUIManager.MoveScene(currentScene);
+        else
+        {
+            // 저장된 데이터가 없습니다.
+            loadGameAlertUI.SetActive(true);
+        }
+
     }
 
     public void OptionBtn()
@@ -90,5 +113,5 @@ public class TitleUIManager : UIUtility
     {
         Application.Quit();
     }
-  
+
 }

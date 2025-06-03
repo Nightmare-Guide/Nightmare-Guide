@@ -76,6 +76,11 @@ public class GameDataManager : MonoBehaviour
 
     }
 
+    public bool HasSaveData()
+    {
+        return File.Exists(FilePath);
+    }
+
     public void SaveGame()
     {
         if (ProgressManager.Instance == null || ProgressManager.Instance.progressData == null)
