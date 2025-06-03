@@ -61,14 +61,14 @@ public class MainUIManager : UIUtility
         }
 
         // Start New Day 타임라인 실행 여부 확인
-        if (!ProgressManager.Instance.progressData.actionStatuses.Find(a => a.actionType == ActionType.StartNewDay).isCompleted)
+        if(!ProgressManager.Instance.IsActionCompleted(ActionType.StartNewDay))
         {
             // 타임라인 실행
             StartTimeLine(timeLineManager.playableAssets[0]);
         }
         else
         {
-            if (cellPhoneObjs.activeInHierarchy && cellPhoneObjs != null)
+            if (cellPhoneObjs != null && cellPhoneObjs.activeInHierarchy)
             {
                 cellPhoneObjs.GetComponent<Collider>().enabled = true;
             }

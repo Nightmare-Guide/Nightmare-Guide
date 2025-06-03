@@ -17,9 +17,13 @@ public class Michael : NPC
     private void Start()
     {
         col.enabled = false;
-        StartCoroutine(EnableCollider(col, 2f));
         AnimHelper.TryPlay(myAnim, "SweepBroom", 0);
         AnimHelper.TryPlay(broomAnim, "Sweep", 0);
+
+        if (!ProgressManager.Instance.IsActionCompleted(ProgressManager.ActionType.FirstMeetMichael))
+        {
+            StartCoroutine(EnableCollider(col, 2f));
+        }
     }
 
     public void DoSweepBroom()

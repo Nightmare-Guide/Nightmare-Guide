@@ -68,6 +68,7 @@ public class ProgressManager : MonoBehaviour
         InitAllActions();
     }
 
+    // Action 저장값 초기화 함수
     void InitAllActions()
     {
         defaultData.actionStatuses = new List<ActionStatus>();
@@ -76,6 +77,17 @@ public class ProgressManager : MonoBehaviour
         {
             defaultData.actionStatuses.Add(new ActionStatus { actionType = type, isCompleted = false });
         }
+    }
+
+    // Action 이 실행되었는 지 안되었는 지 확인하는 함수
+    public bool IsActionCompleted(ActionType type)
+    {
+        return ProgressManager.Instance.progressData.actionStatuses.Find(a => a.actionType == type).isCompleted;
+    }
+
+    public void CompletedAction(ActionType type)
+    {
+        ProgressManager.Instance.progressData.actionStatuses.Find(a => a.actionType == type).isCompleted = true;
     }
 
     /// <summary>

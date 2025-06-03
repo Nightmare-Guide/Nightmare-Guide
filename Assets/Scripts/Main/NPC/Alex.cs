@@ -25,6 +25,11 @@ public class Alex : NPC
 
     private void Start()
     {
+        if (ProgressManager.Instance.IsActionCompleted(ProgressManager.ActionType.FirstMeetAlex))
+        {
+            npcTransform.gameObject.SetActive(false);
+        }
+
         col.enabled = false;
         agent.SetDestination(targetTransform[0].position);
         isWalking = true;

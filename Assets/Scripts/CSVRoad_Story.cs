@@ -263,11 +263,12 @@ public class CSVRoad_Story : MonoBehaviour
                 StartCoroutine(FinishNarration());
                 break;
             case "0_1_0":
-                ProgressManager.Instance.progressData.actionStatuses.Find(a => a.actionType == ActionType.StartNewDay).isCompleted = true;
+                ProgressManager.Instance.CompletedAction(ActionType.StartNewDay);
                 OpenQuestUI(GetQuest("0_1_0_0"));
                 break;
             case "0_2_0":
-                if(currentNPC != null) { Michael michael = currentNPC as Michael; michael.DoSweepBroom(); }
+                ProgressManager.Instance.CompletedAction(ActionType.FirstMeetMichael);
+                if (currentNPC != null) { Michael michael = currentNPC as Michael; michael.DoSweepBroom(); }
                 break;
             case "0_3_0":
                 if (currentNPC != null)
@@ -307,6 +308,7 @@ public class CSVRoad_Story : MonoBehaviour
                 }
                 break;
             case "2_2_0":
+                ProgressManager.Instance.CompletedAction(ActionType.FirstMeetAlex);
                 if (currentNPC != null) { Alex alex = currentNPC as Alex; alex.WalkToOutSide(); }
                 break;
         }
