@@ -8714,6 +8714,7 @@ PrefabInstance:
     - {fileID: 7749946213711501790, guid: 533e2dfb2845ec2409fb38502ad0a3e1, type: 3}
     - {fileID: 1349527047596352295, guid: 533e2dfb2845ec2409fb38502ad0a3e1, type: 3}
     - {fileID: 3504563860939077510, guid: 533e2dfb2845ec2409fb38502ad0a3e1, type: 3}
+    - {fileID: 7251166045550385322, guid: 533e2dfb2845ec2409fb38502ad0a3e1, type: 3}
     m_RemovedGameObjects:
     - {fileID: 4924954150650811863, guid: 533e2dfb2845ec2409fb38502ad0a3e1, type: 3}
     - {fileID: 5792187092455655840, guid: 533e2dfb2845ec2409fb38502ad0a3e1, type: 3}
@@ -8771,9 +8772,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 622494642145563307, guid: 533e2dfb2845ec2409fb38502ad0a3e1, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8841822204598226856}
-    - targetCorrespondingSourceObject: {fileID: 4924954150683016705, guid: 533e2dfb2845ec2409fb38502ad0a3e1, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 5076030362585763993}
   m_SourcePrefab: {fileID: 100100000, guid: 533e2dfb2845ec2409fb38502ad0a3e1, type: 3}
 --- !u!1 &33297072708505366 stripped
 GameObject:
@@ -8861,29 +8859,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3545565823118908311, guid: 533e2dfb2845ec2409fb38502ad0a3e1, type: 3}
   m_PrefabInstance: {fileID: 636626127048302013}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &5516121890348442556 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4924954150683016705, guid: 533e2dfb2845ec2409fb38502ad0a3e1, type: 3}
-  m_PrefabInstance: {fileID: 636626127048302013}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &5076030362585763993
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5516121890348442556}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a1a8a3cd4ab88d84d9adc1d1a381ec64, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lockerIndex: 0
-  doorState: 0
-  boxcollider: {fileID: 0}
-  startRotation: {x: 0, y: 0, z: 0, w: 0}
-  endRotation: {x: 0, y: 0, z: 0, w: 0}
-  isRotation: 0
 --- !u!1 &9012821408535090941 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8486533526051048256, guid: 533e2dfb2845ec2409fb38502ad0a3e1, type: 3}
