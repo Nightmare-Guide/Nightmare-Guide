@@ -86,7 +86,10 @@ public class Enemy : MonoBehaviour
         PlayerMainCamera.camera_single.RotateToTarget(this.transform, 0.2f);
 
         // 몬스터 애니메이션 실행
-        AnimHelper.TryPlay(animator, "killPlayer2", 0f);
+        AnimHelper.TryPlay(animator, "killPlayer3", 0f);
+
+        // 카메라 이펙트 실행 (예: 화면 깜빡임 등)
+        PlayerMainCamera.camera_single.CameraEffect();
     }
 
     void MoveToPlayerForward(Transform playerObj)
@@ -95,12 +98,12 @@ public class Enemy : MonoBehaviour
         Quaternion monsterRotation = PlayerMainCamera.camera_single.GetTargetRotation(this.transform);
 
         // 2. monsterRotation 기준 forward 방향 구하기
-        Vector3 forwardDir = monsterRotation * Vector3.forward;
+        Vector3 forwardDir = monsterRotation * PlayerMainCamera.camera_single.transform.forward;
         forwardDir.y = 0f; // 수평 방향만 유지 (필요 시)
 
         // 3. 플레이어 위치 기준으로 몬스터를 앞쪽으로 떨어진 곳에 배치
         Vector3 playerPos = playerObj.position;
-        Vector3 targetPosition = playerPos + forwardDir.normalized;
+        Vector3 targetPosition = playerPos + forwardDir.normalized * 1.1f;
         targetPosition.y = transform.position.y;
 
         transform.position = targetPosition;

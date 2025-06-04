@@ -68,9 +68,11 @@ public class PlayerMainCamera : MonoBehaviour
     {
         float elapsedTime = 0f; // 경과시간
         float zRotation_duration = 0.5f;
-        float float_duration = 0.15f;
-        float maxtime = 5f;
+        float float_duration = 0.2f;
+        float maxtime = 3f;
         float originalFOV = mainCamera.fieldOfView;
+
+        yield return new WaitForSeconds(0.1f);
 
         while (elapsedTime < maxtime)
         {
