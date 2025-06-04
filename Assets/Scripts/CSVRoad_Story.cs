@@ -296,6 +296,7 @@ public class CSVRoad_Story : MonoBehaviour
             case "0_3_3":
                 if (currentNPC != null)
                 {
+                    Debug.Log("0_3_3실행");
                     EthanMother ethanMother = currentNPC as EthanMother;
                     ethanMother.WorktoPosition();
                 }
@@ -303,6 +304,7 @@ public class CSVRoad_Story : MonoBehaviour
             case "0_3_4":
                 if (currentNPC != null)
                 {
+                    Debug.Log("0_3_4실행");
                     EthanMother ethanMother = currentNPC as EthanMother;
                     ethanMother.supervisor.GoNightmare();
                 }
