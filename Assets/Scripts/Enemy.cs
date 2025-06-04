@@ -70,10 +70,11 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public void InitEnemy()
+    public void InitEnemy(Transform respawnTransform)
     {
         this.gameObject.SetActive(true);
-        this.transform.position = new Vector3(16, 3, -66);
+        this.transform.position = respawnTransform.position;
+        this.transform.rotation = respawnTransform.rotation;
 
         caught_player = false;
         currentState = EnemyState.Normal;

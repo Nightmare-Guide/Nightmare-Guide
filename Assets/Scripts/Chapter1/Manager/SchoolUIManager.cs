@@ -23,7 +23,9 @@ public class SchoolUIManager : UIUtility
     public List<PhoneInfos> phoneInfos; // 각각 휴대폰 정보를 담는 list
     public List<VerticalLayoutGroup> textBoxLayouts;
     [SerializeField] private Enemy enemyObj;
-    [SerializeField] public GameObject playerObj;
+    public GameObject playerObj;
+    public Transform[] playerRespawnPoints;
+    public Transform[] enemyRespawnPoints;
 
     [Header("# School Inventory")]
     public List<Sprite> itemImgs; // 인벤토리에 들어갈 이미지들
@@ -235,6 +237,7 @@ public class SchoolUIManager : UIUtility
     // 몬스터한테 죽었을 때에 실행해야하는 함수
     public IEnumerator RevivalPlayer(ProgressManager.ActionType actionType)
     {
+        // Blink UI 실행
         if(CommonUIManager.instance != null)
         {
             CommonUIManager.instance.Blink(false);
@@ -250,21 +253,33 @@ public class SchoolUIManager : UIUtility
             yield return new WaitForSeconds(CommonUIManager.instance.blinkDuration);
         }
 
+        int respawnPointIndex = 0;
+
+        // Action Type 에 따라서 리스폰 위치 설정
         switch (actionType)
         {
+            case ProgressManager.ActionType.FirstMeetMonster:
+                respawnPointIndex = 0;
+                break;
+            case ProgressManager.ActionType.GetDavidCellPhone:
+                respawnPointIndex = 1;
+                break;
             case ProgressManager.ActionType.EnteredBackRoom:
-                enemyObj.InitEnemy();
-                playerObj.transform.position = new Vector3(15, 4, -63);
-                Camera_Rt.instance.Open_Camera();
-                PlayerController.instance.Open_PlayerController();
+                respawnPointIndex = 2;
+                break;
+            case ProgressManager.ActionType.SolvedCabinetRoom:
+                respawnPointIndex = 3;
                 break;
         }
+
+        enemyObj.InitEnemy(enemyRespawnPoints[respawnPointIndex]);
+        InitPlayer(playerRespawnPoints[respawnPointIndex]);
     }
 
-    void InitPlayer(Transform startPos)
+    void InitPlayer(Transform respawnTransform)
     {
-        playerObj.transform.position = startPos.position;
-        playerObj.transform.rotation = startPos.rotation;
+        playerObj.transform.position = respawnTransform.position;
+        playerObj.transform.rotation = respawnTransform.rotation;
 
         //카메라 회전 활성화
         Camera_Rt.instance.Open_Camera();
