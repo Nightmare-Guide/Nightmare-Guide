@@ -1,6 +1,7 @@
 using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using TMPro;
 using UnityEngine;
 using UnityStandardAssets.Characters.FirstPerson;
@@ -9,7 +10,7 @@ public class Chapter1_Mgr : MonoBehaviour
 {
     public static Chapter1_Mgr instance;
     [Header("lockerRoom관련")]
-    public TextMeshPro [] lockerNames;
+    public TextMeshPro[] lockerNames;
     public GameObject lockerRoomMainDoor1; // 락커룸 도어
     public GameObject lockerRoomMainDoor2;
     public int nextdoorPassword = 0;
@@ -23,11 +24,21 @@ public class Chapter1_Mgr : MonoBehaviour
     [Header("플레이어")]
     public GameObject player;
 
+    [Header("Enemy")]
+    public GameObject Chase_Enemy;
+
     [Header("UI")]
     public GameObject aim_Obj;
 
     [Header("Aim")]
-    public bool isPlaying=true;
+    public bool isPlaying = true;
+
+    [Header("Teleport Points")]
+    public GameObject[] teleportPoints;
+    public GameObject[] teleportTriggerPoints;
+    public int Point = 1;
+
+
 
 
     private void Start()
@@ -45,18 +56,18 @@ public class Chapter1_Mgr : MonoBehaviour
         //
         RandomLockerShuffle();
 
-     
+
 
     }
     private void Update()
     {
-        if(nextdoorPassword == 4)
+        if (nextdoorPassword == 4)
         {
             LockerRoomNextDoor();
             nextdoorPassword = 0;
             Debug.Log("다음지역이 열렸습니다.");
         }
-     
+
     }
 
     private void RandomLockerShuffle() //Locker 이름 랜덤 부여
@@ -97,7 +108,7 @@ public class Chapter1_Mgr : MonoBehaviour
         gameobject.SetTrigger("CloseDoor");
     }
 
-    public void MoveStrangeClass(GameObject[] strange )
+    public void MoveStrangeClass(GameObject[] strange)
     {
         foreach (GameObject obj in strange)
         {
@@ -111,4 +122,23 @@ public class Chapter1_Mgr : MonoBehaviour
         }
     }
 
+    public void Teleport_Enemy(GameObject enemy, GameObject teleportTrigger)
+    {
+        if (Point - 1 < teleportPoints.Length && Point - 1 < teleportTriggerPoints.Length)
+        {
+            // 에너미 이동
+            Vector3 enemyPos = teleportPoints[Point - 1].transform.position;
+            Quaternion enemyRot = teleportPoints[Point - 1].transform.rotation;
+            enemy.transform.position = enemyPos;
+            enemy.transform.rotation = enemyRot;
+
+            // 트리거는 다음 위치로 이동
+            Vector3 triggerPos = teleportTriggerPoints[Point - 1].transform.position;
+            Quaternion triggerRot = teleportTriggerPoints[Point - 1].transform.rotation;
+            teleportTrigger.transform.position = triggerPos;
+            teleportTrigger.transform.rotation = triggerRot;
+
+            Point++;
+        }
+    }
 }
