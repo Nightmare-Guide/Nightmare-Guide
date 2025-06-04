@@ -88,7 +88,7 @@ public class GameDataManager : MonoBehaviour
             Debug.LogError("ProgressManager 인스턴스 또는 progressData가 없습니다.");
             return;
         }
-
+        ProgressManager.Instance.SavePlayerTr();
         GameData saveData = new GameData
         {
             newGame = ProgressManager.Instance.progressData.newGame,

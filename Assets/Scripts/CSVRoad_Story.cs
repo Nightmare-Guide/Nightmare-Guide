@@ -74,11 +74,12 @@ public class CSVRoad_Story : MonoBehaviour
         for (int i = 0; i < data.Count; i++)
         {
             string chapter = data[i]["Chapter"].ToString();
-            if (chapter == subChapterKey)
+            if (chapter.Equals(subChapterKey))
             {
                 if (start == -1) start = i;
                 end = i;
                 chapterEnd = end;
+
             }
             else if (start != -1)
             {
@@ -91,7 +92,8 @@ public class CSVRoad_Story : MonoBehaviour
             //  Debug.LogWarning($"{subChapterKey}에 해당하는 데이터가 없습니다.");
             return;
         }
-
+        Debug.Log("현재 챕터 체크: " + data[progress]["Chapter"].ToString());
+        Debug.Log("현재 챕터 종료 체크: " + chapterEnd);
         StartCoroutine(DisplayChapterDialogue(start, end));
     }
 
@@ -101,7 +103,7 @@ public class CSVRoad_Story : MonoBehaviour
         {
             string chapter = data[i]["Chapter"].ToString();
 
-            if (chapter == subChapterKey)
+            if (chapter.Equals(subChapterKey))
             {
                 string text = data[i][LocalizationSettings.SelectedLocale.Identifier.Code].ToString();
                 questIndex = i;
@@ -138,7 +140,7 @@ public class CSVRoad_Story : MonoBehaviour
             }
 
             // 선택지 활성화 처리
-            if (data[i]["Character"].ToString() == "Select")
+            if (data[i]["Character"].ToString().Equals("Select"))
             {
                 ActivateSelection(i + 1); // 선택지 처리
                 yield break;
@@ -194,6 +196,7 @@ public class CSVRoad_Story : MonoBehaviour
                 Debug.Log("선택지 1 선택: ReturnPoint로 이동");
                 StartCoroutine(DisplayChapterDialogue(returnPoint, data.Count - 1)); // ReturnPoint부터 다시 출력
                 
+                Debug.Log("현재 챕터 : "+ data[progress]["Chapter"].ToString());
             }
             else
             {
@@ -206,6 +209,9 @@ public class CSVRoad_Story : MonoBehaviour
             progress += 4;
             string currentChapter = data[progress]["Chapter"].ToString();
             returnPoint = -1; // ReturnPoint 초기화
+            EndCheck(currentChapter);
+            Debug.Log("현재 챕터 : " + data[progress]["Chapter"].ToString());
+            Debug.Log("현재 챕터 종료: " + chapterEnd);
             // progress가 업데이트된 상태에서 다시 대사 출력
             StartCoroutine(DisplayChapterDialogue(progress, chapterEnd));
         }
@@ -229,7 +235,26 @@ public class CSVRoad_Story : MonoBehaviour
         dialogueBox.SetActive(true);
     }
 
+    public void EndCheck(string chap)
+    {
+        int start = -1, end = -1;
 
+        for (int i = 0; i < data.Count; i++)
+        {
+            string chapter = data[i]["Chapter"].ToString();
+            if (chapter.Equals(chap))
+            {
+                if (start == -1) start = i;
+                end = i;
+                chapterEnd = end;
+
+            }
+            else if (start != -1)
+            {
+                break;
+            }
+        }
+    }
 
     private string FormatDialogue(string text)
     {
