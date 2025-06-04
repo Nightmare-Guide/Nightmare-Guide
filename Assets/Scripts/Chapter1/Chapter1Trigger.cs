@@ -9,7 +9,7 @@ public class Chapter1Trigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player")&&this.gameObject.CompareTag("Trigger"))
+        if (other.gameObject.CompareTag("Player") && this.gameObject.CompareTag("Trigger"))
         {
             Chapter1_Mgr.instance.ActiveTriggerAnimator(triggerObjectAnimator);
         }
@@ -20,6 +20,10 @@ public class Chapter1Trigger : MonoBehaviour
         if (other.gameObject.CompareTag("Player") && this.gameObject.CompareTag("StrangeRoom2"))
         {
             Chapter1_Mgr.instance.MoveStrangeClass(Chapter1_Mgr.instance.strangeRoom2);
+        }
+        if (other.gameObject.CompareTag("Player") && this.gameObject.CompareTag("Teleport"))
+        {
+            Chapter1_Mgr.instance.Teleport_Enemy(Chapter1_Mgr.instance.Chase_Enemy);
         }
     }
 }

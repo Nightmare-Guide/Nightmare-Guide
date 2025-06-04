@@ -9,7 +9,7 @@ public class Chapter1_Mgr : MonoBehaviour
 {
     public static Chapter1_Mgr instance;
     [Header("lockerRoom관련")]
-    public TextMeshPro [] lockerNames;
+    public TextMeshPro[] lockerNames;
     public GameObject lockerRoomMainDoor1; // 락커룸 도어
     public GameObject lockerRoomMainDoor2;
     public int nextdoorPassword = 0;
@@ -23,11 +23,21 @@ public class Chapter1_Mgr : MonoBehaviour
     [Header("플레이어")]
     public GameObject player;
 
+    [Header("Enemy")]
+    public GameObject Chase_Enemy;
+
     [Header("UI")]
     public GameObject aim_Obj;
 
     [Header("Aim")]
-    public bool isPlaying=true;
+    public bool isPlaying = true;
+
+    [Header("Teleport_Point")]
+    public GameObject Point_A;
+    public GameObject Point_B;
+    public GameObject Point_C;
+    public int Point = 1;
+
 
 
     private void Start()
@@ -45,18 +55,18 @@ public class Chapter1_Mgr : MonoBehaviour
         //
         RandomLockerShuffle();
 
-     
+
 
     }
     private void Update()
     {
-        if(nextdoorPassword == 4)
+        if (nextdoorPassword == 4)
         {
             LockerRoomNextDoor();
             nextdoorPassword = 0;
             Debug.Log("다음지역이 열렸습니다.");
         }
-     
+
     }
 
     private void RandomLockerShuffle() //Locker 이름 랜덤 부여
@@ -97,7 +107,7 @@ public class Chapter1_Mgr : MonoBehaviour
         gameobject.SetTrigger("CloseDoor");
     }
 
-    public void MoveStrangeClass(GameObject[] strange )
+    public void MoveStrangeClass(GameObject[] strange)
     {
         foreach (GameObject obj in strange)
         {
@@ -111,4 +121,25 @@ public class Chapter1_Mgr : MonoBehaviour
         }
     }
 
+    public void Teleport_Enemy(GameObject obj)
+    {
+        if (Point == 1)
+        {
+            obj.transform.position = Point_A.transform.position;
+            obj.transform.rotation = Point_A.transform.rotation;
+            Point += 1;
+        }
+        if (Point == 2)
+        {
+            obj.transform.position = Point_B.transform.position;
+            obj.transform.rotation = Point_B.transform.rotation;
+            Point += 1;
+        }
+        if (Point == 3)
+        {
+            obj.transform.position = Point_C.transform.position;
+            obj.transform.rotation = Point_C.transform.rotation;
+            Point += 1;
+        }
+    }
 }
