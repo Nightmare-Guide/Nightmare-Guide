@@ -340,6 +340,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             Close_PlayerController();
             agent.SetDestination(playerwalkposition.position);
         }
+
     }
 
 

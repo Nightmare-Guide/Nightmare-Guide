@@ -9,6 +9,7 @@ public class PlayerMainCamera : MonoBehaviour
 {
     [SerializeField] Camera mainCamera;
     [SerializeField] PostProcessingBehaviour postProcessingBehaviour;
+    public GameObject jumpscareObj;
 
 
     public static PlayerMainCamera camera_single {  get; private set; }
@@ -69,10 +70,8 @@ public class PlayerMainCamera : MonoBehaviour
         float elapsedTime = 0f; // 경과시간
         float zRotation_duration = 0.5f;
         float float_duration = 0.2f;
-        float maxtime = 3f;
+        float maxtime = 2f;
         float originalFOV = mainCamera.fieldOfView;
-
-        yield return new WaitForSeconds(0.1f);
 
         while (elapsedTime < maxtime)
         {
@@ -100,7 +99,7 @@ public class PlayerMainCamera : MonoBehaviour
         float targetY = Quaternion.LookRotation(directionToTarget).eulerAngles.y;
 
         // 최종 목표 회전값 설정 (x: -26, y: 몬스터 방향, z: 0도)
-        Quaternion targetRotation = Quaternion.Euler(-26f, targetY, 0f);
+        Quaternion targetRotation = Quaternion.Euler(0f, targetY, 0f);
 
         return targetRotation;
     }
@@ -119,7 +118,24 @@ public class PlayerMainCamera : MonoBehaviour
         }
 
         transform.rotation = targetRotation; // 정확하게 정렬 보정
+
+        jumpscareObj.SetActive(true);
+
+        Animator monsterAnim = jumpscareObj.GetComponent<Animator>();
+        AnimHelper.TryPlay(monsterAnim, "killPlayer", 0f);
+
+        yield return new WaitForSeconds(0.55f);
+
+        // 카메라 이펙트 실행 (예: 화면 깜빡임 등)
+        CameraEffect();
+
+        yield return new WaitForSeconds(2f);
+
+        // 사망 후 액션
+        if (CommonUIManager.instance.uiManager is SchoolUIManager schoolUIManager)
+        {
+            Debug.Log("사망 후 액션");
+            StartCoroutine(schoolUIManager.RevivalPlayer(ProgressManager.ActionType.EnteredBackRoom));
+        }
     }
-
-
 }
