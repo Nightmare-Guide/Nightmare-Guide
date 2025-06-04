@@ -23,7 +23,7 @@ public class Chapter1Trigger : MonoBehaviour
         }
         if (other.gameObject.CompareTag("Player") && this.gameObject.CompareTag("Teleport"))
         {
-            Chapter1_Mgr.instance.Teleport_Enemy(Chapter1_Mgr.instance.Chase_Enemy);
+            Chapter1_Mgr.instance.Teleport_Enemy(Chapter1_Mgr.instance.Chase_Enemy, this.gameObject);
         }
     }
 }

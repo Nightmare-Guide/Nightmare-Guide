@@ -1,6 +1,7 @@
 using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using TMPro;
 using UnityEngine;
 using UnityStandardAssets.Characters.FirstPerson;
@@ -32,11 +33,11 @@ public class Chapter1_Mgr : MonoBehaviour
     [Header("Aim")]
     public bool isPlaying = true;
 
-    [Header("Teleport_Point")]
-    public GameObject Point_A;
-    public GameObject Point_B;
-    public GameObject Point_C;
+    [Header("Teleport Points")]
+    public GameObject[] teleportPoints;
+    public GameObject[] teleportTriggerPoints;
     public int Point = 1;
+
 
 
 
@@ -121,25 +122,23 @@ public class Chapter1_Mgr : MonoBehaviour
         }
     }
 
-    public void Teleport_Enemy(GameObject obj)
+    public void Teleport_Enemy(GameObject enemy, GameObject teleportTrigger)
     {
-        if (Point == 1)
+        if (Point - 1 < teleportPoints.Length && Point - 1 < teleportTriggerPoints.Length)
         {
-            obj.transform.position = Point_A.transform.position;
-            obj.transform.rotation = Point_A.transform.rotation;
-            Point += 1;
-        }
-        if (Point == 2)
-        {
-            obj.transform.position = Point_B.transform.position;
-            obj.transform.rotation = Point_B.transform.rotation;
-            Point += 1;
-        }
-        if (Point == 3)
-        {
-            obj.transform.position = Point_C.transform.position;
-            obj.transform.rotation = Point_C.transform.rotation;
-            Point += 1;
+            // 에너미 이동
+            Vector3 enemyPos = teleportPoints[Point - 1].transform.position;
+            Quaternion enemyRot = teleportPoints[Point - 1].transform.rotation;
+            enemy.transform.position = enemyPos;
+            enemy.transform.rotation = enemyRot;
+
+            // 트리거는 다음 위치로 이동
+            Vector3 triggerPos = teleportTriggerPoints[Point - 1].transform.position;
+            Quaternion triggerRot = teleportTriggerPoints[Point - 1].transform.rotation;
+            teleportTrigger.transform.position = triggerPos;
+            teleportTrigger.transform.rotation = triggerRot;
+
+            Point++;
         }
     }
 }
