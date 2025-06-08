@@ -22,6 +22,10 @@ public class SchoolUIManager : UIUtility
     public GameObject[] cellPhoneObjs;
     public List<PhoneInfos> phoneInfos; // 각각 휴대폰 정보를 담는 list
     public List<VerticalLayoutGroup> textBoxLayouts;
+    [SerializeField] private Enemy enemyObj;
+    public GameObject playerObj;
+    public Transform[] playerRespawnPoints;
+    public Transform[] enemyRespawnPoints;
 
     [Header("# School Inventory")]
     public List<Sprite> itemImgs; // 인벤토리에 들어갈 이미지들
@@ -57,17 +61,11 @@ public class SchoolUIManager : UIUtility
         {
             optionUI = commonUIManager.optionUI;
             uiObjects.Add(optionUI);
+            commonUIManager.uiManager = this;
         }
 
         InitItemDatas(); // 아이템 데이터 초기화
         GetProgressData(); // 저장된 데이터 가져오기
-
-
-        if (commonUIManager != null)
-        {
-            commonUIManager.uiManager = this;
-        }
-
     }
 
     private void Update()
@@ -89,6 +87,13 @@ public class SchoolUIManager : UIUtility
                     {
                         InGameCloseUI(uiObj);
                     }
+                }
+
+                if (PlayerMainCamera.camera_single.jumpscareObj.activeInHierarchy)
+                {
+                    // 플레이어 움직임 멈춤
+                    PlayerController.instance.Close_PlayerController();
+                    Camera_Rt.instance.Close_Camera();
                 }
             }
         }
@@ -227,5 +232,59 @@ public class SchoolUIManager : UIUtility
         {
             //Debug.Log("파일이 존재하지 않습니다.");
         }
+    }
+
+    // 몬스터한테 죽었을 때에 실행해야하는 함수
+    public IEnumerator RevivalPlayer(ProgressManager.ActionType actionType)
+    {
+        // Blink UI 실행
+        if(CommonUIManager.instance != null)
+        {
+            CommonUIManager.instance.Blink(false);
+
+            yield return new WaitForSeconds(CommonUIManager.instance.blinkDuration);
+
+            PlayerMainCamera.camera_single.jumpscareObj.SetActive(false);
+            PlayerMainCamera.camera_single.jumpscareObj.transform.position = new Vector3(0, -1.77f, 1);
+            PlayerMainCamera.camera_single.jumpscareObj.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+
+            CommonUIManager.instance.Blink(true);
+
+            yield return new WaitForSeconds(CommonUIManager.instance.blinkDuration);
+        }
+
+        int respawnPointIndex = 0;
+
+        // Action Type 에 따라서 리스폰 위치 설정
+        switch (actionType)
+        {
+            case ProgressManager.ActionType.FirstMeetMonster:
+                respawnPointIndex = 0;
+                break;
+            case ProgressManager.ActionType.GetDavidCellPhone:
+                respawnPointIndex = 1;
+                break;
+            case ProgressManager.ActionType.EnteredBackRoom:
+                respawnPointIndex = 2;
+                break;
+            case ProgressManager.ActionType.SolvedCabinetRoom:
+                respawnPointIndex = 3;
+                break;
+        }
+
+        enemyObj.InitEnemy(enemyRespawnPoints[respawnPointIndex]);
+        InitPlayer(playerRespawnPoints[respawnPointIndex]);
+    }
+
+    void InitPlayer(Transform respawnTransform)
+    {
+        playerObj.transform.position = respawnTransform.position;
+        playerObj.transform.rotation = respawnTransform.rotation;
+
+        //카메라 회전 활성화
+        Camera_Rt.instance.Open_Camera();
+
+        //플레이어 컨트롤 On
+        PlayerController.instance.Open_PlayerController();
     }
 }
