@@ -36,7 +36,7 @@ public class Chapter1_Mgr : MonoBehaviour
     [Header("Teleport Points")]
     public GameObject[] teleportPoints;
     public GameObject[] teleportTriggerPoints;
-    public int Point = 1;
+
 
 
 
@@ -122,23 +122,14 @@ public class Chapter1_Mgr : MonoBehaviour
         }
     }
 
-    public void Teleport_Enemy(GameObject enemy, GameObject teleportTrigger)
+    public void Teleport_Enemy(GameObject enemy, int index, GameObject teleportTrigger)
     {
-        if (Point - 1 < teleportPoints.Length && Point - 1 < teleportTriggerPoints.Length)
+        if (index >= 0 && index < teleportPoints.Length)
         {
-            // 에너미 이동
-            Vector3 enemyPos = teleportPoints[Point - 1].transform.position;
-            Quaternion enemyRot = teleportPoints[Point - 1].transform.rotation;
-            enemy.transform.position = enemyPos;
-            enemy.transform.rotation = enemyRot;
+            enemy.transform.position = teleportPoints[index].transform.position;
+            enemy.transform.rotation = teleportPoints[index].transform.rotation;
 
-            // 트리거는 다음 위치로 이동
-            Vector3 triggerPos = teleportTriggerPoints[Point - 1].transform.position;
-            Quaternion triggerRot = teleportTriggerPoints[Point - 1].transform.rotation;
-            teleportTrigger.transform.position = triggerPos;
-            teleportTrigger.transform.rotation = triggerRot;
-
-            Point++;
+            teleportTrigger.SetActive(false); // 트리거 꺼줌
         }
     }
 }
