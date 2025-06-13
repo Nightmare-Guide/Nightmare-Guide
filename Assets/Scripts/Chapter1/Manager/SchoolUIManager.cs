@@ -58,6 +58,9 @@ public class SchoolUIManager : UIUtility
         if (TimeLineManager.instance != null)
             timeLineManager = TimeLineManager.instance;
 
+        // 타임라인 실행 -> 테스트
+        // StartTimeLine(timeLineManager.playableAssets[1]);
+
         if (commonUIManager != null)
         {
             optionUI = commonUIManager.optionUI;
