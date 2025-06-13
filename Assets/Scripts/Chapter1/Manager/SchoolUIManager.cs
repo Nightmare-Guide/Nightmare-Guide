@@ -244,12 +244,9 @@ public class SchoolUIManager : UIUtility
 
             yield return new WaitForSeconds(CommonUIManager.instance.blinkDuration);
 
-            PlayerMainCamera playerCamera = PlayerMainCamera.camera_single;
-
-            playerCamera.jumpscareObj.SetActive(false);
-            playerCamera.InitCameraRotation();
-            playerCamera.jumpscareObj.transform.localPosition = new Vector3(0, -1.77f, 1);
-            playerCamera.jumpscareObj.transform.localRotation = Quaternion.Euler(0, 180, 0);
+            PlayerMainCamera.camera_single.jumpscareObj.SetActive(false);
+            PlayerMainCamera.camera_single.jumpscareObj.transform.position = new Vector3(0, -1.77f, 1);
+            PlayerMainCamera.camera_single.jumpscareObj.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
 
             CommonUIManager.instance.Blink(true);
 
