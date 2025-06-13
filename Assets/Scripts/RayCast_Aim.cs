@@ -92,7 +92,17 @@ public class RayCast_Aim : MonoBehaviour
                     {
                         HintEvent(click_object);
                     }
-                   
+
+                    if (click_object.CompareTag("DropItem"))
+                    {
+                        if(CommonUIManager.instance.uiManager is SchoolUIManager schoolUIManager)
+                        {
+                            schoolUIManager.GetItem(click_object);
+                        }
+                        click_object.SetActive(false);
+                    }
+
+
                 }
             }
         }

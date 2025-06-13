@@ -90,21 +90,33 @@ public class UIUtility : MonoBehaviour
     public void StopPlayerController()
     {
         //플레이어 컨트롤 OFF
-        PlayerController.instance.Close_PlayerController();
+        if(PlayerController.instance != null)
+        {
+            PlayerController.instance.Close_PlayerController();
+        }
 
-        //카메라 회전 정지
-        Camera_Rt.instance.Close_Camera();
+        if(Camera_Rt.instance != null)
+        {
+            //카메라 회전 정지
+            Camera_Rt.instance.Close_Camera();
+        }
 
         CursorUnLocked();
     }
 
     public void StartPlayerController()
     {
-        //카메라 회전 활성화
-        Camera_Rt.instance.Open_Camera();
+        if (PlayerController.instance != null)
+        {
+            //플레이어 컨트롤 On
+            PlayerController.instance.Open_PlayerController();
+        }
 
-        //플레이어 컨트롤 On
-        PlayerController.instance.Open_PlayerController();
+        if (Camera_Rt.instance != null)
+        {
+            //카메라 회전 활성화
+            Camera_Rt.instance.Open_Camera();
+        }
 
         // 마우스 커서 중앙에 고정
         CursorLocked();
