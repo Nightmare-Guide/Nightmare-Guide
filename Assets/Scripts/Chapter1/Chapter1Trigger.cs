@@ -18,21 +18,30 @@ public class Chapter1Trigger : MonoBehaviour
         {
             Chapter1_Mgr.instance.ActiveTriggerAnimator(triggerObjectAnimator);
         }
-        else if (gameObject.CompareTag("StrangeRoom1"))
+        if (gameObject.CompareTag("StrangeRoom1"))
         {
             Chapter1_Mgr.instance.MoveStrangeClass(Chapter1_Mgr.instance.strangeRoom1);
         }
-        else if (gameObject.CompareTag("StrangeRoom2"))
+        if (gameObject.CompareTag("StrangeRoom2"))
         {
             Chapter1_Mgr.instance.MoveStrangeClass(Chapter1_Mgr.instance.strangeRoom2);
         }
-        else if (gameObject.CompareTag("Teleport") && teleportIndex >= 0)
+        if (other.gameObject.CompareTag("Player") && this.gameObject.CompareTag("Teleport"))
         {
-            Chapter1_Mgr.instance.Teleport_Enemy(
-                Chapter1_Mgr.instance.Chase_Enemy,
-                teleportIndex,
-                this.gameObject
-            );
+            int index = System.Array.IndexOf(Chapter1_Mgr.instance.teleportTriggerPoints, this.gameObject);
+
+            if (index != -1)
+            {
+                Chapter1_Mgr.instance.Teleport_Enemy(
+                    Chapter1_Mgr.instance.Chase_Enemy,
+                    index,
+                    this.gameObject
+                );
+            }
+            else
+            {
+                Debug.LogWarning("트리거가 teleportTriggerPoints 배열에 없습니다.");
+            }
         }
     }
 }

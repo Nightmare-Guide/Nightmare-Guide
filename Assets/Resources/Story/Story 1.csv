@@ -24,9 +24,12 @@ DayHouse,0_2_0,npc,마이클,Michael,マイケル,"그래, 다음에 또 보세.
 DayHospital,0_3_0_0,,,,,사무실로 가서 제임스를 만나세요.,Head to the office and meet James.,事務室へ行き、ジェームズに会ってください。,,,quest,
 DayHospital,0_3_0,player,스티븐,Steven,スティーブン,안녕하세요. 새로 입사한 스티븐입니다.,"Hello, I'm Steven, the new hire.",初めまして。新入社員のスティーブンです。,사무실에 첫 입장[병원],,play,
 DayHospital,0_3_0,npc,제임스,James,ジェームズ,"반가워, 나는 네 사수인 제임스야.","Nice to meet you. I'm James, your supervisor.",よろしく、私は君の先輩のジェームズだ。,,,play,
-DayHospital,0_3_0,npc,제임스,James,ジェームズ,첫날부터 미안하지만 인원이 부족해서 오늘부터 바로 임무에 투입될 거야.@@지금 바로 병실로 출발하자,"Sorry to say this on your first day,@@but we're short on staff, so you'll be starting right away.",初日から悪いけど、@@人手が足りないから今日からすぐ任務に入ってもらうよ。,,,play,
-DayHospital,0_3_1,npc,제임스,James,ジェームズ,이미 교육을 받았겠지만 어떻게 일을 진행하는 지 설명이 필요해?,"You've already been trained, but do you need me@@to explain how the job works?",すでに研修は受けたと思うけど、@@仕事の進め方の説明は必要かな？,,,play,point
-DayHospital,0_3_1,npc,제임스,James,ジェームズ,우리는 악몽 속에 갇힌 사람들을 구출하기 위해 정신 연결 기계장치를 사용해 악몽 속으로 들어갈 거야.,We use a mental link device to enter nightmares@@and rescue people trapped inside.,我々は、悪夢に閉じ込められた人々を救出するために、@@精神接続装置を使って悪夢の中に入る。,,,play,point
+DayHospital,0_3_0,npc,제임스,James,ジェームズ,첫날부터 미안하지만 인원이 부족해서 오늘부터 바로 임무에 투입될 거야.,"Sorry to say this on your first day,@@but we're short on staff, so you'll be starting right away.",初日から悪いけど、@@人手が足りないから今日からすぐ任務に入ってもらうよ。,,,play,
+DayHospital,0_3_0,npc,제임스,James,ジェームズ,"여기, 오늘 네가 구출 해야 할 악몽의 주인에 관한 정보야.",Here's the information about the person you'll be rescuing today.,これは、今日あなたが救出する悪夢の主に関する情報です。,,,play,
+DayHospital,0_3_0,npc,제임스,James,ジェームズ,확인하고 말을 걸어줘.,Check it and talk to me.,確認して、声をかけてください。,,,play,
+DayHospital,0_3_1,npc,제임스,James,ジェームズ,그럼 이제 바로 병실로 출발하자.,"Alright, let's go straight to the hospital room now",では、すぐに病室へ行きましょう。,,,play,
+DayHospital,0_3_1,npc,제임스,James,ジェームズ,이미 교육을 받았겠지만 내가 한번 더 설명해줄게.,"You’ve probably already been trained, but let me explain it once more.",すでに研修を受けているとは思いますが、@@念のためもう一度ご説明しますね。,,,play,point
+DayHospital,0_3_1,npc,제임스,James,ジェームズ,우리는 악몽 속에 갇힌 사람들을 구출하기 위해 @@정신 연결 기계장치를 사용해 악몽 속으로 들어갈 거야.,We use a mental link device to enter nightmares@@and rescue people trapped inside.,我々は、悪夢に閉じ込められた人々を救出するために、@@精神接続装置を使って悪夢の中に入る。,,,play,point
 DayHospital,0_3_1,npc,제임스,James,ジェームズ,그곳에서 악몽 주인의 마음 속 결핍을 충족시켜 데리고 탈출해야 해.,"In there, we must fulfill what the dreamer is@@emotionally lacking and bring them out.",そこで、悪夢の主の心の中にある欠落を満たし、@@一緒に脱出しなければならない。,,,play,
 DayHospital,0_3_1,npc,제임스,James,ジェームズ,"하지만 악몽의 내용이 어떤 것인지는 들어가기 전까지는 알 수 없어서,","But we can't know what kind of nightmare it is until we go in,",でも、悪夢の内容は入るまで分からないから、,,,,
 DayHospital,0_3_1,npc,제임스,James,ジェームズ,악몽 안에서는 스스로 모든 걸 해결해야 해.,so you'll have to figure everything out on your own.,中では自分で全てを解決する必要があるんだ。,,,play,
@@ -36,8 +39,6 @@ DayHospital,0_3_2,Select,,,,,,,,,play,
 DayHospital,0_3_2,player,스티븐,Steven,スティーブン,한번만 더 설명 부탁 드립니다. ,"Could you explain it once more, please?",もう一度だけ説明しますね。,,,play,
 DayHospital,0_3_2,player,스티븐,Steven,スティーブン,이해했습니다.,Understood.,理解しました。,,,play,
 DayHospital,0_3_2,Select,,,,,,,,,play,
-DayHospital,0_3_2,npc,제임스,James,ジェームズ,오늘 네가 구출해야 할 악몽의 주인에 관한 정보야.,Here's the information about the person you'll be rescuing today.,これは、今日あなたが救出する悪夢の主に関する情報です。,,,play,
-DayHospital,0_3_2,npc,제임스,James,ジェームズ,확인하고 말을 걸어줘.,Check it and talk to me.,確認して、声をかけてください。,,,play,
 DayHospital,0_3_2,anim,,,,,,,애니메이션,,play,
 DayHospital,0_3_2,npc,제임스,James,ジェームズ,"그래, 오늘은 내가 같이 병실까지 동행할 거야.","Alright, I'll accompany you to the hospital room today.",今日は私が病室まで同行します。,,,play,
 DayHospital,0_3_2,npc,제임스,James,ジェームズ,"마지막으로, 환자도 중요하지만 네 정신도 중요하다는 걸 명심해.","One last thing — the patient is important, but so is your mental health.",最後に、患者も大切ですが、あなた自身の心も大切だということを忘れないでください。,,,play,
