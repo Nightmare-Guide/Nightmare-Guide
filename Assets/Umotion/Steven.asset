@@ -20,7 +20,7 @@ MonoBehaviour:
     PoseToolPivotMode:
       valueInternal: 0
     PoseToolMode:
-      valueInternal: 2
+      valueInternal: 1
     PoseMirrorMode:
       valueInternal: 0
     ConfigMode:
@@ -40,7 +40,7 @@ MonoBehaviour:
     FramesZoom:
       valueInternal: 0.042636693
     PropertiesScrollPosition:
-      valueInternal: 4.000004
+      valueInternal: 848
     PropertiesZoom:
       valueInternal: 1
     CurveYScrollPosition:
@@ -334,9 +334,9 @@ MonoBehaviour:
     - valueInternal: 0
     LocalRotationChannelList:
     - CurrentValue:
-        valueInternal: -0.0009075245
+        valueInternal: 0
       ReferencePoseValue:
-        valueInternal: -0.0009075245
+        valueInternal: 0
       PoseValueList: []
       ChannelPerClipList:
       - LayerList:
@@ -353,12 +353,12 @@ MonoBehaviour:
           newKeyListSerialized: 00000000
       - LayerList:
         - CurrentOriginalValue:
-            valueInternal: -0.0009075245
+            valueInternal: 0
           newKeyListSerialized: 00000000
     - CurrentValue:
-        valueInternal: -9.1748875e-10
+        valueInternal: 0
       ReferencePoseValue:
-        valueInternal: -9.1748875e-10
+        valueInternal: 0
       PoseValueList: []
       ChannelPerClipList:
       - LayerList:
@@ -375,12 +375,12 @@ MonoBehaviour:
           newKeyListSerialized: 00000000
       - LayerList:
         - CurrentOriginalValue:
-            valueInternal: -9.1748875e-10
+            valueInternal: 0
           newKeyListSerialized: 00000000
     - CurrentValue:
-        valueInternal: 7.997415e-12
+        valueInternal: 0
       ReferencePoseValue:
-        valueInternal: 7.997415e-12
+        valueInternal: 0
       PoseValueList: []
       ChannelPerClipList:
       - LayerList:
@@ -397,12 +397,12 @@ MonoBehaviour:
           newKeyListSerialized: 00000000
       - LayerList:
         - CurrentOriginalValue:
-            valueInternal: 7.997415e-12
+            valueInternal: 0
           newKeyListSerialized: 00000000
     - CurrentValue:
-        valueInternal: 0.9999995
+        valueInternal: 1
       ReferencePoseValue:
-        valueInternal: 0.9999995
+        valueInternal: 1
       PoseValueList: []
       ChannelPerClipList:
       - LayerList:
@@ -419,7 +419,7 @@ MonoBehaviour:
           newKeyListSerialized: 00000000
       - LayerList:
         - CurrentOriginalValue:
-            valueInternal: 0.9999995
+            valueInternal: 1
           newKeyListSerialized: 00000000
     - CurrentValue:
         valueInternal: 0
