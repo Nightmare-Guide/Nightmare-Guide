@@ -32,7 +32,7 @@ public class TitleUIManager : UIUtility
         uiObjects.Add(optionUI);
 
         commonUIManager.uiManager = this;
-        SoundManager.Instance.PlayBGM(titlebgm);
+        SoundManager.instance.PlayBGM(titlebgm);
     }
 
     private void Update()
@@ -66,7 +66,7 @@ public class TitleUIManager : UIUtility
         else
         {
             StartNewGame();
-            SoundManager.Instance.StopBGM();
+            SoundManager.instance.StopBGM();
         }
     }
 
