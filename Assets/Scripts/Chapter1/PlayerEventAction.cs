@@ -26,7 +26,7 @@ public class PlayerEventAction : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
 
         // 코루틴으로 부드럽게 회전
-        StartCoroutine(SmoothRotateY(targetYRotation, rotationDuration));
+       // StartCoroutine(SmoothRotateY(targetYRotation, rotationDuration));
     }
 
     private IEnumerator SmoothRotateY(float targetY, float duration)
