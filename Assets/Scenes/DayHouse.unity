@@ -2745,6 +2745,24 @@ MonoBehaviour:
   onScript: 0
   failDialogue: 0_9_9
   progressType: 1
+--- !u!114 &84627467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 84627455}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 0, g: 1, b: 0.19763422, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!4 &88680305 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4208808056615985139, guid: fd68dbc4f60dd2b41b4c463a9f8c4276, type: 3}
@@ -58179,6 +58197,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4214358325184805382, guid: 85482ec0bdbc65242a3733db773a5e91, type: 3}
       insertIndex: -1
       addedObject: {fileID: 84627461}
+    - targetCorrespondingSourceObject: {fileID: 4214358325184805382, guid: 85482ec0bdbc65242a3733db773a5e91, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 84627467}
     - targetCorrespondingSourceObject: {fileID: 658297724480729418, guid: 85482ec0bdbc65242a3733db773a5e91, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8886268834406011576}

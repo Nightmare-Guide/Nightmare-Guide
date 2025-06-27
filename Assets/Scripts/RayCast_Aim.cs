@@ -1,4 +1,4 @@
-using JetBrains.Annotations;
+ï»¿using JetBrains.Annotations;
 using UnityEngine;
 using UnityStandardAssets.Characters.FirstPerson;
 using static CommonUIManager;
@@ -7,7 +7,7 @@ using static UnityEngine.Rendering.DebugUI;
 
 public class RayCast_Aim : MonoBehaviour
 {
-    public float maxRayDistance = 5f; // ·¹ÀÌ ±æÀÌ ¼³Á¤
+    public float maxRayDistance = 5f; // ë ˆì´ ê¸¸ì´ ì„¤ì •
 
     [Header("Locker")]
     bool locker = true;
@@ -15,9 +15,9 @@ public class RayCast_Aim : MonoBehaviour
 
     private void Start()
     {
-        // Ä¿¼­¸¦ È­¸é Áß¾Ó¿¡ °íÁ¤
+        // ì»¤ì„œë¥¼ í™”ë©´ ì¤‘ì•™ì— ê³ ì •
         Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;  // Ä¿¼­¸¦ ¾Èº¸ÀÌ°Ô ÇÏ±â
+        Cursor.visible = false;  // ì»¤ì„œë¥¼ ì•ˆë³´ì´ê²Œ í•˜ê¸°
 
     }
     private void Update()
@@ -27,12 +27,20 @@ public class RayCast_Aim : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, maxRayDistance, LayerMask.GetMask("ActiveObject")))
         {
-            // UI È°¼ºÈ­
+            OutlineObject outline = hit.collider.GetComponent<OutlineObject>();
+
+                if (outline != null && !outline.enabled)
+                {
+                    outline.enabled = true; // âœ… ì‹¤ì œë¡œ ì¼œì¤˜ì•¼ ë¼!
+                    Debug.Log("OutlineObject í™œì„±í™”ë¨!");
+                }
+            
+            // UI í™œì„±í™”
             if (CommonUIManager.instance != null)
             {
                 CommonUIManager.instance.interactionUI.SetActive(true);
             }
-            
+
 
             if (Input.GetKeyDown(KeyCode.E))
             {
@@ -40,10 +48,11 @@ public class RayCast_Aim : MonoBehaviour
                 {
                     GameObject click_object = hit.transform.gameObject;
 
-                    // Äİ¶óÀÌ´õ ºñÈ°¼ºÈ­
+
+                    // ì½œë¼ì´ë” ë¹„í™œì„±í™”
                     click_object.GetComponent<Collider>().enabled = false;
 
-                    // Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.red); // ½ÇÁ¦ Ãæµ¹ ÁöÁ¡±îÁö »¡°£»ö
+                    // Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.red); // ì‹¤ì œ ì¶©ëŒ ì§€ì ê¹Œì§€ ë¹¨ê°„ìƒ‰
 
                     // Debug.Log($"Object Name : {click_object.name}");
                     if (StoryCheck(click_object))
@@ -54,7 +63,7 @@ public class RayCast_Aim : MonoBehaviour
                    
                     if (click_object.CompareTag("NextScene"))
                     {
-                        // ÇÃ·¹ÀÌ¾î ¸ø ¿òÁ÷ÀÌ°Ô
+                        // í”Œë ˆì´ì–´ ëª» ì›€ì§ì´ê²Œ
                         PlayerController.instance.Close_PlayerController();
                         Camera_Rt.instance.Close_Camera();
                       
@@ -62,7 +71,7 @@ public class RayCast_Aim : MonoBehaviour
                         next.Next_Scene();
                        
                     }
-                    // ÅÂ±×°¡ "maze_Btn"ÀÌ¶ó¸é Select_Btn() È£Ãâ
+                    // íƒœê·¸ê°€ "maze_Btn"ì´ë¼ë©´ Select_Btn() í˜¸ì¶œ
                     if (click_object.CompareTag("maze_Btn"))
                     {
                         Chapter1_Maze(click_object);
@@ -101,8 +110,6 @@ public class RayCast_Aim : MonoBehaviour
                         }
                         click_object.SetActive(false);
                     }
-
-
                 }
             }
         }
@@ -110,7 +117,7 @@ public class RayCast_Aim : MonoBehaviour
         {
             if (CommonUIManager.instance != null)
             {
-                // UI ºñ È°¼ºÈ­
+                // UI ë¹„ í™œì„±í™”
                 CommonUIManager.instance.interactionUI.SetActive(false);
             }
           
@@ -126,44 +133,43 @@ public class RayCast_Aim : MonoBehaviour
         button_anim.SetBool("On", true);
     }
 
-    public void Chapter1_Maze(GameObject obj) //Ã©ÅÍ 1 ¹Ì·Î¸Ê Å»Ãâ¿ë ¹öÆ° Å¬¸¯
+    public void Chapter1_Maze(GameObject obj) //ì±•í„° 1 ë¯¸ë¡œë§µ íƒˆì¶œìš© ë²„íŠ¼ í´ë¦­
     {
         Maze_Button mazeButton = obj.GetComponent<Maze_Button>();
 
         if (mazeButton != null)
         {
-            mazeButton.Select_Btn(); // Å¬¸¯ÇÑ ¿ÀºêÁ§Æ®ÀÇ Select_Btn È£Ãâ
-         //   Debug.Log(obj.name + "»ö»ó º¯°æ");
+            mazeButton.Select_Btn(); // í´ë¦­í•œ ì˜¤ë¸Œì íŠ¸ì˜ Select_Btn í˜¸ì¶œ
+         //   Debug.Log(obj.name + "ìƒ‰ìƒ ë³€ê²½");
         }
         else
         {
-         //   Debug.Log("»ö»ó¾øÀ½");
+         //   Debug.Log("ìƒ‰ìƒì—†ìŒ");
         }
     }
 
     public void Locker(GameObject obj)
     {
 
-      //  Debug.Log("¶ôÄ¿ ÀÎ½Ä" + obj.name);
+      //  Debug.Log("ë½ì»¤ ì¸ì‹" + obj.name);
         Locker lockerObj = obj.GetComponent<Locker>();
         if (lockerObj.isMovingToLocker || lockerObj.outMovingToLocker)
         {
             return;
         }
 
-        if (locker)//¹®ÀÌ ¿­¸®°í ÇÃ·¹ÀÌ¾î ÀÌµ¿ÈÄ ¹®µğ ´İÈû
+        if (locker)//ë¬¸ì´ ì—´ë¦¬ê³  í”Œë ˆì´ì–´ ì´ë™í›„ ë¬¸ë”” ë‹«í˜
         {
             lockerObj.isMovingToLocker = true;
             lockerObj.PlayerHide();
             locker = false;
-
-
         }
-        else if (!locker)//ÇÃ·¹ÀÌ¾î ÄÁÆ®·Ñ·¯°¡ È°¼ºÈ­µÇ°í ¹®ÀÌ ¿­¸²
+
+        else if (!locker)//í”Œë ˆì´ì–´ ì»¨íŠ¸ë¡¤ëŸ¬ê°€ í™œì„±í™”ë˜ê³  ë¬¸ì´ ì—´ë¦¼
         {
 
             lockerObj.OpenLocker();
-            // PlayerController.instance.Open_PlayerController();//ÇÃ·¹ÀÌ¾î ÄÁÆ®·Ñ ON
+            // PlayerController.instance.Open_PlayerController();//í”Œë ˆì´ì–´ ì»¨íŠ¸ë¡¤ ON
             locker = true;
             // DoorCheck(obj);
 
@@ -177,11 +183,11 @@ public class RayCast_Aim : MonoBehaviour
         Door door = obj.GetComponent<Door>();
         LockerRoomDoor ldoor = obj.GetComponent<LockerRoomDoor>();
 
-        if (door != null) //ÀÏ¹İÀûÀÎ door ½ºÅ©¸³Æ®
+        if (door != null) //ì¼ë°˜ì ì¸ door ìŠ¤í¬ë¦½íŠ¸
         {
             door.Select_Door();
         }
-        if (ldoor != null) //LockerRoomDoor °ª È®ÀÎ¿ë
+        if (ldoor != null) //LockerRoomDoor ê°’ í™•ì¸ìš©
         {
             ldoor.OpenLockerDoor();
         }
@@ -189,7 +195,7 @@ public class RayCast_Aim : MonoBehaviour
 
     void TouchCellPhone(GameObject obj)
     {
-        // ÇØ´ç ÈŞ´ëÆù È¹µæ bool °ª º¯°æ
+        // í•´ë‹¹ íœ´ëŒ€í° íšë“ bool ê°’ ë³€ê²½
         if (obj.name.Contains("Steven"))
         {
             CommonUIManager.instance.stevenPhone.hasPhone = true;
@@ -208,23 +214,23 @@ public class RayCast_Aim : MonoBehaviour
             else if (targetPhone.name == "David") { ProgressManager.Instance.progressData.phoneDatas[2].hasPhone = true; }
         }
 
-        // CellPhone À§Ä¡ º¯°æ ÇÔ¼ö ½ÇÇà
+        // CellPhone ìœ„ì¹˜ ë³€ê²½ í•¨ìˆ˜ ì‹¤í–‰
         CellPhone cellPhoneLogic = obj.GetComponent<CellPhone>();
 
         Vector3[] cellPhoneTransform = GetCameraInfo();
 
-        cellPhoneLogic.UpPhone(cellPhoneTransform[0], cellPhoneTransform[1]); // Ä«¸Ş¶ó ¾ÕÀ¸·Î ÈŞ´ëÆù ÀÌµ¿
+        cellPhoneLogic.UpPhone(cellPhoneTransform[0], cellPhoneTransform[1]); // ì¹´ë©”ë¼ ì•ìœ¼ë¡œ íœ´ëŒ€í° ì´ë™
 
-        // µ¥ÀÌÅÍ ÀÔ·Â
+        // ë°ì´í„° ì…ë ¥
         if (!obj.name.Contains("Steven"))
         {
             cellPhoneLogic.schoolUIManager.GetItem(obj);
         }
 
-        //ÇÃ·¹ÀÌ¾î ÄÁÆ®·Ñ OFF
+        //í”Œë ˆì´ì–´ ì»¨íŠ¸ë¡¤ OFF
         PlayerController.instance.Close_PlayerController();
 
-        //Ä«¸Ş¶ó È¸Àü Á¤Áö
+        //ì¹´ë©”ë¼ íšŒì „ ì •ì§€
         Camera_Rt.instance.Close_Camera();
     }
 
@@ -232,22 +238,22 @@ public class RayCast_Aim : MonoBehaviour
     {
         Vector3[] arr = new Vector3[2];
 
-        // Ä«¸Ş¶ó Æ÷Áö¼Ç °ª
+        // ì¹´ë©”ë¼ í¬ì§€ì…˜ ê°’
         Vector3 cameraPos = this.GetComponent<Transform>().position;
 
-        // Ä«¸Ş¶ó È¸Àü°ª
+        // ì¹´ë©”ë¼ íšŒì „ê°’
         Vector3 cameraRotate = this.GetComponent<Transform>().eulerAngles;
 
-        // Ä«¸Ş¶ó°¡ ¹Ù¶óº¸´Â ¹æÇâ
+        // ì¹´ë©”ë¼ê°€ ë°”ë¼ë³´ëŠ” ë°©í–¥
         Vector3 cameraForward = transform.forward;
 
-        // Ä«¸Ş¶ó x Ãà È¸Àü°ª¿¡ µû¶ó Y À§Ä¡ Á¶Á¤ (ÃÖ´ë ¡¾0.35f º¯µ¿)
+        // ì¹´ë©”ë¼ x ì¶• íšŒì „ê°’ì— ë”°ë¼ Y ìœ„ì¹˜ ì¡°ì • (ìµœëŒ€ Â±0.35f ë³€ë™)
         float yOffset = Mathf.Sin(cameraRotate.x * Mathf.Deg2Rad) * Mathf.Sign(cameraRotate.x) * -0.35f;
 
-        // ÈŞ´ëÆù ÃÖÁ¾ Æ÷Áö¼Ç °ª
+        // íœ´ëŒ€í° ìµœì¢… í¬ì§€ì…˜ ê°’
         Vector3 cellPhonePos = cameraPos + new Vector3(cameraForward.x * 0.35f, yOffset, cameraForward.z * 0.35f);
 
-        // ÈŞ´ëÆù ÃÖÁ¾ È¸Àü °ª
+        // íœ´ëŒ€í° ìµœì¢… íšŒì „ ê°’
         Vector3 cellPhoneRotate = new Vector3(-cameraRotate.x, 180 + cameraRotate.y, 180 + cameraRotate.z);
 
         arr[0] = cellPhonePos;
@@ -262,9 +268,9 @@ public class RayCast_Aim : MonoBehaviour
         StoryInteractable interactable = obj.GetComponent<StoryInteractable>();
         if (interactable != null)
         {
-            return interactable.Interact(obj); // »óÈ£ÀÛ¿ë ¿Ï·á
+            return interactable.Interact(obj); // ìƒí˜¸ì‘ìš© ì™„ë£Œ
         }
-        return false; // »óÈ£ÀÛ¿ë ¾øÀ½
+        return false; // ìƒí˜¸ì‘ìš© ì—†ìŒ
     }
 
     public void HintEvent(GameObject obj)
