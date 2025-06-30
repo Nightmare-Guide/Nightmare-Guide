@@ -18,7 +18,7 @@ public class NHSupervisor : MonoBehaviour
     void Start()
     {
         anim = GetComponent<Animator>();
-        Invoke("StartNPCFlow", 10f); // 시작 지연
+        Invoke("StartNPCFlow", 5f); // 시작 지연
     }
 
     private IEnumerator MoveToTargetWaypoint(Transform targetWaypoint)
@@ -52,25 +52,57 @@ public class NHSupervisor : MonoBehaviour
 
     private IEnumerator PlayPostArrivalSequence()
     {
+      
+
+        Debug.Log("NHSupervisor: -90도 회전 실행");
+        yield return StartCoroutine(RotateByRelativeAngle(-90f, 1f));
         Debug.Log("NHSupervisor: talk1 실행");
         anim.SetTrigger("isTalk");
         yield return new WaitForSeconds(2.0f); // talk1 애니메이션 길이
+        CSVRoad_Story.instance.OnSelectChapter("2_0_0");
+        yield return new WaitForSeconds(1.0f);
+        CSVRoad_Story.instance.OnSelectChapter("2_0_1");
 
-        Debug.Log("NHSupervisor: Turn_Left 실행");
-        anim.SetTrigger("LeftTurn");
-        yield return new WaitForSeconds(1.0f); // Turn_Left 애니메이션 길이
-
-        Debug.Log("NHSupervisor: Turn_Right 실행");
-        anim.SetTrigger("RightTurn");
-        yield return new WaitForSeconds(1f); // Turn_Right 애니메이션 길이
-
+        Debug.Log("NHSupervisor: +160도 회전 실행");
+        yield return StartCoroutine(RotateByRelativeAngle(160f, 1f));
         Debug.Log("NHSupervisor: Action1 실행");
         anim.SetTrigger("Action");
         yield return new WaitForSeconds(4f); // Action1 애니메이션 길이
 
         Debug.Log("NHSupervisor: walk 시작");
         anim.SetBool("isWalk", true);
-        // 이동 재시작 필요 시, 다음 지점으로 MoveToTargetWaypoint 호출 가능
+    }
+
+    private IEnumerator RotateByRelativeAngle(float angle, float duration)
+    {
+        Quaternion startRot = transform.rotation;
+        Quaternion endRot = startRot * Quaternion.Euler(0, angle, 0); // 상대 회전
+
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            transform.rotation = Quaternion.Slerp(startRot, endRot, elapsed / duration);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        transform.rotation = endRot; // 정확한 최종 값 보정
+    }
+
+    private IEnumerator RotateByAngle(float angle, float duration)
+    {
+        Quaternion startRot = transform.rotation;
+        Quaternion endRot = startRot * Quaternion.Euler(0, angle, 0);
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            transform.rotation = Quaternion.Slerp(startRot, endRot, elapsed / duration);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        transform.rotation = endRot;
     }
 
     public IEnumerator NPCFlowSequence()
