@@ -59,7 +59,7 @@ public class SchoolUIManager : UIUtility
             timeLineManager = TimeLineManager.instance;
 
         // 타임라인 실행 -> 테스트
-        // StartTimeLine(timeLineManager.playableAssets[1]);
+        StartTimeLine(timeLineManager.playableAssets[1]);
 
         if (commonUIManager != null)
         {

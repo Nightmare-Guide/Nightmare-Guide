@@ -4,20 +4,29 @@ using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
-    public static SoundManager Instance;
+    public static SoundManager instance;
 
-    public AudioSource sfxSource;
+
+    [Header("BGM")]
     public AudioSource bgmSource;
+    public AudioClip hospitalSound;
+    public AudioClip windSound;
+    [Header("SFX")]
+    public AudioSource sfxSource;
+    public AudioClip beepsound;
     public AudioClip doorOpen;
     public AudioClip doorClose;
     public AudioClip doorLocked;
+    public AudioClip mouseHover;
+    public AudioClip carEnginsound1;
+    public AudioClip carEnginsound2;
 
 
     private void Awake()
     {
-        if (Instance == null)
+        if (instance == null)
         {
-            Instance = this;
+            instance = this;
             DontDestroyOnLoad(gameObject);
         }
         else
@@ -29,6 +38,8 @@ public class SoundManager : MonoBehaviour
     public void PlayDoorOpen() => sfxSource.PlayOneShot(doorOpen);
     public void PlayDoorClose() => sfxSource.PlayOneShot(doorClose);
     public void PlayDoorLocked() => sfxSource.PlayOneShot(doorLocked);
+    public void ClickButton() => sfxSource.PlayOneShot(beepsound);
+    public void ButtonHover() => sfxSource.PlayOneShot(mouseHover);
 
     public void PlayOneShot(AudioClip clip)
     {
