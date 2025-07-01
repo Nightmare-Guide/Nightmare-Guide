@@ -171,7 +171,16 @@ public class Locker : MonoBehaviour
 
     }
 
-    private IEnumerator RotationDoor()//도어 열기
+    public void OpenDoor()
+    {
+        if (!isRotation)
+        {
+            isRotation = true;
+            StartCoroutine(RotationDoor(5f));
+        }
+    }
+
+    private IEnumerator RotationDoor(float time = 0.5f)//도어 열기
     {
         float startTime = 0f;
         float speedMultiplier = 2.5f; // 속도 증가
@@ -184,9 +193,9 @@ public class Locker : MonoBehaviour
 
         istrigger_on();
 
-        while (startTime < endTime)
+        while (startTime < time)
         {
-            float t = (startTime / endTime);
+            float t = (startTime / time);
             transform.rotation = Quaternion.Slerp(startRotationLocker, endRotation, t);
             startTime += Time.deltaTime * speedMultiplier;
             yield return null;

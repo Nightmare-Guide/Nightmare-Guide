@@ -14958,6 +14958,86 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4000010246071492, guid: 8f9e6b3439e16284d89085d18bacc3bd, type: 3}
   m_PrefabInstance: {fileID: 217850168}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &369392920
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 369392923}
+  - component: {fileID: 369392922}
+  - component: {fileID: 369392921}
+  m_Layer: 0
+  m_Name: SpuerVisor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &369392921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 369392920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a58c3a00155eaad4ab64bce8a7af6f00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  story: 2_0_0
+  col: {fileID: 787698601}
+  npcTransform: {fileID: 369392923}
+  playerTransform: {fileID: 914478418}
+  myAnim: {fileID: 787698602}
+  inAction: 0
+  moveTr:
+  - {fileID: 1025902941}
+  - {fileID: 1230591672}
+  - {fileID: 578796712}
+  - {fileID: 2119709856}
+  speed: 5
+  rotationSpeed: 100
+--- !u!95 &369392922
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 369392920}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 95e23d93c05237e4a8203a8c0bec3db0, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!4 &369392923
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 369392920}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -206.22897, y: 24.25, z: -894.1506}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 787698598}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &370779630 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6392747172101208661, guid: 7148452916a07f34a8145e1d3f150b7d, type: 3}
@@ -31942,17 +32022,35 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 787698592}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a58c3a00155eaad4ab64bce8a7af6f00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveTr:
-  - {fileID: 1025902941}
-  - {fileID: 1230591672}
-  - {fileID: 578796712}
-  - {fileID: 2119709856}
+  story: 
+  col: {fileID: 0}
+  npcTransform: {fileID: 0}
+  playerTransform: {fileID: 0}
+  myAnim: {fileID: 0}
+  inAction: 0
+  moveTr: []
   speed: 5
+  rotationSpeed: 100
+--- !u!4 &787698598 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5747387537766917654, guid: 6a55f2bd5dab07444affc9957e80cd6d, type: 3}
+  m_PrefabInstance: {fileID: 2027741871}
+  m_PrefabAsset: {fileID: 0}
+--- !u!136 &787698601 stripped
+CapsuleCollider:
+  m_CorrespondingSourceObject: {fileID: 2239893498441866406, guid: 6a55f2bd5dab07444affc9957e80cd6d, type: 3}
+  m_PrefabInstance: {fileID: 2027741871}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &787698602 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 8280769726093338590, guid: 6a55f2bd5dab07444affc9957e80cd6d, type: 3}
+  m_PrefabInstance: {fileID: 2027741871}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &789312652
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -36991,6 +37089,11 @@ MonoBehaviour:
   moveSpeed: 2
   stopDistance: 0.1
   obj: {fileID: 6758788}
+--- !u!4 &914478418 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4235032173555325522, guid: 0eee449d6f02a014c80f3b4813fa8f6e, type: 3}
+  m_PrefabInstance: {fileID: 423485677}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &916424755 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4000010246071492, guid: 8f9e6b3439e16284d89085d18bacc3bd, type: 3}
@@ -41469,7 +41572,7 @@ Transform:
   m_GameObject: {fileID: 1025902940}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -207.65, y: 24.21, z: -894.14}
+  m_LocalPosition: {x: -210.63, y: 24.21, z: -894.14}
   m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -76854,19 +76957,19 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 369392923}
     m_Modifications:
     - target: {fileID: 5747387537766917654, guid: 6a55f2bd5dab07444affc9957e80cd6d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -206.22897
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5747387537766917654, guid: 6a55f2bd5dab07444affc9957e80cd6d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 24.25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5747387537766917654, guid: 6a55f2bd5dab07444affc9957e80cd6d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -894.1506
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5747387537766917654, guid: 6a55f2bd5dab07444affc9957e80cd6d, type: 3}
       propertyPath: m_LocalRotation.w
@@ -76906,7 +77009,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8280769726093338590, guid: 6a55f2bd5dab07444affc9957e80cd6d, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8879420308219693780, guid: 6a55f2bd5dab07444affc9957e80cd6d, type: 3}
       propertyPath: m_Enabled
@@ -81546,6 +81649,6 @@ SceneRoots:
   - {fileID: 20776927}
   - {fileID: 1105757148}
   - {fileID: 1379319900}
-  - {fileID: 2027741871}
+  - {fileID: 369392923}
   - {fileID: 912174569}
   - {fileID: 288489203}
