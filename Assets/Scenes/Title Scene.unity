@@ -1635,6 +1635,8 @@ MonoBehaviour:
   doorClose: {fileID: 8300000, guid: 98f97c7aefd4b5e46936b718ff05ab52, type: 3}
   doorLocked: {fileID: 8300000, guid: ca28007fcaea71d4f8c81bd8678d4166, type: 3}
   mouseHover: {fileID: 8300000, guid: da61ff600d567f340886dbf9b637cf13, type: 3}
+  carEnginsound1: {fileID: 0}
+  carEnginsound2: {fileID: 0}
 --- !u!4 &275233425
 Transform:
   m_ObjectHideFlags: 0
@@ -9151,7 +9153,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1435699858}
   - component: {fileID: 1435699857}
-  - component: {fileID: 1435699859}
   m_Layer: 0
   m_Name: Title UI Manager
   m_TagString: Untagged
@@ -9202,21 +9203,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1435699859
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1435699856}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19b0fd8ac0182334e9b8d519a52784de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mixer: {fileID: 24100000, guid: f4f179141ef7360419352248dc4a3eb8, type: 2}
-  bgmSlider: {fileID: 1939306521}
-  sfxSlider: {fileID: 1439319731}
 --- !u!1 &1438344568
 GameObject:
   m_ObjectHideFlags: 0
@@ -11183,6 +11169,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1872977940}
   - component: {fileID: 1872977939}
+  - component: {fileID: 1872977941}
   m_Layer: 0
   m_Name: Common UI Manager
   m_TagString: Untagged
@@ -11233,6 +11220,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1872977941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1872977938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19b0fd8ac0182334e9b8d519a52784de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mixer: {fileID: 24100000, guid: f4f179141ef7360419352248dc4a3eb8, type: 2}
+  bgmSlider: {fileID: 1939306521}
+  sfxSlider: {fileID: 1439319731}
 --- !u!1 &1873465548
 GameObject:
   m_ObjectHideFlags: 0
