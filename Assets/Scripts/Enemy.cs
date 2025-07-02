@@ -38,6 +38,9 @@ public class Enemy : MonoBehaviour
     
         // Animator 컴포넌트 가져오기
         animator = GetComponent<Animator>();
+
+        // GameManager에서 플레이어 Transform을 받아오는 코드 (주석 처리됨)
+        // targetPlayer = GameManager.instance.player_tr;
     }
 
     public enum EnemyState
@@ -50,6 +53,19 @@ public class Enemy : MonoBehaviour
     {
         if (other.CompareTag("Player") && !caught_player)
         {
+            //caught_player = true;
+
+            //PlayerMainCamera.camera_single.RotateTarget(); // 플레이어 카메라 회전
+            //this.LookAtPlayer(targetPlayer, 0f);              // 몬스터 회전
+
+            //animator.SetTrigger("Attack");
+
+            //other.GetComponent<PlayerController>().DisableInput();
+
+            //FreezeEnemy();
+
+            //StartCoroutine(JumpscareSequence());
+
             Jumpscare();
         }
     }
@@ -100,6 +116,55 @@ public class Enemy : MonoBehaviour
         this.gameObject.SetActive(false);
     }
 
+    //private IEnumerator JumpscareSequence()
+    //{
+    //    // 플레이어 카메라를 회전시키는 연출 실행
+    //    PlayerMainCamera.camera_single.RotateTarget();
+
+    //    // 회전이 완료될 때까지 대기
+    //    yield return new WaitForSeconds(PlayerMainCamera.camera_single.rotationDuration);
+
+    //    // 적을 플레이어 앞에 순간이동
+    //    TeleportEnemy();
+
+
+    //    // 카메라 이펙트 실행 (예: 화면 깜빡임 등)
+    //    PlayerMainCamera.camera_single.CameraEffect();
+    //}
+
+    //public void TeleportEnemy()
+    //{
+    //    float jumpscareDistance = 1f;
+
+    //    // 플레이어 카메라 기준으로 바라보는 방향 (수평만 고려)
+    //    Vector3 cameraForward = PlayerMainCamera.camera_single.transform.forward;
+    //    cameraForward.y = 0;
+    //    cameraForward.Normalize();
+
+    //    // 목표 위치 설정
+    //    Vector3 jumpscarePosition = targetPlayer.position + (cameraForward * jumpscareDistance);
+
+    //    // 적 높이 보정
+    //    float heightOffset = -1f;
+    //    jumpscarePosition.y = targetPlayer.position.y + heightOffset;
+
+    //    // 위치 이동
+    //    transform.position = jumpscarePosition;
+
+    //    // Enemy → Player 방향을 정밀하게 계산 (회전)
+    //    Vector3 lookDirection = (targetPlayer.position - transform.position);
+    //    lookDirection.y = 0; // 수평 방향만 사용
+    //    lookDirection.Normalize();
+
+    //    // 적이 플레이어 바라보게 회전
+    //    transform.rotation = Quaternion.LookRotation(lookDirection);
+
+    //    // 회전 보정 (X, Z축 고정)
+    //    Vector3 euler = transform.rotation.eulerAngles;
+    //    euler.x = 0f;
+    //    euler.z = 0f;
+    //    transform.rotation = Quaternion.Euler(euler);
+    //}
     public void FreezeEnemy()
     {
         currentState = EnemyState.Frozen;
