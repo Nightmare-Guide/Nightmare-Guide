@@ -90,21 +90,33 @@ public class UIUtility : MonoBehaviour
     public void StopPlayerController()
     {
         //플레이어 컨트롤 OFF
-        PlayerController.instance.Close_PlayerController();
+        if(PlayerController.instance != null)
+        {
+            PlayerController.instance.Close_PlayerController();
+        }
 
-        //카메라 회전 정지
-        Camera_Rt.instance.Close_Camera();
+        if(Camera_Rt.instance != null)
+        {
+            //카메라 회전 정지
+            Camera_Rt.instance.Close_Camera();
+        }
 
         CursorUnLocked();
     }
 
     public void StartPlayerController()
     {
-        //카메라 회전 활성화
-        Camera_Rt.instance.Open_Camera();
+        if (PlayerController.instance != null)
+        {
+            //플레이어 컨트롤 On
+            PlayerController.instance.Open_PlayerController();
+        }
 
-        //플레이어 컨트롤 On
-        PlayerController.instance.Open_PlayerController();
+        if (Camera_Rt.instance != null)
+        {
+            //카메라 회전 활성화
+            Camera_Rt.instance.Open_Camera();
+        }
 
         // 마우스 커서 중앙에 고정
         CursorLocked();
@@ -280,6 +292,9 @@ public class UIUtility : MonoBehaviour
     public void FinishedTimeLine()
     {
         playableDirector.playableAsset = null;
+
+        // 에임 UI 활성화
+        aimUI.SetActive(true);
     }
 
     public void EnableCollider(Collider col)
@@ -304,15 +319,22 @@ public class UIUtility : MonoBehaviour
         if (timeLineManager.playableAssets.Count > 0 && playableDirector != null)
         {
             // 이미 실행된 적 있으면 return
-            if (ProgressManager.Instance.progressData.timelineWatchedList.Find(e => e.key == asset.name).value)
-                return;
+            //if (ProgressManager.Instance.progressData.timelineWatchedList.Find(e => e.key == asset.name).value)
+            //    return;
 
             // 타임라인 실행
             playableDirector.playableAsset = asset;
             playableDirector.Play();
 
             // 데이터 key 값으로 찾아서 저장
-            ProgressManager.Instance.progressData.timelineWatchedList.Find(e => e.key == asset.name).value = true;
+            // ProgressManager.Instance.progressData.timelineWatchedList.Find(e => e.key == asset.name).value = true;
+
+            // 에임 UI 비활성화
+            aimUI.SetActive(false);
+
+            //마우스 커서 비활성화
+            UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+            UnityEngine.Cursor.visible = false;  // 커서를 보이게 하기
         }
     }
 

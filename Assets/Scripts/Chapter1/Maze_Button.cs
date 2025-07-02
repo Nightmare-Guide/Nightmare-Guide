@@ -109,6 +109,7 @@ public class Maze_ButtonEditor : Editor
             if (GUILayout.Button(colorNames[i]))
             {
                 colorSelector.selectedColor = colors[i]; // 버튼 클릭 시 색상 변경
+                SoundManager.instance.ClickButton();
             }
         }
 

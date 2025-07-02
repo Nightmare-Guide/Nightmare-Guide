@@ -9,6 +9,7 @@ public class TitleUIManager : UIUtility
     [SerializeField] GameObject titleUI;
     [SerializeField] GameObject newGameAlertUI;
     [SerializeField] GameObject loadGameAlertUI;
+    public AudioClip titlebgm;
 
     private void Awake()
     {
@@ -31,6 +32,7 @@ public class TitleUIManager : UIUtility
         uiObjects.Add(optionUI);
 
         commonUIManager.uiManager = this;
+        SoundManager.instance.PlayBGM(titlebgm);
     }
 
     private void Update()
@@ -64,6 +66,7 @@ public class TitleUIManager : UIUtility
         else
         {
             StartNewGame();
+            SoundManager.instance.StopBGM();
         }
     }
 

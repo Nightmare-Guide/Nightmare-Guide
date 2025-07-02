@@ -15,6 +15,7 @@ using Unity.VisualScripting;
 using UnityEngine.Localization.SmartFormat.Utilities;
 using System.IO;
 using static CommonUIManager;
+using UnityEngine.Playables;
 
 public class SchoolUIManager : UIUtility
 {
@@ -57,6 +58,9 @@ public class SchoolUIManager : UIUtility
         if (TimeLineManager.instance != null)
             timeLineManager = TimeLineManager.instance;
 
+        // 타임라인 실행 -> 테스트
+        StartTimeLine(timeLineManager.playableAssets[1]);
+
         if (commonUIManager != null)
         {
             optionUI = commonUIManager.optionUI;
@@ -87,6 +91,12 @@ public class SchoolUIManager : UIUtility
                     {
                         InGameCloseUI(uiObj);
                     }
+                }
+
+                // TimeLine 이 정지 중이면 다시 재생
+                if (playableDirector != null && playableDirector.state == PlayState.Paused && playableDirector.playableAsset != null)
+                {
+                    playableDirector.Play();
                 }
 
                 if (PlayerMainCamera.camera_single.jumpscareObj.activeInHierarchy)
@@ -177,7 +187,7 @@ public class SchoolUIManager : UIUtility
     {
         // obj 이름을 포함하는 items 의 데이터를 inventory 에 추가
         inventory.Add(items.Find(info => obj.gameObject.name.Contains(info.name))); // info -> items List 의 요소
-        ProgressManager.Instance.progressData.schoolInventoryDatas.Add(items.Find(info => obj.gameObject.name.Contains(info.name)).name);
+        // ProgressManager.Instance.progressData.schoolInventoryDatas.Add(items.Find(info => obj.gameObject.name.Contains(info.name)).name);
 
         // 인벤토리 정리
         for (int i = 0; i < inventory.Count; i++)
@@ -194,8 +204,9 @@ public class SchoolUIManager : UIUtility
 
         // 아이템 데이터 입력
         items.Add(new Item { name = "Locker Key", itemImg = itemImgs[0], uiObj = null, schoolUIManager = this });
-        items.Add(new Item { name = "Ethan CellPhone", itemImg = itemImgs[1], uiObj = uiObjects[2], schoolUIManager = this });
-        items.Add(new Item { name = "David CellPhone", itemImg = itemImgs[2], uiObj = uiObjects[3], schoolUIManager = this });
+        items.Add(new Item { name = "Janitor's office Key", itemImg = itemImgs[1], uiObj = null, schoolUIManager = this });
+        items.Add(new Item { name = "Ethan CellPhone", itemImg = itemImgs[2], uiObj = uiObjects[2], schoolUIManager = this });
+        items.Add(new Item { name = "David CellPhone", itemImg = itemImgs[3], uiObj = uiObjects[3], schoolUIManager = this });
     }
 
     void GetProgressData()
