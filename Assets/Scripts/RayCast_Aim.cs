@@ -119,6 +119,14 @@ public class RayCast_Aim : MonoBehaviour
                         }
                         click_object.SetActive(false);
                     }
+
+                    if (click_object.CompareTag("EthanLocker"))
+                    {
+                        if (CommonUIManager.instance.uiManager is SchoolUIManager schoolUIManager)
+                        {
+                            schoolUIManager.FirstMeetEthan();
+                        }
+                    }
                 }
             }
         }
