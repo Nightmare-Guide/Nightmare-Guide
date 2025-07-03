@@ -8,7 +8,6 @@ using static UnityEngine.Rendering.DebugUI;
 public class RayCast_Aim : MonoBehaviour
 {
     public float maxRayDistance = 5f; // 레이 길이 설정
-    private OutlineObject previousOutline;
 
     [Header("Locker")]
     bool locker = true;
@@ -28,22 +27,14 @@ public class RayCast_Aim : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, maxRayDistance, LayerMask.GetMask("ActiveObject")))
         {
-            OutlineObject currentOutline = hit.collider.GetComponent<OutlineObject>();
+            OutlineObject outline = hit.collider.GetComponent<OutlineObject>();
 
-            if (currentOutline != null && !currentOutline.enabled)
-            {
-                currentOutline.enabled = true;
-                Debug.Log("OutlineObject 활성화됨!");
-            }
-
-            if (previousOutline != null && previousOutline != currentOutline)
-            {
-                previousOutline.enabled = false;
-                Debug.Log("이전 OutlineObject 비활성화됨!");
-            }
-
-            previousOutline = currentOutline;
-
+                if (outline != null && !outline.enabled)
+                {
+                    outline.enabled = true; // ✅ 실제로 켜줘야 돼!
+                    Debug.Log("OutlineObject 활성화됨!");
+                }
+            
             // UI 활성화
             if (CommonUIManager.instance != null)
             {
@@ -129,13 +120,7 @@ public class RayCast_Aim : MonoBehaviour
                 // UI 비 활성화
                 CommonUIManager.instance.interactionUI.SetActive(false);
             }
-
-            if (previousOutline != null)
-            {
-                previousOutline.enabled = false;
-                Debug.Log("레이 미충돌 - OutlineObject 비활성화됨!");
-                previousOutline = null;
-            }
+          
         }
     }
 

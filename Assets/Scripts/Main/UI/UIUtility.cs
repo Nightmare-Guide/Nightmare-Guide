@@ -338,8 +338,5 @@ public class UIUtility : MonoBehaviour
         }
     }
 
-    public void PlayAnimation(Animator animator, string animName)
-    {
-        AnimHelper.TryPlay(animator, animName, 0.2f);
-    }
+
 }
