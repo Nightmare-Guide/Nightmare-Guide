@@ -21,7 +21,7 @@ public class CommonUIManager : MonoBehaviour
     [SerializeField] GameObject commonUICanvas;
     public GameObject optionUI;
     public GameObject interactionUI;
-    public bool isTalkingWithNPC = false;
+    public bool isTalkingWithNPC = false; // npc 와 대화 중 게임 정지 후, 다시 게임 진행 시 플레이어 움직임 막는 용도
 
     [Header("# Screen")]
     public Slider bgVolumeSlider;

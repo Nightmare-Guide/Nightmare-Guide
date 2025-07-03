@@ -217,7 +217,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         private void PlayFootStepAudio()
         {
-            if (!m_CharacterController.isGrounded)
+            if (!m_CharacterController.enabled || !m_CharacterController.isGrounded)
             {
                 return;
             }

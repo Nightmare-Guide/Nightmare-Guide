@@ -334,6 +334,10 @@ public class CSVRoad_Story : MonoBehaviour
                     ethanMother.supervisor.GoNightmare();
                 }
                 break;
+            case "1_0_0":
+                // ProgressManager.Instance.CompletedAction(ActionType.FirstMeetEthan);
+                if (CommonUIManager.instance.uiManager is SchoolUIManager schoolUIManager) { schoolUIManager.StartPlayerController(); }
+                break;
             case "2_2_0":
                 ProgressManager.Instance.CompletedAction(ActionType.FirstMeetAlex);
                 if (currentNPC != null) { Alex alex = currentNPC as Alex; alex.WalkToOutSide(); }
