@@ -3,9 +3,9 @@ using System.Collections;
 
 public class NHSupervisor : MonoBehaviour
 {
-    [SerializeField]
-    [Tooltip("NPC가 이동할 단 하나의 목표 지점입니다.")]
-    private Transform moveTr;
+    [SerializeField] Transform moveTr;
+    [SerializeField] Transform checkPoint;
+    [SerializeField] Transform endPoint;
 
     public float speed = 5f;
     public float rotationSpeed = 100f;
@@ -15,10 +15,17 @@ public class NHSupervisor : MonoBehaviour
 
     private Animator anim;
 
+    bool storyCheck = false;
+
     void Start()
     {
         anim = GetComponent<Animator>();
-        Invoke("StartNPCFlow", 5f); // 시작 지연
+        Invoke("StartNPCFlow", 8f); // 시작 지연
+        Invoke("StartStory", 3f);
+    }
+    void StartStory()
+    {
+        CSVRoad_Story.instance.OnSelectChapter("2_0_0");
     }
 
     private IEnumerator MoveToTargetWaypoint(Transform targetWaypoint)
@@ -44,10 +51,20 @@ public class NHSupervisor : MonoBehaviour
             yield return null;
         }
 
-        Debug.Log("NHSupervisor: 포인트 1 도착");
+        Debug.Log("NHSupervisor: 포인트 "+ targetWaypoint.name + " 도착");
 
-        // 도착 후 시퀀스 실행
-        StartCoroutine(PlayPostArrivalSequence());
+        if (!storyCheck)
+        {
+            // 도착 후 시퀀스 실행
+            StartCoroutine(PlayPostArrivalSequence());
+            storyCheck = true;
+        }
+        else
+        {
+            anim.SetTrigger("isIdle");
+        }
+       
+        
     }
 
     private IEnumerator PlayPostArrivalSequence()
@@ -59,18 +76,20 @@ public class NHSupervisor : MonoBehaviour
         Debug.Log("NHSupervisor: talk1 실행");
         anim.SetTrigger("isTalk");
         yield return new WaitForSeconds(2.0f); // talk1 애니메이션 길이
-        CSVRoad_Story.instance.OnSelectChapter("2_0_0");
-        yield return new WaitForSeconds(1.0f);
         CSVRoad_Story.instance.OnSelectChapter("2_0_1");
+        yield return new WaitForSeconds(9.0f);
+       
 
         Debug.Log("NHSupervisor: +160도 회전 실행");
         yield return StartCoroutine(RotateByRelativeAngle(160f, 1f));
+        CSVRoad_Story.instance.OnSelectChapter("2_0_2");
         Debug.Log("NHSupervisor: Action1 실행");
         anim.SetTrigger("Action");
         yield return new WaitForSeconds(4f); // Action1 애니메이션 길이
-
-        Debug.Log("NHSupervisor: walk 시작");
         anim.SetBool("isWalk", true);
+
+        yield return StartCoroutine(MoveToTargetWaypoint(checkPoint));
+
     }
 
     private IEnumerator RotateByRelativeAngle(float angle, float duration)
