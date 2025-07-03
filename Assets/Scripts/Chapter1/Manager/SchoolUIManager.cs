@@ -27,6 +27,8 @@ public class SchoolUIManager : UIUtility
     public GameObject playerObj;
     public Transform[] playerRespawnPoints;
     public Transform[] enemyRespawnPoints;
+    [SerializeField] GameObject fakeWall;
+    [SerializeField] List<GameObject> schoolLights;
 
     [Header("# School Inventory")]
     public List<Sprite> itemImgs; // 인벤토리에 들어갈 이미지들
