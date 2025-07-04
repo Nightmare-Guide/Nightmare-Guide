@@ -29,7 +29,7 @@ public class SchoolUIManager : UIUtility
     public Transform[] enemyRespawnPoints;
     [SerializeField] GameObject fakeWall;
     [SerializeField] List<GameObject> schoolLights;
-    [SerializeField] GameObject flashlightWall;
+    public GameObject flashlightWall;
 
     [Header("# School Inventory")]
     public List<Sprite> itemImgs; // 인벤토리에 들어갈 이미지들
@@ -310,11 +310,11 @@ public class SchoolUIManager : UIUtility
         PlayerController.instance.Open_PlayerController();
     }
 
-    public void FirstMeetEthan()
+    public void FirstMeetEthan(bool getFlashlight)
     {
         CSVRoad_Story.instance.OnSelectChapter("1_0_0");
         fakeWall.SetActive(false);
-        flashlightWall.SetActive(true);
+        flashlightWall.SetActive(!getFlashlight);
         StopPlayerController();
         CommonUIManager.instance.isTalkingWithNPC = true;
     }
