@@ -61927,6 +61927,8 @@ PlayableDirector:
     value: {fileID: 787698602}
   - key: {fileID: -6694972664717756293, guid: d5d1124d5b1a1a04ca27f7e9c23d6765, type: 2}
     value: {fileID: 787698602}
+  - key: {fileID: -8631010117494828367, guid: d5d1124d5b1a1a04ca27f7e9c23d6765, type: 2}
+    value: {fileID: 0}
   m_ExposedReferences:
     m_References:
     - 0d19d07995f94b947902bfa94bd28258: {fileID: 369392920}
@@ -77279,7 +77281,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5747387537766917654, guid: 6a55f2bd5dab07444affc9957e80cd6d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 180
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5747387537766917654, guid: 6a55f2bd5dab07444affc9957e80cd6d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
