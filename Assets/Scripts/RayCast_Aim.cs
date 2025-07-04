@@ -99,6 +99,26 @@ public class RayCast_Aim : MonoBehaviour
                         DoorCheck(click_object);
                     }
 
+                    if (click_object.CompareTag("SpecialDoor"))
+                    {
+                        Debug.Log("Special Door");
+
+                        click_object.GetComponent<Collider>().enabled = true;
+
+                        SchoolUIManager schoolUIManager = CommonUIManager.instance.uiManager as SchoolUIManager;
+
+                        if (click_object.name.Contains("Janitor's office"))
+                        {
+                            Debug.Log(schoolUIManager.CheckItem("Janitor's office key"));
+                            if (schoolUIManager.CheckItem("Janitor's office key"))
+                            {
+                                DoorCheck(click_object);
+                                click_object.tag = "Door";
+                                click_object.GetComponent<Collider>().enabled = false;
+                            }
+                        }
+                    }
+
                     if (click_object.CompareTag("CellPhone"))
                     {
                         //  Debug.Log("CellPhone");
@@ -133,7 +153,7 @@ public class RayCast_Aim : MonoBehaviour
 
                     if (click_object.CompareTag("Flashlight"))
                     {
-                        // ProgressManager.Instance.CompletedAction(ActionType.GetFlashlight);
+                        //ProgressManager.Instance.CompletedAction(ActionType.GetFlashlight);
                         getFlashlight = true;
                         click_object.SetActive(false);
                         if (CommonUIManager.instance.uiManager is SchoolUIManager schoolUIManager) { schoolUIManager.flashlightWall.SetActive(false); }

@@ -204,6 +204,24 @@ public class SchoolUIManager : UIUtility
         }
     }
 
+    // 아이템 사용 함수
+    public void UseItem(GameObject obj)
+    {
+        inventory.Remove(items.Find(info => obj.gameObject.name.Contains(info.name))); // info -> items List 의 요소
+        // ProgressManager.Instance.progressData.schoolInventoryDatas.Remove(items.Find(info => obj.gameObject.name.Contains(info.name)).name);
+
+        // 인벤토리 정리
+        for (int i = 0; i < inventory.Count; i++)
+        {
+            inventorySlots[i].itemData = inventory[i];
+        }
+    }
+
+    public bool CheckItem(string name)
+    {
+        return inventory.Exists(info => name.Contains(info.name));
+    }
+
     void InitItemDatas()
     {
         // 휴대폰 데이터 입력
@@ -257,7 +275,7 @@ public class SchoolUIManager : UIUtility
     public IEnumerator RevivalPlayer(ProgressManager.ActionType actionType)
     {
         // Blink UI 실행
-        if(CommonUIManager.instance != null)
+        if (CommonUIManager.instance != null)
         {
             CommonUIManager.instance.Blink(false);
 
@@ -289,7 +307,7 @@ public class SchoolUIManager : UIUtility
             case ProgressManager.ActionType.EnteredBackRoom:
                 respawnPointIndex = 2;
                 break;
-            case ProgressManager.ActionType.SolvedCabinetRoom:
+            case ProgressManager.ActionType.SolvedLockerRoom:
                 respawnPointIndex = 3;
                 break;
         }
