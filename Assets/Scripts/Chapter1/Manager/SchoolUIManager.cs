@@ -27,6 +27,9 @@ public class SchoolUIManager : UIUtility
     public GameObject playerObj;
     public Transform[] playerRespawnPoints;
     public Transform[] enemyRespawnPoints;
+    [SerializeField] GameObject fakeWall;
+    [SerializeField] List<GameObject> schoolLights;
+    [SerializeField] GameObject flashlightWall;
 
     [Header("# School Inventory")]
     public List<Sprite> itemImgs; // 인벤토리에 들어갈 이미지들
@@ -59,7 +62,7 @@ public class SchoolUIManager : UIUtility
             timeLineManager = TimeLineManager.instance;
 
         // 타임라인 실행 -> 테스트
-        StartTimeLine(timeLineManager.playableAssets[1]);
+        // StartTimeLine(timeLineManager.playableAssets[1]);
 
         if (commonUIManager != null)
         {
@@ -77,6 +80,11 @@ public class SchoolUIManager : UIUtility
         // ESC 키
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            //if (AreAllObjectsDisabled(uiObjects) && commonUIManager != null)               // -> 테스트 때문에 비활성화
+            //{
+            //    // 일시정지 UI 활성화
+            //    PauseGame(uiObjects[0]);
+            //}
             if (AreAllObjectsDisabled(uiObjects))
             {
                 // 일시정지 UI 활성화
@@ -255,9 +263,12 @@ public class SchoolUIManager : UIUtility
 
             yield return new WaitForSeconds(CommonUIManager.instance.blinkDuration);
 
-            PlayerMainCamera.camera_single.jumpscareObj.SetActive(false);
-            PlayerMainCamera.camera_single.jumpscareObj.transform.position = new Vector3(0, -1.77f, 1);
-            PlayerMainCamera.camera_single.jumpscareObj.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+            PlayerMainCamera playerCamera = PlayerMainCamera.camera_single;
+
+            playerCamera.jumpscareObj.SetActive(false);
+            playerCamera.InitCameraRotation();
+            playerCamera.jumpscareObj.transform.localPosition = new Vector3(0, -1.77f, 1);
+            playerCamera.jumpscareObj.transform.localRotation = Quaternion.Euler(0, 180, 0);
 
             CommonUIManager.instance.Blink(true);
 
@@ -297,5 +308,19 @@ public class SchoolUIManager : UIUtility
 
         //플레이어 컨트롤 On
         PlayerController.instance.Open_PlayerController();
+    }
+
+    public void FirstMeetEthan()
+    {
+        CSVRoad_Story.instance.OnSelectChapter("1_0_0");
+        fakeWall.SetActive(false);
+        flashlightWall.SetActive(true);
+        StopPlayerController();
+        CommonUIManager.instance.isTalkingWithNPC = true;
+    }
+
+    public void FinishSchoolScene()
+    {
+        commonUIManager.MoveScene("NightHospital");
     }
 }

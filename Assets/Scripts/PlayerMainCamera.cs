@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.PostProcessing;
 using UnityStandardAssets.ImageEffects;
@@ -59,7 +60,6 @@ public class PlayerMainCamera : MonoBehaviour
         rotationCoroutine = null;
     }
 
-
     public void CameraEffect() // 에너미에서 작동시키려고 메소드화
     {
         StartCoroutine(ShakeCamera());
@@ -85,6 +85,11 @@ public class PlayerMainCamera : MonoBehaviour
 
             yield return null;
         }
+    }
+
+    public void InitCameraRotation()
+    {
+        transform.localRotation = Quaternion.Euler(0, 0, 0);
     }
 
     public void RotateToTarget(Transform target, float time)
