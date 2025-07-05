@@ -61,6 +61,8 @@ public class SchoolUIManager : UIUtility
         if (TimeLineManager.instance != null)
             timeLineManager = TimeLineManager.instance;
 
+        commonUIManager.ApplyFog(commonUIManager.fogSettings[1]); // 테스트 -> 데이터 저장 값 불러오기로 변경
+
         // 타임라인 실행 -> 테스트
         // StartTimeLine(timeLineManager.playableAssets[1]);
 
@@ -205,15 +207,20 @@ public class SchoolUIManager : UIUtility
     }
 
     // 아이템 사용 함수
-    public void UseItem(GameObject obj)
+    public void UseItem(Item item)
     {
-        inventory.Remove(items.Find(info => obj.gameObject.name.Contains(info.name))); // info -> items List 의 요소
-        // ProgressManager.Instance.progressData.schoolInventoryDatas.Remove(items.Find(info => obj.gameObject.name.Contains(info.name)).name);
+        inventory.Remove(item);
+        // ProgressManager.Instance.progressData.schoolInventoryDatas.Remove(item.name);
 
         // 인벤토리 정리
         for (int i = 0; i < inventory.Count; i++)
         {
             inventorySlots[i].itemData = inventory[i];
+        }
+
+        if(inventory.Count == 0)
+        {
+            inventorySlots[0].itemData = null;
         }
     }
 
@@ -330,7 +337,7 @@ public class SchoolUIManager : UIUtility
 
     public void FirstMeetEthan(bool getFlashlight)
     {
-        CSVRoad_Story.instance.OnSelectChapter("1_0_0");
+        CSVRoad_Story.instance.OnSelectChapter("1_0_1"); // 테스트 때문에 1_0_0 에서 변경
         fakeWall.SetActive(false);
         flashlightWall.SetActive(!getFlashlight);
         StopPlayerController();

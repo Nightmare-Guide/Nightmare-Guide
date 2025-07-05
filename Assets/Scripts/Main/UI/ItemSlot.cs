@@ -17,10 +17,15 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     private void OnEnable()
     {
         if (itemData == null)
-            return;
-
-        itemImg.sprite = itemData.itemImg;
-        itemImg.gameObject.SetActive(true);
+        {
+            itemImg.sprite = null;
+            itemImg.gameObject.SetActive(false);
+        }
+        else
+        {
+            itemImg.sprite = itemData.itemImg;
+            itemImg.gameObject.SetActive(true);
+        }
     }
 
     private void OnDisable()

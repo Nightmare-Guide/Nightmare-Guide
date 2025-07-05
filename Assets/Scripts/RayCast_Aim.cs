@@ -103,18 +103,15 @@ public class RayCast_Aim : MonoBehaviour
                     {
                         Debug.Log("Special Door");
 
-                        click_object.GetComponent<Collider>().enabled = true;
-
                         SchoolUIManager schoolUIManager = CommonUIManager.instance.uiManager as SchoolUIManager;
 
                         if (click_object.name.Contains("Janitor's office"))
                         {
-                            Debug.Log(schoolUIManager.CheckItem("Janitor's office key"));
-                            if (schoolUIManager.CheckItem("Janitor's office key"))
+                            if (schoolUIManager.CheckItem(schoolUIManager.items[1].name)) // 열쇠가 있는 지 확인
                             {
                                 DoorCheck(click_object);
                                 click_object.tag = "Door";
-                                click_object.GetComponent<Collider>().enabled = false;
+                                schoolUIManager.UseItem(schoolUIManager.items[1]);
                             }
                         }
                     }

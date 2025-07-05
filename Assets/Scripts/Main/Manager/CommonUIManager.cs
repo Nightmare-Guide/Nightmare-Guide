@@ -37,6 +37,8 @@ public class CommonUIManager : MonoBehaviour
     [SerializeField] bool changingLanguage = false;
     public TextMeshProUGUI text;
 
+    [Header("# Fog")]
+
     // 언어 변경 무한 루프 방지용 타이머
     float timeout = 120f; // 최대 120초 대기
     float timer = 0f;
@@ -58,6 +60,9 @@ public class CommonUIManager : MonoBehaviour
     float characterVolume;
     bool isFullScreen;
     string language;
+
+    [Header("# Fog")]
+    public List<FogSettings> fogSettings = new List<FogSettings>();
 
     // Windows의 마우스 입력을 시뮬레이션하는 API
     [DllImport("user32.dll")]
@@ -88,7 +93,13 @@ public class CommonUIManager : MonoBehaviour
         LanguageDropdown.value = 0;
     }
 
- 
+    private void Start()
+    {
+        fogSettings.Add(new FogSettings { name = "Nightmare" });
+        fogSettings.Add(new FogSettings { name = "Warm", fogColor = new Color(1f, 0.525f, 0f), fogDensity = 0.002f });
+    }
+
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Keypad1))
@@ -426,6 +437,29 @@ public class CommonUIManager : MonoBehaviour
         }
     }
 
+    // Fog 적용 함수
+    public void ApplyFog(FogSettings settings)
+    {
+        Debug.Log(settings.name);
+        RenderSettings.fog = true;
+        RenderSettings.fogColor = settings.fogColor;
+        RenderSettings.fogMode = settings.fogMode;
+
+        switch (settings.fogMode)
+        {
+            case FogMode.Linear:
+                RenderSettings.fogStartDistance = settings.fogStartDistance;
+                RenderSettings.fogEndDistance = settings.fogEndDistance;
+                break;
+            case FogMode.Exponential:
+            case FogMode.ExponentialSquared:
+                RenderSettings.fogDensity = settings.fogDensity;
+                break;
+        }
+
+        Debug.Log($"[FogManager] Applied fog preset: {settings.name}");
+    }
+
     // 휴대폰 정보 Class
     public class PhoneInfos
     {
@@ -450,5 +484,16 @@ public class CommonUIManager : MonoBehaviour
         public Sprite itemImg;
         public GameObject uiObj;
         public SchoolUIManager schoolUIManager;
+    }
+
+    // Fog
+    public class FogSettings
+    {
+        public string name;
+        public FogMode fogMode = FogMode.Exponential;
+        public Color fogColor = Color.black;
+        public float fogDensity = 0.3f;
+        public float fogStartDistance = 0f;
+        public float fogEndDistance = 100f;
     }
 }

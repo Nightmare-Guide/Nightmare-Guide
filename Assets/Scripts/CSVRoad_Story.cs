@@ -339,6 +339,7 @@ public class CSVRoad_Story : MonoBehaviour
                 if (CommonUIManager.instance.uiManager is SchoolUIManager schoolUIManager) { schoolUIManager.StartPlayerController(); }
                 break;
             case "1_0_1":
+                Debug.Log("1");
                 if (CommonUIManager.instance.uiManager is SchoolUIManager) { CommonUIManager.instance.uiManager.StartPlayerController(); }
                 break;
             case "2_2_0":
