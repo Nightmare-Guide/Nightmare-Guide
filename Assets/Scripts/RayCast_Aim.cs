@@ -1,5 +1,7 @@
 ﻿using JetBrains.Annotations;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.PostProcessing;
 using UnityStandardAssets.Characters.FirstPerson;
 using static CommonUIManager;
 using static ProgressManager;
@@ -12,6 +14,8 @@ public class RayCast_Aim : MonoBehaviour
     private OutlineObject previousOutline;
     public GameObject flashlight;
     public bool getFlashlight = false; // 테스트용
+    public VolumeProfile nightmarePost;
+    public VolumeProfile warmPost;
 
     [Header("Locker")]
     bool locker = true;
@@ -151,8 +155,8 @@ public class RayCast_Aim : MonoBehaviour
                     if (click_object.CompareTag("Flashlight"))
                     {
                         //ProgressManager.Instance.CompletedAction(ActionType.GetFlashlight);
-                        getFlashlight = true;
                         click_object.SetActive(false);
+                        getFlashlight = true;
                         if (CommonUIManager.instance.uiManager is SchoolUIManager schoolUIManager) { schoolUIManager.flashlightWall.SetActive(false); }
                     }
                 }

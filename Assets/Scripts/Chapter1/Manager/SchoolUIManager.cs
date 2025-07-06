@@ -23,13 +23,16 @@ public class SchoolUIManager : UIUtility
     public GameObject[] cellPhoneObjs;
     public List<PhoneInfos> phoneInfos; // 각각 휴대폰 정보를 담는 list
     public List<VerticalLayoutGroup> textBoxLayouts;
-    [SerializeField] private Enemy enemyObj;
+    [SerializeField] private Enemy schoolEnemy;
+    [SerializeField] private Enemy backroomEnemy;
+    [SerializeField] private Enemy lastEnemy;
     public GameObject playerObj;
     public Transform[] playerRespawnPoints;
     public Transform[] enemyRespawnPoints;
     [SerializeField] GameObject fakeWall;
     [SerializeField] List<GameObject> schoolLights;
     public GameObject flashlightWall;
+    public GameObject enemyFirstMeetWall;
 
     [Header("# School Inventory")]
     public List<Sprite> itemImgs; // 인벤토리에 들어갈 이미지들
@@ -204,6 +207,11 @@ public class SchoolUIManager : UIUtility
         {
             inventorySlots[i].itemData = inventory[i];
         }
+
+        if (obj.name.Contains("Locker"))
+        {
+            GetLockerKey();
+        }
     }
 
     // 아이템 사용 함수
@@ -307,19 +315,18 @@ public class SchoolUIManager : UIUtility
         {
             case ProgressManager.ActionType.FirstMeetMonster:
                 respawnPointIndex = 0;
-                break;
-            case ProgressManager.ActionType.GetDavidCellPhone:
-                respawnPointIndex = 1;
+                schoolEnemy.InitEnemy(enemyRespawnPoints[respawnPointIndex]);
                 break;
             case ProgressManager.ActionType.EnteredBackRoom:
-                respawnPointIndex = 2;
+                respawnPointIndex = 1;
+                backroomEnemy.InitEnemy(enemyRespawnPoints[respawnPointIndex]);
                 break;
             case ProgressManager.ActionType.SolvedLockerRoom:
-                respawnPointIndex = 3;
+                respawnPointIndex = 2;
+                lastEnemy.InitEnemy(enemyRespawnPoints[respawnPointIndex]);
                 break;
         }
 
-        enemyObj.InitEnemy(enemyRespawnPoints[respawnPointIndex]);
         InitPlayer(playerRespawnPoints[respawnPointIndex]);
     }
 
@@ -341,7 +348,23 @@ public class SchoolUIManager : UIUtility
         fakeWall.SetActive(false);
         flashlightWall.SetActive(!getFlashlight);
         StopPlayerController();
-        CommonUIManager.instance.isTalkingWithNPC = true;
+        commonUIManager.isTalkingWithNPC = true;
+    }
+
+    public void GetLockerKey()
+    {
+        // 조명 다 끄기
+        foreach(GameObject light in schoolLights)
+        {
+            light.SetActive(false);
+        }
+
+        // trigger 벽 활성화
+        enemyFirstMeetWall.SetActive(true);
+
+        commonUIManager.ApplyFog(commonUIManager.fogSettings[0]);
+
+        // 쿵! 하는 사운드 필요
     }
 
     public void FinishSchoolScene()
