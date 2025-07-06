@@ -43,7 +43,7 @@ public class Door : MonoBehaviour
         else
         {
             endRotation = Quaternion.Euler(0, startRotation.eulerAngles.y - 110, 0);
-            SoundManager.instance.PlayDoorClose();
+            // SoundManager.instance.PlayDoorClose();
         }
 
         while (startTime < endTime)

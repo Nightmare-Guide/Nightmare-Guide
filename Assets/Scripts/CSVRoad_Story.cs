@@ -339,7 +339,13 @@ public class CSVRoad_Story : MonoBehaviour
                 if (CommonUIManager.instance.uiManager is SchoolUIManager schoolUIManager) { schoolUIManager.StartPlayerController(); }
                 break;
             case "1_0_1":
-                Debug.Log("1");
+                if (CommonUIManager.instance.uiManager is SchoolUIManager) { CommonUIManager.instance.uiManager.StartPlayerController(); }
+                break;
+            case "1_0_3":
+                // ProgressManager.Instance.CompletedAction(ActionType.FirstMeetMonster);
+                if (CommonUIManager.instance.uiManager is SchoolUIManager) { CommonUIManager.instance.uiManager.StartPlayerController(); }
+                break;
+            case "1_0_4":
                 if (CommonUIManager.instance.uiManager is SchoolUIManager) { CommonUIManager.instance.uiManager.StartPlayerController(); }
                 break;
             case "2_2_0":

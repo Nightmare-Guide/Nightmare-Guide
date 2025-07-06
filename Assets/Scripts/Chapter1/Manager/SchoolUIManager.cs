@@ -16,6 +16,7 @@ using UnityEngine.Localization.SmartFormat.Utilities;
 using System.IO;
 using static CommonUIManager;
 using UnityEngine.Playables;
+using static ProgressManager;
 
 public class SchoolUIManager : UIUtility
 {
@@ -26,9 +27,11 @@ public class SchoolUIManager : UIUtility
     [SerializeField] private Enemy schoolEnemy;
     [SerializeField] private Enemy backroomEnemy;
     [SerializeField] private Enemy lastEnemy;
+    [SerializeField] private GameObject timeLineEnemy;
     public GameObject playerObj;
     public Transform[] playerRespawnPoints;
     public Transform[] enemyRespawnPoints;
+    [SerializeField] Collider ehtanLocker;
     [SerializeField] GameObject fakeWall;
     [SerializeField] List<GameObject> schoolLights;
     public GameObject flashlightWall;
@@ -65,6 +68,8 @@ public class SchoolUIManager : UIUtility
             timeLineManager = TimeLineManager.instance;
 
         commonUIManager.ApplyFog(commonUIManager.fogSettings[1]); // 테스트 -> 데이터 저장 값 불러오기로 변경
+        Camera_Rt.instance.ApplyPostProcessing("Warm"); // 테스트 -> 데이터 저장 값 불러오기로 변경
+
 
         // 타임라인 실행 -> 테스트
         // StartTimeLine(timeLineManager.playableAssets[1]);
@@ -362,9 +367,21 @@ public class SchoolUIManager : UIUtility
         // trigger 벽 활성화
         enemyFirstMeetWall.SetActive(true);
 
+        ehtanLocker.enabled = true;
+
         commonUIManager.ApplyFog(commonUIManager.fogSettings[0]);
+        Camera_Rt.instance.ApplyPostProcessing("Nightmare");
 
         // 쿵! 하는 사운드 필요
+
+        // ProgressManager.Instance.CompletedAction(ActionType.GetLockerKey);
+    }
+
+    public void FirstMeetEnemy()
+    {
+        enemyFirstMeetWall.SetActive(false);
+        StartTimeLine(TimeLineManager.instance.playableAssets[2]);
+        timeLineEnemy.SetActive(false);
     }
 
     public void FinishSchoolScene()

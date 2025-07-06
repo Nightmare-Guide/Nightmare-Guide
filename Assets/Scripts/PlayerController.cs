@@ -346,7 +346,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         public void LookTarget(Transform target)
         {
-            StartCoroutine(SmoothLookAt(playerTransform, target, 0.5f));
+            StartCoroutine(SmoothLookAt(playerTransform, target, 0.25f));
         }
 
         public IEnumerator SmoothLookAt(Transform me, Transform target, float duration)
@@ -387,8 +387,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 {
                     SchoolUIManager schoolUIManager = CommonUIManager.instance.uiManager as SchoolUIManager;
 
-                    schoolUIManager.enemyFirstMeetWall.SetActive(false);
-                    schoolUIManager.StartTimeLine(TimeLineManager.instance.playableAssets[2]);
+                    schoolUIManager.FirstMeetEnemy();
                 }
             }
         }

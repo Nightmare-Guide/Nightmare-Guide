@@ -1,5 +1,6 @@
 ﻿using JetBrains.Annotations;
 using UnityEngine;
+using UnityEngine.PostProcessing;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.PostProcessing;
 using UnityStandardAssets.Characters.FirstPerson;
@@ -14,8 +15,6 @@ public class RayCast_Aim : MonoBehaviour
     private OutlineObject previousOutline;
     public GameObject flashlight;
     public bool getFlashlight = false; // 테스트용
-    public VolumeProfile nightmarePost;
-    public VolumeProfile warmPost;
 
     [Header("Locker")]
     bool locker = true;
@@ -64,9 +63,8 @@ public class RayCast_Aim : MonoBehaviour
                 {
                     GameObject click_object = hit.transform.gameObject;
 
-
-                    // 콜라이더 비활성화
-                    click_object.GetComponent<Collider>().enabled = false;
+                    Collider objCollider = click_object.GetComponent<Collider>();
+                    objCollider.enabled = false; // 중복 작동 방지
 
                     // Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.red); // 실제 충돌 지점까지 빨간색
 
@@ -84,6 +82,7 @@ public class RayCast_Aim : MonoBehaviour
                         Camera_Rt.instance.Close_Camera();
 
                         NextScene next = click_object.GetComponent<NextScene>();
+                        objCollider.enabled = true;
                         next.Next_Scene();
 
                     }
@@ -106,6 +105,7 @@ public class RayCast_Aim : MonoBehaviour
                     if (click_object.CompareTag("SpecialDoor"))
                     {
                         Debug.Log("Special Door");
+                        objCollider.enabled = true;
 
                         SchoolUIManager schoolUIManager = CommonUIManager.instance.uiManager as SchoolUIManager;
 
@@ -116,6 +116,7 @@ public class RayCast_Aim : MonoBehaviour
                                 DoorCheck(click_object);
                                 click_object.tag = "Door";
                                 schoolUIManager.UseItem(schoolUIManager.items[1]);
+                                // ProgressManager.Instance.CompletedAction(ActionType.GetFlashlight);
                             }
                         }
                     }
@@ -148,7 +149,15 @@ public class RayCast_Aim : MonoBehaviour
                     {
                         if (CommonUIManager.instance.uiManager is SchoolUIManager schoolUIManager)
                         {
-                            schoolUIManager.FirstMeetEthan(getFlashlight);
+                            if(schoolUIManager.CheckItem("Locker Key"))
+                            {
+                                CSVRoad_Story.instance.OnSelectChapter("1_0_4");
+                                schoolUIManager.StopPlayerController();
+                            }
+                            else
+                            {
+                                schoolUIManager.FirstMeetEthan(getFlashlight);
+                            }
                         }
                     }
 
@@ -224,12 +233,13 @@ public class RayCast_Aim : MonoBehaviour
 
         //  Debug.Log("락커 인식" + obj.name);
         Locker lockerObj = obj.GetComponent<Locker>();
+
         if (lockerObj.isMovingToLocker || lockerObj.outMovingToLocker)
         {
             return;
         }
 
-        if (locker)//문이 열리고 플레이어 이동후 문디 닫힘
+        if (locker)//문이 열리고 플레이어 이동 후 문 닫힘
         {
             lockerObj.isMovingToLocker = true;
             lockerObj.PlayerHide();
@@ -243,7 +253,6 @@ public class RayCast_Aim : MonoBehaviour
             // PlayerController.instance.Open_PlayerController();//플레이어 컨트롤 ON
             locker = true;
             // DoorCheck(obj);
-
         }
 
 
