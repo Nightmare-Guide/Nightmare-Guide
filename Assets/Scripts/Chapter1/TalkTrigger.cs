@@ -16,7 +16,7 @@ public class TalkTrigger : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             PlayerController.instance.Close_PlayerController(); // 플레이어 조작 멈춤
-            npc.StartWalkToPlayer(player.transform); // NPC 이동 시작
+            //npc.StartWalkToPlayer(player.transform); // NPC 이동 시작
             gameObject.SetActive(false); // 트리거 중복 방지
         }
     }

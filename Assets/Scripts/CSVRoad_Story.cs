@@ -35,6 +35,7 @@ public class CSVRoad_Story : MonoBehaviour
     private int chapterEnd = 0;
     private NPC currentNPC;
     private int questIndex = 0;
+    private bool choicebool = false; // 선택지 중인지 판별
 
     public NarrationManager narrationManager;
 
@@ -295,45 +296,45 @@ public class CSVRoad_Story : MonoBehaviour
                 ProgressManager.Instance.CompletedAction(ActionType.FirstMeetMichael);
                 if (currentNPC != null) { Michael michael = currentNPC as Michael; michael.DoSweepBroom(); }
                 break;
-            case "0_3_0":
-                if (currentNPC != null)
-                {
-                    Supervisor supervisor = currentNPC as Supervisor;
-                    Camera_Rt.instance.Open_Camera();
-                    supervisor.GoHospitalRoom();
-                }
-                break;
-            case "0_3_1":
-                if (currentNPC != null)
-                {
-                    Supervisor supervisor = currentNPC as Supervisor;
-                    supervisor.WalktoIdle();
-                    supervisor.StartSelectBox();
-                }
-                break;
-            case "0_3_2":
-                if (currentNPC != null)
-                {
-                    Supervisor supervisor = currentNPC as Supervisor;
-                    supervisor.InHospitalRoom();
-                }
-                break;
-            case "0_3_3":
-                if (currentNPC != null)
-                {
-                    Debug.Log("0_3_3실행");
-                    EthanMother ethanMother = currentNPC as EthanMother;
-                    ethanMother.WorktoPosition();
-                }
-                break;
-            case "0_3_4":
-                if (currentNPC != null)
-                {
-                    Debug.Log("0_3_4실행");
-                    EthanMother ethanMother = currentNPC as EthanMother;
-                    ethanMother.supervisor.GoNightmare();
-                }
-                break;
+            //case "0_3_0":
+            //    if (currentNPC != null)
+            //    {
+            //        Supervisor supervisor = currentNPC as Supervisor;
+            //        Camera_Rt.instance.Open_Camera();
+            //        supervisor.GoHospitalRoom();
+            //    }
+            //    break;
+            //case "0_3_1":
+            //    if (currentNPC != null)
+            //    {
+            //        Supervisor supervisor = currentNPC as Supervisor;
+            //        supervisor.WalktoIdle();
+            //        supervisor.StartSelectBox();
+            //    }
+            //    break;
+            //case "0_3_2":
+            //    if (currentNPC != null)
+            //    {
+            //        Supervisor supervisor = currentNPC as Supervisor;
+            //        supervisor.InHospitalRoom();
+            //    }
+            //    break;
+            //case "0_3_3":
+            //    if (currentNPC != null)
+            //    {
+            //        Debug.Log("0_3_3실행");
+            //        EthanMother ethanMother = currentNPC as EthanMother;
+            //        ethanMother.WorktoPosition();
+            //    }
+            //    break;
+            //case "0_3_4":
+            //    if (currentNPC != null)
+            //    {
+            //        Debug.Log("0_3_4실행");
+            //        EthanMother ethanMother = currentNPC as EthanMother;
+            //        ethanMother.supervisor.GoNightmare();
+            //    }
+            //    break;
             case "1_0_0":
                 // ProgressManager.Instance.CompletedAction(ActionType.FirstMeetEthan);
                 if (CommonUIManager.instance.uiManager is SchoolUIManager schoolUIManager) { schoolUIManager.StartPlayerController(); }
