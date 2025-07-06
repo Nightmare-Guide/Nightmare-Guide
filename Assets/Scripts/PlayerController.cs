@@ -338,6 +338,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         public void GoNavposition()
         {
             Close_PlayerController();
+            agent.enabled = true;
             agent.SetDestination(playerwalkposition.position);
         }
 
