@@ -8,6 +8,7 @@ using System.Runtime.InteropServices;
 using UnityStandardAssets.Characters.FirstPerson;
 using Unity.VisualScripting;
 using UnityEngine.Playables;
+using UnityEditor.VersionControl;
 
 public class UIUtility : MonoBehaviour
 {
@@ -90,12 +91,12 @@ public class UIUtility : MonoBehaviour
     public void StopPlayerController()
     {
         //플레이어 컨트롤 OFF
-        if(PlayerController.instance != null)
+        if (PlayerController.instance != null)
         {
             PlayerController.instance.Close_PlayerController();
         }
 
-        if(Camera_Rt.instance != null)
+        if (Camera_Rt.instance != null)
         {
             //카메라 회전 정지
             Camera_Rt.instance.Close_Camera();
@@ -270,7 +271,7 @@ public class UIUtility : MonoBehaviour
     // VerticalLayoutGroup 초기화
     public void RebuildVerticalLayout(List<VerticalLayoutGroup> verticalLayoutGroup)
     {
-        foreach(VerticalLayoutGroup group in verticalLayoutGroup)
+        foreach (VerticalLayoutGroup group in verticalLayoutGroup)
         {
             LayoutRebuilder.MarkLayoutForRebuild(group.GetComponent<RectTransform>());
         }
@@ -291,6 +292,9 @@ public class UIUtility : MonoBehaviour
 
     public void FinishedTimeLine()
     {
+        // 데이터 key 값으로 찾아서 저장
+        ProgressManager.Instance.progressData.timelineWatchedList.Find(e => e.key == playableDirector.playableAsset.name).value = true;
+
         playableDirector.playableAsset = null;
 
         // 에임 UI 활성화
@@ -336,11 +340,38 @@ public class UIUtility : MonoBehaviour
             playableDirector.Play();
 
             StopPlayerController();
-
-            // 데이터 key 값으로 찾아서 저장
-            // ProgressManager.Instance.progressData.timelineWatchedList.Find(e => e.key == asset.name).value = true;
         }
     }
 
+    // 포스트 프로세싱, Fog 데이터 불러오기
+    public void GetPostFogData()
+    {
+        CommonUIManager commonUIManager = CommonUIManager.instance;
+        string fogName = ProgressManager.Instance.progressData.fogName;
+        string postName = ProgressManager.Instance.progressData.postProcessingName;
 
+        commonUIManager.ApplyFog(commonUIManager.fogSettings.Find(info => info.name.Equals(fogName)));
+        Camera_Rt.instance.ApplyPostProcessing(postName);
+    }
+
+    // 데이터에 맞게 오브젝트 활성화/비활성화
+    public void CheckObjData(ProgressManager.ActionType action, GameObject obj)
+    {
+        if (ProgressManager.Instance != null)
+        {
+            ProgressManager progress = ProgressManager.Instance;
+
+            // Debug.Log($"obj : {obj.name}, active : {!progress.IsActionCompleted(action)}");
+            obj.SetActive(!progress.IsActionCompleted(action));
+        }
+    }
+    public void CheckObjData(ProgressManager.ActionType action, Collider collider)
+    {
+        if (ProgressManager.Instance != null)
+        {
+            ProgressManager progress = ProgressManager.Instance;
+
+            collider.enabled = !progress.IsActionCompleted(action);
+        }
+    }
 }

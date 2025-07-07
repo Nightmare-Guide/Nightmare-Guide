@@ -55,14 +55,14 @@ public class CSVRoad_Story : MonoBehaviour
 
     private void Start()
     {
-        if (!String.IsNullOrEmpty(ProgressManager.Instance.progressData.quest))
-        {
-            OpenQuestUI(ProgressManager.Instance.progressData.quest);
-        } 
-        else
-        {
-            CloseQuestUI();
-        }
+        //if (!String.IsNullOrEmpty(ProgressManager.Instance.progressData.quest))
+        //{
+        //    OpenQuestUI(ProgressManager.Instance.progressData.quest);
+        //} 
+        //else
+        //{
+        //    CloseQuestUI();
+        //}
     }
 
     public void OnSelectChapter(string subChapterKey, NPC npc = null)
@@ -290,7 +290,7 @@ public class CSVRoad_Story : MonoBehaviour
                 break;
             case "0_1_0":
                 ProgressManager.Instance.CompletedAction(ActionType.StartNewDay);
-                OpenQuestUI(GetQuest("0_1_0_0"));
+                // OpenQuestUI(GetQuest("0_1_0_0"));
                 break;
             case "0_2_0":
                 ProgressManager.Instance.CompletedAction(ActionType.FirstMeetMichael);

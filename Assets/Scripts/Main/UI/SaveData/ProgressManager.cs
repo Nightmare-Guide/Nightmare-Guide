@@ -31,6 +31,7 @@ public class ProgressManager : MonoBehaviour
         EnteredSchool, // 아직 추가 X
         FirstMeetEthan,
         GetFlashlight,
+        GetJanitorsOfficeKey,
         EnteredControlRoom,
         GetLockerKey,
         FirstMeetMonster,
@@ -82,12 +83,12 @@ public class ProgressManager : MonoBehaviour
     // Action 이 실행되었는 지 안되었는 지 확인하는 함수
     public bool IsActionCompleted(ActionType type)
     {
-        return ProgressManager.Instance.progressData.actionStatuses.Find(a => a.actionType == type).isCompleted;
+        return progressData.actionStatuses.Find(a => a.actionType == type).isCompleted;
     }
 
     public void CompletedAction(ActionType type)
     {
-        ProgressManager.Instance.progressData.actionStatuses.Find(a => a.actionType == type).isCompleted = true;
+        progressData.actionStatuses.Find(a => a.actionType == type).isCompleted = true;
     }
 
     /// <summary>
@@ -132,6 +133,8 @@ public class ProgressManager : MonoBehaviour
             progressData.playerPosition = defaultData.playerPosition;
             progressData.playerEulerAngles = defaultData.playerEulerAngles;
             progressData.sanchi = defaultData.sanchi;
+            progressData.fogName = defaultData.fogName;
+            progressData.postProcessingName = defaultData.postProcessingName;
 
             progressData.mainInventoryDatas = new List<string>(defaultData.mainInventoryDatas);
             DeepCopy(defaultData.phoneDatas); // 휴대폰 정보
