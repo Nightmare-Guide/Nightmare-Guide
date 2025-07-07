@@ -28,7 +28,7 @@ public class ProgressManager : MonoBehaviour
         FirstMeetMichael,
         FirstMeetJames,
         TalkWithEthanMom,
-        EnteredSchool, // 아직 추가 X
+        EnteredSchool,
         FirstMeetEthan,
         GetFlashlight,
         GetJanitorsOfficeKey,

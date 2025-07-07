@@ -80,7 +80,6 @@ public class SchoolUIManager : UIUtility
 
         InitItemDatas(); // 아이템 데이터 초기화
         GetProgressData(); // 저장된 데이터 가져오기
-
     }
 
     private void Update()
@@ -255,6 +254,8 @@ public class SchoolUIManager : UIUtility
         items.Add(new Item { name = "Janitor's office Key", itemImg = itemImgs[1], uiObj = null, schoolUIManager = this });
         items.Add(new Item { name = "Ethan CellPhone", itemImg = itemImgs[2], uiObj = uiObjects[2], schoolUIManager = this });
         items.Add(new Item { name = "David CellPhone", itemImg = itemImgs[3], uiObj = uiObjects[3], schoolUIManager = this });
+
+        ProgressManager.Instance.CompletedAction(ActionType.EnteredSchool);
     }
 
     void GetProgressData()
@@ -278,6 +279,7 @@ public class SchoolUIManager : UIUtility
             CheckObjData(ActionType.GetFlashlight, fakeWall);
             CheckObjData(ActionType.GetJanitorsOfficeKey, activeObjs[1]);
             CheckObjData(ActionType.GetLockerKey, activeObjs[2]);
+            CheckObjData(ActionType.GetLockerKey, activeObjs[3]);
 
             bool isFirstMeetEthan = ProgressManager.Instance.IsActionCompleted(ActionType.FirstMeetEthan);
             bool isGetLockerKey = ProgressManager.Instance.IsActionCompleted(ActionType.GetLockerKey);
@@ -388,6 +390,8 @@ public class SchoolUIManager : UIUtility
 
         commonUIManager.ApplyFog(commonUIManager.fogSettings[0]);
         Camera_Rt.instance.ApplyPostProcessing("Nightmare");
+
+        activeObjs[3].SetActive(true);
 
         // 쿵! 하는 사운드 필요
 
