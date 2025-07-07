@@ -176,7 +176,7 @@ public class Locker : MonoBehaviour
         if (!isRotation)
         {
             isRotation = true;
-            StartCoroutine(RotationDoor(5f));
+            StartCoroutine(RotationDoor(2f));
         }
     }
 

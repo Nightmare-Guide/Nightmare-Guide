@@ -28,23 +28,23 @@ public class ProgressManager : MonoBehaviour
         FirstMeetMichael,
         FirstMeetJames,
         TalkWithEthanMom,
-        EnteredSchool,
+        EnteredSchool, // 아직 추가 X
         FirstMeetEthan,
         GetFlashlight,
         EnteredControlRoom,
-        GetCabinetKey,
+        GetLockerKey,
         FirstMeetMonster,
-        GetOutOfCabinet,
-        LeaveEthan,
-        StartSchoolNightmare,
-        SolvedPortalRoom,
+        GetOutOfLocker, // 아직 추가 X
+        LeaveEthan, // 아직 추가 X
+        StartSchoolNightmare, // 아직 추가 X
+        SolvedPortalRoom, // 아직 추가 X  ----------- 
         GetDavidCellPhone,
         SecondMeetMonster,
         EnteredBackRoom,
         EnteredEthanHouse,
         GetEthanCellPhone,
-        EnteredCabinetRoom,
-        SolvedCabinetRoom,
+        EnteredLockerRoom,
+        SolvedLockerRoom,
         StartFinalChase,
         FinishFinalChase,
         TalkWarmlyToEthan,

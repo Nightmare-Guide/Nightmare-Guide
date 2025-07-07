@@ -295,6 +295,8 @@ public class UIUtility : MonoBehaviour
 
         // 에임 UI 활성화
         aimUI.SetActive(true);
+
+        StartPlayerController();
     }
 
     public void EnableCollider(Collider col)
@@ -332,6 +334,8 @@ public class UIUtility : MonoBehaviour
             // 타임라인 실행
             playableDirector.playableAsset = asset;
             playableDirector.Play();
+
+            StopPlayerController();
 
             // 데이터 key 값으로 찾아서 저장
             // ProgressManager.Instance.progressData.timelineWatchedList.Find(e => e.key == asset.name).value = true;

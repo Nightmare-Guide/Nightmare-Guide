@@ -1,7 +1,11 @@
 ﻿using JetBrains.Annotations;
 using UnityEngine;
+using UnityEngine.PostProcessing;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.PostProcessing;
 using UnityStandardAssets.Characters.FirstPerson;
 using static CommonUIManager;
+using static ProgressManager;
 using static SchoolUIManager;
 using static UnityEngine.Rendering.DebugUI;
 
@@ -9,6 +13,8 @@ public class RayCast_Aim : MonoBehaviour
 {
     public float maxRayDistance = 5f; // 레이 길이 설정
     private OutlineObject previousOutline;
+    public GameObject flashlight;
+    public bool getFlashlight = false; // 테스트용
 
     [Header("Locker")]
     bool locker = true;
@@ -50,16 +56,15 @@ public class RayCast_Aim : MonoBehaviour
                 CommonUIManager.instance.interactionUI.SetActive(true);
             }
 
-
+            // 상호작용 E 키
             if (Input.GetKeyDown(KeyCode.E))
             {
                 if (Physics.Raycast(ray, out hit, maxRayDistance, LayerMask.GetMask("ActiveObject")))
                 {
                     GameObject click_object = hit.transform.gameObject;
 
-
-                    // 콜라이더 비활성화
-                    click_object.GetComponent<Collider>().enabled = false;
+                    Collider objCollider = click_object.GetComponent<Collider>();
+                    objCollider.enabled = false; // 중복 작동 방지
 
                     // Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.red); // 실제 충돌 지점까지 빨간색
 
@@ -69,16 +74,17 @@ public class RayCast_Aim : MonoBehaviour
                         click_object.GetComponent<Collider>().enabled = true;
                         return;
                     }
-                   
+
                     if (click_object.CompareTag("NextScene"))
                     {
                         // 플레이어 못 움직이게
                         PlayerController.instance.Close_PlayerController();
                         Camera_Rt.instance.Close_Camera();
-                      
+
                         NextScene next = click_object.GetComponent<NextScene>();
+                        objCollider.enabled = true;
                         next.Next_Scene();
-                       
+
                     }
                     // 태그가 "maze_Btn"이라면 Select_Btn() 호출
                     if (click_object.CompareTag("maze_Btn"))
@@ -96,14 +102,33 @@ public class RayCast_Aim : MonoBehaviour
                         DoorCheck(click_object);
                     }
 
+                    if (click_object.CompareTag("SpecialDoor"))
+                    {
+                        Debug.Log("Special Door");
+                        objCollider.enabled = true;
+
+                        SchoolUIManager schoolUIManager = CommonUIManager.instance.uiManager as SchoolUIManager;
+
+                        if (click_object.name.Contains("Janitor's office"))
+                        {
+                            if (schoolUIManager.CheckItem(schoolUIManager.items[1].name)) // 열쇠가 있는 지 확인
+                            {
+                                DoorCheck(click_object);
+                                click_object.tag = "Door";
+                                schoolUIManager.UseItem(schoolUIManager.items[1]);
+                                // ProgressManager.Instance.CompletedAction(ActionType.GetFlashlight);
+                            }
+                        }
+                    }
+
                     if (click_object.CompareTag("CellPhone"))
                     {
-                      //  Debug.Log("CellPhone");
+                        //  Debug.Log("CellPhone");
                         TouchCellPhone(click_object);
                     }
                     if (click_object.CompareTag("ElevatorButton"))
                     {
-                      //  Debug.Log("ElevatorButton");
+                        //  Debug.Log("ElevatorButton");
                         ElevatorButton(click_object);
                     }
                     if (click_object.CompareTag("HintObj"))
@@ -113,7 +138,7 @@ public class RayCast_Aim : MonoBehaviour
 
                     if (click_object.CompareTag("DropItem"))
                     {
-                        if(CommonUIManager.instance.uiManager is SchoolUIManager schoolUIManager)
+                        if (CommonUIManager.instance.uiManager is SchoolUIManager schoolUIManager)
                         {
                             schoolUIManager.GetItem(click_object);
                         }
@@ -124,8 +149,24 @@ public class RayCast_Aim : MonoBehaviour
                     {
                         if (CommonUIManager.instance.uiManager is SchoolUIManager schoolUIManager)
                         {
-                            schoolUIManager.FirstMeetEthan();
+                            if(schoolUIManager.CheckItem("Locker Key"))
+                            {
+                                CSVRoad_Story.instance.OnSelectChapter("1_0_4");
+                                schoolUIManager.StopPlayerController();
+                            }
+                            else
+                            {
+                                schoolUIManager.FirstMeetEthan(getFlashlight);
+                            }
                         }
+                    }
+
+                    if (click_object.CompareTag("Flashlight"))
+                    {
+                        //ProgressManager.Instance.CompletedAction(ActionType.GetFlashlight);
+                        click_object.SetActive(false);
+                        getFlashlight = true;
+                        if (CommonUIManager.instance.uiManager is SchoolUIManager schoolUIManager) { schoolUIManager.flashlightWall.SetActive(false); }
                     }
                 }
             }
@@ -143,6 +184,22 @@ public class RayCast_Aim : MonoBehaviour
                 previousOutline.enabled = false;
                 Debug.Log("레이 미충돌 - OutlineObject 비활성화됨!");
                 previousOutline = null;
+            }
+        }
+
+        // 손전등 F 키
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            if (!CommonUIManager.instance.uiManager is SchoolUIManager)
+                return;
+            //if (ProgressManager.Instance.IsActionCompleted(ActionType.GetFlashlight))
+            //{
+            //    flashlight.SetActive(true);
+            //}
+
+            if (getFlashlight)
+            {
+                flashlight.SetActive(!flashlight.activeInHierarchy);
             }
         }
     }
@@ -163,25 +220,26 @@ public class RayCast_Aim : MonoBehaviour
         if (mazeButton != null)
         {
             mazeButton.Select_Btn(); // 클릭한 오브젝트의 Select_Btn 호출
-         //   Debug.Log(obj.name + "색상 변경");
+                                     //   Debug.Log(obj.name + "색상 변경");
         }
         else
         {
-         //   Debug.Log("색상없음");
+            //   Debug.Log("색상없음");
         }
     }
 
     public void Locker(GameObject obj)
     {
 
-      //  Debug.Log("락커 인식" + obj.name);
+        //  Debug.Log("락커 인식" + obj.name);
         Locker lockerObj = obj.GetComponent<Locker>();
+
         if (lockerObj.isMovingToLocker || lockerObj.outMovingToLocker)
         {
             return;
         }
 
-        if (locker)//문이 열리고 플레이어 이동후 문디 닫힘
+        if (locker)//문이 열리고 플레이어 이동 후 문 닫힘
         {
             lockerObj.isMovingToLocker = true;
             lockerObj.PlayerHide();
@@ -195,7 +253,6 @@ public class RayCast_Aim : MonoBehaviour
             // PlayerController.instance.Open_PlayerController();//플레이어 컨트롤 ON
             locker = true;
             // DoorCheck(obj);
-
         }
 
 
