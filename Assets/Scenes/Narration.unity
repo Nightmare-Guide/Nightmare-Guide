@@ -781,12 +781,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee83bb30487d84842a57efe14ea8473e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  go_Story: Story 1
+  go_Story: Story 2
   dialogue: {fileID: 202081816}
+  dialogueName: {fileID: 0}
   dialogueBox: {fileID: 202081813}
   dialogueOptions: {fileID: 1947358493}
   option1: {fileID: 1476664489}
   option2: {fileID: 1687276218}
+  questUI: {fileID: 0}
+  questText: {fileID: 0}
   narrationManager: {fileID: 988082162}
 --- !u!4 &1070229839
 Transform:

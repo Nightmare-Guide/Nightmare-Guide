@@ -27,7 +27,7 @@ public class SchoolUIManager : UIUtility
     [SerializeField] private Enemy schoolEnemy;
     [SerializeField] private Enemy backroomEnemy;
     [SerializeField] private Enemy lastEnemy;
-    [SerializeField] private GameObject timeLineEnemy;
+    [SerializeField] private List<GameObject> timeLineEnemys;
     public GameObject playerObj;
     public Transform[] playerRespawnPoints;
     public Transform[] enemyRespawnPoints;
@@ -36,6 +36,7 @@ public class SchoolUIManager : UIUtility
     [SerializeField] List<GameObject> schoolLights;
     public GameObject flashlightWall;
     public GameObject enemyFirstMeetWall;
+    public List<GameObject> activeObjs;
 
     [Header("# School Inventory")]
     public List<Sprite> itemImgs; // 인벤토리에 들어갈 이미지들
@@ -67,12 +68,8 @@ public class SchoolUIManager : UIUtility
         if (TimeLineManager.instance != null)
             timeLineManager = TimeLineManager.instance;
 
-        commonUIManager.ApplyFog(commonUIManager.fogSettings[1]); // 테스트 -> 데이터 저장 값 불러오기로 변경
-        Camera_Rt.instance.ApplyPostProcessing("Warm"); // 테스트 -> 데이터 저장 값 불러오기로 변경
-
-
-        // 타임라인 실행 -> 테스트
-        // StartTimeLine(timeLineManager.playableAssets[1]);
+        // commonUIManager.ApplyFog(commonUIManager.fogSettings[1]); // 테스트 -> 데이터 저장 값 불러오기로 변경
+        // Camera_Rt.instance.ApplyPostProcessing("Warm"); // 테스트 -> 데이터 저장 값 불러오기로 변경
 
         if (commonUIManager != null)
         {
@@ -83,6 +80,7 @@ public class SchoolUIManager : UIUtility
 
         InitItemDatas(); // 아이템 데이터 초기화
         GetProgressData(); // 저장된 데이터 가져오기
+
     }
 
     private void Update()
@@ -205,7 +203,7 @@ public class SchoolUIManager : UIUtility
     {
         // obj 이름을 포함하는 items 의 데이터를 inventory 에 추가
         inventory.Add(items.Find(info => obj.gameObject.name.Contains(info.name))); // info -> items List 의 요소
-        // ProgressManager.Instance.progressData.schoolInventoryDatas.Add(items.Find(info => obj.gameObject.name.Contains(info.name)).name);
+        ProgressManager.Instance.progressData.schoolInventoryDatas.Add(items.Find(info => obj.gameObject.name.Contains(info.name)).name);
 
         // 인벤토리 정리
         for (int i = 0; i < inventory.Count; i++)
@@ -217,13 +215,17 @@ public class SchoolUIManager : UIUtility
         {
             GetLockerKey();
         }
+        else if (obj.name.Contains("Janitor's office Key"))
+        {
+            GetOfficeKey();
+        }
     }
 
     // 아이템 사용 함수
     public void UseItem(Item item)
     {
         inventory.Remove(item);
-        // ProgressManager.Instance.progressData.schoolInventoryDatas.Remove(item.name);
+        ProgressManager.Instance.progressData.schoolInventoryDatas.Remove(item.name);
 
         // 인벤토리 정리
         for (int i = 0; i < inventory.Count; i++)
@@ -268,8 +270,22 @@ public class SchoolUIManager : UIUtility
             phoneInfos[1].hasPhone = ProgressManager.Instance.progressData.phoneDatas[2].hasPhone;
             phoneInfos[1].isUnlocked = ProgressManager.Instance.progressData.phoneDatas[2].isUnlocked;
 
+            // 데이터에 맞게 오브젝트 활성화/비활성화
             if (phoneInfos[0].hasPhone) { cellPhoneObjs[0].SetActive(false); }
             if (phoneInfos[1].hasPhone) { cellPhoneObjs[1].SetActive(false); }
+            CheckObjData(ActionType.FirstMeetEthan, ehtanLocker);
+            CheckObjData(ActionType.GetFlashlight, activeObjs[0]);
+            CheckObjData(ActionType.GetFlashlight, fakeWall);
+            CheckObjData(ActionType.GetJanitorsOfficeKey, activeObjs[1]);
+            CheckObjData(ActionType.GetLockerKey, activeObjs[2]);
+
+            bool isFirstMeetEthan = ProgressManager.Instance.IsActionCompleted(ActionType.FirstMeetEthan);
+            bool isGetLockerKey = ProgressManager.Instance.IsActionCompleted(ActionType.GetLockerKey);
+            ehtanLocker.enabled = isFirstMeetEthan == isGetLockerKey;
+
+            // 포스트 프로세싱, Fog 설정
+            GetPostFogData();
+
 
             inventory = new List<Item>();
 
@@ -354,6 +370,7 @@ public class SchoolUIManager : UIUtility
         flashlightWall.SetActive(!getFlashlight);
         StopPlayerController();
         commonUIManager.isTalkingWithNPC = true;
+        ProgressManager.Instance.CompletedAction(ActionType.FirstMeetEthan);
     }
 
     public void GetLockerKey()
@@ -374,14 +391,19 @@ public class SchoolUIManager : UIUtility
 
         // 쿵! 하는 사운드 필요
 
-        // ProgressManager.Instance.CompletedAction(ActionType.GetLockerKey);
+        ProgressManager.Instance.CompletedAction(ActionType.GetLockerKey);
+    }
+
+    public void GetOfficeKey()
+    {
+        ProgressManager.Instance.CompletedAction(ActionType.GetJanitorsOfficeKey);
     }
 
     public void FirstMeetEnemy()
     {
         enemyFirstMeetWall.SetActive(false);
-        StartTimeLine(TimeLineManager.instance.playableAssets[2]);
-        timeLineEnemy.SetActive(false);
+        StartTimeLine(TimeLineManager.instance.playableAssets[1]);
+        timeLineEnemys[0].SetActive(false);
     }
 
     public void FinishSchoolScene()

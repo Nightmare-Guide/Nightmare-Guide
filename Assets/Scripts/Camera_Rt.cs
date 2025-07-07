@@ -67,5 +67,7 @@ public class Camera_Rt : MonoBehaviour
                 postPorecessingBehaviour.profile = warmPost;
                 break;
         }
+
+        ProgressManager.Instance.progressData.postProcessingName = name; // 데이터 저장
     }
 }

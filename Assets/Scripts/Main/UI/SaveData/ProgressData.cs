@@ -24,8 +24,10 @@ public class ProgressData : ScriptableObject
     public Vector3 playerEulerAngles;
     public List<PlayerTr> playerTr;
 
-    [Header("플레이어 산치")]
+    [Header("Player")]
     public int sanchi = 0;
+    public string postProcessingName;
+    public string fogName;
     [Header("MainUIManager")]
     public List<String> mainInventoryDatas;
     [Header("SchoolUIManager")]

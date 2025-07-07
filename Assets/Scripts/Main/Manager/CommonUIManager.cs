@@ -440,7 +440,6 @@ public class CommonUIManager : MonoBehaviour
     // Fog 적용 함수
     public void ApplyFog(FogSettings settings)
     {
-        Debug.Log(settings.name);
         RenderSettings.fog = true;
         RenderSettings.fogColor = settings.fogColor;
         RenderSettings.fogMode = settings.fogMode;
@@ -458,6 +457,7 @@ public class CommonUIManager : MonoBehaviour
         }
 
         Debug.Log($"[FogManager] Applied fog preset: {settings.name}");
+        ProgressManager.Instance.progressData.fogName = settings.name; // 데이터 저장
     }
 
     // 휴대폰 정보 Class

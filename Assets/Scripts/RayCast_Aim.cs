@@ -14,7 +14,7 @@ public class RayCast_Aim : MonoBehaviour
     public float maxRayDistance = 5f; // 레이 길이 설정
     private OutlineObject previousOutline;
     public GameObject flashlight;
-    public bool getFlashlight = false; // 테스트용
+    // public bool getFlashlight = false; // 테스트용
 
     [Header("Locker")]
     bool locker = true;
@@ -111,12 +111,16 @@ public class RayCast_Aim : MonoBehaviour
 
                         if (click_object.name.Contains("Janitor's office"))
                         {
-                            if (schoolUIManager.CheckItem(schoolUIManager.items[1].name)) // 열쇠가 있는 지 확인
+                            if (schoolUIManager.CheckItem(schoolUIManager.items[1].name)) // 열쇠가 있으면 실행
                             {
                                 DoorCheck(click_object);
                                 click_object.tag = "Door";
                                 schoolUIManager.UseItem(schoolUIManager.items[1]);
-                                // ProgressManager.Instance.CompletedAction(ActionType.GetFlashlight);
+                                ProgressManager.Instance.CompletedAction(ActionType.EnteredControlRoom);
+                            }
+                            else if (ProgressManager.Instance.IsActionCompleted(ActionType.EnteredControlRoom))
+                            {
+                                DoorCheck(click_object);
                             }
                         }
                     }
@@ -156,16 +160,17 @@ public class RayCast_Aim : MonoBehaviour
                             }
                             else
                             {
-                                schoolUIManager.FirstMeetEthan(getFlashlight);
+                                //schoolUIManager.FirstMeetEthan(getFlashlight);
+                                schoolUIManager.FirstMeetEthan(ProgressManager.Instance.IsActionCompleted(ActionType.GetFlashlight));
                             }
                         }
                     }
 
                     if (click_object.CompareTag("Flashlight"))
                     {
-                        //ProgressManager.Instance.CompletedAction(ActionType.GetFlashlight);
+                        ProgressManager.Instance.CompletedAction(ActionType.GetFlashlight);
                         click_object.SetActive(false);
-                        getFlashlight = true;
+                        // getFlashlight = true;
                         if (CommonUIManager.instance.uiManager is SchoolUIManager schoolUIManager) { schoolUIManager.flashlightWall.SetActive(false); }
                     }
                 }
@@ -190,17 +195,18 @@ public class RayCast_Aim : MonoBehaviour
         // 손전등 F 키
         if (Input.GetKeyDown(KeyCode.F))
         {
-            if (!CommonUIManager.instance.uiManager is SchoolUIManager)
+            if (flashlight == null)
                 return;
-            //if (ProgressManager.Instance.IsActionCompleted(ActionType.GetFlashlight))
-            //{
-            //    flashlight.SetActive(true);
-            //}
 
-            if (getFlashlight)
+            if (ProgressManager.Instance.IsActionCompleted(ActionType.GetFlashlight))
             {
                 flashlight.SetActive(!flashlight.activeInHierarchy);
             }
+
+            //if (getFlashlight)
+            //{
+            //    flashlight.SetActive(!flashlight.activeInHierarchy);
+            //}
         }
     }
 
@@ -282,7 +288,7 @@ public class RayCast_Aim : MonoBehaviour
             ProgressManager.Instance.progressData.phoneDatas[0].hasPhone = true;
             ProgressManager.Instance.progressData.storyProgress = "clear";
             ProgressManager.Instance.progressData.newGame = false;
-            CSVRoad_Story.instance.OpenQuestUI(CSVRoad_Story.instance.GetQuest("0_1_0_1"));
+            // CSVRoad_Story.instance.OpenQuestUI(CSVRoad_Story.instance.GetQuest("0_1_0_1"));
         }
         else
         {
