@@ -61,7 +61,7 @@ public class MainUIManager : UIUtility
         }
 
         // Start New Day 타임라인 실행 여부 확인
-        if(!ProgressManager.Instance.IsActionCompleted(ActionType.StartNewDay))
+        if (!ProgressManager.Instance.IsActionCompleted(ActionType.StartNewDay))
         {
             // 타임라인 실행
             StartTimeLine(timeLineManager.playableAssets[0]);

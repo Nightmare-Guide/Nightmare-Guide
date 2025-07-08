@@ -362,8 +362,29 @@ public class CSVRoad_Story : MonoBehaviour
 
         yield return new WaitForSeconds(1.2f);
 
-        SceneManager.LoadScene("DayHouse");
+        // 비동기 로딩 작업
+        UnityEngine.Application.backgroundLoadingPriority = ThreadPriority.Low;
 
-        CommonUIManager.instance.Blink(true);
+        // AsyncOperation : 시간이 걸리는 작업을 백그라운드에서 진행할 때, 그 상태를 확인하거나 제어할 수 있는 클래스
+        AsyncOperation op = SceneManager.LoadSceneAsync("DayHouse"); // 다음 씬을 백그라운드에서 로딩 시작 (비동기)
+        op.allowSceneActivation = false; // 로딩이 끝나도 바로 전환되지 않고 기다림. (ex: 로딩 애니메이션 다 보여주고 넘어갈 때 유용)
+
+        while (!op.isDone) // 매 프레임마다 op.progress 값을 확인하면서 시간 누적 -> progress 0.9 : 씬 전환 준비 완료, 1 : 씬 전환 완료
+        {
+            yield return null;
+
+            if (op.progress < 0.9f)
+            {
+                Debug.Log("Preparing to switch scene");
+            }
+            else
+            {
+                Debug.Log("Finish to switch scene");
+
+                op.allowSceneActivation = true;
+
+                CommonUIManager.instance.Blink(true);
+            }
+        }
     }
 }

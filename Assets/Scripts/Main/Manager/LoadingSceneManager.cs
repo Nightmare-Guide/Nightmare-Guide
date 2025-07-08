@@ -73,7 +73,7 @@ public class LoadingSceneManager : UIUtility
 
                 SetUIOpacity(videoImg, true, 1f, 0f);
 
-                yield return new WaitForSeconds(4f);
+                yield return new WaitForSeconds(2.5f);
 
                 SetUIOpacity(videoImg, false, 1f, 0f);
 
