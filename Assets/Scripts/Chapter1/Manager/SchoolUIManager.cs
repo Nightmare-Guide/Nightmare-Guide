@@ -284,7 +284,8 @@ public class SchoolUIManager : UIUtility
             if (phoneInfos[1].hasPhone) { cellPhoneObjs[1].SetActive(false); }
             CheckObjData(ActionType.FirstMeetEthan, ehtanLocker);
             CheckObjData(ActionType.GetFlashlight, activeObjs[0]);
-            CheckObjData(ActionType.GetFlashlight, fakeWall);
+            // CheckObjData(ActionType.GetFlashlight, fakeWall);
+            fakeWall.SetActive(ProgressManager.Instance.IsActionCompleted(ActionType.FirstMeetEthan) && ProgressManager.Instance.IsActionCompleted(ActionType.GetFlashlight));
             CheckObjData(ActionType.GetJanitorsOfficeKey, activeObjs[1]);
             CheckObjData(ActionType.GetLockerKey, activeObjs[2]);
             activeObjs[3].SetActive(ProgressManager.Instance.IsActionCompleted(ActionType.GetLockerKey));
@@ -416,9 +417,10 @@ public class SchoolUIManager : UIUtility
     public void FirstMeetEnemy()
     {
         enemyFirstMeetWall.SetActive(false);
-        StartTimeLine(TimeLineManager.instance.playableAssets[1]);
         timeLineEnemys[0].SetActive(false);
         activeObjs[6].GetComponent<Collider>().enabled = false;
+        Camera_Rt.instance.postProecessingBehaviour.gameObject.GetComponent<RayCast_Aim>().flashlight.SetActive(true);
+        StartTimeLine(TimeLineManager.instance.playableAssets[1]);
     }
 
     // 몬스터와 첫 추격 후 휴게실 문을 닫았을 때 실행

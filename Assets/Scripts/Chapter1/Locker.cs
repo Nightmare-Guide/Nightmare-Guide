@@ -80,7 +80,8 @@ public class Locker : MonoBehaviour
             // 손전등 비활성화
             Camera_Rt.instance.postProecessingBehaviour.gameObject.GetComponent<RayCast_Aim>().flashlight.SetActive(false);
 
-            if (ProgressManager.Instance.IsActionCompleted(ProgressManager.ActionType.UseLockerKey)
+            if (this.gameObject.name.Contains("Lounge Locker")
+                && ProgressManager.Instance.IsActionCompleted(ProgressManager.ActionType.UseLockerKey)
                 && !ProgressManager.Instance.IsActionCompleted(ProgressManager.ActionType.GetOutOfLocker))
             {
                 schoolUIManager.StartLoungeTimeLine();
@@ -91,6 +92,7 @@ public class Locker : MonoBehaviour
 
     public void OpenLocker()//락커를 열고 나올 떄
     {
+        Debug.Log("Played OpenLocker");
         stat = LockerStat.OutMove;
         PlayerController.instance.stat = PlayerController.PlayerState.Idle;
         Camera_Rt.instance.Close_Camera();
@@ -108,7 +110,8 @@ public class Locker : MonoBehaviour
         {
             schoolUIManager.hideInLocker = false;
 
-            if (ProgressManager.Instance.IsActionCompleted(ProgressManager.ActionType.UseLockerKey)
+            if (this.gameObject.name.Contains("Lounge Locker")
+                && ProgressManager.Instance.IsActionCompleted(ProgressManager.ActionType.UseLockerKey)
                 && !ProgressManager.Instance.IsActionCompleted(ProgressManager.ActionType.GetOutOfLocker))
             {
                 schoolUIManager.FinishLoungeTimeLine();
@@ -149,10 +152,12 @@ public class Locker : MonoBehaviour
 
         if (stat.Equals(LockerStat.OutMove))
         {
+            Debug.Log($"Player Pos : {pr.position}, start Pos : {startPr}");
             pr.position = Vector3.MoveTowards(pr.position, startPr, Time.fixedDeltaTime * 1.2f);//나오는 속도 조절 필요
+            Debug.Log($"Player Pos : {pr.position}");
             if (Vector3.Distance(pr.position, startPr) < 0.01f)
             {
-
+                Debug.Log("Vector3.Distance(pr.position, startPr) < 0.01f");
                 //Debug.Log("락커 탈출");
                 if (currentCoroutine == null)
                 {
@@ -167,7 +172,8 @@ public class Locker : MonoBehaviour
 
     public void OutLocker()
     {
-        Select_Locker(); // 플레이어 탈추후 문닫기
+        Debug.Log("Playered OutLocker");
+        Select_Locker(); // 플레이어 탈출 후 문닫기
         Camera_Rt.instance.Open_Camera();
         PlayerController.instance.Open_PlayerController();
         stat = LockerStat.None;
