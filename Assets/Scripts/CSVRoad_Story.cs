@@ -154,7 +154,8 @@ public class CSVRoad_Story : MonoBehaviour
             {
                 Debug.Log($"SubChapter {data[start]["Chapter"]} 끝");
                 // ProgressManager.Instance.progressData.storyProgress = data[start]["Chapter"].ToString();  // 테스트때문에 잠깐 비활성화
-                string chap = data[i - 1]["Chapter"].ToString();
+                // string chap = data[i - 1]["Chapter"].ToString();
+                string chap = data[i]["Chapter"].ToString();
                 NextAction(chap);
                 chapterEnd = 0;
                 UIUtility uiManager = CommonUIManager.instance.uiManager;
@@ -343,7 +344,7 @@ public class CSVRoad_Story : MonoBehaviour
                 if (CommonUIManager.instance.uiManager is SchoolUIManager) { CommonUIManager.instance.uiManager.StartPlayerController(); }
                 break;
             case "1_0_3":
-                // ProgressManager.Instance.CompletedAction(ActionType.FirstMeetMonster);
+                ProgressManager.Instance.CompletedAction(ActionType.FirstMeetMonster);
                 if (CommonUIManager.instance.uiManager is SchoolUIManager) { CommonUIManager.instance.uiManager.StartPlayerController(); }
                 break;
             case "1_0_4":

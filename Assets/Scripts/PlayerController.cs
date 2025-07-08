@@ -348,6 +348,9 @@ namespace UnityStandardAssets.Characters.FirstPerson
         public void LookTarget(Transform target)
         {
             StartCoroutine(SmoothLookAt(playerTransform, target, 0.25f));
+
+            // 플레이어 카메라 각도 변경
+            StartCoroutine(SmoothRotateTo(GetPlayerCamera().transform, Vector3.zero, 0.35f));
         }
 
         public IEnumerator SmoothLookAt(Transform me, Transform target, float duration)
@@ -380,6 +383,23 @@ namespace UnityStandardAssets.Characters.FirstPerson
             me.rotation = targetRotation; // 마지막 각도 보정
         }
 
+        public IEnumerator SmoothRotateTo(Transform targetTransform, Vector3 targetEulerAngles, float duration)
+        {
+            Quaternion startRotation = targetTransform.localRotation;
+            Quaternion targetRotation = Quaternion.Euler(targetEulerAngles);
+
+            float elapsed = 0f;
+            while (elapsed < duration)
+            {
+                float t = elapsed / duration;
+                targetTransform.localRotation = Quaternion.Slerp(startRotation, targetRotation, t);
+                elapsed += Time.deltaTime;
+                yield return null;
+            }
+
+            targetTransform.localRotation = targetRotation; // 마지막 각도 보정
+        }
+
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("Trigger"))
@@ -389,6 +409,25 @@ namespace UnityStandardAssets.Characters.FirstPerson
                     SchoolUIManager schoolUIManager = CommonUIManager.instance.uiManager as SchoolUIManager;
 
                     schoolUIManager.FirstMeetEnemy();
+                }
+                else if(other.gameObject.name == "Lounge Trigger Wall")
+                {
+                    SchoolUIManager schoolUIManager = CommonUIManager.instance.uiManager as SchoolUIManager;
+
+                    schoolUIManager.enterLounge = true;
+                }
+            }
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.CompareTag("Trigger"))
+            {
+                if (other.gameObject.name == "Lounge Trigger Wall")
+                {
+                    SchoolUIManager schoolUIManager = CommonUIManager.instance.uiManager as SchoolUIManager;
+
+                    schoolUIManager.enterLounge = false;
                 }
             }
         }

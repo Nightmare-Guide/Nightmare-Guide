@@ -123,6 +123,25 @@ public class RayCast_Aim : MonoBehaviour
                                 DoorCheck(click_object);
                             }
                         }
+                        else if (click_object.name.Contains("Lounge Door"))
+                        {
+                            if (ProgressManager.Instance.IsActionCompleted(ActionType.FirstMeetMonster))
+                            {
+                                Door door = click_object.GetComponent<Door>();
+                                DoorCheck(click_object);
+
+                                if (!door.doorState && schoolUIManager.enterLounge)
+                                {
+                                    schoolUIManager.CloseLoungeDoor();
+                                }
+                            }
+                            else
+                            {
+                                DoorCheck(click_object);
+                            }
+                        }
+
+
                     }
 
                     if (click_object.CompareTag("CellPhone"))

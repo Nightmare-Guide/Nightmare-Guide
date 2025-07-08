@@ -2,6 +2,7 @@ using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.Localization.Plugins.XLIFF.V20;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using UnityStandardAssets.Characters.FirstPerson;
@@ -68,10 +69,15 @@ public class Locker : MonoBehaviour
         {
             startRotation = pr.rotation;
             targetRotation = Quaternion.Euler(0, startRotation.eulerAngles.y + rotateRange, 0);
-           // Debug.Log("시작 회전: " + startRotation.eulerAngles);
-           // Debug.Log("목표 회전: " + targetRotation.eulerAngles);
+            // Debug.Log("시작 회전: " + startRotation.eulerAngles);
+            // Debug.Log("목표 회전: " + targetRotation.eulerAngles);
         }
-        
+
+        if (CommonUIManager.instance.uiManager is SchoolUIManager schoolUIManager)
+        {
+            schoolUIManager.hideInLocker = true;
+        }
+
     }
 
     public void OpenLocker()//락커를 열고 나올 떄
@@ -84,32 +90,36 @@ public class Locker : MonoBehaviour
             return;
         }
         Select_Locker();// 락커 열기
-        
+
         //Debug.Log("시작 좌표: " + pr.position);
         //Debug.Log("목표 좌표: " + startPr);
         outMovingToLocker = true;
-        
+
+        if (CommonUIManager.instance.uiManager is SchoolUIManager schoolUIManager)
+        {
+            schoolUIManager.hideInLocker = false;
+        }
     }
 
     private void FixedUpdate()
     {
         if (stat.Equals(LockerStat.InMove)) //락커안까지 플레이어 이동 및 카메라 회전
         {
-            
-            pr.position = Vector3.MoveTowards(pr.position, setTr.position, Time.fixedDeltaTime*1.2f);//이동 속도 조절 필요
-           
+
+            pr.position = Vector3.MoveTowards(pr.position, setTr.position, Time.fixedDeltaTime * 1.2f);//이동 속도 조절 필요
+
             if (Vector3.Distance(pr.position, setTr.position) < 0.01f && Quaternion.Angle(pr.rotation, targetRotation) < 1f)
-            {            
-                
+            {
+
                 pr.rotation = targetRotation;
                 lockPr = false;
                 //Debug.Log("최종 회전: " + pr.rotation.eulerAngles);
 
-                if (currentCoroutine ==null)
+                if (currentCoroutine == null)
                 {
                     InLocker();//문열리는 코루틴 종료후 실행
                 }
-              
+
             }
 
 
@@ -118,22 +128,22 @@ public class Locker : MonoBehaviour
                 pr.rotation = Quaternion.Slerp(pr.rotation, targetRotation, Time.deltaTime * 5f);//카메라 회전 속도
                 //Debug.Log("현재 회전: " + pr.rotation.eulerAngles);
             }
-          
-            
+
+
         }
 
         if (stat.Equals(LockerStat.OutMove))
         {
-            pr.position = Vector3.MoveTowards(pr.position, startPr, Time.fixedDeltaTime*1.2f);//나오는 속도 조절 필요
+            pr.position = Vector3.MoveTowards(pr.position, startPr, Time.fixedDeltaTime * 1.2f);//나오는 속도 조절 필요
             if (Vector3.Distance(pr.position, startPr) < 0.01f)
             {
-                
+
                 //Debug.Log("락커 탈출");
                 if (currentCoroutine == null)
                 {
                     OutLocker();//문열리는 코루틴 종료후 실행
                 }
-               
+
             }
         }
 

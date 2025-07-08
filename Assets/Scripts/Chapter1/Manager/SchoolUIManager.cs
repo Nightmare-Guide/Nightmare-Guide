@@ -37,6 +37,10 @@ public class SchoolUIManager : UIUtility
     public GameObject flashlightWall;
     public GameObject enemyFirstMeetWall;
     public List<GameObject> activeObjs;
+    public float monsterTimer = 0f;
+    public float monsterWaitTime = 60f;
+    public bool enterLounge = false;
+    public bool hideInLocker = false;
 
     [Header("# School Inventory")]
     public List<Sprite> itemImgs; // 인벤토리에 들어갈 이미지들
@@ -112,6 +116,10 @@ public class SchoolUIManager : UIUtility
                 if (playableDirector != null && playableDirector.state == PlayState.Paused && playableDirector.playableAsset != null)
                 {
                     playableDirector.Play();
+
+                    // 플레이어 움직임 멈춤
+                    PlayerController.instance.Close_PlayerController();
+                    Camera_Rt.instance.Close_Camera();
                 }
 
                 if (PlayerMainCamera.camera_single.jumpscareObj.activeInHierarchy)
@@ -279,7 +287,8 @@ public class SchoolUIManager : UIUtility
             CheckObjData(ActionType.GetFlashlight, fakeWall);
             CheckObjData(ActionType.GetJanitorsOfficeKey, activeObjs[1]);
             CheckObjData(ActionType.GetLockerKey, activeObjs[2]);
-            CheckObjData(ActionType.GetLockerKey, activeObjs[3]);
+            activeObjs[3].SetActive(ProgressManager.Instance.IsActionCompleted(ActionType.GetLockerKey));
+            activeObjs[4].SetActive(ProgressManager.Instance.IsActionCompleted(ActionType.GetLockerKey));
 
             bool isFirstMeetEthan = ProgressManager.Instance.IsActionCompleted(ActionType.FirstMeetEthan);
             bool isGetLockerKey = ProgressManager.Instance.IsActionCompleted(ActionType.GetLockerKey);
@@ -392,6 +401,7 @@ public class SchoolUIManager : UIUtility
         Camera_Rt.instance.ApplyPostProcessing("Nightmare");
 
         activeObjs[3].SetActive(true);
+        activeObjs[4].SetActive(true);
 
         // 쿵! 하는 사운드 필요
 
@@ -408,6 +418,39 @@ public class SchoolUIManager : UIUtility
         enemyFirstMeetWall.SetActive(false);
         StartTimeLine(TimeLineManager.instance.playableAssets[1]);
         timeLineEnemys[0].SetActive(false);
+    }
+
+    // 몬스터와 첫 추격 후 휴게실 문을 닫았을 때 실행
+    public void CloseLoungeDoor()
+    {
+        StartCoroutine(StartMonsterTimer());
+    }
+
+    private IEnumerator StartMonsterTimer()
+    {
+        monsterTimer = 0f;
+
+        // waitTime 시간 동안 기다리기
+        while (monsterTimer < monsterWaitTime)
+        {
+            if (hideInLocker)
+            {
+                Debug.Log("hideInLocker");
+                yield break; // 코루틴 즉시 종료
+            }
+
+            monsterTimer += Time.deltaTime;
+            yield return null; // 다음 프레임까지 대기
+        }
+
+        Debug.Log("Finish Timer");
+        MonsterWaitTimeOver(activeObjs[5].GetComponent<Door>());
+    }
+
+    public void MonsterWaitTimeOver(Door door)
+    {
+        door.Select_Door(); // 문 열기
+        door.gameObject.GetComponent<Collider>().enabled = false;   
     }
 
     public void FinishSchoolScene()
