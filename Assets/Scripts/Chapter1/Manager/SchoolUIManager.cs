@@ -24,7 +24,7 @@ public class SchoolUIManager : UIUtility
     public GameObject[] cellPhoneObjs;
     public List<PhoneInfos> phoneInfos; // 각각 휴대폰 정보를 담는 list
     public List<VerticalLayoutGroup> textBoxLayouts;
-    [SerializeField] private Enemy schoolEnemy;
+    [SerializeField] public Enemy schoolEnemy;
     [SerializeField] private Enemy backroomEnemy;
     [SerializeField] private Enemy lastEnemy;
     [SerializeField] private List<GameObject> timeLineEnemys;
@@ -418,6 +418,7 @@ public class SchoolUIManager : UIUtility
         enemyFirstMeetWall.SetActive(false);
         StartTimeLine(TimeLineManager.instance.playableAssets[1]);
         timeLineEnemys[0].SetActive(false);
+        activeObjs[6].GetComponent<Collider>().enabled = false;
     }
 
     // 몬스터와 첫 추격 후 휴게실 문을 닫았을 때 실행
@@ -451,6 +452,26 @@ public class SchoolUIManager : UIUtility
     {
         door.Select_Door(); // 문 열기
         door.gameObject.GetComponent<Collider>().enabled = false;   
+    }
+
+    public void StartLoungeTimeLine()
+    {
+        hideInLocker = true;
+        schoolEnemy.gameObject.SetActive(false);
+        activeObjs[6].GetComponent<Collider>().enabled = false;
+
+        StopPlayerController();
+
+        StartTimeLine(TimeLineManager.instance.playableAssets[2]);
+    }
+
+    public void FinishLoungeTimeLine()
+    {
+        activeObjs[6].GetComponent<Collider>().enabled = true;
+
+        StartPlayerController();
+
+        ProgressManager.Instance.CompletedAction(ActionType.GetOutOfLocker);
     }
 
     public void FinishSchoolScene()

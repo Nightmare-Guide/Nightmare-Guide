@@ -76,6 +76,15 @@ public class Locker : MonoBehaviour
         if (CommonUIManager.instance.uiManager is SchoolUIManager schoolUIManager)
         {
             schoolUIManager.hideInLocker = true;
+
+            // 손전등 비활성화
+            Camera_Rt.instance.postProecessingBehaviour.gameObject.GetComponent<RayCast_Aim>().flashlight.SetActive(false);
+
+            if (ProgressManager.Instance.IsActionCompleted(ProgressManager.ActionType.UseLockerKey)
+                && !ProgressManager.Instance.IsActionCompleted(ProgressManager.ActionType.GetOutOfLocker))
+            {
+                schoolUIManager.StartLoungeTimeLine();
+            }
         }
 
     }
@@ -95,9 +104,15 @@ public class Locker : MonoBehaviour
         //Debug.Log("목표 좌표: " + startPr);
         outMovingToLocker = true;
 
-        if (CommonUIManager.instance.uiManager is SchoolUIManager schoolUIManager)
+        if(CommonUIManager.instance.uiManager is SchoolUIManager schoolUIManager)
         {
             schoolUIManager.hideInLocker = false;
+
+            if (ProgressManager.Instance.IsActionCompleted(ProgressManager.ActionType.UseLockerKey)
+                && !ProgressManager.Instance.IsActionCompleted(ProgressManager.ActionType.GetOutOfLocker))
+            {
+                schoolUIManager.FinishLoungeTimeLine();
+            }
         }
     }
 

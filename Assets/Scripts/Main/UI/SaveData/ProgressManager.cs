@@ -35,6 +35,7 @@ public class ProgressManager : MonoBehaviour
         EnteredControlRoom,
         GetLockerKey,
         FirstMeetMonster,
+        UseLockerKey,
         GetOutOfLocker, // 아직 추가 X
         LeaveEthan, // 아직 추가 X
         StartSchoolNightmare, // 아직 추가 X

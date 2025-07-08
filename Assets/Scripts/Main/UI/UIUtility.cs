@@ -292,6 +292,8 @@ public class UIUtility : MonoBehaviour
 
     public void FinishedTimeLine()
     {
+        Debug.Log("Finish TimeLine");
+
         // 데이터 key 값으로 찾아서 저장
         ProgressManager.Instance.progressData.timelineWatchedList.Find(e => e.key == playableDirector.playableAsset.name).value = true;
 
@@ -332,8 +334,9 @@ public class UIUtility : MonoBehaviour
             UnityEngine.Cursor.visible = false;  // 커서를 안 보이게 하기
 
             // 이미 실행된 적 있으면 return
-            //if (ProgressManager.Instance.progressData.timelineWatchedList.Find(e => e.key == asset.name).value)
-            //    return;
+            if (ProgressManager.Instance.progressData.timelineWatchedList.Find(e => e.key == asset.name).value)
+                return;
+            // -> 추격 전 타임라인은 리스폰 후 데이터 초기화 필요
 
             // 타임라인 실행
             playableDirector.playableAsset = asset;

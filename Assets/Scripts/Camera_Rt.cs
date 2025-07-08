@@ -13,7 +13,7 @@ public class Camera_Rt : MonoBehaviour
     private Camera_Rt rt_Camera;
     public bool lockerCamera = true;
 
-    public PostProcessingBehaviour postPorecessingBehaviour;
+    public PostProcessingBehaviour postProecessingBehaviour;
     public PostProcessingProfile nightmarePost;
     public PostProcessingProfile warmPost;
 
@@ -61,10 +61,10 @@ public class Camera_Rt : MonoBehaviour
         switch (name)
         {
             case "Nightmare":
-                postPorecessingBehaviour.profile = nightmarePost;
+                postProecessingBehaviour.profile = nightmarePost;
                 break;
             case "Warm":
-                postPorecessingBehaviour.profile = warmPost;
+                postProecessingBehaviour.profile = warmPost;
                 break;
         }
 

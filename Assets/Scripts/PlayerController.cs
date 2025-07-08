@@ -350,7 +350,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             StartCoroutine(SmoothLookAt(playerTransform, target, 0.25f));
 
             // 플레이어 카메라 각도 변경
-            StartCoroutine(SmoothRotateTo(GetPlayerCamera().transform, Vector3.zero, 0.35f));
+            StartCoroutine(SmoothRotateTo(GetPlayerCamera().transform, Vector3.zero, 0.25f));
         }
 
         public IEnumerator SmoothLookAt(Transform me, Transform target, float duration)
@@ -375,7 +375,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
             float time = 0f;
             while (time < duration)
             {
-                me.rotation = Quaternion.Slerp(startRotation, targetRotation, time / duration);
+                float t = Mathf.Clamp01(time / duration);
+                me.rotation = Quaternion.Slerp(startRotation, targetRotation, t);
                 time += Time.deltaTime;
                 yield return null;
             }
