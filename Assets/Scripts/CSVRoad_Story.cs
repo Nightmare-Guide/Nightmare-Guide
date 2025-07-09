@@ -147,7 +147,24 @@ public class CSVRoad_Story : MonoBehaviour
                 yield break;
             }
 
-            yield return new WaitForSeconds(2f);
+            if (string.IsNullOrWhiteSpace(data[i]["Time"].ToString()))
+            {
+                // Time이 null, 빈칸, 공백 등일 경우
+                yield return new WaitForSeconds(2f);
+            }
+            else
+            {
+                // 숫자 값이 존재할 경우
+                if (float.TryParse(data[i]["Time"].ToString(), out float dialogueTime))
+                {
+                    yield return new WaitForSeconds(dialogueTime);
+                }
+                else
+                {
+                    Debug.LogWarning($"Time 값이 유효하지 않습니다: {data[i]["Time"]}");
+                    yield return new WaitForSeconds(2f); // 기본 대기
+                }
+            }
             progress = i + 1;
 
             if (i == end)
@@ -190,10 +207,12 @@ public class CSVRoad_Story : MonoBehaviour
 
     public void OnSelectOption(int choice)
     {
+
         if (choice == 1) // 선택지 1: ReturnPoint로 돌아가기
         {
             if (returnPoint != -1)
             {
+                TimeLineManager.instance.ResumeTimeline(); // 타임라인 진행
                 Debug.Log("선택지 1 선택: ReturnPoint로 이동");
                 StartCoroutine(DisplayChapterDialogue(returnPoint, data.Count - 1)); // ReturnPoint부터 다시 출력
                 
@@ -206,6 +225,7 @@ public class CSVRoad_Story : MonoBehaviour
         }
         else if (choice == 2) // 선택지 2: 다음 대사 진행
         {
+            TimeLineManager.instance.ResumeTimeline();
             Debug.Log("선택지 2 선택");
             progress += 4;
             string currentChapter = data[progress]["Chapter"].ToString();
@@ -217,7 +237,9 @@ public class CSVRoad_Story : MonoBehaviour
             StartCoroutine(DisplayChapterDialogue(progress, chapterEnd));
         }
         else if (choice == 3)
-        {   //선택지 상관없이 다음대사를 진행시키고 싶을떄 사용
+        {
+            TimeLineManager.instance.ResumeTimeline();
+            //선택지 상관없이 다음대사를 진행시키고 싶을떄 사용
             Debug.Log("다음 대사 진행");
             progress += 4;
             string currentChapter = data[progress]["Chapter"].ToString();
@@ -226,13 +248,13 @@ public class CSVRoad_Story : MonoBehaviour
         }
 
         dialogueOptions.SetActive(false);
-        if (PlayerController.instance != null)
+      /*  if (PlayerController.instance != null)
         {
             PlayerController.instance.Open_PlayerController();
             Camera_Rt.instance.Open_Camera();
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
-        }
+        }*/
         dialogueBox.SetActive(true);
     }
 

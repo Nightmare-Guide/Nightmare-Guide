@@ -345,6 +345,12 @@ namespace UnityStandardAssets.Characters.FirstPerson
             agent.SetDestination(playerwalkposition.position);
         }
 
+        public void StopAutoMove()
+        {
+            agent.enabled = false;
+            agent.ResetPath();
+        }
+
         public void LookTarget(Transform target)
         {
             StartCoroutine(SmoothLookAt(playerTransform, target, 0.25f));

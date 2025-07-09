@@ -8,6 +8,7 @@ public class Supervisor : NPC
 {
     public Transform hospitalroom;
     public Transform npcwalkPosition;
+    public Transform workposition;
     public NavMeshAgent agent;
     public float talkDistance = 2.0f; //대화거리
     private bool isWalkingToPlayer = false;
@@ -18,6 +19,8 @@ public class Supervisor : NPC
 
     private LookTarget look;
 
+    private Coroutine autoMoveRoutine;
+    private bool isAutoMoveEnabled = false;
     //임시
     public PlayableDirector director;
 
@@ -36,21 +39,25 @@ public class Supervisor : NPC
         }
     }
 
-    private void Update()
-    {
-
-    }
     public void AutoMove()
     {
+        if (autoMoveRoutine != null)
+            StopCoroutine(autoMoveRoutine);
+
+        isAutoMoveEnabled = true;
+        hasStartedPlayerFollow = false;
+
         myAnim.SetBool("isWalk", true);
-        agent.SetDestination(hospitalroom.position);
-        StartCoroutine(CheckPlayerFollow());
+        agent.SetDestination(npcwalkPosition.position);
+
+        autoMoveRoutine = StartCoroutine(CheckPlayerFollow());
     }
+
     private IEnumerator CheckPlayerFollow()
     {
-        yield return new WaitForSeconds(1f); // 약간의 딜레이
+        yield return new WaitForSeconds(1f);
 
-        while (!hasStartedPlayerFollow)
+        while (isAutoMoveEnabled && !hasStartedPlayerFollow)
         {
             float followDistance = Vector3.Distance(transform.position, PlayerController.instance.transform.position);
 
@@ -58,18 +65,60 @@ public class Supervisor : NPC
             {
                 hasStartedPlayerFollow = true;
                 Debug.Log("주인공 이동 시작");
-
-                PlayerController.instance.GoNavposition(); // 목적지 전달
+                PlayerController.instance.GoNavposition();
             }
 
             yield return new WaitForSeconds(0.2f);
         }
+    }
+    public void StopAutoMove()
+    {
+        isAutoMoveEnabled = false;
+        hasStartedPlayerFollow = false;
+
+        if (autoMoveRoutine != null)
+        {
+            StopCoroutine(autoMoveRoutine);
+            autoMoveRoutine = null;
+        }
+
+        if (agent.enabled)
+            agent.ResetPath();
+        PlayerController.instance.StopAutoMove();
+        myAnim.SetBool("isWalk", false);
+        myAnim.SetTrigger("isIdle");
     }
 
     public void WalkToHospitalRoom()
     {
         myAnim.SetBool("isWalk", true);
         agent.SetDestination(npcwalkPosition.position);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            playerTransform = other.transform;
+            FirstMeet();
+            PlayerController.instance.Close_PlayerController();
+            //StartWalkToPlayer(playerTransform);
+        }
+    }
+
+    public void FirstMeet()
+    {
+        //임시
+        director.Play();
+    }
+
+    public void DisableCollider()
+    {
+        col.enabled = false;
+    }
+    public void EnableCollider()
+    {
+        col.enabled = true;
     }
 
     //public void StartWalkToPlayer(Transform player)
@@ -94,22 +143,6 @@ public class Supervisor : NPC
     //    }
 
     //}
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            playerTransform = other.transform;
-            FirstMeet();
-            PlayerController.instance.Close_PlayerController();
-            //StartWalkToPlayer(playerTransform);
-        }
-    }
-
-    public void FirstMeet()
-    {
-        //임시
-        director.Play();
-    }
 
     //public void GoHospitalRoom() //Supervisor가 병실로
     //{
