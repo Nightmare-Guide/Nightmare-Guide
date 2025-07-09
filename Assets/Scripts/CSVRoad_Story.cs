@@ -147,7 +147,26 @@ public class CSVRoad_Story : MonoBehaviour
                 yield break;
             }
 
-            yield return new WaitForSeconds(2f);
+
+            if (string.IsNullOrWhiteSpace(data[i]["Time"].ToString()))
+            {
+                // Time이 null, 빈칸, 공백 등일 경우
+                yield return new WaitForSeconds(2f);
+            }
+            else
+            {
+                // 숫자 값이 존재할 경우
+                if (float.TryParse(data[i]["Time"].ToString(), out float dialogueTime))
+                {
+                    yield return new WaitForSeconds(dialogueTime);
+                }
+                else
+                {
+                    Debug.LogWarning($"Time 값이 유효하지 않습니다: {data[i]["Time"]}");
+                    yield return new WaitForSeconds(2f); // 기본 대기
+                }
+            }
+
             progress = i + 1;
 
             if (i == end)
