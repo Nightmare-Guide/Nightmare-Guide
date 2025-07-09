@@ -88,7 +88,7 @@ public class Locker : MonoBehaviour
         //Debug.Log("½ÃÀÛ ÁÂÇ¥: " + pr.position);
         //Debug.Log("¸ñÇ¥ ÁÂÇ¥: " + startPr);
         outMovingToLocker = true;
-        
+       
     }
 
     private void FixedUpdate()

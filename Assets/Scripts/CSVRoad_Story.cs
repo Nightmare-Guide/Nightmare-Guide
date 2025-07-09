@@ -147,7 +147,15 @@ public class CSVRoad_Story : MonoBehaviour
                 yield break;
             }
 
-            yield return new WaitForSeconds(2f);
+           
+            if (data[i]["Time"].ToString().)
+            {
+
+            }
+            else {
+                yield return new WaitForSeconds(2f);
+            }
+
             progress = i + 1;
 
             if (i == end)

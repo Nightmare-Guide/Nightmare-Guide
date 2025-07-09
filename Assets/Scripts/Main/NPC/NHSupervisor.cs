@@ -3,173 +3,86 @@ using System.Collections;
 
 public class NHSupervisor : MonoBehaviour
 {
-    [SerializeField] Transform moveTr;
-    [SerializeField] Transform checkPoint;
-    [SerializeField] Transform endPoint;
-
-    public float speed = 5f;
-    public float rotationSpeed = 100f;
-
-    private bool isMoving = false;
-    private Coroutine currentMoveCoroutine;
+    public static NHSupervisor instance;
+    [SerializeField] Transform moveTr; // 목표 위치를 지정할 Transform
+    [SerializeField] Transform endPoint; // 목표 위치를 지정할 Transform
+    [SerializeField] float speed = 5f; // 이동 속도
+    [SerializeField] float stopDistance = 0.1f; // 목표 지점 근처에 도달했는지 판단할 거리
 
     private Animator anim;
+    private bool isMoving = false; // 이동 중인지 여부
 
-    bool storyCheck = false;
+
+
 
     void Start()
     {
+        if (instance == null)
+        {
+            instance = this;
+        }
+
         anim = GetComponent<Animator>();
-        Invoke("StartNPCFlow", 8f); // 시작 지연
-        Invoke("StartStory", 3f);
-    }
-    void StartStory()
-    {
-        CSVRoad_Story.instance.OnSelectChapter("2_0_0");
-    }
-
-    private IEnumerator MoveToTargetWaypoint(Transform targetWaypoint)
-    {
-        if (targetWaypoint == null)
+        if (anim == null)
         {
-            Debug.LogWarning("NHSupervisor: 이동할 목표 지점이 null입니다.");
-            yield break;
+            Debug.LogError("Animator 컴포넌트가 NHSupervisor와 같은 오브젝트에 없습니다!");
         }
+    }
 
-        while (Vector3.Distance(transform.position, targetWaypoint.position) > 0.1f)
+    void Update()
+    {
+        // isMoving이 true일 때만 이동 로직 실행
+        if (isMoving && moveTr != null)
         {
-            Vector3 direction = (targetWaypoint.position - transform.position).normalized;
-            direction.y = 0;
+            // 목표 위치까지의 방향 벡터 계산
+            Vector3 direction = (moveTr.position - transform.position).normalized;
 
-            if (direction != Vector3.zero)
+            // 현재 위치에서 목표 위치까지의 거리 계산
+            float distanceToTarget = Vector3.Distance(transform.position, moveTr.position);
+
+            // 목표 지점에 거의 도달했다면 멈춤
+            if (distanceToTarget < stopDistance)
             {
-                Quaternion targetRotation = Quaternion.LookRotation(direction);
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime / 100f);
+                transform.position = moveTr.position; // 정확한 목표 위치로 설정
+                StopMovement();
             }
-
-            transform.position = Vector3.MoveTowards(transform.position, targetWaypoint.position, speed * Time.deltaTime);
-            yield return null;
+            else
+            {
+                // 현재 위치를 목표 방향으로 speed만큼 이동
+                transform.position += direction * speed * Time.deltaTime;
+            }
         }
+    }
 
-        Debug.Log("NHSupervisor: 포인트 "+ targetWaypoint.name + " 도착");
+    // 타임라인 종료 시 Signal Receiver에 의해 호출될 함수
+    public void StartMovement()
+    {
+        Debug.Log("Timeline Ended! Starting Movement...");
 
-        if (!storyCheck)
+        // 애니메이션의 "isWalk" 파라미터를 true로 설정
+        if (anim != null)
         {
-            // 도착 후 시퀀스 실행
-            StartCoroutine(PlayPostArrivalSequence());
-            storyCheck = true;
+            anim.SetBool("isWalk", true);
         }
         else
         {
-            anim.SetTrigger("isIdle");
-        }
-       
-        
-    }
-
-    private IEnumerator PlayPostArrivalSequence()
-    {
-      
-
-        Debug.Log("NHSupervisor: -90도 회전 실행");
-        yield return StartCoroutine(RotateByRelativeAngle(-90f, 1f));
-        Debug.Log("NHSupervisor: talk1 실행");
-        anim.SetTrigger("isTalk");
-        yield return new WaitForSeconds(2.0f); // talk1 애니메이션 길이
-        CSVRoad_Story.instance.OnSelectChapter("2_0_1");
-        yield return new WaitForSeconds(9.0f);
-       
-
-        Debug.Log("NHSupervisor: +160도 회전 실행");
-        yield return StartCoroutine(RotateByRelativeAngle(160f, 1f));
-        CSVRoad_Story.instance.OnSelectChapter("2_0_2");
-        Debug.Log("NHSupervisor: Action1 실행");
-        anim.SetTrigger("Action");
-        yield return new WaitForSeconds(4f); // Action1 애니메이션 길이
-        anim.SetBool("isWalk", true);
-
-        yield return StartCoroutine(MoveToTargetWaypoint(checkPoint));
-
-    }
-
-    private IEnumerator RotateByRelativeAngle(float angle, float duration)
-    {
-        Quaternion startRot = transform.rotation;
-        Quaternion endRot = startRot * Quaternion.Euler(0, angle, 0); // 상대 회전
-
-        float elapsed = 0f;
-        while (elapsed < duration)
-        {
-            transform.rotation = Quaternion.Slerp(startRot, endRot, elapsed / duration);
-            elapsed += Time.deltaTime;
-            yield return null;
+            Debug.LogWarning("Animator is null. Cannot set 'isWalk' parameter.");
         }
 
-        transform.rotation = endRot; // 정확한 최종 값 보정
-    }
-
-    private IEnumerator RotateByAngle(float angle, float duration)
-    {
-        Quaternion startRot = transform.rotation;
-        Quaternion endRot = startRot * Quaternion.Euler(0, angle, 0);
-        float elapsed = 0f;
-
-        while (elapsed < duration)
-        {
-            transform.rotation = Quaternion.Slerp(startRot, endRot, elapsed / duration);
-            elapsed += Time.deltaTime;
-            yield return null;
-        }
-
-        transform.rotation = endRot;
-    }
-
-    public IEnumerator NPCFlowSequence()
-    {
-        if (moveTr == null)
-        {
-            Debug.LogError("NHSupervisor: moveTr가 설정되어 있지 않습니다.");
-            yield break;
-        }
-
+        // 이동 시작 플래그 설정
         isMoving = true;
-
-        Debug.Log("NHSupervisor: walk 애니메이션 시작");
-        anim.SetBool("isWalk", true);
-        yield return StartCoroutine(MoveToTargetWaypoint(moveTr));
-
-        Debug.Log("NHSupervisor: 이동 완료 - walk 종료");
-        anim.SetBool("isWalk", false);
-
-        isMoving = false;
     }
 
-    public void StartNPCFlow()
+    // 이동을 멈추고 애니메이션을 끄는 함수
+    private void StopMovement()
     {
-        if (isMoving)
+        Debug.Log("Movement Finished!");
+        isMoving = false; // 이동 중지
+
+        if (anim != null)
         {
-            Debug.LogWarning("NHSupervisor: 이미 실행 중입니다.");
-            return;
+            anim.SetBool("isWalk", false); // 걷기 애니메이션 끄기
+            anim.SetBool("isIdle1", true);
         }
-
-        if (currentMoveCoroutine != null)
-        {
-            StopCoroutine(currentMoveCoroutine);
-        }
-
-        currentMoveCoroutine = StartCoroutine(NPCFlowSequence());
-    }
-
-    public void StopMoveSequence()
-    {
-        if (currentMoveCoroutine != null)
-        {
-            StopCoroutine(currentMoveCoroutine);
-            currentMoveCoroutine = null;
-        }
-
-        isMoving = false;
-        anim.SetTrigger("isIdle");
-        Debug.Log("NHSupervisor: 시퀀스 강제 중지됨");
     }
 }
