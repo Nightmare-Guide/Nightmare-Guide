@@ -14,7 +14,6 @@ public class RayCast_Aim : MonoBehaviour
     public float maxRayDistance = 5f; // 레이 길이 설정
     private OutlineObject previousOutline;
     public GameObject flashlight;
-    // public bool getFlashlight = false; // 테스트용
 
     [Header("Locker")]
     bool locker = true;
@@ -123,6 +122,25 @@ public class RayCast_Aim : MonoBehaviour
                                 DoorCheck(click_object);
                             }
                         }
+                        else if (click_object.name.Contains("Lounge Door"))
+                        {
+                            if (ProgressManager.Instance.IsActionCompleted(ActionType.FirstMeetMonster))
+                            {
+                                Door door = click_object.GetComponent<Door>();
+                                DoorCheck(click_object);
+
+                                if (!door.doorState && schoolUIManager.enterLounge)
+                                {
+                                    schoolUIManager.CloseLoungeDoor();
+                                }
+                            }
+                            else
+                            {
+                                DoorCheck(click_object);
+                            }
+                        }
+
+
                     }
 
                     if (click_object.CompareTag("CellPhone"))
@@ -156,6 +174,8 @@ public class RayCast_Aim : MonoBehaviour
                             if(schoolUIManager.CheckItem("Locker Key"))
                             {
                                 CSVRoad_Story.instance.OnSelectChapter("1_0_4");
+                                ProgressManager.Instance.CompletedAction(ActionType.UseLockerKey);
+                                schoolUIManager.activeObjs[6].GetComponent<Collider>().enabled = true;
                                 schoolUIManager.StopPlayerController();
                             }
                             else
@@ -198,15 +218,15 @@ public class RayCast_Aim : MonoBehaviour
             if (flashlight == null)
                 return;
 
+            SchoolUIManager schoolUIManager  = CommonUIManager.instance.uiManager as SchoolUIManager;
+
+            if (schoolUIManager.hideInLocker)
+                return;
+
             if (ProgressManager.Instance.IsActionCompleted(ActionType.GetFlashlight))
             {
                 flashlight.SetActive(!flashlight.activeInHierarchy);
             }
-
-            //if (getFlashlight)
-            //{
-            //    flashlight.SetActive(!flashlight.activeInHierarchy);
-            //}
         }
     }
 

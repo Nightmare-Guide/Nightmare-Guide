@@ -96,6 +96,9 @@ public class TitleUIManager : UIUtility
             {
                 ProgressManager.Instance.progressData.scene = currentScene;
             }
+
+            SoundManager.instance.StopBGM();
+
             //플레이어 하우스
             commonUIManager.MoveScene(currentScene);
         }
