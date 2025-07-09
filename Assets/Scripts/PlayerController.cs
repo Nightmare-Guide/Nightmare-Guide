@@ -101,15 +101,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             Close_PlayerController();
             if (ProgressManager.Instance != null)
             {
-                if (ProgressManager.Instance.progressData.hideInLocker)
-                {
-                    transform.position = ProgressManager.Instance.progressData.playerPosition + transform.forward * 1000f;
-                    ProgressManager.Instance.progressData.hideInLocker = false;
-                }
-                else
-                {
-                    transform.position = ProgressManager.Instance.progressData.playerPosition;
-                }
+                transform.position = ProgressManager.Instance.progressData.playerPosition;
             }
             Open_PlayerController();
           

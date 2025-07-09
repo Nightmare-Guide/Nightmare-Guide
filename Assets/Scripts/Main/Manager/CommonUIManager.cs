@@ -163,19 +163,7 @@ public class CommonUIManager : MonoBehaviour
                 Debug.Log(ProgressManager.Instance.progressData.scene+"씬 위치값 : "+ ProgressManager.Instance.progressData.playerPosition +"로테이션 : "+ ProgressManager.Instance.progressData.playerEulerAngles);
                 PlayerController.instance.Close_PlayerController();
                 PlayerController.instance.transform.eulerAngles = ProgressManager.Instance.progressData.playerEulerAngles;
-
-                // 플레이어 위치
-                if (ProgressManager.Instance.progressData.hideInLocker)
-                {
-                    Debug.Log("hideInLocker");
-                    PlayerController.instance.transform.position = ProgressManager.Instance.progressData.playerPosition + transform.forward * 200f;
-                    ProgressManager.Instance.progressData.hideInLocker = false;
-                }
-                else
-                {
-                    PlayerController.instance.transform.position = ProgressManager.Instance.progressData.playerPosition;
-
-                }
+                PlayerController.instance.transform.position = ProgressManager.Instance.progressData.playerPosition;
                 PlayerController.instance.Open_PlayerController();
             }
 
@@ -196,7 +184,8 @@ public class CommonUIManager : MonoBehaviour
         if (GameDataManager.instance != null && PlayerController.instance!=null) {
             ProgressManager.Instance.progressData.playerPosition = PlayerController.instance.transform.position;
             ProgressManager.Instance.progressData.newGame = false;
-            GameDataManager.instance.SaveGame(); }
+            GameDataManager.instance.SaveGame(); 
+        }
     }
 
     void FirstSet()
@@ -224,6 +213,7 @@ public class CommonUIManager : MonoBehaviour
             Time.timeScale = 1;
             if (GameDataManager.instance != null && PlayerController.instance!=null && ProgressManager.Instance!=null) {
                 Vector3 playerTr = PlayerController.instance.transform.position;
+
                 ProgressManager.Instance.progressData.playerPosition = playerTr;
                 ProgressManager.Instance.progressData.newGame = false;
                 GameDataManager.instance.SaveGame();

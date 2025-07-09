@@ -228,8 +228,18 @@ public class ProgressManager : MonoBehaviour
         PlayerTr playerData = GetPlayerTrForScene(sceneName);
         if (playerData != null)
         {     
-            progressData.playerPosition = playerData.tr;
             progressData.playerEulerAngles = playerData.rt;
+
+            if (ProgressManager.Instance.progressData.hideInLocker)
+            {
+                progressData.playerPosition = playerData.tr + Vector3.forward;
+                ProgressManager.Instance.progressData.hideInLocker = false;
+            }
+            else
+            {
+                progressData.playerPosition = playerData.tr;
+            }
+
             Debug.Log($"[{sceneName}] Load 플레이어 위치/회전 정보 업데이트: {playerData.tr}, {playerData.rt}");
         }
         else
@@ -245,8 +255,9 @@ public class ProgressManager : MonoBehaviour
         if (existingData != null)
         {
             //기존 데이터 업데이트
-            existingData.tr = position;
             existingData.rt = rotation;
+            existingData.tr = position;
+
             Debug.Log($"[{sceneName}] Update 플레이어 위치/회전 정보 업데이트: {position}, {rotation}");
         }
         

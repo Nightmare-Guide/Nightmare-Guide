@@ -125,12 +125,12 @@ public class Locker : MonoBehaviour
         if (stat.Equals(LockerStat.InMove)) //락커안까지 플레이어 이동 및 카메라 회전
         {
 
-            pr.position = Vector3.MoveTowards(pr.position, setTr.position, Time.fixedDeltaTime * 1.2f);//이동 속도 조절 필요
+            pr.position = Vector3.MoveTowards(pr.position, setTr.position, Time.fixedDeltaTime * 2f);//이동 속도 조절 필요
 
             if (lockPr)
             {
                 // Debug.Log($"pr.rotation : {pr.rotation}, targetRotation : {targetRotation}");
-                pr.rotation = Quaternion.Slerp(pr.rotation, targetRotation, Time.deltaTime * 5f);//카메라 회전 속도
+                pr.rotation = Quaternion.Slerp(pr.rotation, targetRotation, Time.deltaTime * 10f);//카메라 회전 속도
                 //Debug.Log("현재 회전: " + pr.rotation.eulerAngles);
             }
 
@@ -154,7 +154,7 @@ public class Locker : MonoBehaviour
         if (stat.Equals(LockerStat.OutMove))
         {
             // Debug.Log($"Player Pos : {pr.position}, start Pos : {startPr}");
-            pr.position = Vector3.MoveTowards(pr.position, startPr, Time.fixedDeltaTime * 1.2f);//나오는 속도 조절 필요
+            pr.position = Vector3.MoveTowards(pr.position, startPr, Time.fixedDeltaTime * 2f);//나오는 속도 조절 필요
             // Debug.Log($"Player Pos : {pr.position}");
             if (Vector3.Distance(pr.position, startPr) < 0.01f)
             {

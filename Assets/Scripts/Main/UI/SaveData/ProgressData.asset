@@ -25,17 +25,17 @@ MonoBehaviour:
   - actionType: 3
     isCompleted: 0
   - actionType: 4
-    isCompleted: 0
+    isCompleted: 1
   - actionType: 5
     isCompleted: 1
   - actionType: 6
-    isCompleted: 1
+    isCompleted: 0
   - actionType: 7
-    isCompleted: 1
+    isCompleted: 0
   - actionType: 8
-    isCompleted: 1
+    isCompleted: 0
   - actionType: 9
-    isCompleted: 1
+    isCompleted: 0
   - actionType: 10
     isCompleted: 0
   - actionType: 11
@@ -74,12 +74,14 @@ MonoBehaviour:
     isCompleted: 0
   - actionType: 28
     isCompleted: 0
-  playerPosition: {x: -19.184452, y: 0.5360007, z: -13.991059}
-  playerEulerAngles: {x: 0, y: 88.6, z: 0}
+  - actionType: 29
+    isCompleted: 0
+  playerPosition: {x: -19.288591, y: 4.209917, z: -16.80768}
+  playerEulerAngles: {x: 0, y: 90, z: 0}
   playerTr:
   - scene_Name: DayHouse
     tr: {x: -488, y: 72, z: 140}
-    rt: {x: 0, y: 74.99999, z: 0}
+    rt: {x: 0, y: 0, z: 0}
   - scene_Name: NightHouse
     tr: {x: -605, y: 72, z: 173}
     rt: {x: 0, y: -90, z: 0}
@@ -90,8 +92,8 @@ MonoBehaviour:
     tr: {x: -285, y: 30, z: -810}
     rt: {x: 0, y: 180, z: 0}
   - scene_Name: School_Scene
-    tr: {x: -19.184452, y: 0.5360007, z: -13.991059}
-    rt: {x: -0, y: 90, z: 0}
+    tr: {x: -19.288591, y: 4.209917, z: -16.80768}
+    rt: {x: -0, y: 67.8452, z: 0}
   - scene_Name: Main_Map
     tr: {x: -376, y: 5, z: -355}
     rt: {x: 0, y: 90, z: 0}
@@ -99,12 +101,12 @@ MonoBehaviour:
     tr: {x: -180, y: 5, z: -723}
     rt: {x: 0, y: 90, z: 0}
   sanchi: 0
-  postProcessingName: Nightmare
-  fogName: Nightmare
+  postProcessingName: Warm
+  fogName: Warm
+  hideInLocker: 1
   mainInventoryDatas:
   - 
-  schoolInventoryDatas:
-  - Locker Key
+  schoolInventoryDatas: []
   phoneDatas:
   - name: Steven
     hasPhone: 0
@@ -125,6 +127,8 @@ MonoBehaviour:
   - key: StartFirstDay
     value: 0
   - key: FirstMeetMonster
+    value: 0
+  - key: FirstLounge
     value: 0
   - key: LastSchoolEvent
     value: 0
