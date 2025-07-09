@@ -101,7 +101,15 @@ namespace UnityStandardAssets.Characters.FirstPerson
             Close_PlayerController();
             if (ProgressManager.Instance != null)
             {
-                transform.position = ProgressManager.Instance.progressData.playerPosition;
+                if (ProgressManager.Instance.progressData.hideInLocker)
+                {
+                    transform.position = ProgressManager.Instance.progressData.playerPosition + transform.forward * 1000f;
+                    ProgressManager.Instance.progressData.hideInLocker = false;
+                }
+                else
+                {
+                    transform.position = ProgressManager.Instance.progressData.playerPosition;
+                }
             }
             Open_PlayerController();
           
@@ -405,13 +413,14 @@ namespace UnityStandardAssets.Characters.FirstPerson
         {
             if (other.CompareTag("Trigger"))
             {
-                if(other.gameObject.name == "EnemyFirstMeet Wall")
+                if (other.gameObject.name == "EnemyFirstMeet Wall")
                 {
                     SchoolUIManager schoolUIManager = CommonUIManager.instance.uiManager as SchoolUIManager;
 
+                    Close_PlayerController();
                     schoolUIManager.FirstMeetEnemy();
                 }
-                else if(other.gameObject.name == "Lounge Trigger Wall")
+                else if (other.gameObject.name == "Lounge Trigger Wall")
                 {
                     SchoolUIManager schoolUIManager = CommonUIManager.instance.uiManager as SchoolUIManager;
 

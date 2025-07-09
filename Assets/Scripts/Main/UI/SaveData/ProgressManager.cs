@@ -136,6 +136,7 @@ public class ProgressManager : MonoBehaviour
             progressData.sanchi = defaultData.sanchi;
             progressData.fogName = defaultData.fogName;
             progressData.postProcessingName = defaultData.postProcessingName;
+            progressData.hideInLocker = defaultData.hideInLocker;
 
             progressData.mainInventoryDatas = new List<string>(defaultData.mainInventoryDatas);
             DeepCopy(defaultData.phoneDatas); // ÈÞ´ëÆù Á¤º¸

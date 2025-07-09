@@ -23,6 +23,7 @@ public class LoadingSceneManager : UIUtility
     {
         Cursor.visible = false; // 커서 안보이게 하기
         videoImg.gameObject.SetActive(false);
+        CommonUIManager.instance.interactionUI.SetActive(false);
 
         // Loading 영상 url 찾기
         string filePath = System.IO.Path.Combine(Application.streamingAssetsPath, videoFileName);

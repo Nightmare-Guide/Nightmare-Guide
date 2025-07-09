@@ -15,9 +15,6 @@ public class RayCast_Aim : MonoBehaviour
     private OutlineObject previousOutline;
     public GameObject flashlight;
 
-    [Header("Locker")]
-    bool locker = true;
-
 
     private void Start()
     {
@@ -174,13 +171,14 @@ public class RayCast_Aim : MonoBehaviour
                             if(schoolUIManager.CheckItem("Locker Key"))
                             {
                                 CSVRoad_Story.instance.OnSelectChapter("1_0_4");
-                                ProgressManager.Instance.CompletedAction(ActionType.UseLockerKey);
                                 schoolUIManager.activeObjs[6].GetComponent<Collider>().enabled = true;
-                                schoolUIManager.StopPlayerController();
+                                schoolUIManager.useLockerKey = true;
+                                schoolUIManager.monsterTimer -= 10f;
+                                PlayerController.instance.Close_PlayerController();
+                                Camera_Rt.instance.Close_Camera();
                             }
                             else
                             {
-                                //schoolUIManager.FirstMeetEthan(getFlashlight);
                                 schoolUIManager.FirstMeetEthan(ProgressManager.Instance.IsActionCompleted(ActionType.GetFlashlight));
                             }
                         }
@@ -220,7 +218,7 @@ public class RayCast_Aim : MonoBehaviour
 
             SchoolUIManager schoolUIManager  = CommonUIManager.instance.uiManager as SchoolUIManager;
 
-            if (schoolUIManager.hideInLocker)
+            if (ProgressManager.Instance.progressData.hideInLocker)
                 return;
 
             if (ProgressManager.Instance.IsActionCompleted(ActionType.GetFlashlight))
@@ -265,19 +263,17 @@ public class RayCast_Aim : MonoBehaviour
             return;
         }
 
-        if (locker)//문이 열리고 플레이어 이동 후 문 닫힘
+        if (!ProgressManager.Instance.progressData.hideInLocker)//문이 열리고 플레이어 이동 후 문 닫힘
         {
             lockerObj.isMovingToLocker = true;
             lockerObj.PlayerHide();
-            locker = false;
         }
 
-        else if (!locker)//플레이어 컨트롤러가 활성화되고 문이 열림
+        else if (ProgressManager.Instance.progressData.hideInLocker)//플레이어 컨트롤러가 활성화되고 문이 열림
         {
 
             lockerObj.OpenLocker();
             // PlayerController.instance.Open_PlayerController();//플레이어 컨트롤 ON
-            locker = true;
             // DoorCheck(obj);
         }
 

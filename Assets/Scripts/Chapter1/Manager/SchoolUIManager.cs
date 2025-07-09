@@ -40,7 +40,7 @@ public class SchoolUIManager : UIUtility
     public float monsterTimer = 0f;
     public float monsterWaitTime = 60f;
     public bool enterLounge = false;
-    public bool hideInLocker = false;
+    public bool useLockerKey = false;
 
     [Header("# School Inventory")]
     public List<Sprite> itemImgs; // 인벤토리에 들어갈 이미지들
@@ -91,12 +91,7 @@ public class SchoolUIManager : UIUtility
         // ESC 키
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            //if (AreAllObjectsDisabled(uiObjects) && commonUIManager != null)               // -> 테스트 때문에 비활성화
-            //{
-            //    // 일시정지 UI 활성화
-            //    PauseGame(uiObjects[0]);
-            //}
-            if (AreAllObjectsDisabled(uiObjects))
+            if (AreAllObjectsDisabled(uiObjects) && commonUIManager != null)
             {
                 // 일시정지 UI 활성화
                 PauseGame(uiObjects[0]);
@@ -108,7 +103,16 @@ public class SchoolUIManager : UIUtility
                 {
                     if (uiObj.activeInHierarchy)
                     {
-                        InGameCloseUI(uiObj);
+                        if (PlayerController.instance.stat == PlayerController.PlayerState.Hide) // 락커 안
+                        {
+                            CloseUI(uiObj);
+                            Time.timeScale = 1;
+                            CursorLocked();
+                        }
+                        else
+                        {
+                            InGameCloseUI(uiObj);
+                        }
                     }
                 }
 
@@ -380,7 +384,8 @@ public class SchoolUIManager : UIUtility
         CSVRoad_Story.instance.OnSelectChapter("1_0_1"); // 테스트 때문에 1_0_0 에서 변경
         fakeWall.SetActive(false);
         flashlightWall.SetActive(!getFlashlight);
-        StopPlayerController();
+        PlayerController.instance.Close_PlayerController();
+        Camera_Rt.instance.Close_Camera();
         commonUIManager.isTalkingWithNPC = true;
         ProgressManager.Instance.CompletedAction(ActionType.FirstMeetEthan);
     }
@@ -436,7 +441,7 @@ public class SchoolUIManager : UIUtility
         // waitTime 시간 동안 기다리기
         while (monsterTimer < monsterWaitTime)
         {
-            if (hideInLocker)
+            if (ProgressManager.Instance.progressData.hideInLocker)
             {
                 Debug.Log("hideInLocker");
                 yield break; // 코루틴 즉시 종료
@@ -458,11 +463,9 @@ public class SchoolUIManager : UIUtility
 
     public void StartLoungeTimeLine()
     {
-        hideInLocker = true;
+        ProgressManager.Instance.progressData.hideInLocker = true;
         schoolEnemy.gameObject.SetActive(false);
         activeObjs[6].GetComponent<Collider>().enabled = false;
-
-        StopPlayerController();
 
         StartTimeLine(TimeLineManager.instance.playableAssets[2]);
     }
