@@ -419,6 +419,18 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
                     schoolUIManager.enterLounge = true;
                 }
+                else if (other.gameObject.name == "Portal Room Trigger Wall (Lounge Door)")
+                {
+                    SchoolUIManager schoolUIManager = CommonUIManager.instance.uiManager as SchoolUIManager;
+
+                    schoolUIManager.EnterPortalRoom();
+                }
+                else if(other.gameObject.name.Contains("Backroom Trigger"))
+                {
+                    SchoolUIManager schoolUIManager = CommonUIManager.instance.uiManager as SchoolUIManager;
+
+                    schoolUIManager.EnterBackroom();
+                }
             }
         }
 

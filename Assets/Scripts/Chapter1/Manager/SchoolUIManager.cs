@@ -31,12 +31,14 @@ public class SchoolUIManager : UIUtility
     public GameObject playerObj;
     public Transform[] playerRespawnPoints;
     public Transform[] enemyRespawnPoints;
+    public Transform[] timelineEnemyPoints;
     [SerializeField] Collider ehtanLocker;
     [SerializeField] GameObject fakeWall;
     [SerializeField] List<GameObject> schoolLights;
     public GameObject flashlightWall;
     public GameObject enemyFirstMeetWall;
     public List<GameObject> activeObjs;
+    public List<GameObject> schoolMaps;
     public float monsterTimer = 0f;
     public float monsterWaitTime = 60f;
     public bool enterLounge = false;
@@ -278,31 +280,43 @@ public class SchoolUIManager : UIUtility
             string json = File.ReadAllText(path);
 
             // 휴대폰
-            phoneInfos[0].hasPhone = ProgressManager.Instance.progressData.phoneDatas[1].hasPhone;
+            phoneInfos[0].hasPhone = ProgressManager.Instance.progressData.phoneDatas[1].hasPhone; // Ethan
             phoneInfos[0].isUnlocked = ProgressManager.Instance.progressData.phoneDatas[1].isUnlocked;
-            phoneInfos[1].hasPhone = ProgressManager.Instance.progressData.phoneDatas[2].hasPhone;
+            phoneInfos[1].hasPhone = ProgressManager.Instance.progressData.phoneDatas[2].hasPhone; // David
             phoneInfos[1].isUnlocked = ProgressManager.Instance.progressData.phoneDatas[2].isUnlocked;
 
             // 데이터에 맞게 오브젝트 활성화/비활성화
-            if (phoneInfos[0].hasPhone) { cellPhoneObjs[0].SetActive(false); }
-            if (phoneInfos[1].hasPhone) { cellPhoneObjs[1].SetActive(false); }
+            if (phoneInfos[0].hasPhone) { cellPhoneObjs[0].SetActive(false); } // 에단 휴대폰
+            if (phoneInfos[1].hasPhone) { cellPhoneObjs[1].SetActive(false); } // 데이비드 휴대폰
             CheckObjData(ActionType.FirstMeetEthan, ehtanLocker);
-            CheckObjData(ActionType.GetFlashlight, activeObjs[0]);
-            // CheckObjData(ActionType.GetFlashlight, fakeWall);
+            CheckObjData(ActionType.GetFlashlight, activeObjs[0]); // 손전등
             fakeWall.SetActive(ProgressManager.Instance.IsActionCompleted(ActionType.FirstMeetEthan) && ProgressManager.Instance.IsActionCompleted(ActionType.GetFlashlight));
-            CheckObjData(ActionType.GetJanitorsOfficeKey, activeObjs[1]);
-            CheckObjData(ActionType.GetLockerKey, activeObjs[2]);
-            activeObjs[3].SetActive(ProgressManager.Instance.IsActionCompleted(ActionType.GetLockerKey));
-            activeObjs[4].SetActive(ProgressManager.Instance.IsActionCompleted(ActionType.GetLockerKey));
+            CheckObjData(ActionType.GetJanitorsOfficeKey, activeObjs[1]); // 관리실 열쇠
+            CheckObjData(ActionType.GetLockerKey, activeObjs[2]); // 락커 열쇠
+            activeObjs[3].SetActive(ProgressManager.Instance.IsActionCompleted(ActionType.GetLockerKey)); // 휴게실 Red Lright
+            activeObjs[4].SetActive(ProgressManager.Instance.IsActionCompleted(ActionType.GetLockerKey)); // 휴게실 추격 Trigger
+            activeObjs[8].SetActive(ProgressManager.Instance.IsActionCompleted(ActionType.LeaveEthan)); // Portal Room 입장 Trigger
+            activeObjs[9].SetActive(ProgressManager.Instance.IsActionCompleted(ActionType.LeaveEthan));  // Backroom 입장 Trigger
 
             bool isFirstMeetEthan = ProgressManager.Instance.IsActionCompleted(ActionType.FirstMeetEthan);
             bool isGetLockerKey = ProgressManager.Instance.IsActionCompleted(ActionType.GetLockerKey);
             ehtanLocker.enabled = isFirstMeetEthan == isGetLockerKey;
 
+            activeObjs[10].GetComponent<Door>().enabled = phoneInfos[1].hasPhone; // Backroom Door 기능 데이비드 휴대폰 획득 여부로 활성화/비활성화
+
+
+
+            // 데이터에 맞게 맵 활성화/비활성화
+            schoolMaps[0].SetActive(!ProgressManager.Instance.IsActionCompleted(ActionType.EnterPortalRoom)); // 기본(First) 학교
+            schoolMaps[1].SetActive(!ProgressManager.Instance.IsActionCompleted(ActionType.EnterPortalRoom)); // 기본(First) 휴게실
+            schoolMaps[2].SetActive(ProgressManager.Instance.IsActionCompleted(ActionType.LeaveEthan)); // Portal Room
+            schoolMaps[3].SetActive(ProgressManager.Instance.IsActionCompleted(ActionType.LeaveEthan)); // Backroom
+
+
             // 포스트 프로세싱, Fog 설정
             GetPostFogData();
 
-
+            // 인벤토리
             inventory = new List<Item>();
 
             // 아이템
@@ -315,6 +329,12 @@ public class SchoolUIManager : UIUtility
             for (int i = 0; i < inventory.Count; i++)
             {
                 inventorySlots[i].itemData = inventory[i];
+            }
+
+            // 학교 맵 추격 중 게임 종료 후 다시 접속 시
+            if (ProgressManager.Instance.IsActionCompleted(ActionType.GetLockerKey) && !ProgressManager.Instance.IsActionCompleted(ActionType.GetOutOfLocker))
+            {
+                RespawnDuringSchoolChase();
             }
         }
         else
@@ -340,31 +360,38 @@ public class SchoolUIManager : UIUtility
             playerCamera.jumpscareObj.transform.localPosition = new Vector3(0, -1.77f, 1);
             playerCamera.jumpscareObj.transform.localRotation = Quaternion.Euler(0, 180, 0);
 
+            int respawnPointIndex = 0;
+
+            // Action Type 에 따라서 리스폰 위치 설정
+            switch (actionType)
+            {
+                case ProgressManager.ActionType.FirstMeetMonster:
+                    respawnPointIndex = 0;
+                    RespawnDuringSchoolChase();
+                    break;
+                case ProgressManager.ActionType.EnteredBackRoom:
+                    respawnPointIndex = 1;
+                    backroomEnemy.InitEnemy(enemyRespawnPoints[respawnPointIndex]);
+                    break;
+                case ProgressManager.ActionType.SolvedLockerRoom:
+                    respawnPointIndex = 2;
+                    lastEnemy.InitEnemy(enemyRespawnPoints[respawnPointIndex]);
+                    break;
+            }
+
+            InitPlayer(playerRespawnPoints[respawnPointIndex]);
+
+            yield return null;
+
             CommonUIManager.instance.Blink(true);
 
             yield return new WaitForSeconds(CommonUIManager.instance.blinkDuration);
+
+            if(actionType == ProgressManager.ActionType.EnteredBackRoom)
+            {
+                backroomEnemy.gameObject.SetActive(true);
+            }
         }
-
-        int respawnPointIndex = 0;
-
-        // Action Type 에 따라서 리스폰 위치 설정
-        switch (actionType)
-        {
-            case ProgressManager.ActionType.FirstMeetMonster:
-                respawnPointIndex = 0;
-                schoolEnemy.InitEnemy(enemyRespawnPoints[respawnPointIndex]);
-                break;
-            case ProgressManager.ActionType.EnteredBackRoom:
-                respawnPointIndex = 1;
-                backroomEnemy.InitEnemy(enemyRespawnPoints[respawnPointIndex]);
-                break;
-            case ProgressManager.ActionType.SolvedLockerRoom:
-                respawnPointIndex = 2;
-                lastEnemy.InitEnemy(enemyRespawnPoints[respawnPointIndex]);
-                break;
-        }
-
-        InitPlayer(playerRespawnPoints[respawnPointIndex]);
     }
 
     void InitPlayer(Transform respawnTransform)
@@ -377,6 +404,27 @@ public class SchoolUIManager : UIUtility
 
         //플레이어 컨트롤 On
         PlayerController.instance.Open_PlayerController();
+    }
+
+    void RespawnDuringSchoolChase()
+    {
+        Debug.Log("RespawnDuringSchoolChase");
+        enemyFirstMeetWall.SetActive(true);
+        schoolEnemy.InitEnemy(enemyRespawnPoints[0]);
+        InitPlayer(playerRespawnPoints[0]);
+        InitTimelineEnemy(timeLineEnemys[0].transform, timelineEnemyPoints[0]);
+        InitTimelineEnemy(timeLineEnemys[1].transform, timelineEnemyPoints[1]);
+        activeObjs[4].SetActive(true); // Lounge Trigger
+        activeObjs[5].GetComponent<Door>().enabled = true;
+        monsterTimer = 0;
+        activeObjs[7].GetComponent<Collider>().enabled = true;
+        enterLounge = false;
+    }
+
+    void InitTimelineEnemy(Transform timelineEnemy, Transform respawnTransform)
+    {
+        timelineEnemy.position = respawnTransform.position;
+        timelineEnemy.rotation = respawnTransform.rotation;
     }
 
     public void FirstMeetEthan(bool getFlashlight)
@@ -457,26 +505,83 @@ public class SchoolUIManager : UIUtility
 
     public void MonsterWaitTimeOver(Door door)
     {
+        schoolEnemy.transform.position = timelineEnemyPoints[1].position;
+        schoolEnemy.transform.rotation = timelineEnemyPoints[1].rotation;
+
         door.Select_Door(); // 문 열기
-        door.gameObject.GetComponent<Collider>().enabled = false;   
+        door.gameObject.GetComponent<Door>().enabled = false; 
+    }
+
+    public void UseLockerKey()
+    {
+        CSVRoad_Story.instance.OnSelectChapter("1_0_4");
+        commonUIManager.isTalkingWithNPC = true;
+        activeObjs[6].GetComponent<Collider>().enabled = true; // 휴게실 락커 문
+        useLockerKey = true;
+        monsterTimer -= 10f;
+        PlayerController.instance.Close_PlayerController();
+        Camera_Rt.instance.Close_Camera();
+        ProgressManager.Instance.CompletedAction(ActionType.UseLockerKey);
     }
 
     public void StartLoungeTimeLine()
     {
         ProgressManager.Instance.progressData.hideInLocker = true;
         schoolEnemy.gameObject.SetActive(false);
-        activeObjs[6].GetComponent<Collider>().enabled = false;
+        activeObjs[4].SetActive(false); // Lounge Trigger
+        activeObjs[5].GetComponent<Door>().enabled = false; // Lounge Door
+        activeObjs[6].GetComponent<Collider>().enabled = false; // Lounge Locker Door
 
         StartTimeLine(TimeLineManager.instance.playableAssets[2]);
     }
 
     public void FinishLoungeTimeLine()
     {
-        activeObjs[6].GetComponent<Collider>().enabled = true;
-
-        StartPlayerController();
+        activeObjs[5].tag = "SpecialDoor"; // Lounge Door
+        activeObjs[7].GetComponent<Collider>().enabled = true; // Ethan Locker
 
         ProgressManager.Instance.CompletedAction(ActionType.GetOutOfLocker);
+    }
+
+    public void GetOutOfLoungeLocker()
+    {
+        CSVRoad_Story.instance.OnSelectChapter("1_0_6");
+        commonUIManager.isTalkingWithNPC = true;
+        activeObjs[5].GetComponent<Door>().enabled = true; // 휴게실 문
+        schoolMaps[0].SetActive(false); // First School
+        schoolMaps[2].SetActive(true); // Portal Room
+        schoolMaps[3].SetActive(true); // Backroom
+        PlayerController.instance.Close_PlayerController();
+        Camera_Rt.instance.Close_Camera();
+        ProgressManager.Instance.CompletedAction(ActionType.LeaveEthan);
+    }
+
+    public void EnterPortalRoom()
+    {
+        activeObjs[8].SetActive(false); // Portal Room 입장 Trigger
+        activeObjs[9].SetActive(true);  // Backroom 입장 Trigger
+
+        Door doorLogic = activeObjs[5].GetComponent<Door>(); // Lounge Door
+
+        if (doorLogic.doorState) { doorLogic.Select_Door(); }
+
+        doorLogic.enabled = false; // 휴게실 문 기능 비활성화
+
+        ProgressManager.Instance.CompletedAction(ProgressManager.ActionType.EnterPortalRoom);
+    }
+
+    public void EnterBackroom()
+    {
+        activeObjs[9].SetActive(false); // Backroom 입장 Trigger
+        backroomEnemy.gameObject.SetActive(true); // Backroom Enemy 활성화
+
+        Door doorLogic = activeObjs[10].GetComponent<Door>(); // Backroom Door
+
+        if (doorLogic.doorState) {  doorLogic.Select_Door(); }
+
+        doorLogic.enabled = false;
+
+        ProgressManager.Instance.CompletedAction(ActionType.EnteredBackRoom);
     }
 
     public void FinishSchoolScene()

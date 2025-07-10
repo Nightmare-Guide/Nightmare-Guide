@@ -356,7 +356,7 @@ public class CSVRoad_Story : MonoBehaviour
             //    }
             //    break;
             case "1_0_0":
-                // ProgressManager.Instance.CompletedAction(ActionType.FirstMeetEthan);
+                ProgressManager.Instance.CompletedAction(ActionType.FirstMeetEthan);
                 if (CommonUIManager.instance.uiManager is SchoolUIManager schoolUIManager) { schoolUIManager.StartPlayerController(); }
                 break;
             case "1_0_1":
@@ -367,6 +367,7 @@ public class CSVRoad_Story : MonoBehaviour
                 if (CommonUIManager.instance.uiManager is SchoolUIManager) { CommonUIManager.instance.uiManager.StartPlayerController(); }
                 break;
             case "1_0_4":
+            case "1_0_6":
                 if (CommonUIManager.instance.uiManager is SchoolUIManager) { CommonUIManager.instance.uiManager.StartPlayerController(); }
                 break;
             case "2_2_0":

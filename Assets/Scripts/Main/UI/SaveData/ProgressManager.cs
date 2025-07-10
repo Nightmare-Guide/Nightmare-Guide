@@ -36,12 +36,10 @@ public class ProgressManager : MonoBehaviour
         GetLockerKey,
         FirstMeetMonster,
         UseLockerKey,
-        GetOutOfLocker, // 아직 추가 X
-        LeaveEthan, // 아직 추가 X
-        StartSchoolNightmare, // 아직 추가 X
-        SolvedPortalRoom, // 아직 추가 X  ----------- 
+        GetOutOfLocker,
+        LeaveEthan,
+        EnterPortalRoom,
         GetDavidCellPhone,
-        SecondMeetMonster,
         EnteredBackRoom,
         EnteredEthanHouse,
         GetEthanCellPhone,
@@ -257,6 +255,13 @@ public class ProgressManager : MonoBehaviour
             //기존 데이터 업데이트
             existingData.rt = rotation;
             existingData.tr = position;
+
+            if(IsActionCompleted(ActionType.GetLockerKey) && !IsActionCompleted(ActionType.GetOutOfLocker))
+            {
+                SchoolUIManager schoolUIManager = CommonUIManager.instance.uiManager as SchoolUIManager;
+                existingData.tr = schoolUIManager.playerRespawnPoints[0].position;
+                existingData.rt = schoolUIManager.playerRespawnPoints[0].rotation.eulerAngles;
+            }
 
             Debug.Log($"[{sceneName}] Update 플레이어 위치/회전 정보 업데이트: {position}, {rotation}");
         }

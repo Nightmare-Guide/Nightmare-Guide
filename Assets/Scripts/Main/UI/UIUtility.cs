@@ -328,8 +328,8 @@ public class UIUtility : MonoBehaviour
         if (timeLineManager.playableAssets.Count > 0 && playableDirector != null)
         {
             // 이미 실행된 적 있으면 return
-            if (ProgressManager.Instance.progressData.timelineWatchedList.Find(e => e.key == asset.name).value)
-                return;
+            //if (ProgressManager.Instance.progressData.timelineWatchedList.Find(e => e.key == asset.name).value)
+            //    return;
             // -> 추격 전 타임라인은 리스폰 후 데이터 초기화 필요
 
             // 에임 UI 비활성화

@@ -29,23 +29,23 @@ MonoBehaviour:
   - actionType: 5
     isCompleted: 1
   - actionType: 6
-    isCompleted: 0
+    isCompleted: 1
   - actionType: 7
-    isCompleted: 0
+    isCompleted: 1
   - actionType: 8
-    isCompleted: 0
+    isCompleted: 1
   - actionType: 9
-    isCompleted: 0
+    isCompleted: 1
   - actionType: 10
-    isCompleted: 0
+    isCompleted: 1
   - actionType: 11
-    isCompleted: 0
+    isCompleted: 1
   - actionType: 12
-    isCompleted: 0
+    isCompleted: 1
   - actionType: 13
-    isCompleted: 0
+    isCompleted: 1
   - actionType: 14
-    isCompleted: 0
+    isCompleted: 1
   - actionType: 15
     isCompleted: 0
   - actionType: 16
@@ -74,10 +74,8 @@ MonoBehaviour:
     isCompleted: 0
   - actionType: 28
     isCompleted: 0
-  - actionType: 29
-    isCompleted: 0
-  playerPosition: {x: -19.288591, y: 4.209917, z: -16.80768}
-  playerEulerAngles: {x: 0, y: 90, z: 0}
+  playerPosition: {x: 21.836283, y: 3.8559995, z: -65.26149}
+  playerEulerAngles: {x: 0, y: 261.50006, z: 0}
   playerTr:
   - scene_Name: DayHouse
     tr: {x: -488, y: 72, z: 140}
@@ -92,8 +90,8 @@ MonoBehaviour:
     tr: {x: -285, y: 30, z: -810}
     rt: {x: 0, y: 180, z: 0}
   - scene_Name: School_Scene
-    tr: {x: -19.288591, y: 4.209917, z: -16.80768}
-    rt: {x: -0, y: 67.8452, z: 0}
+    tr: {x: 21.836283, y: 3.8559995, z: -65.26149}
+    rt: {x: 0, y: 298, z: 0}
   - scene_Name: Main_Map
     tr: {x: -376, y: 5, z: -355}
     rt: {x: 0, y: 90, z: 0}
@@ -101,12 +99,14 @@ MonoBehaviour:
     tr: {x: -180, y: 5, z: -723}
     rt: {x: 0, y: 90, z: 0}
   sanchi: 0
-  postProcessingName: Warm
-  fogName: Warm
-  hideInLocker: 1
+  postProcessingName: Nightmare
+  fogName: Nightmare
+  hideInLocker: 0
   mainInventoryDatas:
   - 
-  schoolInventoryDatas: []
+  schoolInventoryDatas:
+  - Locker Key
+  - David CellPhone
   phoneDatas:
   - name: Steven
     hasPhone: 0
@@ -115,7 +115,7 @@ MonoBehaviour:
     hasPhone: 0
     isUnlocked: 0
   - name: David
-    hasPhone: 0
+    hasPhone: 1
     isUnlocked: 0
   bgVolume: 50
   effectVolume: 50
@@ -127,8 +127,8 @@ MonoBehaviour:
   - key: StartFirstDay
     value: 0
   - key: FirstMeetMonster
-    value: 0
+    value: 1
   - key: FirstLounge
-    value: 0
+    value: 1
   - key: LastSchoolEvent
     value: 0

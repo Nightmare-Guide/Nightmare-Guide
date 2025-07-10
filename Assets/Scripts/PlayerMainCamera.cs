@@ -140,7 +140,19 @@ public class PlayerMainCamera : MonoBehaviour
         if (CommonUIManager.instance.uiManager is SchoolUIManager schoolUIManager)
         {
             Debug.Log("»ç¸Á ÈÄ ¾×¼Ç");
-            StartCoroutine(schoolUIManager.RevivalPlayer(ProgressManager.ActionType.EnteredBackRoom));
+
+            if (!ProgressManager.Instance.IsActionCompleted(ProgressManager.ActionType.GetOutOfLocker))
+            {
+                StartCoroutine(schoolUIManager.RevivalPlayer(ProgressManager.ActionType.FirstMeetMonster));
+            }   
+            else if (!ProgressManager.Instance.IsActionCompleted(ProgressManager.ActionType.EnteredEthanHouse))
+            {
+                StartCoroutine(schoolUIManager.RevivalPlayer(ProgressManager.ActionType.EnteredBackRoom));
+            }
+            else if (!ProgressManager.Instance.IsActionCompleted(ProgressManager.ActionType.FinishFinalChase))
+            {
+                StartCoroutine(schoolUIManager.RevivalPlayer(ProgressManager.ActionType.SolvedLockerRoom));
+            }
         }
     }
 }

@@ -53,33 +53,40 @@ public class Enemy : MonoBehaviour
             Jumpscare();
         }
     }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player") && !caught_player)
+        {
+            Jumpscare();
+        }
+    }
 
     public void InitEnemy(Transform respawnTransform)
     {
-        this.gameObject.SetActive(true);
+        this.gameObject.SetActive(false);
         this.transform.position = respawnTransform.position;
         this.transform.rotation = respawnTransform.rotation;
 
         caught_player = false;
         currentState = EnemyState.Normal;
 
-        // Rigidbody 멈춤
-        Rigidbody rb = GetComponent<Rigidbody>();
+        //// Rigidbody 멈춤
+        //Rigidbody rb = GetComponent<Rigidbody>();
 
-        if (rb != null)
-        {
-            rb.isKinematic = false;
-            rb.constraints = RigidbodyConstraints.None;
-        }
+        //if (rb != null)
+        //{
+        //    rb.isKinematic = false;
+        //    rb.constraints = RigidbodyConstraints.None;
+        //}
 
-        // NavMeshAgent 정지
-        NavMeshAgent agent = GetComponent<NavMeshAgent>();
-        if (agent != null)
-        {
-            agent.isStopped = false;
-            agent.updatePosition = true;
-            agent.updateRotation = true;
-        }
+        //// NavMeshAgent 정지
+        //NavMeshAgent agent = GetComponent<NavMeshAgent>();
+        //if (agent != null)
+        //{
+        //    agent.isStopped = false;
+        //    agent.updatePosition = true;
+        //    agent.updateRotation = true;
+        //}
 
     }
 
@@ -92,7 +99,7 @@ public class Enemy : MonoBehaviour
         Camera_Rt.instance.Close_Camera();
 
         // 몬스터 움직임 멈춤
-        FreezeEnemy();
+        // FreezeEnemy();
 
         // 플레이어 카메라가 몬스터를 향해 회전
         PlayerMainCamera.camera_single.RotateToTarget(this.transform, 0.2f);
