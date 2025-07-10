@@ -1,88 +1,127 @@
 using UnityEngine;
 using System.Collections;
+using UnityStandardAssets.Characters.FirstPerson;
 
 public class NHSupervisor : MonoBehaviour
 {
     public static NHSupervisor instance;
-    [SerializeField] Transform moveTr; // 목표 위치를 지정할 Transform
-    [SerializeField] Transform endPoint; // 목표 위치를 지정할 Transform
-    [SerializeField] float speed = 5f; // 이동 속도
-    [SerializeField] float stopDistance = 0.1f; // 목표 지점 근처에 도달했는지 판단할 거리
+
+    [SerializeField] Transform moveTr;
+    [SerializeField] Transform endPoint;
+    [SerializeField] Transform endPoint2;
+    [SerializeField] float speed = 5f;
+    [SerializeField] float stopDistance = 0.1f;
+
+    [SerializeField] GameObject roomDoor;
+    [SerializeField] GameObject roomDoor2;
 
     private Animator anim;
-    private bool isMoving = false; // 이동 중인지 여부
+    private bool isMoving = false;
+    private int movementStage = 0;
+    private Transform currentTarget;
 
-
-
+    private Transform playerTr;
+    private bool isDraggingPlayer = false;
+    [SerializeField] float dragDistance = 1.8f;
+    [SerializeField] float playerFollowSpeed = 3f;
 
     void Start()
     {
-        if (instance == null)
-        {
-            instance = this;
-        }
+        if (instance == null) instance = this;
 
         anim = GetComponent<Animator>();
-        if (anim == null)
-        {
-            Debug.LogError("Animator 컴포넌트가 NHSupervisor와 같은 오브젝트에 없습니다!");
-        }
+        if (anim == null) Debug.LogError("Animator 없음");
+
+        playerTr = PlayerController.instance.transform;
     }
 
     void Update()
     {
-        // isMoving이 true일 때만 이동 로직 실행
-        if (isMoving && moveTr != null)
+        if (isMoving && currentTarget != null)
         {
-            // 목표 위치까지의 방향 벡터 계산
-            Vector3 direction = (moveTr.position - transform.position).normalized;
+            float distanceToTarget = Vector3.Distance(transform.position, currentTarget.position);
 
-            // 현재 위치에서 목표 위치까지의 거리 계산
-            float distanceToTarget = Vector3.Distance(transform.position, moveTr.position);
-
-            // 목표 지점에 거의 도달했다면 멈춤
             if (distanceToTarget < stopDistance)
             {
-                transform.position = moveTr.position; // 정확한 목표 위치로 설정
-                StopMovement();
+                transform.position = currentTarget.position;
+                HandleMovementStage();
             }
             else
             {
-                // 현재 위치를 목표 방향으로 speed만큼 이동
+                Vector3 direction = (currentTarget.position - transform.position).normalized;
                 transform.position += direction * speed * Time.deltaTime;
             }
         }
+
+        if (isDraggingPlayer)
+        {
+            // Supervisor와 일정 거리 유지하며 플레이어를 끌고 이동
+            Vector3 targetPos = transform.position - transform.forward * dragDistance;
+            playerTr.position = Vector3.MoveTowards(playerTr.position, targetPos, playerFollowSpeed * Time.deltaTime);
+        }
     }
 
-    // 타임라인 종료 시 Signal Receiver에 의해 호출될 함수
+    private void OnTriggerEnter(Collider other)
+    {
+        if (movementStage == 1 && other.CompareTag("Player"))
+        {
+            Debug.Log("플레이어가 접근함 → 문 열고 다음 단계로 이동");
+            roomDoor.GetComponent<Door>().Select_Door();
+
+            PlayerController.instance.Close_PlayerController(); // 조작 제한
+            isDraggingPlayer = true;
+
+            MoveTo(endPoint);
+        }
+    }
+
     public void StartMovement()
     {
-        Debug.Log("Timeline Ended! Starting Movement...");
-
-        // 애니메이션의 "isWalk" 파라미터를 true로 설정
-        if (anim != null)
-        {
-            anim.SetBool("isWalk", true);
-        }
-        else
-        {
-            Debug.LogWarning("Animator is null. Cannot set 'isWalk' parameter.");
-        }
-
-        // 이동 시작 플래그 설정
-        isMoving = true;
+        anim?.SetBool("isWalk", true);
+        movementStage = 0;
+        MoveTo(moveTr);
     }
 
-    // 이동을 멈추고 애니메이션을 끄는 함수
-    private void StopMovement()
+    private void MoveTo(Transform target)
     {
-        Debug.Log("Movement Finished!");
-        isMoving = false; // 이동 중지
+        currentTarget = target;
+        isMoving = true;
+        anim?.SetBool("isWalk", true);
+        anim?.SetTrigger("isIdle");
+    }
 
-        if (anim != null)
+    private void StopAndIdle()
+    {
+        isMoving = false;
+        anim?.SetBool("isWalk", false);
+        anim?.SetTrigger("isIdle");
+    }
+
+    private void HandleMovementStage()
+    {
+        isMoving = false;
+
+        switch (movementStage)
         {
-            anim.SetBool("isWalk", false); // 걷기 애니메이션 끄기
-            anim.SetBool("isIdle1", true);
+            case 0:
+                Debug.Log("1단계 도착. 트리거 대기");
+                movementStage = 1;
+                anim.SetTrigger("isIdle");
+                break;
+
+            case 1:
+                Debug.Log("2단계 도착. 문 열기");
+                roomDoor2.GetComponent<Door>().Select_Door();
+                MoveTo(endPoint2);
+                movementStage = 2;
+                break;
+
+            case 2:
+                Debug.Log("최종 도착");
+                StopAndIdle();
+                isDraggingPlayer = false;
+                PlayerController.instance.Open_PlayerController(); // 조작 복구
+                break;
         }
     }
 }
