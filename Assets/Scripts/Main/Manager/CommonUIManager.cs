@@ -162,8 +162,8 @@ public class CommonUIManager : MonoBehaviour
             {
                 Debug.Log(ProgressManager.Instance.progressData.scene+"¾À À§Ä¡°ª : "+ ProgressManager.Instance.progressData.playerPosition +"·ÎÅ×ÀÌ¼Ç : "+ ProgressManager.Instance.progressData.playerEulerAngles);
                 PlayerController.instance.Close_PlayerController();
-                PlayerController.instance.transform.position = ProgressManager.Instance.progressData.playerPosition;
                 PlayerController.instance.transform.eulerAngles = ProgressManager.Instance.progressData.playerEulerAngles;
+                PlayerController.instance.transform.position = ProgressManager.Instance.progressData.playerPosition;
                 PlayerController.instance.Open_PlayerController();
             }
 
@@ -184,7 +184,8 @@ public class CommonUIManager : MonoBehaviour
         if (GameDataManager.instance != null && PlayerController.instance!=null) {
             ProgressManager.Instance.progressData.playerPosition = PlayerController.instance.transform.position;
             ProgressManager.Instance.progressData.newGame = false;
-            GameDataManager.instance.SaveGame(); }
+            GameDataManager.instance.SaveGame(); 
+        }
     }
 
     void FirstSet()
@@ -212,6 +213,7 @@ public class CommonUIManager : MonoBehaviour
             Time.timeScale = 1;
             if (GameDataManager.instance != null && PlayerController.instance!=null && ProgressManager.Instance!=null) {
                 Vector3 playerTr = PlayerController.instance.transform.position;
+
                 ProgressManager.Instance.progressData.playerPosition = playerTr;
                 ProgressManager.Instance.progressData.newGame = false;
                 GameDataManager.instance.SaveGame();
@@ -306,7 +308,9 @@ public class CommonUIManager : MonoBehaviour
         if (ProgressManager.Instance != null && !sceneName.Equals("Title Scene")) {
             PlayerSpawnPoint(sceneName);
             ProgressManager.Instance.progressData.scene = sceneName;
-        }// ¾À ÀúÀå
+        }
+        
+        // ¾À ÀúÀå
         interactionUI.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;

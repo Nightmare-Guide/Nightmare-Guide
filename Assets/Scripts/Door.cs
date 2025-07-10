@@ -5,10 +5,8 @@ using UnityEngine.AI;
 
 public class Door : MonoBehaviour
 {
-    public string doorID;
     public int lockerIndex;
     public bool doorState; // true = ¿­¸², false = ´ÝÈû
-    public bool inplayerTimeLine = false; // ÇÃ·¹ÀÌ¾î Å¸ÀÓ¶óÀÎ È®ÀÎ
     public BoxCollider boxcollider;
     public NavMeshObstacle navMeshObstacle;
 
@@ -22,6 +20,7 @@ public class Door : MonoBehaviour
     {
         startRotation = transform.rotation;
         boxcollider = GetComponent<BoxCollider>();
+        doorState = false;
 
         // NavMeshObstacle ÀÚµ¿ ÇÒ´ç
         navMeshObstacle = GetComponent<NavMeshObstacle>();
@@ -47,22 +46,22 @@ public class Door : MonoBehaviour
 
         DisableCollider();
 
-        // ¹® ¿­¸²
+        // ¹® ´Ý±â
         if (doorState)
         {
-            if (doorID == "DayTimeLine" && !inplayerTimeLine)
-            {
-                inplayerTimeLine = true;
-            }
-            endRotation = Quaternion.Euler(0, startRotation.eulerAngles.y + 110, 0);
-            DisableObstacle(); // ¹® ¿­¸®¸é NavMeshObstacle ²¨Áü
-            // SoundManager.instance.PlayDoorOpen();
-        }
-        else // ¹® ´ÝÈû
-        {
-            endRotation = Quaternion.Euler(0, startRotation.eulerAngles.y - 110, 0);
+            if(this.gameObject.name.Contains("Janitor's office")) { endRotation = Quaternion.Euler(0, startRotation.eulerAngles.y - 90, 0); }
+            else { endRotation = Quaternion.Euler(0, startRotation.eulerAngles.y + 90, 0); }
+            doorState = false;
             EnableObstacle(); // ¹® ´ÝÈ÷¸é NavMeshObstacle ÄÑÁü
             // SoundManager.instance.PlayDoorClose();
+        }
+        else // ¹® ¿­±â
+        {
+            if (this.gameObject.name.Contains("Janitor's office")) { endRotation = Quaternion.Euler(0, startRotation.eulerAngles.y + 90, 0); }
+            else { endRotation = Quaternion.Euler(0, startRotation.eulerAngles.y - 90, 0); }
+            doorState = true;
+            DisableObstacle(); // ¹® ¿­¸®¸é NavMeshObstacle ²¨Áü
+            // SoundManager.instance.PlayDoorOpen();
         }
 
         while (startTime < endTime)
@@ -73,7 +72,6 @@ public class Door : MonoBehaviour
         }
 
         transform.rotation = endRotation;
-        doorState = !doorState;
         isRotation = false;
 
         EnableCollider();

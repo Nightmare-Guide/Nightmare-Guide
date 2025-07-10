@@ -15,15 +15,17 @@ public class PlayerEventAction : MonoBehaviour
     [SerializeField] GameObject obj;
     private void Start()
     {
-        Invoke("RotatePlayer", 7f);
-       
+        Invoke("RotatePlayer",35f);
+        PlayerController.instance.Close_PlayerController();
+        Camera_Rt.instance.Close_Camera(); // 카메라 회전 잠금
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     public void RotatePlayer()
     {
-        PlayerController.instance.Close_PlayerController();
-        Camera_Rt.instance.Close_Camera(); // 카메라 회전 잠금
-        Cursor.lockState = CursorLockMode.Locked;
+        PlayerController.instance.Open_PlayerController();
+        Camera_Rt.instance.Open_Camera(); // 카메라 회전 잠금
+
 
         // 코루틴으로 부드럽게 회전
        // StartCoroutine(SmoothRotateY(targetYRotation, rotationDuration));

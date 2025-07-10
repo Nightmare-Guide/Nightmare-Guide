@@ -36,12 +36,10 @@ public class ProgressManager : MonoBehaviour
         GetLockerKey,
         FirstMeetMonster,
         UseLockerKey,
-        GetOutOfLocker, // 아직 추가 X
-        LeaveEthan, // 아직 추가 X
-        StartSchoolNightmare, // 아직 추가 X
-        SolvedPortalRoom, // 아직 추가 X  ----------- 
+        GetOutOfLocker,
+        LeaveEthan,
+        EnterPortalRoom,
         GetDavidCellPhone,
-        SecondMeetMonster,
         EnteredBackRoom,
         EnteredEthanHouse,
         GetEthanCellPhone,
@@ -136,6 +134,7 @@ public class ProgressManager : MonoBehaviour
             progressData.sanchi = defaultData.sanchi;
             progressData.fogName = defaultData.fogName;
             progressData.postProcessingName = defaultData.postProcessingName;
+            progressData.hideInLocker = defaultData.hideInLocker;
 
             progressData.mainInventoryDatas = new List<string>(defaultData.mainInventoryDatas);
             DeepCopy(defaultData.phoneDatas); // 휴대폰 정보
@@ -227,8 +226,18 @@ public class ProgressManager : MonoBehaviour
         PlayerTr playerData = GetPlayerTrForScene(sceneName);
         if (playerData != null)
         {     
-            progressData.playerPosition = playerData.tr;
             progressData.playerEulerAngles = playerData.rt;
+
+            if (ProgressManager.Instance.progressData.hideInLocker)
+            {
+                progressData.playerPosition = playerData.tr + (Quaternion.Euler(playerData.rt) * Vector3.forward); // 게임 시작 시 플레이어가 락커에 숨어있었던 상태라면 락커 밖으로 리스폰
+                ProgressManager.Instance.progressData.hideInLocker = false;
+            }
+            else
+            {
+                progressData.playerPosition = playerData.tr;
+            }
+
             Debug.Log($"[{sceneName}] Load 플레이어 위치/회전 정보 업데이트: {playerData.tr}, {playerData.rt}");
         }
         else
@@ -244,8 +253,16 @@ public class ProgressManager : MonoBehaviour
         if (existingData != null)
         {
             //기존 데이터 업데이트
-            existingData.tr = position;
             existingData.rt = rotation;
+            existingData.tr = position;
+
+            if(IsActionCompleted(ActionType.GetLockerKey) && !IsActionCompleted(ActionType.GetOutOfLocker))
+            {
+                SchoolUIManager schoolUIManager = CommonUIManager.instance.uiManager as SchoolUIManager;
+                existingData.tr = schoolUIManager.playerRespawnPoints[0].position;
+                existingData.rt = schoolUIManager.playerRespawnPoints[0].rotation.eulerAngles;
+            }
+
             Debug.Log($"[{sceneName}] Update 플레이어 위치/회전 정보 업데이트: {position}, {rotation}");
         }
         

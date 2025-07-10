@@ -15,9 +15,6 @@ public class RayCast_Aim : MonoBehaviour
     private OutlineObject previousOutline;
     public GameObject flashlight;
 
-    [Header("Locker")]
-    bool locker = true;
-
 
     private void Start()
     {
@@ -97,6 +94,13 @@ public class RayCast_Aim : MonoBehaviour
 
                     if (click_object.CompareTag("Door"))
                     {
+                        objCollider.enabled = true;
+
+                        Door doorLogic = click_object.GetComponent<Door>();
+
+                        if (doorLogic.enabled == false)
+                            return;
+
                         Debug.Log("Door");
                         DoorCheck(click_object);
                     }
@@ -105,6 +109,11 @@ public class RayCast_Aim : MonoBehaviour
                     {
                         Debug.Log("Special Door");
                         objCollider.enabled = true;
+
+                        Door doorLogic = click_object.GetComponent<Door>();
+
+                        if (doorLogic.enabled == false)
+                            return;
 
                         SchoolUIManager schoolUIManager = CommonUIManager.instance.uiManager as SchoolUIManager;
 
@@ -124,7 +133,13 @@ public class RayCast_Aim : MonoBehaviour
                         }
                         else if (click_object.name.Contains("Lounge Door"))
                         {
-                            if (ProgressManager.Instance.IsActionCompleted(ActionType.FirstMeetMonster))
+                            if (ProgressManager.Instance.IsActionCompleted(ActionType.LeaveEthan))
+                            {
+                                CSVRoad_Story.instance.OnSelectChapter("1_1_0");
+                                schoolUIManager.activeObjs[8].SetActive(true); // Portal Room 입장 Trigger
+                                DoorCheck(click_object);
+                            }
+                            else if (ProgressManager.Instance.IsActionCompleted(ActionType.FirstMeetMonster) && !ProgressManager.Instance.IsActionCompleted(ActionType.LeaveEthan))
                             {
                                 Door door = click_object.GetComponent<Door>();
                                 DoorCheck(click_object);
@@ -171,16 +186,16 @@ public class RayCast_Aim : MonoBehaviour
                     {
                         if (CommonUIManager.instance.uiManager is SchoolUIManager schoolUIManager)
                         {
-                            if(schoolUIManager.CheckItem("Locker Key"))
+                            if(schoolUIManager.CheckItem("Locker Key") && !ProgressManager.Instance.IsActionCompleted(ActionType.GetOutOfLocker))
                             {
-                                CSVRoad_Story.instance.OnSelectChapter("1_0_4");
-                                ProgressManager.Instance.CompletedAction(ActionType.UseLockerKey);
-                                schoolUIManager.activeObjs[6].GetComponent<Collider>().enabled = true;
-                                schoolUIManager.StopPlayerController();
+                                schoolUIManager.UseLockerKey();
+                            }
+                            else if (ProgressManager.Instance.IsActionCompleted(ActionType.GetOutOfLocker))
+                            {
+                                schoolUIManager.GetOutOfLoungeLocker();
                             }
                             else
                             {
-                                //schoolUIManager.FirstMeetEthan(getFlashlight);
                                 schoolUIManager.FirstMeetEthan(ProgressManager.Instance.IsActionCompleted(ActionType.GetFlashlight));
                             }
                         }
@@ -190,8 +205,13 @@ public class RayCast_Aim : MonoBehaviour
                     {
                         ProgressManager.Instance.CompletedAction(ActionType.GetFlashlight);
                         click_object.SetActive(false);
-                        // getFlashlight = true;
                         if (CommonUIManager.instance.uiManager is SchoolUIManager schoolUIManager) { schoolUIManager.flashlightWall.SetActive(false); }
+                    }
+
+                    if (click_object.CompareTag("Ending"))
+                    {
+                        Chap1Ending ending = click_object.GetComponent<Chap1Ending>();
+                        ending.StartEndingSequence();
                     }
                 }
             }
@@ -220,7 +240,7 @@ public class RayCast_Aim : MonoBehaviour
 
             SchoolUIManager schoolUIManager  = CommonUIManager.instance.uiManager as SchoolUIManager;
 
-            if (schoolUIManager.hideInLocker)
+            if (ProgressManager.Instance.progressData.hideInLocker)
                 return;
 
             if (ProgressManager.Instance.IsActionCompleted(ActionType.GetFlashlight))
@@ -265,23 +285,21 @@ public class RayCast_Aim : MonoBehaviour
             return;
         }
 
-        if (locker)//문이 열리고 플레이어 이동 후 문 닫힘
+        if (!ProgressManager.Instance.progressData.hideInLocker)//문이 열리고 플레이어 이동 후 문 닫힘
         {
             lockerObj.isMovingToLocker = true;
             lockerObj.PlayerHide();
-            locker = false;
         }
 
-        else if (!locker)//플레이어 컨트롤러가 활성화되고 문이 열림
+        else if (ProgressManager.Instance.progressData.hideInLocker)//플레이어 컨트롤러가 활성화되고 문이 열림
         {
 
             lockerObj.OpenLocker();
             // PlayerController.instance.Open_PlayerController();//플레이어 컨트롤 ON
-            locker = true;
             // DoorCheck(obj);
         }
 
-
+        lockerObj.StartMoveToTarget();
     }
 
     public void DoorCheck(GameObject obj)
@@ -317,7 +335,14 @@ public class RayCast_Aim : MonoBehaviour
 
             targetPhone.hasPhone = true;
             if (targetPhone.name == "Ethan") { ProgressManager.Instance.progressData.phoneDatas[1].hasPhone = true; }
-            else if (targetPhone.name == "David") { ProgressManager.Instance.progressData.phoneDatas[2].hasPhone = true; }
+            else if (targetPhone.name == "David") 
+            { 
+                ProgressManager.Instance.progressData.phoneDatas[2].hasPhone = true;
+                ProgressManager.Instance.CompletedAction(ActionType.GetDavidCellPhone);
+
+                SchoolUIManager schooluiManager = CommonUIManager.instance.uiManager as SchoolUIManager;
+                schooluiManager.activeObjs[10].gameObject.GetComponent<Door>().enabled = true;
+            }
         }
 
         // CellPhone 위치 변경 함수 실행

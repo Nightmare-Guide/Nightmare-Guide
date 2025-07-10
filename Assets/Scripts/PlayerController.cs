@@ -57,7 +57,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
             Idle,
             Hide,
             Hiding,
-            Death
+            Death,
+            Moving // -> 이동 애니메이션,코루틴 전용
         }
         public PlayerState stat = PlayerState.Idle;
 
@@ -411,17 +412,30 @@ namespace UnityStandardAssets.Characters.FirstPerson
         {
             if (other.CompareTag("Trigger"))
             {
-                if(other.gameObject.name == "EnemyFirstMeet Wall")
+                if (other.gameObject.name == "EnemyFirstMeet Wall")
                 {
                     SchoolUIManager schoolUIManager = CommonUIManager.instance.uiManager as SchoolUIManager;
 
+                    Close_PlayerController();
                     schoolUIManager.FirstMeetEnemy();
                 }
-                else if(other.gameObject.name == "Lounge Trigger Wall")
+                else if (other.gameObject.name == "Lounge Trigger Wall")
                 {
                     SchoolUIManager schoolUIManager = CommonUIManager.instance.uiManager as SchoolUIManager;
 
                     schoolUIManager.enterLounge = true;
+                }
+                else if (other.gameObject.name == "Portal Room Trigger Wall (Lounge Door)")
+                {
+                    SchoolUIManager schoolUIManager = CommonUIManager.instance.uiManager as SchoolUIManager;
+
+                    schoolUIManager.EnterPortalRoom();
+                }
+                else if(other.gameObject.name.Contains("Backroom Trigger"))
+                {
+                    SchoolUIManager schoolUIManager = CommonUIManager.instance.uiManager as SchoolUIManager;
+
+                    schoolUIManager.EnterBackroom();
                 }
             }
         }
