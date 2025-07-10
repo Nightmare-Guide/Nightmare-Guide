@@ -191,6 +191,12 @@ public class RayCast_Aim : MonoBehaviour
                         // getFlashlight = true;
                         if (CommonUIManager.instance.uiManager is SchoolUIManager schoolUIManager) { schoolUIManager.flashlightWall.SetActive(false); }
                     }
+
+                    if (click_object.CompareTag("Ending"))
+                    {
+                        Chap1Ending ending = click_object.GetComponent<Chap1Ending>();
+                        ending.StartEndingSequence();
+                    }
                 }
             }
         }
