@@ -33,6 +33,7 @@ public class Locker : MonoBehaviour
     private float endTime = 0.5f; //회전 시간
     public bool isRotation = false; // false면 회전 안하고있음.
     public Coroutine currentCoroutine;
+    public Coroutine moveCoroutine;
 
 
 
@@ -70,7 +71,7 @@ public class Locker : MonoBehaviour
         {
             startRotation = pr.rotation;
             // targetRotation = Quaternion.Euler(0, startRotation.eulerAngles.y + rotateRange, 0);
-            targetRotation = setTr.rotation; 
+            targetRotation = setTr.rotation;
             StartCoroutine(PlayerController.instance.SmoothRotateTo(PlayerController.instance.GetPlayerCamera().transform, Vector3.zero, 0.25f)); // 플레이어 카메라 각도 변경
             // Debug.Log("시작 회전: " + startRotation.eulerAngles);
             // Debug.Log("목표 회전: " + targetRotation.eulerAngles);
@@ -109,7 +110,7 @@ public class Locker : MonoBehaviour
         //Debug.Log("목표 좌표: " + startPr);
         outMovingToLocker = true;
 
-        if(CommonUIManager.instance.uiManager is SchoolUIManager schoolUIManager)
+        if (CommonUIManager.instance.uiManager is SchoolUIManager schoolUIManager)
         {
             if (this.gameObject.name.Contains("Lounge Locker")
                 && ProgressManager.Instance.IsActionCompleted(ProgressManager.ActionType.UseLockerKey)
@@ -120,60 +121,111 @@ public class Locker : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
+    //private void FixedUpdate()
+    //{
+    //    if (stat.Equals(LockerStat.InMove)) //락커안까지 플레이어 이동 및 카메라 회전
+    //    {
+
+    //        pr.position = Vector3.MoveTowards(pr.position, setTr.position, Time.fixedDeltaTime * 2f);//이동 속도 조절 필요
+
+    //        if (lockPr)
+    //        {
+    //            pr.rotation = Quaternion.Slerp(pr.rotation, targetRotation, Time.deltaTime * 10f);//카메라 회전 속도
+    //        }
+
+    //        if (Vector3.Distance(pr.position, setTr.position) < 0.01f && Quaternion.Angle(pr.rotation, targetRotation) < 1f)
+    //        {
+
+    //            pr.rotation = targetRotation;
+    //            lockPr = false;
+    //            //Debug.Log("최종 회전: " + pr.rotation.eulerAngles);
+
+    //            if (currentCoroutine == null)
+    //            {
+    //                InLocker();//문열리는 코루틴 종료후 실행
+    //            }
+
+    //        }
+
+
+    //    }
+
+    //    if (stat.Equals(LockerStat.OutMove))
+    //    {
+    //        // Debug.Log($"Player Pos : {pr.position}, start Pos : {startPr}");
+    //        pr.position = Vector3.MoveTowards(pr.position, startPr, Time.fixedDeltaTime * 2f);//나오는 속도 조절 필요
+    //        // Debug.Log($"Player Pos : {pr.position}");
+    //        if (Vector3.Distance(pr.position, startPr) < 0.01f)
+    //        {
+    //            //Debug.Log("락커 탈출");
+    //            // Debug.Log($"Final Player Pos : {pr.position}, start Pos : {startPr}");
+    //            if (currentCoroutine == null)
+    //            {
+    //                OutLocker();//문열리는 코루틴 종료후 실행
+    //            }
+
+    //        }
+    //    }
+
+    //}
+
+    public void StartMoveToTarget()
     {
-        if (stat.Equals(LockerStat.InMove)) //락커안까지 플레이어 이동 및 카메라 회전
+        moveCoroutine = StartCoroutine(MoveAndRotateToTarget());
+    }
+
+    private IEnumerator MoveAndRotateToTarget()
+    {
+        PlayerController.instance.stat = PlayerController.PlayerState.Moving;
+
+        float moveSpeed = 2f;
+        float rotateSpeed = 10f;
+
+        if (lockPr)
         {
-
-            pr.position = Vector3.MoveTowards(pr.position, setTr.position, Time.fixedDeltaTime * 2f);//이동 속도 조절 필요
-
-            if (lockPr)
+            while (Vector3.Distance(pr.position, setTr.position) > 0.01f || Quaternion.Angle(pr.rotation, targetRotation) > 1f)
             {
-                // Debug.Log($"pr.rotation : {pr.rotation}, targetRotation : {targetRotation}");
-                pr.rotation = Quaternion.Slerp(pr.rotation, targetRotation, Time.deltaTime * 10f);//카메라 회전 속도
-                //Debug.Log("현재 회전: " + pr.rotation.eulerAngles);
+                // 위치 이동
+                pr.position = Vector3.MoveTowards(pr.position, setTr.position, Time.deltaTime * moveSpeed);
+                // 회전 (부드럽게)
+                pr.rotation = Quaternion.Slerp(pr.rotation, targetRotation, Time.deltaTime * rotateSpeed);
+
+                yield return null; // 다음 프레임까지 대기
             }
 
-            if (Vector3.Distance(pr.position, setTr.position) < 0.01f && Quaternion.Angle(pr.rotation, targetRotation) < 1f)
+            // 최종 위치 및 회전 정확히 고정
+            pr.position = setTr.position;
+            pr.rotation = targetRotation;
+        }
+        else
+        {
+            while (Vector3.Distance(pr.position, startPr) > 0.01f)
             {
+                // 위치만 이동
+                pr.position = Vector3.MoveTowards(pr.position, startPr, Time.deltaTime * moveSpeed);
 
-                pr.rotation = targetRotation;
-                lockPr = false;
-                //Debug.Log("최종 회전: " + pr.rotation.eulerAngles);
-
-                if (currentCoroutine == null)
-                {
-                    InLocker();//문열리는 코루틴 종료후 실행
-                }
-
+                yield return null; // 다음 프레임까지 대기
             }
 
-
+            // 최종 위치 정확히 고정
+            pr.position = startPr;
         }
 
-        if (stat.Equals(LockerStat.OutMove))
+        if (currentCoroutine == null)
         {
-            // Debug.Log($"Player Pos : {pr.position}, start Pos : {startPr}");
-            pr.position = Vector3.MoveTowards(pr.position, startPr, Time.fixedDeltaTime * 2f);//나오는 속도 조절 필요
-            // Debug.Log($"Player Pos : {pr.position}");
-            if (Vector3.Distance(pr.position, startPr) < 0.01f)
-            {
-                //Debug.Log("락커 탈출");
-                // Debug.Log($"Final Player Pos : {pr.position}, start Pos : {startPr}");
-                if (currentCoroutine == null)
-                {
-                    OutLocker();//문열리는 코루틴 종료후 실행
-                }
-
-            }
+            if (lockPr) { InLocker(); }
+            else { OutLocker(); }
         }
 
+        lockPr = false;
+        moveCoroutine = null;
     }
 
 
     public void OutLocker()
     {
-        Debug.Log("Playered OutLocker");
+        Debug.Log("Playered Out Locker");
+        PlayerController.instance.stat = PlayerController.PlayerState.Idle;
         Select_Locker(); // 플레이어 탈출 후 문닫기
         Camera_Rt.instance.Open_Camera();
         PlayerController.instance.Open_PlayerController();
@@ -182,6 +234,7 @@ public class Locker : MonoBehaviour
     }
     public void InLocker() //플레이어 진입후 도어 닫김
     {
+        Debug.Log("Playered In Locker");
         PlayerController.instance.stat = PlayerController.PlayerState.Hide;
         //Debug.Log("최종 회전2" + pr.rotation);
         Select_Locker(); // 플레이어 입장후 문닫기

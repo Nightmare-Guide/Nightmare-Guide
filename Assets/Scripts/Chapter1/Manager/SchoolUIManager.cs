@@ -103,7 +103,7 @@ public class SchoolUIManager : UIUtility
                 {
                     if (uiObj.activeInHierarchy)
                     {
-                        if (PlayerController.instance.stat == PlayerController.PlayerState.Hide) // 락커 안
+                        if (PlayerController.instance.stat == PlayerController.PlayerState.Hide || PlayerController.instance.stat == PlayerController.PlayerState.Moving) // 락커 안 or 이동 애니메이션
                         {
                             CloseUI(uiObj);
                             Time.timeScale = 1;

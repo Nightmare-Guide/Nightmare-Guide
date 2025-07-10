@@ -57,7 +57,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
             Idle,
             Hide,
             Hiding,
-            Death
+            Death,
+            Moving // -> 이동 애니메이션,코루틴 전용
         }
         public PlayerState stat = PlayerState.Idle;
 

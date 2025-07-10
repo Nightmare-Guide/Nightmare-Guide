@@ -277,7 +277,7 @@ public class RayCast_Aim : MonoBehaviour
             // DoorCheck(obj);
         }
 
-
+        lockerObj.StartMoveToTarget();
     }
 
     public void DoorCheck(GameObject obj)
