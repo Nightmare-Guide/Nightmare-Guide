@@ -1212,9 +1212,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a014f12ec0a2f7c468b0ceb389bc52de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  door: {fileID: 32562151}
-  inplayer: 0
-  col: {fileID: 0}
+  doorID: 
+  lockerIndex: 0
+  doorState: 0
+  inplayerTimeLine: 0
+  boxcollider: {fileID: 0}
+  navMeshObstacle: {fileID: 0}
+  startRotation: {x: 0, y: 0, z: 0, w: 0}
+  endRotation: {x: 0, y: 0, z: 0, w: 0}
+  isRotation: 0
 --- !u!1001 &31171242
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13861,7 +13867,7 @@ PrefabInstance:
     - target: {fileID: 7499311385267196504, guid: 37491a294c4c009499bdf23c35799009, type: 3}
       propertyPath: boxcollider
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 32562138}
     - target: {fileID: 7502364777391907493, guid: 37491a294c4c009499bdf23c35799009, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -16749,9 +16755,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 9075403978162299522, guid: 37491a294c4c009499bdf23c35799009, type: 3}
       insertIndex: -1
       addedObject: {fileID: 233066769}
-    - targetCorrespondingSourceObject: {fileID: 508119560401683603, guid: 37491a294c4c009499bdf23c35799009, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 271429676}
     - targetCorrespondingSourceObject: {fileID: 4836543411654777792, guid: 37491a294c4c009499bdf23c35799009, type: 3}
       insertIndex: -1
       addedObject: {fileID: 30146160}
@@ -16898,9 +16901,25 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5516121890348442556, guid: 37491a294c4c009499bdf23c35799009, type: 3}
   m_PrefabInstance: {fileID: 32562132}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &32562136 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7499311385267196504, guid: 37491a294c4c009499bdf23c35799009, type: 3}
+  m_PrefabInstance: {fileID: 32562132}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1a8a3cd4ab88d84d9adc1d1a381ec64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &32562137 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7171486677189030514, guid: 37491a294c4c009499bdf23c35799009, type: 3}
+  m_PrefabInstance: {fileID: 32562132}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &32562138 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 2911435977485326916, guid: 37491a294c4c009499bdf23c35799009, type: 3}
   m_PrefabInstance: {fileID: 32562132}
   m_PrefabAsset: {fileID: 0}
 --- !u!65 &32562145
@@ -16936,8 +16955,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1a8a3cd4ab88d84d9adc1d1a381ec64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doorID: 
   lockerIndex: 0
   doorState: 0
+  inplayerTimeLine: 0
   boxcollider: {fileID: 0}
   navMeshObstacle: {fileID: 0}
   startRotation: {x: 0, y: 0, z: 0, w: 0}
@@ -16955,8 +16976,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1a8a3cd4ab88d84d9adc1d1a381ec64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doorID: 
   lockerIndex: 0
   doorState: 0
+  inplayerTimeLine: 0
   boxcollider: {fileID: 32562145}
   navMeshObstacle: {fileID: 0}
   startRotation: {x: 0, y: 0, z: 0, w: 0}
@@ -19990,17 +20013,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4000013417321710, guid: 10272761d3fd54347a85ee429ac43947, type: 3}
   m_PrefabInstance: {fileID: 109219327}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &110347405 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7499311385267196504, guid: 37491a294c4c009499bdf23c35799009, type: 3}
-  m_PrefabInstance: {fileID: 32562132}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a1a8a3cd4ab88d84d9adc1d1a381ec64, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &113570776
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23071,6 +23083,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playableAssets:
   - {fileID: 11400000, guid: 950304e48bf300e47929915c979137dd, type: 2}
+  - {fileID: 11400000, guid: 409cf74a3b5866c4e84133cbf98aab25, type: 2}
   director: {fileID: 818130190}
 --- !u!4 &214696944
 Transform:
@@ -24782,9 +24795,10 @@ MonoBehaviour:
   playerTransform: {fileID: 1412871865}
   myAnim: {fileID: 225213864}
   inAction: 0
+  mainUI: {fileID: 132048519}
   supervisor: {fileID: 1275250081}
   director: {fileID: 818130190}
-  door: {fileID: 271429677}
+  door: {fileID: 32562136}
 --- !u!136 &225213870 stripped
 CapsuleCollider:
   m_CorrespondingSourceObject: {fileID: -3311136920640150127, guid: 96aad948126d38c48b198c7c25743e37, type: 3}
@@ -26597,84 +26611,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4000011788195086, guid: 838214ad01c7ee344b66e1507aa07c81, type: 3}
   m_PrefabInstance: {fileID: 267210868}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &271429675
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 271429676}
-  - component: {fileID: 271429679}
-  - component: {fileID: 271429678}
-  - component: {fileID: 271429677}
-  m_Layer: 11
-  m_Name: NPCDoorTrigger (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &271429676
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 271429675}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.12, z: 0}
-  m_LocalScale: {x: 1.2511337, y: 2.2137103, z: 1.0260001}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1779037355}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &271429677
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 271429675}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a014f12ec0a2f7c468b0ceb389bc52de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  door: {fileID: 110347405}
-  inplayer: 0
-  col: {fileID: 271429678}
---- !u!65 &271429678
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 271429675}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!33 &271429679
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 271429675}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!4 &271591136 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4000012178568724, guid: 6de8e3d0aa489914f801624af1e61699, type: 3}
@@ -56167,6 +56103,7 @@ MonoBehaviour:
   playerTransform: {fileID: 1412871865}
   myAnim: {fileID: 1275250079}
   inAction: 0
+  mainUI: {fileID: 0}
   hospitalroom: {fileID: 1443644742}
   npcwalkPosition: {fileID: 1443644742}
   workposition: {fileID: 0}
@@ -71390,11 +71327,6 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 4000013970533702, guid: f22634d26b707084291b799f0493cbb2, type: 3}
   m_PrefabInstance: {fileID: 1776108745}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &1779037355 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 508119560401683603, guid: 37491a294c4c009499bdf23c35799009, type: 3}
-  m_PrefabInstance: {fileID: 32562132}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1780769183
 PrefabInstance:

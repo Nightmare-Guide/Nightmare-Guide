@@ -198,4 +198,13 @@ public class MainUIManager : UIUtility
             }
         }
     }
+
+    public void FirstSupervisorMeet()
+    {
+        StartTimeLine(TimeLineManager.instance.playableAssets[0]);
+    }
+    public void FirstEthanMotherMeet()
+    {
+        StartTimeLine(TimeLineManager.instance.playableAssets[1]);
+    }
 }

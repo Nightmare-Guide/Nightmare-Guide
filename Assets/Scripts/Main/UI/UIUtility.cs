@@ -322,7 +322,6 @@ public class UIUtility : MonoBehaviour
         col.enabled = true;
     }
 
-
     public void StartTimeLine(PlayableAsset asset)
     {
         if (timeLineManager.playableAssets.Count > 0 && playableDirector != null)

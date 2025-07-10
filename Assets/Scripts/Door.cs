@@ -5,8 +5,10 @@ using UnityEngine.AI;
 
 public class Door : MonoBehaviour
 {
+    public string doorID;
     public int lockerIndex;
     public bool doorState; // true = 열림, false = 닫힘
+    public bool inplayerTimeLine = false; // 플레이어 타임라인 확인
     public BoxCollider boxcollider;
     public NavMeshObstacle navMeshObstacle;
 
@@ -48,6 +50,10 @@ public class Door : MonoBehaviour
         // 문 열림
         if (doorState)
         {
+            if (doorID == "DayTimeLine" && !inplayerTimeLine)
+            {
+                inplayerTimeLine = true;
+            }
             endRotation = Quaternion.Euler(0, startRotation.eulerAngles.y + 110, 0);
             DisableObstacle(); // 문 열리면 NavMeshObstacle 꺼짐
             // SoundManager.instance.PlayDoorOpen();

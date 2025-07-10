@@ -7,22 +7,25 @@ using UnityStandardAssets.Characters.FirstPerson;
 
 public class EthanMother : NPC
 {
+    public MainUIManager mainUI;
     public Supervisor supervisor;
     public PlayableDirector director;
 
-    public AutoDoor door;
+    public Door door;
 
     private void OnTriggerEnter(Collider other)
     {
-        if (door.inplayer)
+        if (door.inplayerTimeLine)
         {
             //supervisor.WalktoIdle();
             FirstMeet();
+            door.inplayerTimeLine = false;
+            door.doorID = "";
         }
     }
     public void FirstMeet()
     {
-        director.Play();
+        mainUI.FirstEthanMotherMeet();
         //LookAtPlayer();
     }
 

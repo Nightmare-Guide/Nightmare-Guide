@@ -6,6 +6,7 @@ using UnityStandardAssets.Characters.FirstPerson;
 
 public class Supervisor : NPC
 {
+    public MainUIManager mainUI;
     public Transform hospitalroom;
     public Transform npcwalkPosition;
     public Transform workposition;
@@ -99,17 +100,19 @@ public class Supervisor : NPC
     {
         if (other.CompareTag("Player"))
         {
-            playerTransform = other.transform;
+            //처음만나는 조건추가해야함
             FirstMeet();
+
+            //기본적으로 무조건 적용해야하는 것
+            playerTransform = other.transform;
             PlayerController.instance.Close_PlayerController();
             //StartWalkToPlayer(playerTransform);
         }
     }
 
     public void FirstMeet()
-    {
-        //임시
-        director.Play();
+    {   //처음만나는 조건 추가 해야함
+        mainUI.FirstSupervisorMeet();
     }
 
     public void DisableCollider()
