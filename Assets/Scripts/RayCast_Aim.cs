@@ -105,6 +105,7 @@ public class RayCast_Aim : MonoBehaviour
                         DoorCheck(click_object);
                     }
 
+
                     if (click_object.CompareTag("SpecialDoor"))
                     {
                         Debug.Log("Special Door");
@@ -307,13 +308,20 @@ public class RayCast_Aim : MonoBehaviour
         Door door = obj.GetComponent<Door>();
         LockerRoomDoor ldoor = obj.GetComponent<LockerRoomDoor>();
 
-        if (door != null) //일반적인 door 스크립트
-        {
-            door.Select_Door();
-        }
         if (ldoor != null) //LockerRoomDoor 값 확인용
         {
+            Debug.Log("LockerRoomDoor 발견!");
             ldoor.OpenLockerDoor();
+            ldoor.Select_Door();
+        }
+        else if (door != null) //일반적인 door 스크립트
+        {
+            door.Select_Door();
+            Debug.Log("Door발견!");
+        }
+        else
+        {
+            Debug.Log("LockerRoomDoor 컴포넌트 없음!");
         }
     }
 

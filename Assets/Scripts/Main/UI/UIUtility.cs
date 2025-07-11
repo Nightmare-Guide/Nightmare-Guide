@@ -107,6 +107,7 @@ public class UIUtility : MonoBehaviour
 
     public void StartPlayerController()
     {
+        Debug.Log("StartPlayerController");
         if (PlayerController.instance != null)
         {
             //플레이어 컨트롤 On

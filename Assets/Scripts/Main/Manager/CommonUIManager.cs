@@ -95,7 +95,7 @@ public class CommonUIManager : MonoBehaviour
 
     private void Start()
     {
-        fogSettings.Add(new FogSettings { name = "Nightmare" });
+        fogSettings.Add(new FogSettings { name = "Nightmare", fogDensity = 0.7f });
         fogSettings.Add(new FogSettings { name = "Warm", fogColor = new Color(1f, 0.525f, 0f), fogDensity = 0.002f });
     }
 
