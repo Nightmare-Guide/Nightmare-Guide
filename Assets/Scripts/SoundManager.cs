@@ -20,6 +20,7 @@ public class SoundManager : MonoBehaviour
     public AudioClip mouseHover;
     public AudioClip carEnginsound1;
     public AudioClip carEnginsound2;
+    public AudioClip broomSound;
 
 
     private void Awake()
@@ -41,10 +42,14 @@ public class SoundManager : MonoBehaviour
     public void ClickButton() => sfxSource.PlayOneShot(beepsound);
     public void ButtonHover() => sfxSource.PlayOneShot(mouseHover);
 
-    public void PlayOneShot(AudioClip clip)
+    public void BroomSound() => SfxSoundLoop(broomSound);
+
+
+
+    public void SfxSoundLoop(AudioClip clip)
     {
-        if (clip != null)
-            sfxSource.PlayOneShot(clip);
+        sfxSource.loop = true;
+        sfxSource.PlayOneShot(clip);
     }
 
     public void PlayBGM(AudioClip clip, bool loop = true)
