@@ -75,7 +75,7 @@ public class Chapter1_Mgr : MonoBehaviour
 
     private void RandomLockerShuffle() //Locker 이름 랜덤 부여
     {
-        string[] names = { "James", "John", "Robert", "David", "Mark", "Paul", "Steven", "Kevin" }; //가해자는 James, John, Robert, David (임시)
+        string[] names = { "David", "Lucas", "Henry", "Daniel", "Mark", "Paul", "Steven", "Kevin" }; //가해자는 David, Lucas, Henry, Daniel (임시)
         List<int> usedIndices = new List<int>();
 
         int count = Mathf.Min(lockerNames.Length, names.Length);
