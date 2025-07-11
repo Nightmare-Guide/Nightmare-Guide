@@ -27,6 +27,7 @@ public class UIUtility : MonoBehaviour
     [Header("# Singleton")]
     public CommonUIManager commonUIManager;
     public TimeLineManager timeLineManager;
+    public SoundManager soundManager;
 
     // Windows의 마우스 입력을 시뮬레이션하는 API
     [DllImport("user32.dll")]
@@ -378,5 +379,10 @@ public class UIUtility : MonoBehaviour
 
             collider.enabled = !progress.IsActionCompleted(action);
         }
+    }
+
+    public void PlaySfxSound(string audioName)
+    {
+        
     }
 }

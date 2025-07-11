@@ -73,6 +73,8 @@ public class SchoolUIManager : UIUtility
             commonUIManager = CommonUIManager.instance;
         if (TimeLineManager.instance != null)
             timeLineManager = TimeLineManager.instance;
+        if (SoundManager.instance != null)
+            soundManager = SoundManager.instance;
 
         // commonUIManager.ApplyFog(commonUIManager.fogSettings[1]); // 테스트 -> 데이터 저장 값 불러오기로 변경
         // Camera_Rt.instance.ApplyPostProcessing("Warm"); // 테스트 -> 데이터 저장 값 불러오기로 변경
@@ -232,6 +234,9 @@ public class SchoolUIManager : UIUtility
         {
             GetOfficeKey();
         }
+        
+        // 사운드
+        
     }
 
     // 아이템 사용 함수

@@ -20,7 +20,16 @@ public class SoundManager : MonoBehaviour
     public AudioClip mouseHover;
     public AudioClip carEnginsound1;
     public AudioClip carEnginsound2;
-    public AudioClip broomSound;
+    public AudioClip broomSound; // 빗자루 사운드
+    public AudioClip getItem; // 아이템 획득
+    public AudioClip flashlightSound; // 손전등 껐다/켰다
+    public AudioClip keySuccessSound; // 열쇠 성공 사운드
+    public AudioClip keyFailSound; // 열쇠 실패 사운드
+    public AudioClip lockerFallSound; // 락커 넘어지는 소리
+    public AudioClip enemyAppearance; // 몬스터 등장
+    public AudioClip chaseSound; // 추격 사운드
+    public AudioClip jumpScareSound; // 점프스케어 사운드
+    public AudioClip wallMoveSound; // 벽 이동 사운드
 
 
     private void Awake()

@@ -11350,6 +11350,15 @@ MonoBehaviour:
   carEnginsound1: {fileID: 0}
   carEnginsound2: {fileID: 0}
   broomSound: {fileID: 8300000, guid: 665c9c07493655a4e9735833c41fb109, type: 3}
+  getItem: {fileID: 8300000, guid: 91c4e922a81247847805939ffcb914f0, type: 3}
+  flashlightSound: {fileID: 8300000, guid: db586a01fec0e2343b93d6f1bf6bd2d0, type: 3}
+  keySuccessSound: {fileID: 8300000, guid: d9c4594b71c84914082dacc3f1cca095, type: 3}
+  keyFailSound: {fileID: 8300000, guid: 2f63ca68eb52a8044974d60388549aca, type: 3}
+  lockerFallSound: {fileID: 8300000, guid: 6ce13b962c5a01d4695ccbb7af20909f, type: 3}
+  enemyAppearance: {fileID: 0}
+  chaseSound: {fileID: 0}
+  jumpScareSound: {fileID: 8300000, guid: 560075650b5043b40a001d0cd33a6490, type: 3}
+  wallMoveSound: {fileID: 8300000, guid: 846e0862800b6a548abde340487b0b52, type: 3}
 --- !u!4 &275233425
 Transform:
   m_ObjectHideFlags: 0
@@ -61795,7 +61804,7 @@ MonoBehaviour:
   titleUI: {fileID: 499009190}
   newGameAlertUI: {fileID: 1478249677}
   loadGameAlertUI: {fileID: 415744113}
-  titlebgm: {fileID: 8300000, guid: 4d29cfb95ff3ffb4c8fd441df852f29f, type: 3}
+  titlebgm: {fileID: 8300000, guid: 124c43f177cf21d41943a673400df73f, type: 3}
 --- !u!4 &1435699858
 Transform:
   m_ObjectHideFlags: 0
