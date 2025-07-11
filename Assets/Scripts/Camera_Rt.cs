@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.PostProcessing;
 using UnityStandardAssets.Characters.FirstPerson;
+using static UnityEditor.AddressableAssets.Build.Layout.BuildLayout;
 public class Camera_Rt : MonoBehaviour
 {
     public static Camera_Rt instance;
@@ -10,6 +12,11 @@ public class Camera_Rt : MonoBehaviour
     private MouseLook m_MouseLook = new MouseLook(); // 마우스 컨트롤용 객체
     private Camera_Rt rt_Camera;
     public bool lockerCamera = true;
+
+    public PostProcessingBehaviour postProecessingBehaviour;
+    public PostProcessingProfile nightmarePost;
+    public PostProcessingProfile warmPost;
+
     private void Start()
     {
         if (instance == null)
@@ -47,5 +54,20 @@ public class Camera_Rt : MonoBehaviour
     public void Close_Camera()
     {
         lockerCamera = false;
+    }
+
+    public void ApplyPostProcessing(string name)
+    {
+        switch (name)
+        {
+            case "Nightmare":
+                postProecessingBehaviour.profile = nightmarePost;
+                break;
+            case "Warm":
+                postProecessingBehaviour.profile = warmPost;
+                break;
+        }
+
+        ProgressManager.Instance.progressData.postProcessingName = name; // 데이터 저장
     }
 }

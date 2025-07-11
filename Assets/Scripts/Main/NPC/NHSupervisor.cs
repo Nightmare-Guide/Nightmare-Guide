@@ -1,175 +1,127 @@
 using UnityEngine;
 using System.Collections;
+using UnityStandardAssets.Characters.FirstPerson;
 
 public class NHSupervisor : MonoBehaviour
 {
+    public static NHSupervisor instance;
+
     [SerializeField] Transform moveTr;
-    [SerializeField] Transform checkPoint;
     [SerializeField] Transform endPoint;
+    [SerializeField] Transform endPoint2;
+    [SerializeField] float speed = 5f;
+    [SerializeField] float stopDistance = 0.1f;
 
-    public float speed = 5f;
-    public float rotationSpeed = 100f;
-
-    private bool isMoving = false;
-    private Coroutine currentMoveCoroutine;
+    [SerializeField] GameObject roomDoor;
+    [SerializeField] GameObject roomDoor2;
 
     private Animator anim;
+    private bool isMoving = false;
+    private int movementStage = 0;
+    private Transform currentTarget;
 
-    bool storyCheck = false;
+    private Transform playerTr;
+    private bool isDraggingPlayer = false;
+    [SerializeField] float dragDistance = 1.8f;
+    [SerializeField] float playerFollowSpeed = 3f;
 
     void Start()
     {
+        if (instance == null) instance = this;
+
         anim = GetComponent<Animator>();
-        Invoke("StartNPCFlow", 8f); // 시작 지연
-        Invoke("StartStory", 3f);
-    }
-    void StartStory()
-    {
-        CSVRoad_Story.instance.OnSelectChapter("2_0_0");
+        if (anim == null) Debug.LogError("Animator 없음");
+
+        playerTr = PlayerController.instance.transform;
     }
 
-    private IEnumerator MoveToTargetWaypoint(Transform targetWaypoint)
+    void Update()
     {
-        if (targetWaypoint == null)
+        if (isMoving && currentTarget != null)
         {
-            Debug.LogWarning("NHSupervisor: 이동할 목표 지점이 null입니다.");
-            yield break;
-        }
+            float distanceToTarget = Vector3.Distance(transform.position, currentTarget.position);
 
-        while (Vector3.Distance(transform.position, targetWaypoint.position) > 0.1f)
-        {
-            Vector3 direction = (targetWaypoint.position - transform.position).normalized;
-            direction.y = 0;
-
-            if (direction != Vector3.zero)
+            if (distanceToTarget < stopDistance)
             {
-                Quaternion targetRotation = Quaternion.LookRotation(direction);
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime / 100f);
+                transform.position = currentTarget.position;
+                HandleMovementStage();
             }
-
-            transform.position = Vector3.MoveTowards(transform.position, targetWaypoint.position, speed * Time.deltaTime);
-            yield return null;
+            else
+            {
+                Vector3 direction = (currentTarget.position - transform.position).normalized;
+                transform.position += direction * speed * Time.deltaTime;
+            }
         }
 
-        Debug.Log("NHSupervisor: 포인트 "+ targetWaypoint.name + " 도착");
-
-        if (!storyCheck)
+        if (isDraggingPlayer)
         {
-            // 도착 후 시퀀스 실행
-            StartCoroutine(PlayPostArrivalSequence());
-            storyCheck = true;
+            // Supervisor와 일정 거리 유지하며 플레이어를 끌고 이동
+            Vector3 targetPos = transform.position - transform.forward * dragDistance;
+            playerTr.position = Vector3.MoveTowards(playerTr.position, targetPos, playerFollowSpeed * Time.deltaTime);
         }
-        else
-        {
-            anim.SetTrigger("isIdle");
-        }
-       
-        
     }
 
-    private IEnumerator PlayPostArrivalSequence()
+    private void OnTriggerEnter(Collider other)
     {
-      
+        if (movementStage == 1 && other.CompareTag("Player"))
+        {
+            Debug.Log("플레이어가 접근함 → 문 열고 다음 단계로 이동");
+            roomDoor.GetComponent<Door>().Select_Door();
 
-        Debug.Log("NHSupervisor: -90도 회전 실행");
-        yield return StartCoroutine(RotateByRelativeAngle(-90f, 1f));
-        Debug.Log("NHSupervisor: talk1 실행");
-        anim.SetTrigger("isTalk");
-        yield return new WaitForSeconds(2.0f); // talk1 애니메이션 길이
-        CSVRoad_Story.instance.OnSelectChapter("2_0_1");
-        yield return new WaitForSeconds(9.0f);
-       
+            PlayerController.instance.Close_PlayerController(); // 조작 제한
+            isDraggingPlayer = true;
 
-        Debug.Log("NHSupervisor: +160도 회전 실행");
-        yield return StartCoroutine(RotateByRelativeAngle(160f, 1f));
-        CSVRoad_Story.instance.OnSelectChapter("2_0_2");
-        Debug.Log("NHSupervisor: Action1 실행");
-        anim.SetTrigger("Action");
-        yield return new WaitForSeconds(4f); // Action1 애니메이션 길이
-        anim.SetBool("isWalk", true);
-
-        yield return StartCoroutine(MoveToTargetWaypoint(checkPoint));
-
+            MoveTo(endPoint);
+        }
     }
 
-    private IEnumerator RotateByRelativeAngle(float angle, float duration)
+    public void StartMovement()
     {
-        Quaternion startRot = transform.rotation;
-        Quaternion endRot = startRot * Quaternion.Euler(0, angle, 0); // 상대 회전
-
-        float elapsed = 0f;
-        while (elapsed < duration)
-        {
-            transform.rotation = Quaternion.Slerp(startRot, endRot, elapsed / duration);
-            elapsed += Time.deltaTime;
-            yield return null;
-        }
-
-        transform.rotation = endRot; // 정확한 최종 값 보정
+        anim?.SetBool("isWalk", true);
+        movementStage = 0;
+        MoveTo(moveTr);
     }
 
-    private IEnumerator RotateByAngle(float angle, float duration)
+    private void MoveTo(Transform target)
     {
-        Quaternion startRot = transform.rotation;
-        Quaternion endRot = startRot * Quaternion.Euler(0, angle, 0);
-        float elapsed = 0f;
-
-        while (elapsed < duration)
-        {
-            transform.rotation = Quaternion.Slerp(startRot, endRot, elapsed / duration);
-            elapsed += Time.deltaTime;
-            yield return null;
-        }
-
-        transform.rotation = endRot;
-    }
-
-    public IEnumerator NPCFlowSequence()
-    {
-        if (moveTr == null)
-        {
-            Debug.LogError("NHSupervisor: moveTr가 설정되어 있지 않습니다.");
-            yield break;
-        }
-
+        currentTarget = target;
         isMoving = true;
-
-        Debug.Log("NHSupervisor: walk 애니메이션 시작");
-        anim.SetBool("isWalk", true);
-        yield return StartCoroutine(MoveToTargetWaypoint(moveTr));
-
-        Debug.Log("NHSupervisor: 이동 완료 - walk 종료");
-        anim.SetBool("isWalk", false);
-
-        isMoving = false;
+        anim?.SetBool("isWalk", true);
+        anim?.SetTrigger("isIdle");
     }
 
-    public void StartNPCFlow()
+    private void StopAndIdle()
     {
-        if (isMoving)
-        {
-            Debug.LogWarning("NHSupervisor: 이미 실행 중입니다.");
-            return;
-        }
-
-        if (currentMoveCoroutine != null)
-        {
-            StopCoroutine(currentMoveCoroutine);
-        }
-
-        currentMoveCoroutine = StartCoroutine(NPCFlowSequence());
+        isMoving = false;
+        anim?.SetBool("isWalk", false);
+        anim?.SetTrigger("isIdle");
     }
 
-    public void StopMoveSequence()
+    private void HandleMovementStage()
     {
-        if (currentMoveCoroutine != null)
-        {
-            StopCoroutine(currentMoveCoroutine);
-            currentMoveCoroutine = null;
-        }
-
         isMoving = false;
-        anim.SetTrigger("isIdle");
-        Debug.Log("NHSupervisor: 시퀀스 강제 중지됨");
+
+        switch (movementStage)
+        {
+            case 0:
+                Debug.Log("1단계 도착. 트리거 대기");
+                movementStage = 1;
+                anim.SetTrigger("isIdle");
+                break;
+
+            case 1:
+                Debug.Log("2단계 도착. 문 열기");
+                roomDoor2.GetComponent<Door>().Select_Door();
+                MoveTo(endPoint2);
+                movementStage = 2;
+                break;
+
+            case 2:
+                Debug.Log("최종 도착");
+                StopAndIdle();
+                isDraggingPlayer = false;
+                PlayerController.instance.Open_PlayerController(); // 조작 복구
+                break;
+        }
     }
 }

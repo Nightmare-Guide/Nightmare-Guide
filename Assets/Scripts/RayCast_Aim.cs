@@ -1,7 +1,11 @@
 ﻿using JetBrains.Annotations;
 using UnityEngine;
+using UnityEngine.PostProcessing;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.PostProcessing;
 using UnityStandardAssets.Characters.FirstPerson;
 using static CommonUIManager;
+using static ProgressManager;
 using static SchoolUIManager;
 using static UnityEngine.Rendering.DebugUI;
 
@@ -9,9 +13,7 @@ public class RayCast_Aim : MonoBehaviour
 {
     public float maxRayDistance = 5f; // 레이 길이 설정
     private OutlineObject previousOutline;
-
-    [Header("Locker")]
-    bool locker = true;
+    public GameObject flashlight;
 
 
     private void Start()
@@ -50,16 +52,15 @@ public class RayCast_Aim : MonoBehaviour
                 CommonUIManager.instance.interactionUI.SetActive(true);
             }
 
-
+            // 상호작용 E 키
             if (Input.GetKeyDown(KeyCode.E))
             {
                 if (Physics.Raycast(ray, out hit, maxRayDistance, LayerMask.GetMask("ActiveObject")))
                 {
                     GameObject click_object = hit.transform.gameObject;
 
-
-                    // 콜라이더 비활성화
-                    click_object.GetComponent<Collider>().enabled = false;
+                    Collider objCollider = click_object.GetComponent<Collider>();
+                    objCollider.enabled = false; // 중복 작동 방지
 
                     // Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.red); // 실제 충돌 지점까지 빨간색
 
@@ -69,16 +70,17 @@ public class RayCast_Aim : MonoBehaviour
                         click_object.GetComponent<Collider>().enabled = true;
                         return;
                     }
-                   
+
                     if (click_object.CompareTag("NextScene"))
                     {
                         // 플레이어 못 움직이게
                         PlayerController.instance.Close_PlayerController();
                         Camera_Rt.instance.Close_Camera();
-                      
+
                         NextScene next = click_object.GetComponent<NextScene>();
+                        objCollider.enabled = true;
                         next.Next_Scene();
-                       
+
                     }
                     // 태그가 "maze_Btn"이라면 Select_Btn() 호출
                     if (click_object.CompareTag("maze_Btn"))
@@ -92,18 +94,79 @@ public class RayCast_Aim : MonoBehaviour
 
                     if (click_object.CompareTag("Door"))
                     {
+                        objCollider.enabled = true;
+
+                        Door doorLogic = click_object.GetComponent<Door>();
+
+                        if (doorLogic.enabled == false)
+                            return;
+
                         Debug.Log("Door");
                         DoorCheck(click_object);
                     }
 
+
+                    if (click_object.CompareTag("SpecialDoor"))
+                    {
+                        Debug.Log("Special Door");
+                        objCollider.enabled = true;
+
+                        Door doorLogic = click_object.GetComponent<Door>();
+
+                        if (doorLogic.enabled == false)
+                            return;
+
+                        SchoolUIManager schoolUIManager = CommonUIManager.instance.uiManager as SchoolUIManager;
+
+                        if (click_object.name.Contains("Janitor's office"))
+                        {
+                            if (schoolUIManager.CheckItem(schoolUIManager.items[1].name)) // 열쇠가 있으면 실행
+                            {
+                                DoorCheck(click_object);
+                                click_object.tag = "Door";
+                                schoolUIManager.UseItem(schoolUIManager.items[1]);
+                                ProgressManager.Instance.CompletedAction(ActionType.EnteredControlRoom);
+                            }
+                            else if (ProgressManager.Instance.IsActionCompleted(ActionType.EnteredControlRoom))
+                            {
+                                DoorCheck(click_object);
+                            }
+                        }
+                        else if (click_object.name.Contains("Lounge Door"))
+                        {
+                            if (ProgressManager.Instance.IsActionCompleted(ActionType.LeaveEthan))
+                            {
+                                CSVRoad_Story.instance.OnSelectChapter("1_1_0");
+                                schoolUIManager.activeObjs[8].SetActive(true); // Portal Room 입장 Trigger
+                                DoorCheck(click_object);
+                            }
+                            else if (ProgressManager.Instance.IsActionCompleted(ActionType.FirstMeetMonster) && !ProgressManager.Instance.IsActionCompleted(ActionType.LeaveEthan))
+                            {
+                                Door door = click_object.GetComponent<Door>();
+                                DoorCheck(click_object);
+
+                                if (!door.doorState && schoolUIManager.enterLounge)
+                                {
+                                    schoolUIManager.CloseLoungeDoor();
+                                }
+                            }
+                            else
+                            {
+                                DoorCheck(click_object);
+                            }
+                        }
+
+
+                    }
+
                     if (click_object.CompareTag("CellPhone"))
                     {
-                      //  Debug.Log("CellPhone");
+                        //  Debug.Log("CellPhone");
                         TouchCellPhone(click_object);
                     }
                     if (click_object.CompareTag("ElevatorButton"))
                     {
-                      //  Debug.Log("ElevatorButton");
+                        //  Debug.Log("ElevatorButton");
                         ElevatorButton(click_object);
                     }
                     if (click_object.CompareTag("HintObj"))
@@ -113,7 +176,7 @@ public class RayCast_Aim : MonoBehaviour
 
                     if (click_object.CompareTag("DropItem"))
                     {
-                        if(CommonUIManager.instance.uiManager is SchoolUIManager schoolUIManager)
+                        if (CommonUIManager.instance.uiManager is SchoolUIManager schoolUIManager)
                         {
                             schoolUIManager.GetItem(click_object);
                         }
@@ -124,8 +187,32 @@ public class RayCast_Aim : MonoBehaviour
                     {
                         if (CommonUIManager.instance.uiManager is SchoolUIManager schoolUIManager)
                         {
-                            schoolUIManager.FirstMeetEthan();
+                            if(schoolUIManager.CheckItem("Locker Key") && !ProgressManager.Instance.IsActionCompleted(ActionType.GetOutOfLocker))
+                            {
+                                schoolUIManager.UseLockerKey();
+                            }
+                            else if (ProgressManager.Instance.IsActionCompleted(ActionType.GetOutOfLocker))
+                            {
+                                schoolUIManager.GetOutOfLoungeLocker();
+                            }
+                            else
+                            {
+                                schoolUIManager.FirstMeetEthan(ProgressManager.Instance.IsActionCompleted(ActionType.GetFlashlight));
+                            }
                         }
+                    }
+
+                    if (click_object.CompareTag("Flashlight"))
+                    {
+                        ProgressManager.Instance.CompletedAction(ActionType.GetFlashlight);
+                        click_object.SetActive(false);
+                        if (CommonUIManager.instance.uiManager is SchoolUIManager schoolUIManager) { schoolUIManager.flashlightWall.SetActive(false); }
+                    }
+
+                    if (click_object.CompareTag("Ending"))
+                    {
+                        Chap1Ending ending = click_object.GetComponent<Chap1Ending>();
+                        ending.StartEndingSequence();
                     }
                 }
             }
@@ -143,6 +230,23 @@ public class RayCast_Aim : MonoBehaviour
                 previousOutline.enabled = false;
                 Debug.Log("레이 미충돌 - OutlineObject 비활성화됨!");
                 previousOutline = null;
+            }
+        }
+
+        // 손전등 F 키
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            if (flashlight == null)
+                return;
+
+            SchoolUIManager schoolUIManager  = CommonUIManager.instance.uiManager as SchoolUIManager;
+
+            if (ProgressManager.Instance.progressData.hideInLocker)
+                return;
+
+            if (ProgressManager.Instance.IsActionCompleted(ActionType.GetFlashlight))
+            {
+                flashlight.SetActive(!flashlight.activeInHierarchy);
             }
         }
     }
@@ -163,42 +267,40 @@ public class RayCast_Aim : MonoBehaviour
         if (mazeButton != null)
         {
             mazeButton.Select_Btn(); // 클릭한 오브젝트의 Select_Btn 호출
-         //   Debug.Log(obj.name + "색상 변경");
+                                     //   Debug.Log(obj.name + "색상 변경");
         }
         else
         {
-         //   Debug.Log("색상없음");
+            //   Debug.Log("색상없음");
         }
     }
 
     public void Locker(GameObject obj)
     {
 
-      //  Debug.Log("락커 인식" + obj.name);
+        //  Debug.Log("락커 인식" + obj.name);
         Locker lockerObj = obj.GetComponent<Locker>();
+
         if (lockerObj.isMovingToLocker || lockerObj.outMovingToLocker)
         {
             return;
         }
 
-        if (locker)//문이 열리고 플레이어 이동후 문디 닫힘
+        if (!ProgressManager.Instance.progressData.hideInLocker)//문이 열리고 플레이어 이동 후 문 닫힘
         {
             lockerObj.isMovingToLocker = true;
             lockerObj.PlayerHide();
-            locker = false;
         }
 
-        else if (!locker)//플레이어 컨트롤러가 활성화되고 문이 열림
+        else if (ProgressManager.Instance.progressData.hideInLocker)//플레이어 컨트롤러가 활성화되고 문이 열림
         {
 
             lockerObj.OpenLocker();
             // PlayerController.instance.Open_PlayerController();//플레이어 컨트롤 ON
-            locker = true;
             // DoorCheck(obj);
-
         }
 
-
+        lockerObj.StartMoveToTarget();
     }
 
     public void DoorCheck(GameObject obj)
@@ -206,13 +308,20 @@ public class RayCast_Aim : MonoBehaviour
         Door door = obj.GetComponent<Door>();
         LockerRoomDoor ldoor = obj.GetComponent<LockerRoomDoor>();
 
-        if (door != null) //일반적인 door 스크립트
-        {
-            door.Select_Door();
-        }
         if (ldoor != null) //LockerRoomDoor 값 확인용
         {
+            Debug.Log("LockerRoomDoor 발견!");
             ldoor.OpenLockerDoor();
+            ldoor.Select_Door();
+        }
+        else if (door != null) //일반적인 door 스크립트
+        {
+            door.Select_Door();
+            Debug.Log("Door발견!");
+        }
+        else
+        {
+            Debug.Log("LockerRoomDoor 컴포넌트 없음!");
         }
     }
 
@@ -225,7 +334,7 @@ public class RayCast_Aim : MonoBehaviour
             ProgressManager.Instance.progressData.phoneDatas[0].hasPhone = true;
             ProgressManager.Instance.progressData.storyProgress = "clear";
             ProgressManager.Instance.progressData.newGame = false;
-            CSVRoad_Story.instance.OpenQuestUI(CSVRoad_Story.instance.GetQuest("0_1_0_1"));
+            // CSVRoad_Story.instance.OpenQuestUI(CSVRoad_Story.instance.GetQuest("0_1_0_1"));
         }
         else
         {
@@ -234,7 +343,14 @@ public class RayCast_Aim : MonoBehaviour
 
             targetPhone.hasPhone = true;
             if (targetPhone.name == "Ethan") { ProgressManager.Instance.progressData.phoneDatas[1].hasPhone = true; }
-            else if (targetPhone.name == "David") { ProgressManager.Instance.progressData.phoneDatas[2].hasPhone = true; }
+            else if (targetPhone.name == "David") 
+            { 
+                ProgressManager.Instance.progressData.phoneDatas[2].hasPhone = true;
+                ProgressManager.Instance.CompletedAction(ActionType.GetDavidCellPhone);
+
+                SchoolUIManager schooluiManager = CommonUIManager.instance.uiManager as SchoolUIManager;
+                schooluiManager.activeObjs[10].gameObject.GetComponent<Door>().enabled = true;
+            }
         }
 
         // CellPhone 위치 변경 함수 실행

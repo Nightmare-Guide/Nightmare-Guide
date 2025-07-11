@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fadef4205c7b67342aa1e9c079046fc7, type: 3}
   m_Name: ProgressData
   m_EditorClassIdentifier: 
-  newGame: 1
-  scene: DayHouse
+  newGame: 0
+  scene: School_Scene
   storyProgress: 0_0_0
   actionStatuses:
   - actionType: 0
@@ -25,27 +25,27 @@ MonoBehaviour:
   - actionType: 3
     isCompleted: 0
   - actionType: 4
-    isCompleted: 0
+    isCompleted: 1
   - actionType: 5
-    isCompleted: 0
+    isCompleted: 1
   - actionType: 6
-    isCompleted: 0
+    isCompleted: 1
   - actionType: 7
-    isCompleted: 0
+    isCompleted: 1
   - actionType: 8
-    isCompleted: 0
+    isCompleted: 1
   - actionType: 9
-    isCompleted: 0
+    isCompleted: 1
   - actionType: 10
-    isCompleted: 0
+    isCompleted: 1
   - actionType: 11
-    isCompleted: 0
+    isCompleted: 1
   - actionType: 12
-    isCompleted: 0
+    isCompleted: 1
   - actionType: 13
-    isCompleted: 0
+    isCompleted: 1
   - actionType: 14
-    isCompleted: 0
+    isCompleted: 1
   - actionType: 15
     isCompleted: 0
   - actionType: 16
@@ -72,8 +72,10 @@ MonoBehaviour:
     isCompleted: 0
   - actionType: 27
     isCompleted: 0
-  playerPosition: {x: -487, y: 71, z: 138}
-  playerEulerAngles: {x: 0, y: 0, z: 0}
+  - actionType: 28
+    isCompleted: 0
+  playerPosition: {x: 21.836283, y: 3.8559995, z: -65.26149}
+  playerEulerAngles: {x: 0, y: 261.50006, z: 0}
   playerTr:
   - scene_Name: DayHouse
     tr: {x: -488, y: 72, z: 140}
@@ -88,8 +90,8 @@ MonoBehaviour:
     tr: {x: -285, y: 30, z: -810}
     rt: {x: 0, y: 180, z: 0}
   - scene_Name: School_Scene
-    tr: {x: 0, y: 0, z: 0}
-    rt: {x: 0, y: 0, z: 0}
+    tr: {x: 21.836283, y: 3.8559995, z: -65.26149}
+    rt: {x: 0, y: 298, z: 0}
   - scene_Name: Main_Map
     tr: {x: -376, y: 5, z: -355}
     rt: {x: 0, y: 90, z: 0}
@@ -97,9 +99,14 @@ MonoBehaviour:
     tr: {x: -180, y: 5, z: -723}
     rt: {x: 0, y: 90, z: 0}
   sanchi: 0
+  postProcessingName: Nightmare
+  fogName: Nightmare
+  hideInLocker: 0
   mainInventoryDatas:
   - 
-  schoolInventoryDatas: []
+  schoolInventoryDatas:
+  - Locker Key
+  - David CellPhone
   phoneDatas:
   - name: Steven
     hasPhone: 0
@@ -108,7 +115,7 @@ MonoBehaviour:
     hasPhone: 0
     isUnlocked: 0
   - name: David
-    hasPhone: 0
+    hasPhone: 1
     isUnlocked: 0
   bgVolume: 50
   effectVolume: 50
@@ -118,4 +125,10 @@ MonoBehaviour:
   quest: 
   timelineWatchedList:
   - key: StartFirstDay
+    value: 0
+  - key: FirstMeetMonster
+    value: 1
+  - key: FirstLounge
+    value: 1
+  - key: LastSchoolEvent
     value: 0

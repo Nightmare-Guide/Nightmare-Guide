@@ -1,7 +1,9 @@
 using System;
+using System.Collections;
 using Unity.Burst.CompilerServices;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Rendering;
 using UnityStandardAssets.CrossPlatformInput;
 using UnityStandardAssets.Utility;
 using Random = UnityEngine.Random;
@@ -48,13 +50,15 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private AudioSource m_AudioSource;
         public NavMeshAgent agent;
         public Transform playerwalkposition;
+        private Transform playerTransform;
 
         public enum PlayerState
         {
             Idle,
             Hide,
             Hiding,
-            Death
+            Death,
+            Moving // -> 이동 애니메이션,코루틴 전용
         }
         public PlayerState stat = PlayerState.Idle;
 
@@ -69,9 +73,9 @@ namespace UnityStandardAssets.Characters.FirstPerson
             {
                 Destroy(gameObject); // 중복된 인스턴스 제거
             }
-         
 
 
+            playerTransform = GetComponent<Transform>();
             m_CharacterController = GetComponent<CharacterController>();
             m_Camera = Camera.main;
             m_OriginalCameraPosition = m_Camera.transform.localPosition; // 카메라 로컬 포지션입력
@@ -300,7 +304,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
             }
         }
 
-
         private void RotateView()
         {
             m_MouseLook.LookRotation(transform, m_Camera.transform);
@@ -331,6 +334,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_CharacterController.enabled = false;
         }
 
+
         public Camera GetPlayerCamera()
         {
             return m_Camera;
@@ -338,12 +342,109 @@ namespace UnityStandardAssets.Characters.FirstPerson
         public void GoNavposition()
         {
             Close_PlayerController();
+            agent.enabled = true;
             agent.SetDestination(playerwalkposition.position);
         }
 
+        public void LookTarget(Transform target)
+        {
+            StartCoroutine(SmoothLookAt(playerTransform, target, 0.25f));
+
+            // 플레이어 카메라 각도 변경
+            StartCoroutine(SmoothRotateTo(GetPlayerCamera().transform, Vector3.zero, 0.25f));
+        }
+
+        public IEnumerator SmoothLookAt(Transform me, Transform target, float duration)
+        {
+            Vector3 direction = target.position - me.position;
+            direction.y = 0f; // 수직 방향 제외 (고개 꺾이는 것 방지)
+
+            Quaternion startRotation = me.rotation;
+            Quaternion targetRotation = Quaternion.LookRotation(direction.normalized);
+            Vector3 r = targetRotation.eulerAngles;
+
+            string meName = me.gameObject.name;
+            string targetName = target.gameObject.name;
+
+            if (meName.Contains("Michael") || targetName.Contains("Michael"))
+                r += Vector3.down * 5f;
+            else if (meName.Contains("Alex") || targetName.Contains("Alex"))
+                r += Vector3.up * 2.5f;
+
+            targetRotation = Quaternion.Euler(r);
+
+            float time = 0f;
+            while (time < duration)
+            {
+                float t = Mathf.Clamp01(time / duration);
+                me.rotation = Quaternion.Slerp(startRotation, targetRotation, t);
+                time += Time.deltaTime;
+                yield return null;
+            }
+
+            me.rotation = targetRotation; // 마지막 각도 보정
+        }
+
+        public IEnumerator SmoothRotateTo(Transform targetTransform, Vector3 targetEulerAngles, float duration)
+        {
+            Quaternion startRotation = targetTransform.localRotation;
+            Quaternion targetRotation = Quaternion.Euler(targetEulerAngles);
+
+            float elapsed = 0f;
+            while (elapsed < duration)
+            {
+                float t = elapsed / duration;
+                targetTransform.localRotation = Quaternion.Slerp(startRotation, targetRotation, t);
+                elapsed += Time.deltaTime;
+                yield return null;
+            }
+
+            targetTransform.localRotation = targetRotation; // 마지막 각도 보정
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.CompareTag("Trigger"))
+            {
+                if (other.gameObject.name == "EnemyFirstMeet Wall")
+                {
+                    SchoolUIManager schoolUIManager = CommonUIManager.instance.uiManager as SchoolUIManager;
+
+                    Close_PlayerController();
+                    schoolUIManager.FirstMeetEnemy();
+                }
+                else if (other.gameObject.name == "Lounge Trigger Wall")
+                {
+                    SchoolUIManager schoolUIManager = CommonUIManager.instance.uiManager as SchoolUIManager;
+
+                    schoolUIManager.enterLounge = true;
+                }
+                else if (other.gameObject.name == "Portal Room Trigger Wall (Lounge Door)")
+                {
+                    SchoolUIManager schoolUIManager = CommonUIManager.instance.uiManager as SchoolUIManager;
+
+                    schoolUIManager.EnterPortalRoom();
+                }
+                else if(other.gameObject.name.Contains("Backroom Trigger"))
+                {
+                    SchoolUIManager schoolUIManager = CommonUIManager.instance.uiManager as SchoolUIManager;
+
+                    schoolUIManager.EnterBackroom();
+                }
+            }
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.CompareTag("Trigger"))
+            {
+                if (other.gameObject.name == "Lounge Trigger Wall")
+                {
+                    SchoolUIManager schoolUIManager = CommonUIManager.instance.uiManager as SchoolUIManager;
+
+                    schoolUIManager.enterLounge = false;
+                }
+            }
+        }
     }
-
-
-
-
 }

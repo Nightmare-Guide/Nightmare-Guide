@@ -31,20 +31,20 @@ public class ProgressManager : MonoBehaviour
         EnteredSchool,
         FirstMeetEthan,
         GetFlashlight,
+        GetJanitorsOfficeKey,
         EnteredControlRoom,
-        GetCabinetKey,
+        GetLockerKey,
         FirstMeetMonster,
-        GetOutOfCabinet,
+        UseLockerKey,
+        GetOutOfLocker,
         LeaveEthan,
-        StartSchoolNightmare,
-        SolvedPortalRoom,
+        EnterPortalRoom,
         GetDavidCellPhone,
-        SecondMeetMonster,
         EnteredBackRoom,
         EnteredEthanHouse,
         GetEthanCellPhone,
-        EnteredCabinetRoom,
-        SolvedCabinetRoom,
+        EnteredLockerRoom,
+        SolvedLockerRoom,
         StartFinalChase,
         FinishFinalChase,
         TalkWarmlyToEthan,
@@ -82,12 +82,12 @@ public class ProgressManager : MonoBehaviour
     // Action 이 실행되었는 지 안되었는 지 확인하는 함수
     public bool IsActionCompleted(ActionType type)
     {
-        return ProgressManager.Instance.progressData.actionStatuses.Find(a => a.actionType == type).isCompleted;
+        return progressData.actionStatuses.Find(a => a.actionType == type).isCompleted;
     }
 
     public void CompletedAction(ActionType type)
     {
-        ProgressManager.Instance.progressData.actionStatuses.Find(a => a.actionType == type).isCompleted = true;
+        progressData.actionStatuses.Find(a => a.actionType == type).isCompleted = true;
     }
 
     /// <summary>
@@ -132,6 +132,9 @@ public class ProgressManager : MonoBehaviour
             progressData.playerPosition = defaultData.playerPosition;
             progressData.playerEulerAngles = defaultData.playerEulerAngles;
             progressData.sanchi = defaultData.sanchi;
+            progressData.fogName = defaultData.fogName;
+            progressData.postProcessingName = defaultData.postProcessingName;
+            progressData.hideInLocker = defaultData.hideInLocker;
 
             progressData.mainInventoryDatas = new List<string>(defaultData.mainInventoryDatas);
             DeepCopy(defaultData.phoneDatas); // 휴대폰 정보
@@ -223,8 +226,18 @@ public class ProgressManager : MonoBehaviour
         PlayerTr playerData = GetPlayerTrForScene(sceneName);
         if (playerData != null)
         {     
-            progressData.playerPosition = playerData.tr;
             progressData.playerEulerAngles = playerData.rt;
+
+            if (ProgressManager.Instance.progressData.hideInLocker)
+            {
+                progressData.playerPosition = playerData.tr + (Quaternion.Euler(playerData.rt) * Vector3.forward); // 게임 시작 시 플레이어가 락커에 숨어있었던 상태라면 락커 밖으로 리스폰
+                ProgressManager.Instance.progressData.hideInLocker = false;
+            }
+            else
+            {
+                progressData.playerPosition = playerData.tr;
+            }
+
             Debug.Log($"[{sceneName}] Load 플레이어 위치/회전 정보 업데이트: {playerData.tr}, {playerData.rt}");
         }
         else
@@ -240,8 +253,16 @@ public class ProgressManager : MonoBehaviour
         if (existingData != null)
         {
             //기존 데이터 업데이트
-            existingData.tr = position;
             existingData.rt = rotation;
+            existingData.tr = position;
+
+            if(IsActionCompleted(ActionType.GetLockerKey) && !IsActionCompleted(ActionType.GetOutOfLocker))
+            {
+                SchoolUIManager schoolUIManager = CommonUIManager.instance.uiManager as SchoolUIManager;
+                existingData.tr = schoolUIManager.playerRespawnPoints[0].position;
+                existingData.rt = schoolUIManager.playerRespawnPoints[0].rotation.eulerAngles;
+            }
+
             Debug.Log($"[{sceneName}] Update 플레이어 위치/회전 정보 업데이트: {position}, {rotation}");
         }
         

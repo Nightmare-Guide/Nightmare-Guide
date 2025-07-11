@@ -22,6 +22,9 @@ public class GameData
     public Vector3 playerEulerAngles;
 
     public int sanchi = 0;
+    public string fogName;
+    public string postProcessingName;
+    public bool hideInLocker;
     public List<string> mainInventoryDatas;
     public List<SavePhoneData> phoneDatas;
     public List<string> schoolInventoryDatas;
@@ -98,6 +101,9 @@ public class GameDataManager : MonoBehaviour
             playerPosition = ProgressManager.Instance.progressData.playerPosition,
             playerEulerAngles= ProgressManager.Instance.progressData.playerEulerAngles,
             sanchi = ProgressManager.Instance.progressData.sanchi,
+            fogName = ProgressManager.Instance.progressData.fogName,
+            postProcessingName = ProgressManager.Instance.progressData.postProcessingName,
+            hideInLocker = ProgressManager.Instance.progressData.hideInLocker,
 
             mainInventoryDatas = ProgressManager.Instance.progressData.mainInventoryDatas,
             phoneDatas = ProgressManager.Instance.progressData.phoneDatas,
@@ -135,6 +141,9 @@ public class GameDataManager : MonoBehaviour
                 ProgressManager.Instance.progressData.playerPosition = loadData.playerPosition;
                 ProgressManager.Instance.progressData.playerEulerAngles = loadData.playerEulerAngles;
                 ProgressManager.Instance.progressData.sanchi = loadData.sanchi;
+                ProgressManager.Instance.progressData.fogName = loadData.fogName;
+                ProgressManager.Instance.progressData.postProcessingName = loadData.postProcessingName;
+                ProgressManager.Instance.progressData.hideInLocker = loadData.hideInLocker;
 
                 ProgressManager.Instance.progressData.mainInventoryDatas = loadData.mainInventoryDatas;
                 ProgressManager.Instance.progressData.phoneDatas = loadData.phoneDatas;

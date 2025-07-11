@@ -1,22 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Door : MonoBehaviour
 {
     public int lockerIndex;
-    public bool doorState; //true면 열린상태 false면 닫힌상태
+    public bool doorState; // true = 열림, false = 닫힘
     public BoxCollider boxcollider;
+    public NavMeshObstacle navMeshObstacle;
+
     [SerializeField] private Quaternion startRotation;
     [SerializeField] private Quaternion endRotation;
-    private float endTime = 0.5f; //회전 시간
-    public bool isRotation = false; // false면 회전 안하고있음.
+    private float endTime = 0.5f;
+    public bool isRotation = false;
     public Coroutine currentCoroutine;
 
     private void Start()
     {
         startRotation = transform.rotation;
         boxcollider = GetComponent<BoxCollider>();
+        doorState = false;
+
+        // NavMeshObstacle 자동 할당
+        navMeshObstacle = GetComponent<NavMeshObstacle>();
+        if (navMeshObstacle != null)
+        {
+            navMeshObstacle.carving = true;
+        }
     }
 
     public void Select_Door()
@@ -35,15 +46,22 @@ public class Door : MonoBehaviour
 
         DisableCollider();
 
+        // 문 닫기
         if (doorState)
         {
-            endRotation = Quaternion.Euler(0, startRotation.eulerAngles.y + 110, 0);
-            // SoundManager.instance.PlayDoorOpen();
+            if(this.gameObject.name.Contains("Janitor's office")) { endRotation = Quaternion.Euler(0, startRotation.eulerAngles.y - 90, 0); }
+            else { endRotation = Quaternion.Euler(0, startRotation.eulerAngles.y + 90, 0); }
+            doorState = false;
+            EnableObstacle(); // 문 닫히면 NavMeshObstacle 켜짐
+            // SoundManager.instance.PlayDoorClose();
         }
-        else
+        else // 문 열기
         {
-            endRotation = Quaternion.Euler(0, startRotation.eulerAngles.y - 110, 0);
-            SoundManager.instance.PlayDoorClose();
+            if (this.gameObject.name.Contains("Janitor's office")) { endRotation = Quaternion.Euler(0, startRotation.eulerAngles.y + 90, 0); }
+            else { endRotation = Quaternion.Euler(0, startRotation.eulerAngles.y - 90, 0); }
+            doorState = true;
+            DisableObstacle(); // 문 열리면 NavMeshObstacle 꺼짐
+            // SoundManager.instance.PlayDoorOpen();
         }
 
         while (startTime < endTime)
@@ -54,7 +72,6 @@ public class Door : MonoBehaviour
         }
 
         transform.rotation = endRotation;
-        doorState = !doorState;
         isRotation = false;
 
         EnableCollider();
@@ -65,4 +82,16 @@ public class Door : MonoBehaviour
 
     public void istrigger_on() => boxcollider.isTrigger = true;
     public void istrigger_off() => boxcollider.isTrigger = false;
+
+    private void EnableObstacle()
+    {
+        if (navMeshObstacle != null)
+            navMeshObstacle.enabled = true;
+    }
+
+    private void DisableObstacle()
+    {
+        if (navMeshObstacle != null)
+            navMeshObstacle.enabled = false;
+    }
 }

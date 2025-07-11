@@ -15,7 +15,7 @@ public class EthanMother : NPC
         {
             playerTransform = other.transform;
             supervisor.agent.isStopped = true;
-            supervisor.WalktoIdle();
+            //supervisor.WalktoIdle();
             FirstMeet();
         }
     }

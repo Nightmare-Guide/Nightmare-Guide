@@ -8,6 +8,7 @@ using System.Runtime.InteropServices;
 using UnityStandardAssets.Characters.FirstPerson;
 using Unity.VisualScripting;
 using UnityEngine.Playables;
+using UnityEditor.VersionControl;
 
 public class UIUtility : MonoBehaviour
 {
@@ -90,12 +91,12 @@ public class UIUtility : MonoBehaviour
     public void StopPlayerController()
     {
         //플레이어 컨트롤 OFF
-        if(PlayerController.instance != null)
+        if (PlayerController.instance != null)
         {
             PlayerController.instance.Close_PlayerController();
         }
 
-        if(Camera_Rt.instance != null)
+        if (Camera_Rt.instance != null)
         {
             //카메라 회전 정지
             Camera_Rt.instance.Close_Camera();
@@ -106,6 +107,7 @@ public class UIUtility : MonoBehaviour
 
     public void StartPlayerController()
     {
+        Debug.Log("StartPlayerController");
         if (PlayerController.instance != null)
         {
             //플레이어 컨트롤 On
@@ -270,7 +272,7 @@ public class UIUtility : MonoBehaviour
     // VerticalLayoutGroup 초기화
     public void RebuildVerticalLayout(List<VerticalLayoutGroup> verticalLayoutGroup)
     {
-        foreach(VerticalLayoutGroup group in verticalLayoutGroup)
+        foreach (VerticalLayoutGroup group in verticalLayoutGroup)
         {
             LayoutRebuilder.MarkLayoutForRebuild(group.GetComponent<RectTransform>());
         }
@@ -291,10 +293,18 @@ public class UIUtility : MonoBehaviour
 
     public void FinishedTimeLine()
     {
+        Debug.Log("Finish TimeLine");
+
+        // 데이터 key 값으로 찾아서 저장
+        ProgressManager.Instance.progressData.timelineWatchedList.Find(e => e.key == playableDirector.playableAsset.name).value = true;
+
+        playableDirector.Stop();
         playableDirector.playableAsset = null;
 
         // 에임 UI 활성화
         aimUI.SetActive(true);
+
+        // StartPlayerController();
     }
 
     public void EnableCollider(Collider col)
@@ -318,6 +328,11 @@ public class UIUtility : MonoBehaviour
     {
         if (timeLineManager.playableAssets.Count > 0 && playableDirector != null)
         {
+            // 이미 실행된 적 있으면 return
+            //if (ProgressManager.Instance.progressData.timelineWatchedList.Find(e => e.key == asset.name).value)
+            //    return;
+            // -> 추격 전 타임라인은 리스폰 후 데이터 초기화 필요
+
             // 에임 UI 비활성화
             aimUI.SetActive(false);
 
@@ -325,18 +340,43 @@ public class UIUtility : MonoBehaviour
             UnityEngine.Cursor.lockState = CursorLockMode.Locked;
             UnityEngine.Cursor.visible = false;  // 커서를 안 보이게 하기
 
-            // 이미 실행된 적 있으면 return
-            //if (ProgressManager.Instance.progressData.timelineWatchedList.Find(e => e.key == asset.name).value)
-            //    return;
+            StopPlayerController();
 
             // 타임라인 실행
             playableDirector.playableAsset = asset;
             playableDirector.Play();
-
-            // 데이터 key 값으로 찾아서 저장
-            // ProgressManager.Instance.progressData.timelineWatchedList.Find(e => e.key == asset.name).value = true;
         }
     }
 
+    // 포스트 프로세싱, Fog 데이터 불러오기
+    public void GetPostFogData()
+    {
+        CommonUIManager commonUIManager = CommonUIManager.instance;
+        string fogName = ProgressManager.Instance.progressData.fogName;
+        string postName = ProgressManager.Instance.progressData.postProcessingName;
 
+        commonUIManager.ApplyFog(commonUIManager.fogSettings.Find(info => info.name.Equals(fogName)));
+        Camera_Rt.instance.ApplyPostProcessing(postName);
+    }
+
+    // 데이터에 맞게 오브젝트 활성화/비활성화
+    public void CheckObjData(ProgressManager.ActionType action, GameObject obj)
+    {
+        if (ProgressManager.Instance != null)
+        {
+            ProgressManager progress = ProgressManager.Instance;
+
+            // Debug.Log($"obj : {obj.name}, active : {!progress.IsActionCompleted(action)}");
+            obj.SetActive(!progress.IsActionCompleted(action));
+        }
+    }
+    public void CheckObjData(ProgressManager.ActionType action, Collider collider)
+    {
+        if (ProgressManager.Instance != null)
+        {
+            ProgressManager progress = ProgressManager.Instance;
+
+            collider.enabled = !progress.IsActionCompleted(action);
+        }
+    }
 }

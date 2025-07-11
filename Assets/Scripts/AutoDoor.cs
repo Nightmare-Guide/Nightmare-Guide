@@ -8,7 +8,7 @@ public class AutoDoor : MonoBehaviour
     public Door door;
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Supervisor")&& !door.doorState)
+        if (other.CompareTag("Player") && !door.doorState)
         {
             door.Select_Door();
         }

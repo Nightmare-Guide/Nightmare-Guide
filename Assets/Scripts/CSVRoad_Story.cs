@@ -35,6 +35,7 @@ public class CSVRoad_Story : MonoBehaviour
     private int chapterEnd = 0;
     private NPC currentNPC;
     private int questIndex = 0;
+    private bool choicebool = false; // 선택지 중인지 판별
 
     public NarrationManager narrationManager;
 
@@ -54,14 +55,14 @@ public class CSVRoad_Story : MonoBehaviour
 
     private void Start()
     {
-        if (!String.IsNullOrEmpty(ProgressManager.Instance.progressData.quest))
-        {
-            OpenQuestUI(ProgressManager.Instance.progressData.quest);
-        } 
-        else
-        {
-            CloseQuestUI();
-        }
+        //if (!String.IsNullOrEmpty(ProgressManager.Instance.progressData.quest))
+        //{
+        //    OpenQuestUI(ProgressManager.Instance.progressData.quest);
+        //} 
+        //else
+        //{
+        //    CloseQuestUI();
+        //}
     }
 
     public void OnSelectChapter(string subChapterKey, NPC npc = null)
@@ -146,14 +147,34 @@ public class CSVRoad_Story : MonoBehaviour
                 yield break;
             }
 
-            yield return new WaitForSeconds(2f);
+
+            if (string.IsNullOrWhiteSpace(data[i]["Time"].ToString()))
+            {
+                // Time이 null, 빈칸, 공백 등일 경우
+                yield return new WaitForSeconds(2f);
+            }
+            else
+            {
+                // 숫자 값이 존재할 경우
+                if (float.TryParse(data[i]["Time"].ToString(), out float dialogueTime))
+                {
+                    yield return new WaitForSeconds(dialogueTime);
+                }
+                else
+                {
+                    Debug.LogWarning($"Time 값이 유효하지 않습니다: {data[i]["Time"]}");
+                    yield return new WaitForSeconds(2f); // 기본 대기
+                }
+            }
+
             progress = i + 1;
 
             if (i == end)
             {
                 Debug.Log($"SubChapter {data[start]["Chapter"]} 끝");
                 // ProgressManager.Instance.progressData.storyProgress = data[start]["Chapter"].ToString();  // 테스트때문에 잠깐 비활성화
-                string chap = data[i - 1]["Chapter"].ToString();
+                // string chap = data[i - 1]["Chapter"].ToString();
+                string chap = data[i]["Chapter"].ToString();
                 NextAction(chap);
                 chapterEnd = 0;
                 UIUtility uiManager = CommonUIManager.instance.uiManager;
@@ -289,54 +310,65 @@ public class CSVRoad_Story : MonoBehaviour
                 break;
             case "0_1_0":
                 ProgressManager.Instance.CompletedAction(ActionType.StartNewDay);
-                OpenQuestUI(GetQuest("0_1_0_0"));
+                // OpenQuestUI(GetQuest("0_1_0_0"));
                 break;
             case "0_2_0":
                 ProgressManager.Instance.CompletedAction(ActionType.FirstMeetMichael);
                 if (currentNPC != null) { Michael michael = currentNPC as Michael; michael.DoSweepBroom(); }
                 break;
-            case "0_3_0":
-                if (currentNPC != null)
-                {
-                    Supervisor supervisor = currentNPC as Supervisor;
-                    Camera_Rt.instance.Open_Camera();
-                    supervisor.GoHospitalRoom();
-                }
-                break;
-            case "0_3_1":
-                if (currentNPC != null)
-                {
-                    Supervisor supervisor = currentNPC as Supervisor;
-                    supervisor.WalktoIdle();
-                    supervisor.StartSelectBox();
-                }
-                break;
-            case "0_3_2":
-                if (currentNPC != null)
-                {
-                    Supervisor supervisor = currentNPC as Supervisor;
-                    supervisor.InHospitalRoom();
-                }
-                break;
-            case "0_3_3":
-                if (currentNPC != null)
-                {
-                    Debug.Log("0_3_3실행");
-                    EthanMother ethanMother = currentNPC as EthanMother;
-                    ethanMother.WorktoPosition();
-                }
-                break;
-            case "0_3_4":
-                if (currentNPC != null)
-                {
-                    Debug.Log("0_3_4실행");
-                    EthanMother ethanMother = currentNPC as EthanMother;
-                    ethanMother.supervisor.GoNightmare();
-                }
-                break;
+            //case "0_3_0":
+            //    if (currentNPC != null)
+            //    {
+            //        Supervisor supervisor = currentNPC as Supervisor;
+            //        Camera_Rt.instance.Open_Camera();
+            //        supervisor.GoHospitalRoom();
+            //    }
+            //    break;
+            //case "0_3_1":
+            //    if (currentNPC != null)
+            //    {
+            //        Supervisor supervisor = currentNPC as Supervisor;
+            //        supervisor.WalktoIdle();
+            //        supervisor.StartSelectBox();
+            //    }
+            //    break;
+            //case "0_3_2":
+            //    if (currentNPC != null)
+            //    {
+            //        Supervisor supervisor = currentNPC as Supervisor;
+            //        supervisor.InHospitalRoom();
+            //    }
+            //    break;
+            //case "0_3_3":
+            //    if (currentNPC != null)
+            //    {
+            //        Debug.Log("0_3_3실행");
+            //        EthanMother ethanMother = currentNPC as EthanMother;
+            //        ethanMother.WorktoPosition();
+            //    }
+            //    break;
+            //case "0_3_4":
+            //    if (currentNPC != null)
+            //    {
+            //        Debug.Log("0_3_4실행");
+            //        EthanMother ethanMother = currentNPC as EthanMother;
+            //        ethanMother.supervisor.GoNightmare();
+            //    }
+            //    break;
             case "1_0_0":
-                // ProgressManager.Instance.CompletedAction(ActionType.FirstMeetEthan);
+                ProgressManager.Instance.CompletedAction(ActionType.FirstMeetEthan);
                 if (CommonUIManager.instance.uiManager is SchoolUIManager schoolUIManager) { schoolUIManager.StartPlayerController(); }
+                break;
+            case "1_0_1":
+                if (CommonUIManager.instance.uiManager is SchoolUIManager) { CommonUIManager.instance.uiManager.StartPlayerController(); }
+                break;
+            case "1_0_3":
+                ProgressManager.Instance.CompletedAction(ActionType.FirstMeetMonster);
+                if (CommonUIManager.instance.uiManager is SchoolUIManager) { CommonUIManager.instance.uiManager.StartPlayerController(); }
+                break;
+            case "1_0_4":
+            case "1_0_6":
+                if (CommonUIManager.instance.uiManager is SchoolUIManager) { CommonUIManager.instance.uiManager.StartPlayerController(); }
                 break;
             case "2_2_0":
                 ProgressManager.Instance.CompletedAction(ActionType.FirstMeetAlex);
@@ -351,8 +383,29 @@ public class CSVRoad_Story : MonoBehaviour
 
         yield return new WaitForSeconds(1.2f);
 
-        SceneManager.LoadScene("DayHouse");
+        // 비동기 로딩 작업
+        UnityEngine.Application.backgroundLoadingPriority = ThreadPriority.Low;
 
-        CommonUIManager.instance.Blink(true);
+        // AsyncOperation : 시간이 걸리는 작업을 백그라운드에서 진행할 때, 그 상태를 확인하거나 제어할 수 있는 클래스
+        AsyncOperation op = SceneManager.LoadSceneAsync("DayHouse"); // 다음 씬을 백그라운드에서 로딩 시작 (비동기)
+        op.allowSceneActivation = false; // 로딩이 끝나도 바로 전환되지 않고 기다림. (ex: 로딩 애니메이션 다 보여주고 넘어갈 때 유용)
+
+        while (!op.isDone) // 매 프레임마다 op.progress 값을 확인하면서 시간 누적 -> progress 0.9 : 씬 전환 준비 완료, 1 : 씬 전환 완료
+        {
+            yield return null;
+
+            if (op.progress < 0.9f)
+            {
+                Debug.Log("Preparing to switch scene");
+            }
+            else
+            {
+                Debug.Log("Finish to switch scene");
+
+                op.allowSceneActivation = true;
+
+                CommonUIManager.instance.Blink(true);
+            }
+        }
     }
 }
