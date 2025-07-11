@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -31,6 +32,7 @@ public class SoundManager : MonoBehaviour
     public AudioClip jumpScareSound; // 점프스케어 사운드
     public AudioClip wallMoveSound; // 벽 이동 사운드
 
+    public Dictionary<string, Action> soundMethods; // 사운드 메소드
 
     private void Awake()
     {
@@ -43,6 +45,25 @@ public class SoundManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        soundMethods = new Dictionary<string, Action>
+        {
+            { "PlayDoorOpen", PlayDoorOpen },
+            { "PlayDoorClose", PlayDoorClose },
+            { "PlayDoorLocked", PlayDoorLocked },
+            { "ClickButton", ClickButton },
+            { "ButtonHover", ButtonHover },
+            { "BroomSound", BroomSound },
+            { "GetItemSound", GetItemSound },
+            { "FlashlightSound", FlashlightSound },
+            { "KeySuccessSound", KeySuccessSound },
+            { "KeyFailSound", KeyFailSound },
+            { "LockerFallSound", LockerFallSound },
+            { "EnemyAppearanceSound", EnemyAppearanceSound },
+            { "ChaseSound", ChaseSound },
+            { "JumpScareSound", JumpScareSound },
+            { "WallMoveSound", WallMoveSound }
+        };
     }
 
     public void PlayDoorOpen() => sfxSource.PlayOneShot(doorOpen);
@@ -50,10 +71,16 @@ public class SoundManager : MonoBehaviour
     public void PlayDoorLocked() => sfxSource.PlayOneShot(doorLocked);
     public void ClickButton() => sfxSource.PlayOneShot(beepsound);
     public void ButtonHover() => sfxSource.PlayOneShot(mouseHover);
-
     public void BroomSound() => SfxSoundLoop(broomSound);
-
-
+    public void GetItemSound() => sfxSource.PlayOneShot(getItem);
+    public void FlashlightSound() => sfxSource.PlayOneShot(flashlightSound);
+    public void KeySuccessSound() => sfxSource.PlayOneShot(keySuccessSound);
+    public void KeyFailSound() => sfxSource.PlayOneShot(keyFailSound);
+    public void LockerFallSound() => sfxSource.PlayOneShot(lockerFallSound);
+    public void EnemyAppearanceSound() => sfxSource.PlayOneShot(enemyAppearance);
+    public void ChaseSound() => SfxSoundLoop(chaseSound);
+    public void JumpScareSound() => sfxSource.PlayOneShot(jumpScareSound);
+    public void WallMoveSound() => sfxSource.PlayOneShot(wallMoveSound);
 
     public void SfxSoundLoop(AudioClip clip)
     {

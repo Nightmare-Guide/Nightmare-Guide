@@ -381,8 +381,18 @@ public class UIUtility : MonoBehaviour
         }
     }
 
-    public void PlaySfxSound(string audioName)
+    public void PlaySound(string methodName)
     {
-        
+        if (SoundManager.instance == null)
+            return;
+
+        if (SoundManager.instance.soundMethods.TryGetValue(methodName, out var action))
+        {
+            action();
+        }
+        else
+        {
+            Debug.LogWarning($"No sound method found for '{methodName}'");
+        }
     }
 }
