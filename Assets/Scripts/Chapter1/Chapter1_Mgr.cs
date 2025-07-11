@@ -9,14 +9,17 @@ using UnityStandardAssets.Characters.FirstPerson;
 public class Chapter1_Mgr : MonoBehaviour
 {
     public static Chapter1_Mgr instance;
+
     [Header("lockerRoom관련")]
     public TextMeshPro[] lockerNames;
     public GameObject lockerRoomMainDoor1; // 락커룸 도어
     public GameObject lockerRoomMainDoor2;
     public int nextdoorPassword = 0;
+
     [Header("StrangeRoom")]
     public GameObject[] strangeRoom1;
     public GameObject[] strangeRoom2;
+
     [Header("Door")]
     public Door doorScript1;
     public Door doorScript2;

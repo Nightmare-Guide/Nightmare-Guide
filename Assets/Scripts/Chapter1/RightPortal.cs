@@ -15,6 +15,8 @@ public class RightPortal : MonoBehaviour
 
     [Header("성공포탈")]
     public bool succeesPortal;
+    [Header("마지막포탈확인")]
+    public bool lastportal;
 
     void Awake()
     {
@@ -97,7 +99,7 @@ public class RightPortal : MonoBehaviour
             {
                 rb.velocity = Vector3.zero;
             }
-            if (succeesPortal) // 성공 포탈인 경우
+            if (succeesPortal && !lastportal) // 성공 포탈인 경우
             {
                 // 최대 단계를 넘지 않도록 제한
                 if (portalManager.portalStage < 4)
@@ -105,6 +107,10 @@ public class RightPortal : MonoBehaviour
                     portalManager.portalStage++;
                     Debug.Log("진행: 포탈 단계 증가 -> " + portalManager.portalStage);
                 }
+            }
+            else if (lastportal)
+            {
+                
             }
             else // 실패 포탈인 경우
             {
