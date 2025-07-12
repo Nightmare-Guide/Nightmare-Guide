@@ -357,15 +357,11 @@ public class RayCast_Aim : MonoBehaviour
                                             .Find(info => obj.gameObject.name.Contains(info.name));
 
             targetPhone.hasPhone = true;
-            if (targetPhone.name == "Ethan") { ProgressManager.Instance.progressData.phoneDatas[1].hasPhone = true; }
-            else if (targetPhone.name == "David") 
-            { 
-                ProgressManager.Instance.progressData.phoneDatas[2].hasPhone = true;
-                ProgressManager.Instance.CompletedAction(ActionType.GetDavidCellPhone);
 
-                SchoolUIManager schooluiManager = CommonUIManager.instance.uiManager as SchoolUIManager;
-                schooluiManager.activeObjs[10].gameObject.GetComponent<Door>().enabled = true;
-            }
+            SchoolUIManager schooluiManager = CommonUIManager.instance.uiManager as SchoolUIManager;
+
+            if (targetPhone.name == "Ethan") { schooluiManager.GetEthanCellPhone(); }
+            else if (targetPhone.name == "David") { schooluiManager.GetDavidCellPhone(); }
         }
 
         // CellPhone 위치 변경 함수 실행

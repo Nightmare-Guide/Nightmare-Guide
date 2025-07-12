@@ -74,8 +74,8 @@ public class SchoolUIManager : UIUtility
             commonUIManager = CommonUIManager.instance;
         if (TimeLineManager.instance != null)
             timeLineManager = TimeLineManager.instance;
-        if (progressManager != null)
-            progressManager = progressManager;
+        if (ProgressManager.Instance != null)
+            progressManager = ProgressManager.Instance;
         if (SoundManager.instance != null)
             soundManager = SoundManager.instance;
 
@@ -297,7 +297,7 @@ public class SchoolUIManager : UIUtility
             if (phoneInfos[1].hasPhone) { cellPhoneObjs[1].SetActive(false); } // 데이비드 휴대폰
             CheckObjData(ActionType.FirstMeetEthan, ehtanLocker);
             CheckObjData(ActionType.GetFlashlight, activeObjs[0]); // 손전등
-            fakeWall.SetActive(progressManager.IsActionCompleted(ActionType.FirstMeetEthan) && progressManager.IsActionCompleted(ActionType.GetFlashlight));
+            fakeWall.SetActive(!progressManager.IsActionCompleted(ActionType.FirstMeetEthan) && !progressManager.IsActionCompleted(ActionType.GetFlashlight));
             CheckObjData(ActionType.GetJanitorsOfficeKey, activeObjs[1]); // 관리실 열쇠
             CheckObjData(ActionType.GetLockerKey, activeObjs[2]); // 락커 열쇠
             activeObjs[3].SetActive(progressManager.IsActionCompleted(ActionType.GetLockerKey)); // 휴게실 Red Lright
@@ -307,6 +307,7 @@ public class SchoolUIManager : UIUtility
             activeObjs[12].GetComponent<Door>().enabled = progressManager.IsActionCompleted(ActionType.ClearBackRoom) && !progressManager.IsActionCompleted(ActionType.EnteredEthanHouse); // Ethan House 입장 문
             activeObjs[13].SetActive(progressManager.IsActionCompleted(ActionType.ClearBackRoom));  // Backroom 퇴장 Trigger
             activeObjs[14].SetActive(progressManager.IsActionCompleted(ActionType.ClearBackRoom));  // Ethan House 입장 Trigger
+            activeObjs[15].SetActive(!phoneInfos[1].hasPhone); // Locker Room 입장 벽
 
             bool isFirstMeetEthan = progressManager.IsActionCompleted(ActionType.FirstMeetEthan);
             bool isGetLockerKey = progressManager.IsActionCompleted(ActionType.GetLockerKey);
@@ -315,18 +316,22 @@ public class SchoolUIManager : UIUtility
             // Backroom Door 기능 데이비드 휴대폰 획득 및 백룸 입장 여부로 활성화/비활성화
             activeObjs[10].GetComponent<Door>().enabled = phoneInfos[1].hasPhone && !progressManager.IsActionCompleted(ActionType.EnteredBackRoom);
 
-            // Backroom 을 클리어 했으나 탈출하고 않고 종료 후 재접 시, 문 개방
-            if(progressManager.IsActionCompleted(ActionType.ClearBackRoom) && !progressManager.IsActionCompleted(ActionType.OutOfBackRoom)) 
-            { if (!activeObjs[11].GetComponent<Door>().doorState)
-                    activeObjs[11].GetComponent<Door>().Select_Door(); }
-
             // 데이터에 맞게 맵 활성화/비활성화
-            schoolMaps[0].SetActive(!progressManager.IsActionCompleted(ActionType.EnterPortalRoom)); // 기본(First) 학교
-            schoolMaps[1].SetActive(!progressManager.IsActionCompleted(ActionType.EnterPortalRoom)); // 기본(First) 휴게실
-            schoolMaps[2].SetActive(progressManager.IsActionCompleted(ActionType.LeaveEthan)); // Portal Room
-            schoolMaps[3].SetActive(progressManager.IsActionCompleted(ActionType.LeaveEthan)); // Backroom
+            schoolMaps[0].SetActive(!progressManager.IsActionCompleted(ActionType.EnterPortalRoom) && !progressManager.IsActionCompleted(ActionType.LeaveEthan)); // 기본(First) 학교
+            schoolMaps[1].SetActive(!progressManager.IsActionCompleted(ActionType.EnterPortalRoom) && !progressManager.IsActionCompleted(ActionType.LeaveEthan)); // 기본(First) 휴게실
+            schoolMaps[2].SetActive(progressManager.IsActionCompleted(ActionType.LeaveEthan) && !progressManager.IsActionCompleted(ActionType.OutOfBackRoom)); // Portal Room
+            schoolMaps[3].SetActive(progressManager.IsActionCompleted(ActionType.LeaveEthan) && !progressManager.IsActionCompleted(ActionType.EnteredEthanHouse)); // Backroom
             schoolMaps[4].SetActive(progressManager.IsActionCompleted(ActionType.ClearBackRoom)); // Ethan House
+            // schoolMaps[5].SetActive(phoneInfos[1].hasPhone); // Locker Room 및 마지막 추격 맵
 
+            // Backroom 을 클리어 했으나 탈출하고 않고 종료 후 재접 시, 문 개방
+            if (progressManager.IsActionCompleted(ActionType.ClearBackRoom) && !progressManager.IsActionCompleted(ActionType.OutOfBackRoom))
+            {
+                if (!activeObjs[11].GetComponent<Door>().doorState) { activeObjs[11].GetComponent<Door>().Select_Door(); }
+            }
+
+            // Backroom Enemy
+            backroomEnemy.gameObject.SetActive(progressManager.IsActionCompleted(ActionType.EnteredBackRoom) && !progressManager.IsActionCompleted(ActionType.ClearBackRoom));
 
             // 포스트 프로세싱, Fog 설정
             GetPostFogData();
@@ -350,6 +355,11 @@ public class SchoolUIManager : UIUtility
             if (progressManager.IsActionCompleted(ActionType.GetLockerKey) && !progressManager.IsActionCompleted(ActionType.GetOutOfLocker))
             {
                 RespawnDuringSchoolChase();
+            }
+            // 백룸 안에서 종료 후 다시 접속 시
+            else if(progressManager.IsActionCompleted(ActionType.EnteredBackRoom) && !progressManager.IsActionCompleted(ActionType.ClearBackRoom))
+            {
+                RespawnDuringBackroom();
             }
         }
         else
@@ -387,7 +397,7 @@ public class SchoolUIManager : UIUtility
                     break;
                 case ProgressManager.ActionType.EnteredBackRoom:
                     respawnPointIndex = 1;
-                    backroomEnemy.InitEnemy(enemyRespawnPoints[respawnPointIndex]);
+                    RespawnDuringBackroom();
                     break;
                 case ProgressManager.ActionType.SolvedLockerRoom:
                     respawnPointIndex = 2;
@@ -435,6 +445,14 @@ public class SchoolUIManager : UIUtility
         monsterTimer = 0;
         activeObjs[7].GetComponent<Collider>().enabled = true;
         enterLounge = false;
+    }
+
+    void RespawnDuringBackroom()
+    {
+        Debug.Log("RespawnDuringBackroom");
+        backroomEnemy.InitEnemy(enemyRespawnPoints[1]);
+        InitPlayer(playerRespawnPoints[1]);
+        Maze_Mgr.instance.Btn_Clear();
     }
 
     void InitTimelineEnemy(Transform timelineEnemy, Transform respawnTransform)
@@ -620,6 +638,8 @@ public class SchoolUIManager : UIUtility
 
         backroomEnemy.gameObject.SetActive(false); // 클리어 즉시 몬스터 비활성화
 
+        schoolMaps[4].SetActive(true); // Ethan House
+
         progressManager.CompletedAction(ActionType.ClearBackRoom);
     }
 
@@ -628,13 +648,13 @@ public class SchoolUIManager : UIUtility
         if (!ForceCloseDoor(activeObjs[11].GetComponent<Door>())) // 백룸 탈출 문 -> 문 닫기 및 Trigger 비활성화
             return;
 
+        activeObjs[13].SetActive(false); // Backroom Out Trigger
+
         // 맵 비활성화
         schoolMaps[1].SetActive(false); // 학교 휴게실
         schoolMaps[2].SetActive(false); // 포탈 방
 
         progressManager.CompletedAction(ActionType.OutOfBackRoom);
-
-        activeObjs[13].SetActive(false); // Backroom Out Trigger
     }
 
     public void EnterEthanHouse()
@@ -645,6 +665,24 @@ public class SchoolUIManager : UIUtility
         progressManager.CompletedAction(ActionType.EnteredEthanHouse);
 
         activeObjs[14].SetActive(false); // Ethan House 입장 Trigger
+    }
+
+    public void GetDavidCellPhone()
+    {
+        ProgressManager.Instance.progressData.phoneDatas[2].hasPhone = true;
+        ProgressManager.Instance.CompletedAction(ActionType.GetDavidCellPhone);
+
+        activeObjs[10].gameObject.GetComponent<Door>().enabled = true; // Barkroom 입장 문
+    }
+
+    public void GetEthanCellPhone()
+    {
+        ProgressManager.Instance.progressData.phoneDatas[1].hasPhone = true;
+
+        activeObjs[15].SetActive(false); // 락커룸 가는 fake wall 비활성화
+        schoolMaps[5].SetActive(true); // 락커룸 및 마지막 추격 맵
+
+        soundManager.WallMoveSound();
     }
 
     public void FinishSchoolScene()
