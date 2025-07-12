@@ -9,7 +9,8 @@ public class EnemyVision : MonoBehaviour
     [Header("탐지 설정")]
     public float detectionRadius = 10f; // 시야 감지 거리
     [Range(0, 360)] public float detectionAngle = 120f; // 시야각
-    public float closeRangeRadius = 3f; // 🔹 추가: 전방위 근접 감지 거리
+    public float closeRangeRadius = 3f; // 근거리 전방위 감지
+    public float longRangeThreshold = 25f; // 🔸 추가: 너무 멀리 도망간 경우 감지
 
 
     [Header("레이어 설정")]
@@ -55,17 +56,25 @@ public class EnemyVision : MonoBehaviour
             StartCoroutine(HandleDetectionCooldown());
         }
     }
-
     private bool CheckPlayerInView()
     {
-        // 기존 부채꼴 감지
-        bool inView = CheckObjectInView(player);
+        if (player == null) return false;
 
-        // 🔹 새로 추가된 근거리 원형 감지
+        float distance = Vector3.Distance(transform.position, player.transform.position);
+
+        // 🔸 일정 거리 이상 벗어나면 강제로 감지
+        if (distance > longRangeThreshold)
+        {
+            return true;
+        }
+
+        // 기존 감지 로직
+        bool inView = CheckObjectInView(player);
         bool inCloseRange = CheckObjectInCloseRange(player);
 
         return inView || inCloseRange;
     }
+
 
     private bool CheckObjectInCloseRange(GameObject obj)
     {
@@ -154,6 +163,11 @@ public class EnemyVision : MonoBehaviour
         // 🔹 추가: 전방위 근거리 감지 반경
         Gizmos.color = new Color(1f, 0.5f, 0f, 0.5f); // 주황색
         Gizmos.DrawWireSphere(transform.position, closeRangeRadius);
+
+
+        // 🔸 장거리 감지 한계 표시 (회색 실선)
+        Gizmos.color = Color.gray;
+        Gizmos.DrawWireSphere(transform.position, longRangeThreshold);
 
         if (isDetected)
         {
