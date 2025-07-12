@@ -11,11 +11,15 @@ public class PlayerEventAction : MonoBehaviour
     [SerializeField] float moveSpeed = 2f;          // 이동 속도
     [SerializeField] float stopDistance = 0.1f;     // 도착 판정 거리
 
+    public float rtPl = 38f;
+    public float moPl = 42f;
+
 
     [SerializeField] GameObject obj;
     private void Start()
     {
-        Invoke("RotatePlayer",40f);
+        Invoke("RotatePlayer", rtPl);// 카메라 회전 
+        Invoke("MovePlayer", moPl); // 플레이어 움직임
         PlayerController.instance.Close_PlayerController();
         Camera_Rt.instance.Close_Camera(); // 카메라 회전 잠금
         Cursor.lockState = CursorLockMode.Locked;
@@ -23,14 +27,15 @@ public class PlayerEventAction : MonoBehaviour
 
     public void RotatePlayer()
     {
-        PlayerController.instance.Open_PlayerController();
         Camera_Rt.instance.Open_Camera(); // 카메라 회전 잠금
-
-
         // 코루틴으로 부드럽게 회전
        // StartCoroutine(SmoothRotateY(targetYRotation, rotationDuration));
     }
+    public void MovePlayer()
+    {
 
+        PlayerController.instance.Open_PlayerController();
+    }
     private IEnumerator SmoothRotateY(float targetY, float duration)
     {
         Transform playerTransform = PlayerController.instance.transform;
@@ -49,6 +54,23 @@ public class PlayerEventAction : MonoBehaviour
         playerTransform.rotation = endRot;
 
       
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Ending"))
+        {
+            if(NHSupervisor.instance != null)
+            {
+                NHSupervisor.instance.TalkToPlayer();
+            }
+            else
+            {
+                Debug.Log("SuperVisor instance가 존재하지 않음");
+            }
+        }
+
+
     }
 
     /*public void PlayerMove()
