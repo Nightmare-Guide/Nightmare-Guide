@@ -406,7 +406,17 @@ namespace UnityStandardAssets.Characters.FirstPerson
         {
             if (other.CompareTag("Trigger"))
             {
-                if (other.gameObject.name == "EnemyFirstMeet Wall")
+                if (other.gameObject.name.Contains("Ethan Locker Trigger") && !ProgressManager.Instance.IsActionCompleted(ProgressManager.ActionType.FirstMeetEthan))
+                {
+                    SchoolUIManager schoolUIManager = CommonUIManager.instance.uiManager as SchoolUIManager;
+                    AudioSource ehtanLockerAudio = schoolUIManager.activeObjs[7].GetComponent<AudioSource>();
+
+                    if (ehtanLockerAudio.enabled)
+                    {
+                        ehtanLockerAudio.Play();
+                    }
+                }
+                else if (other.gameObject.name == "EnemyFirstMeet Wall")
                 {
                     SchoolUIManager schoolUIManager = CommonUIManager.instance.uiManager as SchoolUIManager;
 
@@ -431,15 +441,17 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
                     schoolUIManager.EnterBackroom();
                 }
-                else if(other.gameObject.name.Contains("Ethan Locker Trigger") && !ProgressManager.Instance.IsActionCompleted(ProgressManager.ActionType.FirstMeetEthan))
+                else if (other.gameObject.name.Contains("Backroom Clear Trigger Wall"))
                 {
                     SchoolUIManager schoolUIManager = CommonUIManager.instance.uiManager as SchoolUIManager;
-                    AudioSource ehtanLockerAudio = schoolUIManager.activeObjs[7].GetComponent<AudioSource>();
 
-                    if (ehtanLockerAudio.enabled)
-                    {
-                        ehtanLockerAudio.Play();
-                    }
+                    schoolUIManager.OutOfBackroom();
+                }
+                else if (other.gameObject.name.Contains("Ethah House Trigger Wall"))
+                {
+                    SchoolUIManager schoolUIManager = CommonUIManager.instance.uiManager as SchoolUIManager;
+
+                    schoolUIManager.EnterEthanHouse();
                 }
             }
         }

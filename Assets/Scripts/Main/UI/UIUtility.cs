@@ -28,6 +28,7 @@ public class UIUtility : MonoBehaviour
     [Header("# Singleton")]
     public CommonUIManager commonUIManager;
     public TimeLineManager timeLineManager;
+    public ProgressManager progressManager;
     public SoundManager soundManager;
 
     // Windows의 마우스 입력을 시뮬레이션하는 API
@@ -416,6 +417,18 @@ public class UIUtility : MonoBehaviour
 
             collider.enabled = !progress.IsActionCompleted(action);
         }
+    }
+
+    public bool ForceCloseDoor(Door doorLogic)
+    {
+        if (doorLogic.isRotation)
+            return false;
+
+        if (doorLogic.doorState) { doorLogic.Select_Door(); }
+
+        doorLogic.enabled = false;
+
+        return true;
     }
 
     public void PlaySound(string methodName)

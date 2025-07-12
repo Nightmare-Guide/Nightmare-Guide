@@ -143,6 +143,9 @@ public class Maze_Mgr : MonoBehaviour
             Door door = door_Obj.GetComponent<Door>();
             door.Select_Door();
             maze_Clear = true;
+
+            SchoolUIManager schoolUIManager = CommonUIManager.instance.uiManager as SchoolUIManager;
+            schoolUIManager.ClearBackroom();
         }
         else
         {

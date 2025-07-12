@@ -41,6 +41,8 @@ public class ProgressManager : MonoBehaviour
         EnterPortalRoom,
         GetDavidCellPhone,
         EnteredBackRoom,
+        ClearBackRoom,
+        OutOfBackRoom,
         EnteredEthanHouse,
         GetEthanCellPhone,
         EnteredLockerRoom,
