@@ -583,30 +583,36 @@ public class SchoolUIManager : UIUtility
 
     public void EnterPortalRoom()
     {
-        activeObjs[8].SetActive(false); // Portal Room 입장 Trigger
-        activeObjs[9].SetActive(true);  // Backroom 입장 Trigger
-
         Door doorLogic = activeObjs[5].GetComponent<Door>(); // Lounge Door
+
+        if (doorLogic.isRotation)
+            return;
 
         if (doorLogic.doorState) { doorLogic.Select_Door(); }
 
         doorLogic.enabled = false; // 휴게실 문 기능 비활성화
 
         ProgressManager.Instance.CompletedAction(ProgressManager.ActionType.EnterPortalRoom);
+
+        activeObjs[8].SetActive(false); // Portal Room 입장 Trigger
+        activeObjs[9].SetActive(true);  // Backroom 입장 Trigger
     }
 
     public void EnterBackroom()
     {
-        activeObjs[9].SetActive(false); // Backroom 입장 Trigger
-        backroomEnemy.gameObject.SetActive(true); // Backroom Enemy 활성화
-
         Door doorLogic = activeObjs[10].GetComponent<Door>(); // Backroom Door
+
+        if (doorLogic.isRotation)
+            return;
 
         if (doorLogic.doorState) {  doorLogic.Select_Door(); }
 
         doorLogic.enabled = false;
 
         ProgressManager.Instance.CompletedAction(ActionType.EnteredBackRoom);
+
+        activeObjs[9].SetActive(false); // Backroom 입장 Trigger
+        backroomEnemy.gameObject.SetActive(true); // Backroom Enemy 활성화
     }
 
     public void FinishSchoolScene()
