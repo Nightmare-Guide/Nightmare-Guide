@@ -15,7 +15,7 @@ public class PlayerEventAction : MonoBehaviour
     [SerializeField] GameObject obj;
     private void Start()
     {
-        Invoke("RotatePlayer",35f);
+        Invoke("RotatePlayer",40f);
         PlayerController.instance.Close_PlayerController();
         Camera_Rt.instance.Close_Camera(); // 카메라 회전 잠금
         Cursor.lockState = CursorLockMode.Locked;

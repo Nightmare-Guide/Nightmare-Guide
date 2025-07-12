@@ -11,6 +11,7 @@ public class TitleUIManager : UIUtility
     [SerializeField] GameObject loadGameAlertUI;
     public AudioClip titlebgm;
 
+
     private void Awake()
     {
         //마우스 커서 활성화
@@ -33,6 +34,8 @@ public class TitleUIManager : UIUtility
 
         commonUIManager.uiManager = this;
         SoundManager.instance.PlayBGM(titlebgm);
+        SoundManager.instance.sfxSource.Stop();
+        SoundManager.instance.sfxSource.clip = null;
     }
 
     private void Update()

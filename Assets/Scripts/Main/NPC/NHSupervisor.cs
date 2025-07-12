@@ -1,127 +1,105 @@
 using UnityEngine;
-using System.Collections;
-using UnityStandardAssets.Characters.FirstPerson;
+using System.Collections; // 코루틴 사용을 위한 네임스페이스
+using UnityStandardAssets.Characters.FirstPerson; // PlayerController 접근을 위한 네임스페이스
 
 public class NHSupervisor : MonoBehaviour
 {
+
     public static NHSupervisor instance;
 
-    [SerializeField] Transform moveTr;
-    [SerializeField] Transform endPoint;
-    [SerializeField] Transform endPoint2;
-    [SerializeField] float speed = 5f;
-    [SerializeField] float stopDistance = 0.1f;
+    [Header("Door References")]
+    [SerializeField] private GameObject roomDoor; // 첫 번째 문 오브젝트 (NHDoor()로 제어)
+    // roomDoor2는 더 이상 사용되지 않으므로 제거됩니다.
 
-    [SerializeField] GameObject roomDoor;
-    [SerializeField] GameObject roomDoor2;
+    private Animator anim; // NHSupervisor의 애니메이터 컴포넌트
+    private Transform playerTr; // 플레이어의 Transform 컴포넌트 (플레이어 정지 기능에만 사용)
 
-    private Animator anim;
-    private bool isMoving = false;
-    private int movementStage = 0;
-    private Transform currentTarget;
-
-    private Transform playerTr;
-    private bool isDraggingPlayer = false;
-    [SerializeField] float dragDistance = 1.8f;
-    [SerializeField] float playerFollowSpeed = 3f;
-
+    
     void Start()
     {
-        if (instance == null) instance = this;
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject); // 중복 인스턴스 파괴
+        }
 
         anim = GetComponent<Animator>();
-        if (anim == null) Debug.LogError("Animator 없음");
+        if (anim == null)
+        {
+            Debug.LogError("Animator 컴포넌트가 NHSupervisor 오브젝트에 없습니다.");
+        }
 
-        playerTr = PlayerController.instance.transform;
+        // PlayerController 인스턴스가 존재하고 Transform을 가져올 수 있는지 확인합니다.
+        if (PlayerController.instance != null)
+        {
+            playerTr = PlayerController.instance.transform;
+        }
+        else
+        {
+            Debug.LogError("PlayerController 인스턴스를 찾을 수 없습니다. 플레이어 정지 기능이 작동하지 않을 수 있습니다.");
+        }
     }
+
 
     void Update()
     {
-        if (isMoving && currentTarget != null)
-        {
-            float distanceToTarget = Vector3.Distance(transform.position, currentTarget.position);
-
-            if (distanceToTarget < stopDistance)
-            {
-                transform.position = currentTarget.position;
-                HandleMovementStage();
-            }
-            else
-            {
-                Vector3 direction = (currentTarget.position - transform.position).normalized;
-                transform.position += direction * speed * Time.deltaTime;
-            }
-        }
-
-        if (isDraggingPlayer)
-        {
-            // Supervisor와 일정 거리 유지하며 플레이어를 끌고 이동
-            Vector3 targetPos = transform.position - transform.forward * dragDistance;
-            playerTr.position = Vector3.MoveTowards(playerTr.position, targetPos, playerFollowSpeed * Time.deltaTime);
-        }
+      
     }
+
 
     private void OnTriggerEnter(Collider other)
     {
-        if (movementStage == 1 && other.CompareTag("Player"))
+        // 플레이어와 접촉했을 때
+        if (other.CompareTag("Player"))
         {
-            Debug.Log("플레이어가 접근함 → 문 열고 다음 단계로 이동");
-            roomDoor.GetComponent<Door>().Select_Door();
+            Debug.Log("NHSupervisor: 플레이어가 접촉함. 플레이어 정지 및 토크 애니메이션 재생.");
 
-            PlayerController.instance.Close_PlayerController(); // 조작 제한
-            isDraggingPlayer = true;
+            // 플레이어 정지
+            PlayerController.instance?.Close_PlayerController(); // PlayerController가 있는지 확인 후 호출
 
-            MoveTo(endPoint);
+            // NHSupervisor 토크 애니메이션 재생
+            anim?.SetBool("isWalk", false); // 혹시 걷기 애니메이션이 재생 중이었다면 멈춥니다.
+            anim?.SetTrigger("isTalk"); // 'isTalk' 트리거를 사용하여 토크 애니메이션으로 전환합니다.
+            if(CSVRoad_Story.instance != null)
+            {
+                CSVRoad_Story.instance.OnSelectChapter("2_1_0"); // 스토리 호출 
+            }
+            Invoke("EndStory", 22f);
+            // 이 트리거 이벤트가 한 번만 발생하도록 NHSupervisor 콜라이더의 isTrigger를 비활성화합니다.
+            // (필요에 따라 이 로직을 유지하거나 제거할 수 있습니다.)
+            Collider thisCollider = GetComponent<Collider>();
+            if (thisCollider != null && thisCollider.isTrigger)
+            {
+                thisCollider.isTrigger = false;
+                Debug.Log("NHSupervisor 콜라이더의 isTrigger를 false로 설정하여 재진입 방지");
+            }
+        }
+    }
+    public void EndStory()
+    {
+        if (PlayerController.instance != null)
+        {
+            PlayerController.instance.Open_PlayerController();
         }
     }
 
     public void StartMovement()
     {
-        anim?.SetBool("isWalk", true);
-        movementStage = 0;
-        MoveTo(moveTr);
+        Debug.Log("NHSupervisor: StartMovement 호출됨. 아이들 상태로 변경 후 2초 뒤 문 열기.");
+        anim?.SetBool("isWalk", false); // 혹시 걷기 애니메이션이 재생 중이었다면 멈춥니다.
+        anim?.SetTrigger("isIdle"); // 아이들 애니메이션으로 전환합니다.
+
+        Invoke("NHDoor", 2f);
     }
 
-    private void MoveTo(Transform target)
+
+
+    public void NHDoor()
     {
-        currentTarget = target;
-        isMoving = true;
-        anim?.SetBool("isWalk", true);
-        anim?.SetTrigger("isIdle");
-    }
-
-    private void StopAndIdle()
-    {
-        isMoving = false;
-        anim?.SetBool("isWalk", false);
-        anim?.SetTrigger("isIdle");
-    }
-
-    private void HandleMovementStage()
-    {
-        isMoving = false;
-
-        switch (movementStage)
-        {
-            case 0:
-                Debug.Log("1단계 도착. 트리거 대기");
-                movementStage = 1;
-                anim.SetTrigger("isIdle");
-                break;
-
-            case 1:
-                Debug.Log("2단계 도착. 문 열기");
-                roomDoor2.GetComponent<Door>().Select_Door();
-                MoveTo(endPoint2);
-                movementStage = 2;
-                break;
-
-            case 2:
-                Debug.Log("최종 도착");
-                StopAndIdle();
-                isDraggingPlayer = false;
-                PlayerController.instance.Open_PlayerController(); // 조작 복구
-                break;
-        }
+        Debug.Log("NHSupervisor: NHDoor() 호출됨 - 첫 번째 문을 엽니다.");
+        roomDoor.GetComponent<Door>()?.Select_Door(); // Door 컴포넌트가 있는지 확인 후 호출
     }
 }
