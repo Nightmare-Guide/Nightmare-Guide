@@ -304,7 +304,9 @@ public class CommonUIManager : MonoBehaviour
     // ¾À ÀÌµ¿ ÇÔ¼ö
     public void MoveScene(string sceneName)
     {
-        
+        SoundManager.instance.bgmSource.Stop();
+        SoundManager.instance.sfxSource.Stop();
+
         if (ProgressManager.Instance != null && !sceneName.Equals("Title Scene")) {
             PlayerSpawnPoint(sceneName);
             ProgressManager.Instance.progressData.scene = sceneName;
