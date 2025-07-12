@@ -4,7 +4,7 @@ using UnityStandardAssets.Characters.FirstPerson; // PlayerController Á¢±ÙÀ» À§Ç
 
 public class NHSupervisor : MonoBehaviour
 {
-    // ½Ì±ÛÅæ ÀÎ½ºÅÏ½º: ´Ù¸¥ ½ºÅ©¸³Æ®¿¡¼­ ÀÌ ½ºÅ©¸³Æ®¿¡ ½±°Ô Á¢±ÙÇÒ ¼ö ÀÖµµ·Ï ÇÕ´Ï´Ù.
+
     public static NHSupervisor instance;
 
     [Header("Door References")]
@@ -14,10 +14,7 @@ public class NHSupervisor : MonoBehaviour
     private Animator anim; // NHSupervisorÀÇ ¾Ö´Ï¸ŞÀÌÅÍ ÄÄÆ÷³ÍÆ®
     private Transform playerTr; // ÇÃ·¹ÀÌ¾îÀÇ Transform ÄÄÆ÷³ÍÆ® (ÇÃ·¹ÀÌ¾î Á¤Áö ±â´É¿¡¸¸ »ç¿ë)
 
-    /// <summary>
-    /// ½ºÅ©¸³Æ® ÃÊ±âÈ­ ½Ã È£ÃâµË´Ï´Ù.
-    /// ½Ì±ÛÅæ ÀÎ½ºÅÏ½º ¼³Á¤ ¹× ÄÄÆ÷³ÍÆ® ÂüÁ¶ È¹µæÀ» ¼öÇàÇÕ´Ï´Ù.
-    /// </summary>
+    
     void Start()
     {
         if (instance == null)
@@ -46,18 +43,13 @@ public class NHSupervisor : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// ÀÌ ½ºÅ©¸³Æ® ¹öÀü¿¡¼­´Â Update() ¸Ş¼­µå¿¡¼­ Áö¼ÓÀûÀ¸·Î Ã³¸®ÇÒ ·ÎÁ÷ÀÌ ¾ø½À´Ï´Ù.
-    /// </summary>
+
     void Update()
     {
-        // ÇöÀç ¹öÀü¿¡¼­´Â Update¿¡¼­ Ã³¸®ÇÒ ·ÎÁ÷ÀÌ ¾ø½À´Ï´Ù.
+      
     }
 
-    /// <summary>
-    /// ´Ù¸¥ Äİ¶óÀÌ´õ°¡ NHSupervisorÀÇ Æ®¸®°Å Äİ¶óÀÌ´õ¿¡ ÁøÀÔÇßÀ» ¶§ È£ÃâµË´Ï´Ù.
-    /// </summary>
-    /// <param name="other">Æ®¸®°Å¿¡ ÁøÀÔÇÑ ´Ù¸¥ Äİ¶óÀÌ´õ</param>
+
     private void OnTriggerEnter(Collider other)
     {
         // ÇÃ·¹ÀÌ¾î¿Í Á¢ÃËÇßÀ» ¶§
@@ -93,33 +85,18 @@ public class NHSupervisor : MonoBehaviour
             PlayerController.instance.Open_PlayerController();
         }
     }
-    /// <summary>
-    /// NHSupervisorÀÇ ½ÃÄö½º¸¦ ½ÃÀÛÇÕ´Ï´Ù.
-    /// È£ÃâµÇ¸é ¾ÆÀÌµé ¾Ö´Ï¸ŞÀÌ¼ÇÀ¸·Î º¯°æµÇ°í 2ÃÊ ÈÄ NHDoor¸¦ ½ÇÇàÇÕ´Ï´Ù.
-    /// </summary>
+
     public void StartMovement()
     {
         Debug.Log("NHSupervisor: StartMovement È£ÃâµÊ. ¾ÆÀÌµé »óÅÂ·Î º¯°æ ÈÄ 2ÃÊ µÚ ¹® ¿­±â.");
         anim?.SetBool("isWalk", false); // È¤½Ã °È±â ¾Ö´Ï¸ŞÀÌ¼ÇÀÌ Àç»ı ÁßÀÌ¾ú´Ù¸é ¸ØÃä´Ï´Ù.
         anim?.SetTrigger("isIdle"); // ¾ÆÀÌµé ¾Ö´Ï¸ŞÀÌ¼ÇÀ¸·Î ÀüÈ¯ÇÕ´Ï´Ù.
 
-        StartCoroutine(OpenDoorAfterDelay(2f)); // 2ÃÊ ÈÄ ¹®À» ¿©´Â ÄÚ·çÆ¾ ½ÃÀÛ
+        Invoke("NHDoor", 2f);
     }
 
-    /// <summary>
-    /// ÁöÁ¤µÈ µô·¹ÀÌ ÈÄ NHDoor() ¸Ş¼­µå¸¦ È£ÃâÇÕ´Ï´Ù.
-    /// </summary>
-    /// <param name="delay">µô·¹ÀÌ ½Ã°£ (ÃÊ)</param>
-    private IEnumerator OpenDoorAfterDelay(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        NHDoor(); // µô·¹ÀÌ ÈÄ ¹® ¿­±â
-    }
 
-    /// <summary>
-    /// Ã¹ ¹øÂ° ¹®(roomDoor)À» ¿©´Â °ø¿ë ¸Ş¼­µåÀÔ´Ï´Ù.
-    /// Å¸ÀÓ¶óÀÎ ½Ã±×³Î ¶Ç´Â ½ºÅ©¸³Æ® ³»ºÎ¿¡¼­ È£ÃâµÉ ¼ö ÀÖ½À´Ï´Ù.
-    /// </summary>
+
     public void NHDoor()
     {
         Debug.Log("NHSupervisor: NHDoor() È£ÃâµÊ - Ã¹ ¹øÂ° ¹®À» ¿±´Ï´Ù.");
