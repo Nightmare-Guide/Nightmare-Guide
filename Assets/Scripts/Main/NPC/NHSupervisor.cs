@@ -14,7 +14,7 @@ public class NHSupervisor : MonoBehaviour
     private Animator anim; // NHSupervisor의 애니메이터 컴포넌트
     private Transform playerTr; // 플레이어의 Transform 컴포넌트 (플레이어 정지 기능에만 사용)
 
-    
+    bool talkPl = false;
     void Start()
     {
         if (instance == null)
@@ -50,7 +50,7 @@ public class NHSupervisor : MonoBehaviour
     }
 
 
-    private void OnTriggerEnter(Collider other)
+    /*private void OnTriggerEnter(Collider other)
     {
         // 플레이어와 접촉했을 때
         if (other.CompareTag("Player"))
@@ -77,7 +77,44 @@ public class NHSupervisor : MonoBehaviour
                 Debug.Log("NHSupervisor 콜라이더의 isTrigger를 false로 설정하여 재진입 방지");
             }
         }
+    }*/
+
+    public void TalkToPlayer()
+    {
+
+        if (talkPl)
+        {
+            return;
+        }
+
+        Debug.Log("NHSupervisor: 플레이어가 접촉함. 플레이어 정지 및 토크 애니메이션 재생.");
+        if (roomDoor.GetComponent<Door>().doorState == true)
+        {
+            NHDoor();
+        }
+      
+        // 플레이어 정지
+        PlayerController.instance?.Close_PlayerController(); // PlayerController가 있는지 확인 후 호출
+
+        // NHSupervisor 토크 애니메이션 재생
+        anim?.SetBool("isWalk", false); // 혹시 걷기 애니메이션이 재생 중이었다면 멈춥니다.
+        anim?.SetTrigger("isTalk"); // 'isTalk' 트리거를 사용하여 토크 애니메이션으로 전환합니다.
+        if (CSVRoad_Story.instance != null)
+        {
+            CSVRoad_Story.instance.OnSelectChapter("2_1_0"); // 스토리 호출 
+        }
+        Invoke("EndStory", 22f);
+        // 이 트리거 이벤트가 한 번만 발생하도록 NHSupervisor 콜라이더의 isTrigger를 비활성화합니다.
+        // (필요에 따라 이 로직을 유지하거나 제거할 수 있습니다.)
+        Collider thisCollider = GetComponent<Collider>();
+        if (thisCollider != null && thisCollider.isTrigger)
+        {
+            thisCollider.isTrigger = false;
+            Debug.Log("NHSupervisor 콜라이더의 isTrigger를 false로 설정하여 재진입 방지");
+        }
+        talkPl = true;
     }
+
     public void EndStory()
     {
         if (PlayerController.instance != null)
