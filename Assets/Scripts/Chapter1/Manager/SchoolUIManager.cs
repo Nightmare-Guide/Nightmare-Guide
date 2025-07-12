@@ -17,6 +17,7 @@ using System.IO;
 using static CommonUIManager;
 using UnityEngine.Playables;
 using static ProgressManager;
+using UnityEditor.Localization.Plugins.XLIFF.V20;
 
 public class SchoolUIManager : UIUtility
 {
@@ -73,9 +74,10 @@ public class SchoolUIManager : UIUtility
             commonUIManager = CommonUIManager.instance;
         if (TimeLineManager.instance != null)
             timeLineManager = TimeLineManager.instance;
+        if (SoundManager.instance != null)
+            soundManager = SoundManager.instance;
 
-        // commonUIManager.ApplyFog(commonUIManager.fogSettings[1]); // 테스트 -> 데이터 저장 값 불러오기로 변경
-        // Camera_Rt.instance.ApplyPostProcessing("Warm"); // 테스트 -> 데이터 저장 값 불러오기로 변경
+        soundManager.PlayBGM(soundManager.windSound);
 
         if (commonUIManager != null)
         {
@@ -232,6 +234,9 @@ public class SchoolUIManager : UIUtility
         {
             GetOfficeKey();
         }
+
+        // 사운드
+        soundManager.GetItemSound();
     }
 
     // 아이템 사용 함수
@@ -355,6 +360,7 @@ public class SchoolUIManager : UIUtility
 
             PlayerMainCamera playerCamera = PlayerMainCamera.camera_single;
 
+            soundManager.sfxSource.Stop();
             playerCamera.jumpscareObj.SetActive(false);
             playerCamera.InitCameraRotation();
             playerCamera.jumpscareObj.transform.localPosition = new Vector3(0, -1.77f, 1);
@@ -430,6 +436,8 @@ public class SchoolUIManager : UIUtility
     public void FirstMeetEthan(bool getFlashlight)
     {
         CSVRoad_Story.instance.OnSelectChapter("1_0_1"); // 테스트 때문에 1_0_0 에서 변경
+        activeObjs[7].GetComponent<AudioSource>().Stop();
+        activeObjs[7].GetComponent<AudioSource>().enabled = false;
         fakeWall.SetActive(false);
         flashlightWall.SetActive(!getFlashlight);
         PlayerController.instance.Close_PlayerController();
@@ -457,7 +465,8 @@ public class SchoolUIManager : UIUtility
         activeObjs[3].SetActive(true);
         activeObjs[4].SetActive(true);
 
-        // 쿵! 하는 사운드 필요
+        // 사운드
+        soundManager.LockerFallSound();
 
         ProgressManager.Instance.CompletedAction(ActionType.GetLockerKey);
     }
@@ -486,6 +495,16 @@ public class SchoolUIManager : UIUtility
     {
         monsterTimer = 0f;
 
+        yield return new WaitForSeconds(2f);
+
+        schoolEnemy.transform.position = timelineEnemyPoints[1].position;
+        schoolEnemy.transform.rotation = timelineEnemyPoints[1].rotation;
+
+        schoolEnemy.GetComponent<AudioSource>().Stop();
+        schoolEnemy.GetComponent<AudioSource>().clip = null;
+        schoolEnemy.GetComponent<AudioSource>().clip = soundManager.doorBangSound;
+        schoolEnemy.GetComponent<AudioSource>().Play();
+
         // waitTime 시간 동안 기다리기
         while (monsterTimer < monsterWaitTime)
         {
@@ -509,7 +528,12 @@ public class SchoolUIManager : UIUtility
         schoolEnemy.transform.rotation = timelineEnemyPoints[1].rotation;
 
         door.Select_Door(); // 문 열기
-        door.gameObject.GetComponent<Door>().enabled = false; 
+        door.gameObject.GetComponent<Door>().enabled = false;
+
+        schoolEnemy.GetComponent<AudioSource>().Stop();
+        schoolEnemy.GetComponent<AudioSource>().clip = null;
+        schoolEnemy.GetComponent<AudioSource>().clip = soundManager.enemyRunSound;
+        schoolEnemy.GetComponent<AudioSource>().Play();
     }
 
     public void UseLockerKey()
@@ -522,6 +546,7 @@ public class SchoolUIManager : UIUtility
         PlayerController.instance.Close_PlayerController();
         Camera_Rt.instance.Close_Camera();
         ProgressManager.Instance.CompletedAction(ActionType.UseLockerKey);
+        soundManager.KeyFailSound();
     }
 
     public void StartLoungeTimeLine()

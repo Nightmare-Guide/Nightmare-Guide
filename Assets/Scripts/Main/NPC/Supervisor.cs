@@ -8,13 +8,13 @@ public class Supervisor : NPC
 {
     public Transform hospitalroom;
     public Transform npcwalkPosition;
-    public NavMeshAgent agent;
+
     public float talkDistance = 2.0f; //대화거리
-    private bool isWalkingToPlayer = false;
+
     public BoxCollider nightmareEntrance;
     public bool hasStartedPlayerFollow = false;
     //private bool isWalkingToHospitalRoom = false;
-    public GameObject [] position;
+    public GameObject[] position;
 
     private LookTarget look;
 
@@ -30,7 +30,7 @@ public class Supervisor : NPC
     private void Awake()
     {
         look = GetComponent<LookTarget>();
-        if ( look != null)
+        if (look != null)
         {
             look.target = PlayerController.instance.transform;
         }
@@ -54,14 +54,13 @@ public class Supervisor : NPC
         {
             float followDistance = Vector3.Distance(transform.position, PlayerController.instance.transform.position);
 
-            if (followDistance > 15f)
+            if (followDistance > 8f)
             {
                 hasStartedPlayerFollow = true;
                 Debug.Log("주인공 이동 시작");
 
                 PlayerController.instance.GoNavposition(); // 목적지 전달
             }
-
             yield return new WaitForSeconds(0.2f);
         }
     }
@@ -72,28 +71,6 @@ public class Supervisor : NPC
         agent.SetDestination(npcwalkPosition.position);
     }
 
-    //public void StartWalkToPlayer(Transform player)
-    //{
-    //    playerTransform = player;
-    //    isWalkingToPlayer = true;
-
-    //    if (isWalkingToPlayer)
-    //    {
-    //        PlayerController.instance.Close_PlayerController();
-    //        agent.SetDestination(playerTransform.position);
-    //        myAnim.SetBool("isWalk", true);
-
-    //        float distance = Vector3.Distance(transform.position, playerTransform.position);
-    //        if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
-    //        {
-    //            agent.ResetPath();
-    //            myAnim.SetBool("isWalk", false);
-    //            myAnim.SetTrigger("isTalk");
-    //            isWalkingToPlayer = false;
-    //        }
-    //    }
-
-    //}
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))

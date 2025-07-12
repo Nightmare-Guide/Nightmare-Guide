@@ -53,7 +53,7 @@ public class Door : MonoBehaviour
             else { endRotation = Quaternion.Euler(0, startRotation.eulerAngles.y + 90, 0); }
             doorState = false;
             EnableObstacle(); // ¹® ´ÝÈ÷¸é NavMeshObstacle ÄÑÁü
-            // SoundManager.instance.PlayDoorClose();
+            if(SoundManager.instance != null) { SoundManager.instance.PlayDoorClose(); }
         }
         else // ¹® ¿­±â
         {
@@ -61,7 +61,7 @@ public class Door : MonoBehaviour
             else { endRotation = Quaternion.Euler(0, startRotation.eulerAngles.y - 90, 0); }
             doorState = true;
             DisableObstacle(); // ¹® ¿­¸®¸é NavMeshObstacle ²¨Áü
-            // SoundManager.instance.PlayDoorOpen();
+            if (SoundManager.instance != null) { SoundManager.instance.PlayDoorClose(); }
         }
 
         while (startTime < endTime)

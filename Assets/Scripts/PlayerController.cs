@@ -431,6 +431,16 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
                     schoolUIManager.EnterBackroom();
                 }
+                else if(other.gameObject.name.Contains("Ethan Locker Trigger") && !ProgressManager.Instance.IsActionCompleted(ProgressManager.ActionType.FirstMeetEthan))
+                {
+                    SchoolUIManager schoolUIManager = CommonUIManager.instance.uiManager as SchoolUIManager;
+                    AudioSource ehtanLockerAudio = schoolUIManager.activeObjs[7].GetComponent<AudioSource>();
+
+                    if (ehtanLockerAudio.enabled)
+                    {
+                        ehtanLockerAudio.Play();
+                    }
+                }
             }
         }
 
@@ -443,6 +453,12 @@ namespace UnityStandardAssets.Characters.FirstPerson
                     SchoolUIManager schoolUIManager = CommonUIManager.instance.uiManager as SchoolUIManager;
 
                     schoolUIManager.enterLounge = false;
+                }
+                else if (other.gameObject.name.Contains("Ethan Locker Trigger") && !ProgressManager.Instance.IsActionCompleted(ProgressManager.ActionType.FirstMeetEthan))
+                {
+                    SchoolUIManager schoolUIManager = CommonUIManager.instance.uiManager as SchoolUIManager;
+
+                    schoolUIManager.activeObjs[7].GetComponent<AudioSource>().Stop();
                 }
             }
         }

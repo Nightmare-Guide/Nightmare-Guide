@@ -20,6 +20,7 @@ public class UIUtility : MonoBehaviour
 
     [Header("# Object")]
     [SerializeField] Camera playerCamera;
+    [SerializeField] List<AudioSource> audioSources;
 
     [Header("# TimeLine")]
     public PlayableDirector playableDirector;
@@ -27,6 +28,7 @@ public class UIUtility : MonoBehaviour
     [Header("# Singleton")]
     public CommonUIManager commonUIManager;
     public TimeLineManager timeLineManager;
+    public SoundManager soundManager;
 
     // Windows의 마우스 입력을 시뮬레이션하는 API
     [DllImport("user32.dll")]
@@ -65,6 +67,27 @@ public class UIUtility : MonoBehaviour
     public void CloseUI(GameObject ui)
     {
         ui.SetActive(false);
+
+        if (SoundManager.instance.bgmSource.clip != null && !SoundManager.instance.bgmSource.isPlaying)
+        {
+            SoundManager.instance.bgmSource.Play();
+        }
+
+        if (SoundManager.instance.sfxSource.clip != null && !SoundManager.instance.sfxSource.isPlaying)
+        {
+            SoundManager.instance.sfxSource.Play();
+        }
+
+        if(audioSources.Count > 0)
+        {
+            foreach(AudioSource audioSource in audioSources)
+            {
+                if (audioSource.enabled && audioSource.gameObject.activeSelf && audioSource.clip != null && !audioSource.isPlaying)
+                {
+                    audioSource.Play();
+                }
+            }
+        }
     }
 
     // 게임 일시 정지 함수
@@ -85,6 +108,21 @@ public class UIUtility : MonoBehaviour
         // 일시 정지 UI 활성화
         blur.SetActive(true);
         optionUI.SetActive(true);
+
+        // 사운드 정지
+        SoundManager.instance.bgmSource.Stop();
+        SoundManager.instance.sfxSource.Stop();
+
+        if (audioSources.Count > 0)
+        {
+            foreach (AudioSource audioSource in audioSources)
+            {
+                if (audioSource.enabled && audioSource.gameObject.activeSelf && audioSource.clip != null && audioSource.isPlaying)
+                {
+                    audioSource.Stop();
+                }
+            }
+        }
     }
 
     // 오브젝트 상호작용 시 플레이어 움직임 멈춤 함수
@@ -378,5 +416,25 @@ public class UIUtility : MonoBehaviour
 
             collider.enabled = !progress.IsActionCompleted(action);
         }
+    }
+
+    public void PlaySound(string methodName)
+    {
+        if (SoundManager.instance == null)
+            return;
+
+        if (SoundManager.instance.soundMethods.TryGetValue(methodName, out var action))
+        {
+            action();
+        }
+        else
+        {
+            Debug.LogWarning($"No sound method found for '{methodName}'");
+        }
+    }
+
+    public void StopSfxSound()
+    {
+        soundManager.StopSfxSound();
     }
 }
