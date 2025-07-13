@@ -45,7 +45,6 @@ public class ProgressManager : MonoBehaviour
         OutOfBackRoom,
         EnteredEthanHouse,
         GetEthanCellPhone,
-        EnteredLockerRoom,
         ClearLockerRoom,
         StartFinalChase,
         FinishFinalChase,
