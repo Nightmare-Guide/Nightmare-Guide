@@ -6331,7 +6331,7 @@ PlayableDirector:
   m_GameObject: {fileID: 818130188}
   m_Enabled: 1
   serializedVersion: 3
-  m_PlayableAsset: {fileID: 11400000, guid: 950304e48bf300e47929915c979137dd, type: 2}
+  m_PlayableAsset: {fileID: 11400000, guid: e789ec833f1ddd54aa1ce272e1d83471, type: 2}
   m_InitialState: 0
   m_WrapMode: 2
   m_DirectorUpdateMode: 1
@@ -6415,6 +6415,10 @@ PlayableDirector:
     value: {fileID: 0}
   - key: {fileID: -3173647714960895785, guid: 89002627787ee2d49bfcb8f2dd672a56, type: 2}
     value: {fileID: 0}
+  - key: {fileID: -2478040111654118284, guid: 950304e48bf300e47929915c979137dd, type: 2}
+    value: {fileID: 1412871867}
+  - key: {fileID: 7697242265204007607, guid: e789ec833f1ddd54aa1ce272e1d83471, type: 2}
+    value: {fileID: 1412871867}
   m_ExposedReferences:
     m_References:
     - 38f9172ac76f4fb41ac0b582767acf03: {fileID: 103334295}
@@ -9650,6 +9654,11 @@ NavMeshAgent:
   m_BaseOffset: 0.81
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!82 &1412871867 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 5998101189420875569, guid: 0eee449d6f02a014c80f3b4813fa8f6e, type: 3}
+  m_PrefabInstance: {fileID: 1412871863}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1412871870 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7172746398900973553, guid: 0eee449d6f02a014c80f3b4813fa8f6e, type: 3}
