@@ -83,6 +83,14 @@ public class MainUIManager : UIUtility
             SliderController.instance.bgmMaxVolume = -40f;
             Debug.Log(SliderController.instance.bgmMaxVolume);
         }
+        else if (SceneManager.GetActiveScene().name == "School_Scene")
+        {
+            //예외처리할려고 만듬
+        }
+        else
+        {
+            SoundManager.instance.bgmSource.clip = null;
+        }
     }
     public void ShowReport()
     {
