@@ -100,15 +100,16 @@ public class NPC : MonoBehaviour
         myAnim.SetBool("isWalk", true);
 
         // 도착할 때까지 기다림
-        while (agent.pathPending || agent.remainingDistance > agent.stoppingDistance + 0.1f)
+        while (agent.pathPending || agent.remainingDistance > agent.stoppingDistance || agent.velocity.sqrMagnitude > 0.01f)
         {
             yield return null;
         }
 
         // 도착
-        agent.ResetPath();
+        agent.ResetPath(); 
         myAnim.SetBool("isWalk", false);
         myAnim.SetTrigger("isTalk");
         isWalkingToPlayer = false;
     }
+    
 }

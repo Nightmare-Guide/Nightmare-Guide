@@ -1,4 +1,5 @@
 using System.Collections;
+using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Playables;
@@ -8,6 +9,9 @@ public class Supervisor : NPC
 {
     public Transform hospitalroom;
     public Transform npcwalkPosition;
+    public Transform hospitalRoomFront;
+    public MainUIManager MainUIManager;
+
 
     public float talkDistance = 2.0f; //대화거리
 
@@ -35,17 +39,28 @@ public class Supervisor : NPC
             look.target = PlayerController.instance.transform;
         }
     }
-
-    private void Update()
+    public void FollowSupervisor()
     {
-
-    }
-    public void AutoMove()
-    {
-        myAnim.SetBool("isWalk", true);
-        agent.SetDestination(hospitalroom.position);
         StartCoroutine(CheckPlayerFollow());
     }
+
+    public void AutoMoveHospitalRoom(Transform tf)
+    {
+        myAnim.SetBool("isWalk", true);
+        agent.SetDestination(tf.position);
+    }
+    public void StopMoveToTalk()
+    {
+        myAnim.SetBool("isWalk", false);
+        myAnim.SetTrigger("isTalk");
+        agent.ResetPath();
+    }
+    public void SuperVisorWork()
+    {
+        myAnim.SetBool("isWalk", false);
+        myAnim.SetTrigger("isWork");
+    }
+
     private IEnumerator CheckPlayerFollow()
     {
         yield return new WaitForSeconds(1f); // 약간의 딜레이
@@ -59,7 +74,7 @@ public class Supervisor : NPC
                 hasStartedPlayerFollow = true;
                 Debug.Log("주인공 이동 시작");
 
-                PlayerController.instance.GoNavposition(); // 목적지 전달
+                PlayerController.instance.GoNavposition(PlayerController.instance.playerwalkposition); // 목적지 전달
             }
             yield return new WaitForSeconds(0.2f);
         }
@@ -69,6 +84,7 @@ public class Supervisor : NPC
     {
         myAnim.SetBool("isWalk", true);
         agent.SetDestination(npcwalkPosition.position);
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -81,11 +97,19 @@ public class Supervisor : NPC
             //StartWalkToPlayer(playerTransform);
         }
     }
+    public void EnableCollider()
+    {
+        col.enabled = true;
+    }
+    public void DisableCollider()
+    {
+        col.enabled = false;
+    }
 
     public void FirstMeet()
     {
         //임시
-        director.Play();
+        MainUIManager.DayHospitalTimeLine();
     }
 
     //public void GoHospitalRoom() //Supervisor가 병실로

@@ -19089,6 +19089,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 89002627787ee2d49bfcb8f2dd672a56, type: 2}
   - {fileID: 11400000, guid: df61abfe2c201ca418d5e1e0460896b7, type: 2}
   - {fileID: 11400000, guid: 50f9b8c4bc165f8478dcff255d7f8117, type: 2}
+  - {fileID: 11400000, guid: 950304e48bf300e47929915c979137dd, type: 2}
+  - {fileID: 11400000, guid: e789ec833f1ddd54aa1ce272e1d83471, type: 2}
+  - {fileID: 11400000, guid: b0b3a3d3312ac15468e35d1e283051e5, type: 2}
 --- !u!4 &444086497
 Transform:
   m_ObjectHideFlags: 0
@@ -61882,6 +61885,7 @@ MonoBehaviour:
   playableDirector: {fileID: 0}
   commonUIManager: {fileID: 0}
   timeLineManager: {fileID: 0}
+  progressManager: {fileID: 0}
   soundManager: {fileID: 0}
   titleUI: {fileID: 499009190}
   newGameAlertUI: {fileID: 1478249677}

@@ -80,10 +80,17 @@ public class RayCast_Aim : MonoBehaviour
                         NextScene next = click_object.GetComponent<NextScene>();
                         objCollider.enabled = true;
                         next.Next_Scene();
+                    }
+                    if (click_object.CompareTag("GoNightMare"))
+                    {
+                        PlayerController.instance.Close_PlayerController();
+                        Camera_Rt.instance.Close_Camera();
+                        NextScene next = click_object.GetComponent<NextScene>();
+                        next.GoNightMareTimeLine();
 
                     }
-                    // 태그가 "maze_Btn"이라면 Select_Btn() 호출
-                    if (click_object.CompareTag("maze_Btn"))
+                        // 태그가 "maze_Btn"이라면 Select_Btn() 호출
+                        if (click_object.CompareTag("maze_Btn"))
                     {
                         Chapter1_Maze(click_object);
                     }
