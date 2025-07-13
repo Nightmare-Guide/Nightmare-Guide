@@ -12,7 +12,7 @@ public class CloseLine : MonoBehaviour
         {
 
             Door obj = door.GetComponent<Door>();
-            obj.Select_Door();
+            // obj.Select_Door();
             open = false;
 
         }

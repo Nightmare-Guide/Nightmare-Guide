@@ -76,7 +76,19 @@ public class MainUIManager : UIUtility
             playableDirector.playableAsset = null;
         }
     }
-
+    public void DayHospitalTimeLine()
+    {
+        //조건필요
+        StartTimeLine(timeLineManager.playableAssets[4]);
+    }
+    public void FirstMeetEthanMother()
+    {
+        StartTimeLine(timeLineManager.playableAssets[5]);
+    }
+    public void GoNightMare()
+    {
+        StartTimeLine(timeLineManager.playableAssets[6]);
+    }
     private void Update()
     {
         // ESC 키

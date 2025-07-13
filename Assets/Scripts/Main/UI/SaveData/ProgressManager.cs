@@ -41,10 +41,12 @@ public class ProgressManager : MonoBehaviour
         EnterPortalRoom,
         GetDavidCellPhone,
         EnteredBackRoom,
+        ClearBackRoom,
+        OutOfBackRoom,
         EnteredEthanHouse,
         GetEthanCellPhone,
         EnteredLockerRoom,
-        SolvedLockerRoom,
+        ClearLockerRoom,
         StartFinalChase,
         FinishFinalChase,
         TalkWarmlyToEthan,
@@ -261,6 +263,12 @@ public class ProgressManager : MonoBehaviour
                 SchoolUIManager schoolUIManager = CommonUIManager.instance.uiManager as SchoolUIManager;
                 existingData.tr = schoolUIManager.playerRespawnPoints[0].position;
                 existingData.rt = schoolUIManager.playerRespawnPoints[0].rotation.eulerAngles;
+            }
+            else if (IsActionCompleted(ActionType.EnteredBackRoom) && !IsActionCompleted(ActionType.ClearBackRoom))
+            {
+                SchoolUIManager schoolUIManager = CommonUIManager.instance.uiManager as SchoolUIManager;
+                existingData.tr = schoolUIManager.playerRespawnPoints[1].position;
+                existingData.rt = schoolUIManager.playerRespawnPoints[1].rotation.eulerAngles;
             }
 
             Debug.Log($"[{sceneName}] Update 플레이어 위치/회전 정보 업데이트: {position}, {rotation}");

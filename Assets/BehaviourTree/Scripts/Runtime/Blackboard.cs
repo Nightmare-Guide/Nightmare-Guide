@@ -9,6 +9,7 @@ namespace TheKiwiCoder
     public class Blackboard
     {
         public Vector3 moveToPosition;
+        public bool isDetected;
 
         // 데이터를 저장할 Dictionary
         private Dictionary<string, object> data = new();

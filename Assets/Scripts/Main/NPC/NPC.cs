@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityStandardAssets.Characters.FirstPerson;
 
 public class NPC : MonoBehaviour
@@ -11,6 +12,8 @@ public class NPC : MonoBehaviour
     public Transform playerTransform;
     public Animator myAnim;
     public bool inAction = false;
+    public NavMeshAgent agent;
+    private bool isWalkingToPlayer = false;
 
     public IEnumerator EnableCollider(Collider col, float time)
     {
@@ -79,4 +82,34 @@ public class NPC : MonoBehaviour
 
         targetTransform.localRotation = targetRotation; // 마지막 각도 보정
     }
+
+    public void StartWalkToPlayer(Transform player)
+    {
+        playerTransform = player;
+        agent.stoppingDistance = 7f; // 플레이어 근처에서 멈추도록 설정
+        agent.autoBraking = false;
+        StartCoroutine(WalkToPlayerRoutine());
+    }
+
+    private IEnumerator WalkToPlayerRoutine()
+    {
+        PlayerController.instance.Close_PlayerController();
+        isWalkingToPlayer = true;
+
+        agent.SetDestination(playerTransform.position);
+        myAnim.SetBool("isWalk", true);
+
+        // 도착할 때까지 기다림
+        while (agent.pathPending || agent.remainingDistance > agent.stoppingDistance || agent.velocity.sqrMagnitude > 0.01f)
+        {
+            yield return null;
+        }
+
+        // 도착
+        agent.ResetPath(); 
+        myAnim.SetBool("isWalk", false);
+        myAnim.SetTrigger("isTalk");
+        isWalkingToPlayer = false;
+    }
+    
 }

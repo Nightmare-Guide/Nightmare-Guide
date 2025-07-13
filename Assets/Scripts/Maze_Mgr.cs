@@ -36,11 +36,13 @@ public class Maze_Mgr : MonoBehaviour
     public bool reStart = false;
     public Coroutine currentCoroutine;
 
-
+    private void Awake()
+    {
+        if (instance == null) { instance = this; }
+    }
 
     private void Start()
     {
-        if (instance == null) { instance = this; }
         Make_Answer();
 
     }
@@ -139,10 +141,13 @@ public class Maze_Mgr : MonoBehaviour
         bool clear = anw.SequenceEqual(num_Answer);
         if (clear)
         {
-           // Debug.Log("Å»Ãâ ¼º°ø");
+            Debug.Log("Å»Ãâ ¼º°ø");
             Door door = door_Obj.GetComponent<Door>();
             door.Select_Door();
             maze_Clear = true;
+
+            SchoolUIManager schoolUIManager = CommonUIManager.instance.uiManager as SchoolUIManager;
+            schoolUIManager.ClearBackroom();
         }
         else
         {
@@ -159,6 +164,7 @@ public class Maze_Mgr : MonoBehaviour
        for(int i=0; i<9; i++)
         {
             btn[i].GetComponent<Maze_Button>().Clear_Btn();
+            btn[i].GetComponent<Collider>().enabled = true;
         }
         panel_Check = 0;
 

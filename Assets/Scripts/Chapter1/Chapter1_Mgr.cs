@@ -9,14 +9,17 @@ using UnityStandardAssets.Characters.FirstPerson;
 public class Chapter1_Mgr : MonoBehaviour
 {
     public static Chapter1_Mgr instance;
+
     [Header("lockerRoom관련")]
     public TextMeshPro[] lockerNames;
     public GameObject lockerRoomMainDoor1; // 락커룸 도어
     public GameObject lockerRoomMainDoor2;
     public int nextdoorPassword = 0;
+
     [Header("StrangeRoom")]
     public GameObject[] strangeRoom1;
     public GameObject[] strangeRoom2;
+
     [Header("Door")]
     public Door doorScript1;
     public Door doorScript2;
@@ -65,6 +68,8 @@ public class Chapter1_Mgr : MonoBehaviour
         {
             LockerRoomNextDoor();
             nextdoorPassword = 0;
+            SchoolUIManager schoolUIManager = CommonUIManager.instance.uiManager as SchoolUIManager;
+            schoolUIManager.ClearLockerRoom();
             Debug.Log("다음지역이 열렸습니다.");
         }
 
@@ -72,7 +77,7 @@ public class Chapter1_Mgr : MonoBehaviour
 
     private void RandomLockerShuffle() //Locker 이름 랜덤 부여
     {
-        string[] names = { "James", "John", "Robert", "David", "Mark", "Paul", "Steven", "Kevin" }; //가해자는 James, John, Robert, David (임시)
+        string[] names = { "David", "Lucas", "Henry", "Daniel", "Mark", "Paul", "Steven", "Kevin" }; //가해자는 David, Lucas, Henry, Daniel (임시)
         List<int> usedIndices = new List<int>();
 
         int count = Mathf.Min(lockerNames.Length, names.Length);

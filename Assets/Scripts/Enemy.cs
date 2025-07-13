@@ -28,6 +28,9 @@ public class Enemy : MonoBehaviour
     // 적 캐릭터의 애니메이터
     public Animator animator;
 
+    // 사운드
+    AudioSource enemyAudio;
+
     private void Awake()
     {
         // 싱글턴 인스턴스 설정
@@ -38,6 +41,15 @@ public class Enemy : MonoBehaviour
     
         // Animator 컴포넌트 가져오기
         animator = GetComponent<Animator>();
+        enemyAudio = GetComponent<AudioSource>();
+    }
+
+    private void OnEnable()
+    {
+        enemyAudio.Stop();
+        enemyAudio.clip = null;
+        enemyAudio.clip = SoundManager.instance.enemyRunSound;
+        enemyAudio.Play(); // 달리기 사운드 플레이
     }
 
     public enum EnemyState
@@ -94,6 +106,8 @@ public class Enemy : MonoBehaviour
     {
         caught_player = true;
 
+        enemyAudio.Stop();
+
         // 플레이어 움직임 멈춤
         PlayerController.instance.Close_PlayerController();
         Camera_Rt.instance.Close_Camera();
@@ -101,7 +115,7 @@ public class Enemy : MonoBehaviour
         // 몬스터 움직임 멈춤
         // FreezeEnemy();
 
-        // 플레이어 카메라가 몬스터를 향해 회전
+        // 플레이어 카메라가 몬스터를 향해 회전 및 애니메이션 실행
         PlayerMainCamera.camera_single.RotateToTarget(this.transform, 0.2f);
 
         this.gameObject.SetActive(false);

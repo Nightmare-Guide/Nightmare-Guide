@@ -18,6 +18,7 @@ MonoBehaviour:
   position: {x: 0, y: 0}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
+    isDetected: 0
   description: 
   drawGizmos: 0
   child: {fileID: -2026143017301274427}
@@ -39,6 +40,7 @@ MonoBehaviour:
   position: {x: -0.00006866455, y: 268.04337}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
+    isDetected: 0
   description: 
   drawGizmos: 0
 --- !u!114 &-2026143017301274427
@@ -59,6 +61,7 @@ MonoBehaviour:
   position: {x: -0.000030517578, y: 124.000015}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
+    isDetected: 0
   description: 
   drawGizmos: 0
   child: {fileID: -6864811370924655868}
@@ -84,3 +87,4 @@ MonoBehaviour:
   - {fileID: -6864811370924655868}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
+    isDetected: 1

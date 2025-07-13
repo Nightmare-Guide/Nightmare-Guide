@@ -112,7 +112,7 @@ public class Locker : MonoBehaviour
 
         if (CommonUIManager.instance.uiManager is SchoolUIManager schoolUIManager)
         {
-            if (this.gameObject.name.Contains("Lounge Locker")
+            if (this.gameObject.name.Contains("Lounge Locker")  
                 && ProgressManager.Instance.IsActionCompleted(ProgressManager.ActionType.UseLockerKey)
                 && !ProgressManager.Instance.IsActionCompleted(ProgressManager.ActionType.GetOutOfLocker))
             {

@@ -1,4 +1,5 @@
 using System.Collections;
+using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Playables;
@@ -6,22 +7,21 @@ using UnityStandardAssets.Characters.FirstPerson;
 
 public class Supervisor : NPC
 {
-    public MainUIManager mainUI;
     public Transform hospitalroom;
     public Transform npcwalkPosition;
-    public Transform workposition;
-    public NavMeshAgent agent;
+    public Transform hospitalRoomFront;
+    public MainUIManager MainUIManager;
+
+
     public float talkDistance = 2.0f; //대화거리
-    private bool isWalkingToPlayer = false;
+
     public BoxCollider nightmareEntrance;
     public bool hasStartedPlayerFollow = false;
     //private bool isWalkingToHospitalRoom = false;
-    public GameObject [] position;
+    public GameObject[] position;
 
     private LookTarget look;
 
-    private Coroutine autoMoveRoutine;
-    private bool isAutoMoveEnabled = false;
     //임시
     public PlayableDirector director;
 
@@ -34,118 +34,83 @@ public class Supervisor : NPC
     private void Awake()
     {
         look = GetComponent<LookTarget>();
-        if ( look != null)
+        if (look != null)
         {
             look.target = PlayerController.instance.transform;
         }
     }
-
-    public void AutoMove()
+    public void FollowSupervisor()
     {
-        if (autoMoveRoutine != null)
-            StopCoroutine(autoMoveRoutine);
+        StartCoroutine(CheckPlayerFollow());
+    }
 
-        isAutoMoveEnabled = true;
-        hasStartedPlayerFollow = false;
-
+    public void AutoMoveHospitalRoom(Transform tf)
+    {
         myAnim.SetBool("isWalk", true);
-        agent.SetDestination(npcwalkPosition.position);
-
-        autoMoveRoutine = StartCoroutine(CheckPlayerFollow());
+        agent.SetDestination(tf.position);
+    }
+    public void StopMoveToTalk()
+    {
+        myAnim.SetBool("isWalk", false);
+        myAnim.SetTrigger("isTalk");
+        agent.ResetPath();
+    }
+    public void SuperVisorWork()
+    {
+        myAnim.SetBool("isWalk", false);
+        myAnim.SetTrigger("isWork");
     }
 
     private IEnumerator CheckPlayerFollow()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1f); // 약간의 딜레이
 
-        while (isAutoMoveEnabled && !hasStartedPlayerFollow)
+        while (!hasStartedPlayerFollow)
         {
             float followDistance = Vector3.Distance(transform.position, PlayerController.instance.transform.position);
 
-            if (followDistance > 15f)
+            if (followDistance > 8f)
             {
                 hasStartedPlayerFollow = true;
                 Debug.Log("주인공 이동 시작");
-                PlayerController.instance.GoNavposition();
-            }
 
+                PlayerController.instance.GoNavposition(PlayerController.instance.playerwalkposition); // 목적지 전달
+            }
             yield return new WaitForSeconds(0.2f);
         }
-    }
-    public void StopAutoMove()
-    {
-        isAutoMoveEnabled = false;
-        hasStartedPlayerFollow = false;
-
-        if (autoMoveRoutine != null)
-        {
-            StopCoroutine(autoMoveRoutine);
-            autoMoveRoutine = null;
-        }
-
-        if (agent.enabled)
-            agent.ResetPath();
-        PlayerController.instance.StopAutoMove();
-        myAnim.SetBool("isWalk", false);
-        myAnim.SetTrigger("isIdle");
     }
 
     public void WalkToHospitalRoom()
     {
         myAnim.SetBool("isWalk", true);
         agent.SetDestination(npcwalkPosition.position);
+
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            //처음만나는 조건추가해야함
-            FirstMeet();
-
-            //기본적으로 무조건 적용해야하는 것
             playerTransform = other.transform;
+            FirstMeet();
             PlayerController.instance.Close_PlayerController();
             //StartWalkToPlayer(playerTransform);
         }
-    }
-
-    public void FirstMeet()
-    {   //처음만나는 조건 추가 해야함
-        mainUI.FirstSupervisorMeet();
-    }
-
-    public void DisableCollider()
-    {
-        col.enabled = false;
     }
     public void EnableCollider()
     {
         col.enabled = true;
     }
+    public void DisableCollider()
+    {
+        col.enabled = false;
+    }
 
-    //public void StartWalkToPlayer(Transform player)
-    //{
-    //    playerTransform = player;
-    //    isWalkingToPlayer = true;
-
-    //    if (isWalkingToPlayer)
-    //    {
-    //        PlayerController.instance.Close_PlayerController();
-    //        agent.SetDestination(playerTransform.position);
-    //        myAnim.SetBool("isWalk", true);
-
-    //        float distance = Vector3.Distance(transform.position, playerTransform.position);
-    //        if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
-    //        {
-    //            agent.ResetPath();
-    //            myAnim.SetBool("isWalk", false);
-    //            myAnim.SetTrigger("isTalk");
-    //            isWalkingToPlayer = false;
-    //        }
-    //    }
-
-    //}
+    public void FirstMeet()
+    {
+        //임시
+        MainUIManager.DayHospitalTimeLine();
+    }
 
     //public void GoHospitalRoom() //Supervisor가 병실로
     //{

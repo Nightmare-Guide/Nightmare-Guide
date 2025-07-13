@@ -85,7 +85,7 @@ MonoBehaviour:
     tr: {x: -261, y: 6, z: -689}
     rt: {x: 0, y: -90, z: 0}
   - scene_Name: NightHospital
-    tr: {x: -285, y: 30, z: -810}
+    tr: {x: -205.08, y: 28.22, z: -899.39}
     rt: {x: 0, y: 180, z: 0}
   - scene_Name: School_Scene
     tr: {x: 0, y: 0, z: 0}
@@ -99,6 +99,7 @@ MonoBehaviour:
   sanchi: 0
   postProcessingName: Warm
   fogName: Warm
+  hideInLocker: 0
   mainInventoryDatas:
   - 
   schoolInventoryDatas: []
@@ -120,4 +121,10 @@ MonoBehaviour:
   quest: 
   timelineWatchedList:
   - key: StartFirstDay
+    value: 0
+  - key: FirstMeetMonster
+    value: 0
+  - key: FirstLounge
+    value: 0
+  - key: LastSchoolEvent
     value: 0

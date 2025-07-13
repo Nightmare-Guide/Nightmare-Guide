@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3614689956377930692}
   - component: {fileID: 1175950009855326806}
   - component: {fileID: 5653621134772009590}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: locker_01a (9)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -121,7 +121,7 @@ GameObject:
   - component: {fileID: 2773157948370359974}
   - component: {fileID: 7698322579388402437}
   - component: {fileID: 2859661803412313803}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: door
   m_TagString: Door
   m_Icon: {fileID: 0}
@@ -230,6 +230,7 @@ MonoBehaviour:
   lockerIndex: 0
   doorState: 0
   boxcollider: {fileID: 7698322579388402437}
+  navMeshObstacle: {fileID: 0}
   startRotation: {x: 0, y: 0, z: 0, w: 0}
   endRotation: {x: 0, y: 0, z: 0, w: 0}
   isRotation: 0
@@ -244,7 +245,7 @@ GameObject:
   - component: {fileID: 6858372367520153052}
   - component: {fileID: 3228701063137760966}
   - component: {fileID: 249512927884125504}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: NameSpace
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -359,8 +360,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -416,7 +417,7 @@ GameObject:
   - component: {fileID: 418417289667359333}
   - component: {fileID: 3065165865877200082}
   - component: {fileID: 314771213859377716}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -521,7 +522,7 @@ GameObject:
   - component: {fileID: 6072192098392237743}
   - component: {fileID: 280316491663839178}
   - component: {fileID: 6695806029599924791}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -129,7 +129,11 @@ public class PlayerMainCamera : MonoBehaviour
         Animator monsterAnim = jumpscareObj.GetComponent<Animator>();
         AnimHelper.TryPlay(monsterAnim, "killPlayer", 0f);
 
-        yield return new WaitForSeconds(0.55f);
+        yield return new WaitForSeconds(0.3f);
+
+        SoundManager.instance.JumpScareSound(); // 사운드
+
+        yield return new WaitForSeconds(0.25f);
 
         // 카메라 이펙트 실행 (예: 화면 깜빡임 등)
         CameraEffect();
@@ -151,7 +155,7 @@ public class PlayerMainCamera : MonoBehaviour
             }
             else if (!ProgressManager.Instance.IsActionCompleted(ProgressManager.ActionType.FinishFinalChase))
             {
-                StartCoroutine(schoolUIManager.RevivalPlayer(ProgressManager.ActionType.SolvedLockerRoom));
+                StartCoroutine(schoolUIManager.RevivalPlayer(ProgressManager.ActionType.ClearLockerRoom));;
             }
         }
     }

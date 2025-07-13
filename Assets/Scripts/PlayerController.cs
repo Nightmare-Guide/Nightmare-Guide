@@ -51,6 +51,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
         public NavMeshAgent agent;
         public Transform playerwalkposition;
         private Transform playerTransform;
+        public Transform destination;
+        public Animator anim;
 
         public enum PlayerState
         {
@@ -87,6 +89,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_AudioSource = GetComponent<AudioSource>();
             m_MouseLook.Init(transform, m_Camera.transform);
             if (ProgressManager.Instance != null&&!ProgressManager.Instance.progressData.newGame) { SpawnSet(); }
+            anim = GetComponent<Animator>();
 
         }
 
@@ -137,7 +140,11 @@ namespace UnityStandardAssets.Characters.FirstPerson
             GetComponent<PlayerController>().enabled = false;
             Camera_Rt.instance.Close_Camera();
         }
-
+        public void AbleInput()
+        {
+            Camera_Rt.instance.Open_Camera();
+            Open_PlayerController();
+        }
 
         private void PlayLandingSound()
         {
@@ -145,7 +152,10 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_AudioSource.Play();
             m_NextStep = m_StepCycle + .5f;
         }
-
+        public void OpenAnim()
+        {
+            anim.enabled = true;
+        }
 
         private void FixedUpdate()
         {
@@ -328,6 +338,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         public void Open_PlayerController()
         {
             m_CharacterController.enabled = true;
+            agent.enabled = false;
         }
         public void Close_PlayerController()
         {
@@ -339,11 +350,11 @@ namespace UnityStandardAssets.Characters.FirstPerson
         {
             return m_Camera;
         }
-        public void GoNavposition()
+        public void GoNavposition(Transform nav)
         {
             Close_PlayerController();
             agent.enabled = true;
-            agent.SetDestination(playerwalkposition.position);
+            agent.SetDestination(nav.position);
         }
 
         public void StopAutoMove()
@@ -412,7 +423,17 @@ namespace UnityStandardAssets.Characters.FirstPerson
         {
             if (other.CompareTag("Trigger"))
             {
-                if (other.gameObject.name == "EnemyFirstMeet Wall")
+                if (other.gameObject.name.Contains("Ethan Locker Trigger") && !ProgressManager.Instance.IsActionCompleted(ProgressManager.ActionType.FirstMeetEthan))
+                {
+                    SchoolUIManager schoolUIManager = CommonUIManager.instance.uiManager as SchoolUIManager;
+                    AudioSource ehtanLockerAudio = schoolUIManager.activeObjs[7].GetComponent<AudioSource>();
+
+                    if (ehtanLockerAudio.enabled)
+                    {
+                        ehtanLockerAudio.Play();
+                    }
+                }
+                else if (other.gameObject.name == "EnemyFirstMeet Wall")
                 {
                     SchoolUIManager schoolUIManager = CommonUIManager.instance.uiManager as SchoolUIManager;
 
@@ -437,6 +458,18 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
                     schoolUIManager.EnterBackroom();
                 }
+                else if (other.gameObject.name.Contains("Backroom Clear Trigger Wall"))
+                {
+                    SchoolUIManager schoolUIManager = CommonUIManager.instance.uiManager as SchoolUIManager;
+
+                    schoolUIManager.OutOfBackroom();
+                }
+                else if (other.gameObject.name.Contains("Ethah House Trigger Wall"))
+                {
+                    SchoolUIManager schoolUIManager = CommonUIManager.instance.uiManager as SchoolUIManager;
+
+                    schoolUIManager.EnterEthanHouse();
+                }
             }
         }
 
@@ -450,7 +483,19 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
                     schoolUIManager.enterLounge = false;
                 }
+                else if (other.gameObject.name.Contains("Ethan Locker Trigger") && !ProgressManager.Instance.IsActionCompleted(ProgressManager.ActionType.FirstMeetEthan))
+                {
+                    SchoolUIManager schoolUIManager = CommonUIManager.instance.uiManager as SchoolUIManager;
+
+                    schoolUIManager.activeObjs[7].GetComponent<AudioSource>().Stop();
+                }
             }
+        }
+        public void AutoMove(Transform destination)
+        {
+            agent.enabled = true;
+            Close_PlayerController();
+            agent.SetDestination(destination.position);
         }
     }
 }
