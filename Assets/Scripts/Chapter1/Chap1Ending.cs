@@ -41,49 +41,73 @@ public class Chap1Ending : MonoBehaviour
             tempColor.a = 0f;
             backgroundImage.color = tempColor;
         }
+        else
+        {
+            Debug.LogError("Awake: backgroundImage is not assigned in the Inspector!");
+        }
 
         // 텍스트들의 초기 색상 저장 (TMP_Text는 initialTextColorFullAlpha 설정 시 필요)
         if (chapterClearText != null)
         {
-            initialTextColorFullAlpha = chapterClearText.color; // 완전한 알파값 저장
+            initialTextColorFullAlpha = chapterClearText.color; // 현재 색상(RGB) 가져오기
+            initialTextColorFullAlpha.a = 1f; // 알파 값을 1 (완전 불투명)로 설정
+
             initialTextColorAlphaZero = new Color(initialTextColorFullAlpha.r, initialTextColorFullAlpha.g, initialTextColorFullAlpha.b, 0f);
+        }
+        else
+        {
+            Debug.LogError("Awake: chapterClearText is not assigned in the Inspector!");
         }
 
         // 모든 텍스트를 초기 투명 상태로 설정
         SetTextAlpha(chapterClearText, 0f);
         SetTextAlpha(returningText, 0f);
         SetTextAlpha(countdownText, 0f);
-        if (countdownText != null) countdownText.text = "5"; // 초기 카운트다운 숫자 설정
+
+        if (countdownText != null)
+        {
+            countdownText.text = "5"; // 초기 카운트다운 숫자 설정
+        }
 
         // 텍스트 부모 오브젝트를 비활성화 상태로 시작
         if (textParentPanel != null)
         {
             textParentPanel.SetActive(false);
         }
+        else
+        {
+            Debug.LogError("Awake: textParentPanel is not assigned in the Inspector!");
+        }
 
         // Lint 초기 위치 설정 (Inspector에서 설정하는 것이 가장 안정적이지만, 코드에서도 명시)
         if (lintTop != null)
         {
-            // LintTop은 오른쪽 밖에서 시작 (LEFT:2000, RIGHT:-2000)
             lintTop.anchorMin = new Vector2(0f, lintTop.anchorMin.y);
             lintTop.anchorMax = new Vector2(1f, lintTop.anchorMax.y);
             lintTop.offsetMin = new Vector2(2000f, lintTop.offsetMin.y);
             lintTop.offsetMax = new Vector2(-2000f, lintTop.offsetMax.y);
         }
+        else
+        {
+            Debug.LogError("Awake: lintTop is not assigned in the Inspector!");
+        }
         if (lintBottom != null)
         {
-            // LintBottom도 LintTop과 동일하게 오른쪽 밖에서 시작 (LEFT:2000, RIGHT:-2000)
             lintBottom.anchorMin = new Vector2(0f, lintBottom.anchorMin.y);
             lintBottom.anchorMax = new Vector2(1f, lintBottom.anchorMax.y);
-            lintBottom.offsetMin = new Vector2(2000f, lintBottom.offsetMin.y); // 변경: -2000f -> 2000f
-            lintBottom.offsetMax = new Vector2(-2000f, lintBottom.offsetMax.y); // 변경: 2000f -> -2000f
+            lintBottom.offsetMin = new Vector2(2000f, lintBottom.offsetMin.y);
+            lintBottom.offsetMax = new Vector2(-2000f, lintBottom.offsetMax.y);
+        }
+        else
+        {
+            Debug.LogError("Awake: lintBottom is not assigned in the Inspector!");
         }
     }
 
     void Update()
     {
         // 1. 게임 중 Ctrl + F7번을 누르면 EndingAction 메소드가 실행
-        if ((Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl)) && Input.GetKeyDown(KeyCode.F7))
+       /* if ((Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl)) && Input.GetKeyDown(KeyCode.F7))
         {
             if (!isEndingSequenceActive) // 엔딩 시퀀스가 실행 중이 아닐 때만 시작
             {
@@ -92,15 +116,20 @@ public class Chap1Ending : MonoBehaviour
             }
             else
             {
-                Debug.Log("Ending sequence is already active.");
+                Debug.Log("Ending sequence is already active. Ignoring input.");
             }
-        }
+        }*/
     }
 
     public void StartEndingSequence()
     {
-        if (isEndingSequenceActive) return; // 중복 호출 방지
+        if (isEndingSequenceActive)
+        {
+            Debug.LogWarning("StartEndingSequence: Attempted to start sequence while already active. Aborting.");
+            return; // 중복 호출 방지
+        }
         isEndingSequenceActive = true;
+        Debug.Log("Starting Ending Sequence Coroutine.");
         StartCoroutine(EndingActionCoroutine());
     }
 
@@ -111,9 +140,12 @@ public class Chap1Ending : MonoBehaviour
         {
             textParentPanel.SetActive(true);
         }
+        else
+        {
+            Debug.LogError("EndingActionCoroutine: textParentPanel is null. Cannot activate.");
+        }
 
         // 1. 배경이 먼저 어두워진다 (3초 동안)
-        Debug.Log("Starting background fade.");
         float timer = 0f;
         Color startBgColor = backgroundImage != null ? backgroundImage.color : Color.clear;
         Color endBgColor = new Color(startBgColor.r, startBgColor.g, startBgColor.b, 250f / 255f); // 목표 알파값 250/255f
@@ -129,23 +161,17 @@ public class Chap1Ending : MonoBehaviour
             yield return null;
         }
         if (backgroundImage != null) backgroundImage.color = endBgColor;
-        Debug.Log("Background fade complete.");
 
         // 2. Line이 양쪽에서 슬라이드 이동 (2초 동안)
-        Debug.Log("Starting lint slide animation.");
         timer = 0f;
 
-        // Lint 시작/끝 offsetMin/offsetMax 정의
-        // LintTop과 LintBottom 모두 RIGHT에서 LEFT:2000 -> 0, RIGHT:-2000 -> 0
-        // 목표: LEFT:0, RIGHT:0 (부모의 전체 너비로 늘어남)
-        Vector2 lintTopStartOffsetMin = lintTop.offsetMin;
-        Vector2 lintTopStartOffsetMax = lintTop.offsetMax;
+        Vector2 lintTopStartOffsetMin = lintTop != null ? lintTop.offsetMin : Vector2.zero;
+        Vector2 lintTopStartOffsetMax = lintTop != null ? lintTop.offsetMax : Vector2.zero;
         Vector2 lintTopEndOffsetMin = new Vector2(0f, lintTopStartOffsetMin.y);
         Vector2 lintTopEndOffsetMax = new Vector2(0f, lintTopStartOffsetMax.y);
 
-        // lintBottom도 lintTop과 동일한 시작/끝 값 사용
-        Vector2 lintBottomStartOffsetMin = lintBottom.offsetMin; // 변경: -2000f -> 2000f
-        Vector2 lintBottomStartOffsetMax = lintBottom.offsetMax; // 변경: 2000f -> -2000f
+        Vector2 lintBottomStartOffsetMin = lintBottom != null ? lintBottom.offsetMin : Vector2.zero;
+        Vector2 lintBottomStartOffsetMax = lintBottom != null ? lintBottom.offsetMax : Vector2.zero;
         Vector2 lintBottomEndOffsetMin = new Vector2(0f, lintBottomStartOffsetMin.y);
         Vector2 lintBottomEndOffsetMax = new Vector2(0f, lintBottomStartOffsetMax.y);
 
@@ -178,13 +204,16 @@ public class Chap1Ending : MonoBehaviour
             lintBottom.offsetMin = lintBottomEndOffsetMin;
             lintBottom.offsetMax = lintBottomEndOffsetMax;
         }
-        Debug.Log("Lint slide animation complete.");
 
         // 4. 텍스트 페이드인
         // "Chapter Clear" 텍스트 선명화
         if (chapterClearText != null)
         {
             yield return StartCoroutine(FadeInTMPText(chapterClearText, textFadeInDuration));
+        }
+        else
+        {
+            Debug.LogError("EndingActionCoroutine: chapterClearText is null, skipping fade-in.");
         }
         yield return new WaitForSeconds(1f); // 1초 대기
 
@@ -193,12 +222,20 @@ public class Chap1Ending : MonoBehaviour
         {
             yield return StartCoroutine(FadeInTMPText(returningText, textFadeInDuration));
         }
+        else
+        {
+            Debug.LogError("EndingActionCoroutine: returningText is null, skipping fade-in.");
+        }
         yield return new WaitForSeconds(1f); // 1초 대기
 
         // 6. 카운트다운 (5 -> 4 -> 3 -> 2 -> 1)
         if (countdownText != null)
         {
             yield return StartCoroutine(FadeInTMPText(countdownText, textFadeInDuration));
+        }
+        else
+        {
+            Debug.LogError("EndingActionCoroutine: countdownText is null, skipping fade-in and countdown.");
         }
         yield return new WaitForSeconds(0.5f); // 텍스트 선명화 후 짧게 대기
 
@@ -216,11 +253,9 @@ public class Chap1Ending : MonoBehaviour
         if (countdownText != null)
         {
             countdownText.gameObject.SetActive(false);
-            Debug.Log("Countdown text turned off.");
         }
 
         // 텍스트 박스가 꺼진 후 2초 뒤에 씬 이동
-        Debug.Log("Waiting " + sceneMoveDelayAfterCountdown + " seconds before moving to scene.");
         yield return new WaitForSeconds(sceneMoveDelayAfterCountdown);
 
         // 7. 타이틀 씬 이동
@@ -240,10 +275,17 @@ public class Chap1Ending : MonoBehaviour
     // TMP_Text를 서서히 선명하게 만드는 코루틴
     IEnumerator FadeInTMPText(TMP_Text targetText, float fadeDuration)
     {
-        if (targetText == null) yield break;
+        if (targetText == null)
+        {
+            Debug.LogWarning("FadeInTMPText: targetText is null. Aborting fade-in.");
+            yield break;
+        }
 
-        Color startColor = targetText.color; // 현재 알파값 (0)
-        Color endColor = new Color(initialTextColorFullAlpha.r, initialTextColorFullAlpha.g, initialTextColorFullAlpha.b, initialTextColorFullAlpha.a); // 목표 알파값 (1)
+        // 시작과 끝 색상 정의
+        Color startColor = initialTextColorAlphaZero;
+        Color endColor = initialTextColorFullAlpha;
+
+        Debug.Log($"FadeInTMPText for '{targetText.name}': Starting fade from alpha {startColor.a} to {endColor.a}. Duration: {fadeDuration}s");
 
         float timer = 0f;
         while (timer < fadeDuration)
@@ -253,8 +295,10 @@ public class Chap1Ending : MonoBehaviour
             targetText.color = Color.Lerp(startColor, endColor, progress);
             yield return null;
         }
-        targetText.color = endColor; // 정확히 목표 색상으로 설정
+        targetText.color = endColor; // 정확한 끝 값으로 마무리
+        Debug.Log($"FadeInTMPText for '{targetText.name}': Fade-in complete. Final Alpha: {targetText.color.a:F2}");
     }
+
 
     // TMP_Text의 알파값만 설정하는 헬퍼 함수
     private void SetTextAlpha(TMP_Text targetText, float alpha)
@@ -264,6 +308,10 @@ public class Chap1Ending : MonoBehaviour
             Color tempColor = targetText.color;
             tempColor.a = alpha;
             targetText.color = tempColor;
+        }
+        else
+        {
+            Debug.LogError($"SetTextAlpha: Attempted to set alpha on a null TMP_Text object.");
         }
     }
 }
