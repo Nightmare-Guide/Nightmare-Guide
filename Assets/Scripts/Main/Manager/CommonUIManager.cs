@@ -103,7 +103,7 @@ public class CommonUIManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Keypad1))
+        /*if (Input.GetKeyDown(KeyCode.Keypad1))
         {
             MoveScene("Title Scene");
         }
@@ -138,7 +138,7 @@ public class CommonUIManager : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.Keypad9))
         {
             MoveScene("NightHouse");
-        }
+        }*/
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
