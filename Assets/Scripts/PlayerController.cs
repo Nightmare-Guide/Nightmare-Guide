@@ -75,7 +75,10 @@ namespace UnityStandardAssets.Characters.FirstPerson
             {
                 Destroy(gameObject); // 중복된 인스턴스 제거
             }
-
+            if (agent == null)
+            {
+                agent = GetComponent<NavMeshAgent>();
+            }
 
             playerTransform = GetComponent<Transform>();
             m_CharacterController = GetComponent<CharacterController>();
