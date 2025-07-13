@@ -36,6 +36,10 @@ public class SoundManager : MonoBehaviour
     public AudioClip jumpScareSound; // 점프스케어 사운드
     public AudioClip wallMoveSound; // 벽 이동 사운드
     public AudioClip turnOffLightSound; // 전등 꺼지는 소리
+    public AudioClip elevatorOpenSound;
+    public AudioClip elevatorCloseSound;
+    public AudioClip elevatorMoveSound;
+    public AudioClip footStepSound;
 
 
     public Dictionary<string, Action> soundMethods; // 사운드 메소드
@@ -71,7 +75,11 @@ public class SoundManager : MonoBehaviour
             { "ChaseSound", ChaseSound },
             { "JumpScareSound", JumpScareSound },
             { "WallMoveSound", WallMoveSound },
-            { "TurnOffLightSound", TurnOffLightSound }
+            { "TurnOffLightSound", TurnOffLightSound },
+            { "ElevatorOpenSound", ElevatorOpenSound },
+            { "ElevatorCloseSound", ElevatorCloseSound },
+            { "ElevatorMoveSound", ElevatorMoveSound },
+            { "FootStepSound", FootStepSound }
         };
     }
 
@@ -93,6 +101,10 @@ public class SoundManager : MonoBehaviour
     public void JumpScareSound() => sfxSource.PlayOneShot(jumpScareSound);
     public void WallMoveSound() => sfxSource.PlayOneShot(wallMoveSound);
     public void TurnOffLightSound() => sfxSource.PlayOneShot(turnOffLightSound);
+    public void ElevatorOpenSound() => sfxSource.PlayOneShot(elevatorOpenSound);
+    public void ElevatorCloseSound() => sfxSource.PlayOneShot(elevatorCloseSound);
+    public void ElevatorMoveSound() => sfxSource.PlayOneShot(elevatorMoveSound);
+    public void FootStepSound() => sfxSource.PlayOneShot(footStepSound);
 
     public void SfxSoundLoop(AudioClip clip)
     {

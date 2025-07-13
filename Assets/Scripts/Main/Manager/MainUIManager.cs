@@ -6,6 +6,7 @@ using TMPro;
 using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.Playables;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using static CommonUIManager;
 using static ProgressManager;
@@ -76,6 +77,31 @@ public class MainUIManager : UIUtility
 
             playableDirector.playableAsset = null;
         }
+        if (SceneManager.GetActiveScene().name == "DayHospital")
+        {
+            SoundManager.instance.PlayBGM(SoundManager.instance.hospitalSound);
+            SliderController.instance.bgmMaxVolume = -40f;
+            Debug.Log(SliderController.instance.bgmMaxVolume);
+        }
+        else if (SceneManager.GetActiveScene().name == "School_Scene")
+        {
+            //예외처리할려고 만듬
+        }
+        else
+        {
+            SoundManager.instance.bgmSource.clip = null;
+        }
+    }
+    public void ShowReport()
+    {
+        timeLineManager.PauseTimeline();
+        report.SetActive(true);
+        Invoke(nameof(HideReport), 3f);
+    }
+    public void HideReport()
+    {
+        timeLineManager.ResumeTimeline();
+        report.SetActive(false);
     }
     public void ShowReport()
     {

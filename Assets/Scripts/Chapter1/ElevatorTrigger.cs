@@ -28,7 +28,7 @@ public class ElevatorTrigger : MonoBehaviour
 
     public void Operate_Elevator()
     {
-        elevator_anim.SetTrigger("UpPosition");
+        // elevator_anim.SetTrigger("UpPosition");
     }
 
     public void Close_Elevator()

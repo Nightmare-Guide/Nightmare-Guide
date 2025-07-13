@@ -18,6 +18,7 @@ using static CommonUIManager;
 using UnityEngine.Playables;
 using static ProgressManager;
 using UnityEditor.Localization.Plugins.XLIFF.V20;
+using UnityEngine.AI;
 
 public class SchoolUIManager : UIUtility
 {
@@ -26,8 +27,8 @@ public class SchoolUIManager : UIUtility
     public List<PhoneInfos> phoneInfos; // 각각 휴대폰 정보를 담는 list
     public List<VerticalLayoutGroup> textBoxLayouts;
     [SerializeField] public Enemy schoolEnemy;
-    [SerializeField] private Enemy backroomEnemy;
-    [SerializeField] private Enemy lastEnemy;
+    [SerializeField] public Enemy backroomEnemy;
+    [SerializeField] public Enemy lastEnemy;
     [SerializeField] private List<GameObject> timeLineEnemys;
     public GameObject playerObj;
     public Transform[] playerRespawnPoints;
@@ -38,8 +39,12 @@ public class SchoolUIManager : UIUtility
     [SerializeField] List<GameObject> schoolLights;
     public GameObject flashlightWall;
     public GameObject enemyFirstMeetWall;
+    public Transform elevatorTf;
+    public Vector3 playerLastLoungePos;
+    public Vector3 elevatorLastLoungePos;
     public List<GameObject> activeObjs;
     public List<GameObject> schoolMaps;
+    public List<Chapter1Trigger> lastAreaTriggerObjs;
     public float monsterTimer = 0f;
     public float monsterWaitTime = 60f;
     public bool enterLounge = false;
@@ -307,11 +312,13 @@ public class SchoolUIManager : UIUtility
             activeObjs[12].GetComponent<Door>().enabled = progressManager.IsActionCompleted(ActionType.ClearBackRoom) && !progressManager.IsActionCompleted(ActionType.EnteredEthanHouse); // Ethan House 입장 문
             activeObjs[13].SetActive(progressManager.IsActionCompleted(ActionType.ClearBackRoom));  // Backroom 퇴장 Trigger
             activeObjs[14].SetActive(progressManager.IsActionCompleted(ActionType.ClearBackRoom));  // Ethan House 입장 Trigger
-            activeObjs[15].SetActive(progressManager.IsActionCompleted(ActionType.EnteredEthanHouse) && !phoneInfos[0].hasPhone); // Locker Room 입장 벽
+            activeObjs[15].SetActive(!phoneInfos[0].hasPhone); // Locker Room 입장 벽
             activeObjs[16].GetComponent<Light>().color = progressManager.IsActionCompleted(ActionType.ClearLockerRoom) ? UnityEngine.Color.red : UnityEngine.Color.white; // Locker Room Light
+            activeObjs[16].GetComponent<Light>().intensity = progressManager.IsActionCompleted(ActionType.ClearLockerRoom) ? 4f : 2f; // Locker Room Light
             activeObjs[17].GetComponent<Door>().enabled = progressManager.IsActionCompleted(ActionType.ClearLockerRoom); // Locker Room Left 문
             activeObjs[18].GetComponent<Door>().enabled = progressManager.IsActionCompleted(ActionType.ClearLockerRoom); // Locker Room Right 문
             activeObjs[19].SetActive(progressManager.IsActionCompleted(ActionType.ClearLockerRoom) && progressManager.IsActionCompleted(ActionType.FinishFinalChase)); // Start Final Chase Tirgger
+            activeObjs[24].SetActive(progressManager.IsActionCompleted(ActionType.FinishFinalChase) && !progressManager.IsActionCompleted(ActionType.TalkWarmlyToEthan));
 
             bool isFirstMeetEthan = progressManager.IsActionCompleted(ActionType.FirstMeetEthan);
             bool startMonsterTimer = !activeObjs[5].GetComponent<Door>().doorState && enterLounge;
@@ -327,6 +334,7 @@ public class SchoolUIManager : UIUtility
             schoolMaps[3].SetActive(progressManager.IsActionCompleted(ActionType.LeaveEthan) && !progressManager.IsActionCompleted(ActionType.EnteredEthanHouse)); // Backroom
             schoolMaps[4].SetActive(progressManager.IsActionCompleted(ActionType.ClearBackRoom)); // Ethan House
             schoolMaps[5].SetActive(phoneInfos[0].hasPhone); // Locker Room 및 마지막 추격 맵
+            schoolMaps[6].SetActive(progressManager.IsActionCompleted(ActionType.FinishFinalChase)); // Last Lounge
 
             // Backroom 을 클리어 했으나 탈출하고 않고 종료 후 재접 시, 문 개방
             if (progressManager.IsActionCompleted(ActionType.ClearBackRoom) && !progressManager.IsActionCompleted(ActionType.OutOfBackRoom))
@@ -365,6 +373,18 @@ public class SchoolUIManager : UIUtility
             {
                 RespawnDuringBackroom();
             }
+            else if (progressManager.IsActionCompleted(ActionType.ClearLockerRoom) && !progressManager.IsActionCompleted(ActionType.FinishFinalChase))
+            {
+                RespawnDuringFinalChase();
+            }
+            else if (progressManager.IsActionCompleted(ActionType.FinishFinalChase))
+            {
+                playerObj.transform.position = playerRespawnPoints[3].position;
+                playerObj.transform.rotation = playerRespawnPoints[3].rotation;
+                elevatorTf.localPosition = elevatorLastLoungePos;
+                activeObjs[23].GetComponent<Collider>().enabled = true; // 엘리베이터 열기 버튼
+                activeObjs[24].SetActive(true); // Last Lounge Objs
+            }
         }
         else
         {
@@ -391,26 +411,25 @@ public class SchoolUIManager : UIUtility
             playerCamera.jumpscareObj.transform.localPosition = new Vector3(0, -1.77f, 1);
             playerCamera.jumpscareObj.transform.localRotation = Quaternion.Euler(0, 180, 0);
 
-            int respawnPointIndex = 0;
-
             // Action Type 에 따라서 리스폰 위치 설정
             switch (actionType)
             {
                 case ProgressManager.ActionType.FirstMeetMonster:
-                    respawnPointIndex = 0;
                     RespawnDuringSchoolChase();
                     break;
                 case ProgressManager.ActionType.EnteredBackRoom:
-                    respawnPointIndex = 1;
                     RespawnDuringBackroom();
                     break;
                 case ProgressManager.ActionType.ClearLockerRoom:
-                    respawnPointIndex = 2;
-                    lastEnemy.InitEnemy(enemyRespawnPoints[respawnPointIndex]);
+                    RespawnDuringFinalChase();
+                    break;
+                case ProgressManager.ActionType.FinishFinalChase:
+                    playerObj.transform.position = playerRespawnPoints[3].position;
+                    playerObj.transform.rotation = playerRespawnPoints[3].rotation;
+                    elevatorTf.localPosition = elevatorLastLoungePos;
+                    activeObjs[24].SetActive(true); // Last Lounge Objs
                     break;
             }
-
-            InitPlayer(playerRespawnPoints[respawnPointIndex]);
 
             yield return null;
 
@@ -460,6 +479,54 @@ public class SchoolUIManager : UIUtility
         Maze_Mgr.instance.Btn_Clear();
     }
 
+    void RespawnDuringFinalChase()
+    {
+        Debug.Log("RespawnDuringFinalChase");
+        lastEnemy.InitEnemy(enemyRespawnPoints[2]);
+        InitPlayer(playerRespawnPoints[2]);
+        activeObjs[16].GetComponent<Light>().color = UnityEngine.Color.red; // Locker Room Light
+        activeObjs[17].GetComponent<Door>().enabled = true; // Locker Room Left 문
+        activeObjs[18].GetComponent<Door>().enabled = true; // Locker Room Right 문
+        activeObjs[19].SetActive(true); // Start Final Chase Trigger
+
+        activeObjs[20].GetComponent<Door>().enabled = true; // 마지막 추격 맵 fake Door
+        if (activeObjs[20].GetComponent<Door>().doorState) { activeObjs[20].GetComponent<Door>().Select_Door(); }
+        activeObjs[21].GetComponent<Door>().enabled = true;
+        if (activeObjs[21].GetComponent<Door>().doorState) { activeObjs[21].GetComponent<Door>().Select_Door(); }
+        activeObjs[22].GetComponent<Collider>().enabled = true; // 엘리베이터 닫기 버튼
+        activeObjs[23].GetComponent<Collider>().enabled = false; // 엘리베이터 열기 버튼
+        activeObjs[24].SetActive(false); // Last Lounge 오브젝트들
+
+        // PostProcessing 및 Fog 변경
+        commonUIManager.ApplyFog(commonUIManager.fogSettings[0]);
+        Camera_Rt.instance.ApplyPostProcessing("Nightmare");
+
+        InitTimelineEnemy(timeLineEnemys[2].transform, timelineEnemyPoints[2]);
+
+        // 트리거 오브젝트들 위치 초기화
+        foreach(Chapter1Trigger obj in lastAreaTriggerObjs)
+        {
+            obj.gameObject.SetActive(true);
+
+            if (obj.triggerObject == null)
+                return;
+
+            obj.triggerObject.SetActive(true);
+
+            Animator objAnim;
+
+            if (obj.triggerObject.TryGetComponent<Animator>(out objAnim))
+            {
+                Debug.Log("ReturnTrigger");
+                objAnim.SetBool("ReturnTrigger", true);
+            }
+            else
+            {
+                Debug.Log("Don't have Animator");
+            }
+        }
+    }
+
     void InitTimelineEnemy(Transform timelineEnemy, Transform respawnTransform)
     {
         timelineEnemy.position = respawnTransform.position;
@@ -468,7 +535,7 @@ public class SchoolUIManager : UIUtility
 
     public void FirstMeetEthan(bool getFlashlight)
     {
-        CSVRoad_Story.instance.OnSelectChapter("1_0_1"); // 테스트 때문에 1_0_0 에서 변경
+        CSVRoad_Story.instance.OnSelectChapter("1_0_0");
         activeObjs[7].GetComponent<AudioSource>().Stop();
         activeObjs[7].GetComponent<AudioSource>().enabled = false;
         fakeWall.SetActive(false);
@@ -663,6 +730,7 @@ public class SchoolUIManager : UIUtility
         // PostProcessing 및 Fog 변경
         commonUIManager.ApplyFog(commonUIManager.fogSettings[1]);
         Camera_Rt.instance.ApplyPostProcessing("Warm");
+        Camera_Rt.instance.postProecessingBehaviour.gameObject.GetComponent<RayCast_Aim>().flashlight.SetActive(false);
         soundManager.FlashlightSound();
 
         progressManager.CompletedAction(ActionType.OutOfBackRoom);
@@ -699,6 +767,7 @@ public class SchoolUIManager : UIUtility
     public void ClearLockerRoom()
     {
         activeObjs[16].GetComponent<Light>().color = UnityEngine.Color.red; // Locker Room Light
+        activeObjs[16].GetComponent<Light>().intensity = 4;
         activeObjs[17].GetComponent<Door>().enabled = true; // Locker Room Left 문
         activeObjs[18].GetComponent<Door>().enabled = true; // Locker Room Right 문
         activeObjs[19].SetActive(true); // Start Final Chase Trigger
@@ -714,16 +783,87 @@ public class SchoolUIManager : UIUtility
 
     public void StartFinalChase()
     {
+        activeObjs[19].SetActive(false);  // Start Final Chase Trigger
+        Camera_Rt.instance.postProecessingBehaviour.gameObject.GetComponent<RayCast_Aim>().flashlight.SetActive(true);
+        StartTimeLine(TimeLineManager.instance.playableAssets[4]);
         progressManager.CompletedAction(ActionType.StartFinalChase);
     }
 
     public void FinishFinalChase()
     {
+        Debug.Log("FinishFinalChase");
+        StartCoroutine(EnterElevator());
+    }
+
+    IEnumerator EnterElevator()
+    {
+        soundManager.ClickButton();
         progressManager.CompletedAction(ActionType.FinishFinalChase);
+
+        yield return new WaitForSeconds(2f);
+
+        lastEnemy.gameObject.SetActive(false);
+        soundManager.sfxSource.Stop();
+        soundManager.sfxSource.clip = null;
+        soundManager.ElevatorMoveSound();
+
+        yield return new WaitForSeconds(2f);
+
+        commonUIManager.Blink(false);
+
+        yield return new WaitForSeconds(1f);
+
+        elevatorTf.localPosition = elevatorLastLoungePos;
+
+        yield return new WaitForSeconds(0.1f);
+
+        StopPlayerController();
+
+        playerObj.transform.position = playerRespawnPoints[3].position;
+        playerObj.transform.rotation = playerRespawnPoints[3].rotation;
+
+        StartPlayerController();
+
+        activeObjs[24].SetActive(true); // Last Lounge Objs
+
+        // PostProcessing 및 Fog 변경
+        commonUIManager.ApplyFog(commonUIManager.fogSettings[1]);
+        Camera_Rt.instance.ApplyPostProcessing("Warm");
+        Camera_Rt.instance.postProecessingBehaviour.gameObject.GetComponent<RayCast_Aim>().flashlight.SetActive(false);
+
+        yield return new WaitForSeconds(2f);
+
+        commonUIManager.Blink(true);
+
+        yield return null;
+
+        activeObjs[23].GetComponent<Collider>().enabled = true; // 엘리베이터 열기 버튼
+        schoolMaps[4].SetActive(false); // Ethan House
+        schoolMaps[5].SetActive(false); // Last Area
+        schoolMaps[6].SetActive(true); // Last Lounge
+
+    }
+
+    public void StartLastTimeLine()
+    {
+        StartCoroutine(StartLastSchoolEvent());
+    }
+
+    IEnumerator StartLastSchoolEvent()
+    {
+        commonUIManager.Blink(false);
+
+        yield return new WaitForSeconds(1f);
+
+        commonUIManager.Blink(true);
+
+        progressManager.CompletedAction(ActionType.EnterLastLounge);
+        StartTimeLine(TimeLineManager.instance.playableAssets[3]);
     }
 
     public void FinishSchoolScene()
     {
+        progressManager.CompletedAction(ActionType.TalkWarmlyToEthan);
         commonUIManager.MoveScene("NightHospital");
     }
 }

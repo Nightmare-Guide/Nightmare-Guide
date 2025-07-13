@@ -12,6 +12,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using UnityStandardAssets.Characters.FirstPerson;
 using static UnityEngine.Rendering.DebugUI;
+using UnityEngine.Audio;
 
 public class CommonUIManager : MonoBehaviour
 {
@@ -387,7 +388,7 @@ public class CommonUIManager : MonoBehaviour
 
         yield return new WaitForSeconds(blinkDuration);
 
-        blinkObj.SetActive(false);
+        // blinkObj.SetActive(false);
     }
 
     public void SetBGVolume(float value)
@@ -395,6 +396,7 @@ public class CommonUIManager : MonoBehaviour
         //bgAudioSource.volume = value;
         bgVolume = value;
         bgVolumeSlider.value = value;
+
         if (ProgressManager.Instance != null)
         {
             ProgressManager.Instance.progressData.bgVolume = value;
