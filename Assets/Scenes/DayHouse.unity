@@ -2743,7 +2743,7 @@ MonoBehaviour:
   requiredStoryProgress: clear
   successDialogue: 
   onScript: 0
-  failDialogue: 0_9_9
+  failDialogue: 0_1_0_0
   progressType: 1
 --- !u!114 &84627467
 MonoBehaviour:
@@ -4066,9 +4066,11 @@ MonoBehaviour:
   optionUI: {fileID: 0}
   fadeInOutImg: {fileID: 1670902870}
   playerCamera: {fileID: 694136377275395200}
+  audioSources: []
   playableDirector: {fileID: 307477813}
   commonUIManager: {fileID: 0}
   timeLineManager: {fileID: 0}
+  soundManager: {fileID: 0}
   textBoxLayouts:
   - {fileID: 615279089}
   - {fileID: 615279088}
