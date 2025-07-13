@@ -226,20 +226,23 @@ public class CommonUIManager : MonoBehaviour
 
     public void FullScreenBtn()
     {
-        // 전체 화면 코드 필요
         fullScreenCheckImg.SetActive(true);
         windowedCheckImg.SetActive(false);
 
         isFullScreen = true;
+
+        Screen.fullScreenMode = FullScreenMode.ExclusiveFullScreen;
+        Screen.fullScreen = true;
     }
 
     public void WindowedBtn()
     {
-        // 창모드 화면 코드 필요
         fullScreenCheckImg.SetActive(false);
         windowedCheckImg.SetActive(true);
 
         isFullScreen = false;
+
+        Screen.SetResolution(1280, 720, FullScreenMode.Windowed);
     }
 
     // DropDown 에 들어가는 값 변경 함수
