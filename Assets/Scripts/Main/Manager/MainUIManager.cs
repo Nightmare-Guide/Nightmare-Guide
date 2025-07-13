@@ -6,6 +6,7 @@ using TMPro;
 using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.Playables;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using static CommonUIManager;
 using static ProgressManager;
@@ -75,6 +76,12 @@ public class MainUIManager : UIUtility
             }
 
             playableDirector.playableAsset = null;
+        }
+        if (SceneManager.GetActiveScene().name == "DayHospital")
+        {
+            SoundManager.instance.PlayBGM(SoundManager.instance.hospitalSound);
+            SliderController.instance.bgmMaxVolume = -40f;
+            Debug.Log(SliderController.instance.bgmMaxVolume);
         }
     }
     public void ShowReport()
