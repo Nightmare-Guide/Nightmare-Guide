@@ -80,7 +80,6 @@ public class MainUIManager : UIUtility
         if (SceneManager.GetActiveScene().name == "DayHospital")
         {
             SoundManager.instance.PlayBGM(SoundManager.instance.hospitalSound);
-            SliderController.instance.bgmMaxVolume = -40f;
             Debug.Log(SliderController.instance.bgmMaxVolume);
         }
         else if (SceneManager.GetActiveScene().name == "School_Scene")
@@ -96,7 +95,7 @@ public class MainUIManager : UIUtility
     {
         timeLineManager.PauseTimeline();
         report.SetActive(true);
-        Invoke(nameof(HideReport), 3f);
+        Invoke(nameof(HideReport), 7f);
     }
     public void HideReport()
     {
