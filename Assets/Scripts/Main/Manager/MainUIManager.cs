@@ -93,13 +93,13 @@ public class MainUIManager : UIUtility
     }
     public void ShowReport()
     {
-        timeLineManager.PauseTimeline();
+        uiObjects[0].SetActive(true);
         report.SetActive(true);
         Invoke(nameof(HideReport), 7f);
     }
     public void HideReport()
     {
-        timeLineManager.ResumeTimeline();
+        uiObjects[0].SetActive(false);
         report.SetActive(false);
     }
     public void DayHospitalTimeLine()

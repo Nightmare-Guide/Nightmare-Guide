@@ -2092,10 +2092,10 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1577738153}
+  - {fileID: 296318760}
   - {fileID: 771610738}
   - {fileID: 1413191944}
-  - {fileID: 296318760}
-  - {fileID: 1577738153}
   - {fileID: 615279077}
   - {fileID: 1977004579}
   - {fileID: 2114304279}
@@ -6331,7 +6331,7 @@ PlayableDirector:
   m_GameObject: {fileID: 818130188}
   m_Enabled: 1
   serializedVersion: 3
-  m_PlayableAsset: {fileID: 11400000, guid: e789ec833f1ddd54aa1ce272e1d83471, type: 2}
+  m_PlayableAsset: {fileID: 11400000, guid: 950304e48bf300e47929915c979137dd, type: 2}
   m_InitialState: 0
   m_WrapMode: 2
   m_DirectorUpdateMode: 1
