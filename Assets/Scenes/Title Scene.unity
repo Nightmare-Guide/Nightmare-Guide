@@ -11363,6 +11363,10 @@ MonoBehaviour:
   jumpScareSound: {fileID: 8300000, guid: 97bcbf6b9a7e27c4f8b419ddaca9ef97, type: 3}
   wallMoveSound: {fileID: 8300000, guid: 846e0862800b6a548abde340487b0b52, type: 3}
   turnOffLightSound: {fileID: 0}
+  elevatorOpenSound: {fileID: 8300000, guid: e7b2e17f96e1293439b1610897e0fe6f, type: 3}
+  elevatorCloseSound: {fileID: 8300000, guid: c06cc88d0a0b4b44d922dbc80c42e19b, type: 3}
+  elevatorMoveSound: {fileID: 8300000, guid: 4b4079698072d8f46a25464cc198c7fe, type: 3}
+  footStepSound: {fileID: 8300000, guid: 42e65e088b3f4374e851b8dbd38f3df9, type: 3}
 --- !u!4 &275233425
 Transform:
   m_ObjectHideFlags: 0
@@ -39082,7 +39086,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 2100000, guid: deeb9136c09ccf64b903ee0f98add2a1, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:

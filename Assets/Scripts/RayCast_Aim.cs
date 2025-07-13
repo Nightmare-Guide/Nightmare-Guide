@@ -90,7 +90,7 @@ public class RayCast_Aim : MonoBehaviour
                     if (click_object.CompareTag("Locker"))
                     {
                         Locker(click_object);
-                        
+
                         SoundManager.instance.PlayDoorOpen();
                     }
 
@@ -200,7 +200,7 @@ public class RayCast_Aim : MonoBehaviour
                     {
                         if (CommonUIManager.instance.uiManager is SchoolUIManager schoolUIManager)
                         {
-                            if(schoolUIManager.CheckItem("Locker Key") && !ProgressManager.Instance.IsActionCompleted(ActionType.GetOutOfLocker))
+                            if (schoolUIManager.CheckItem("Locker Key") && !ProgressManager.Instance.IsActionCompleted(ActionType.GetOutOfLocker))
                             {
                                 schoolUIManager.UseLockerKey();
                             }
@@ -253,7 +253,7 @@ public class RayCast_Aim : MonoBehaviour
             if (flashlight == null)
                 return;
 
-            SchoolUIManager schoolUIManager  = CommonUIManager.instance.uiManager as SchoolUIManager;
+            SchoolUIManager schoolUIManager = CommonUIManager.instance.uiManager as SchoolUIManager;
 
             if (ProgressManager.Instance.progressData.hideInLocker)
                 return;
@@ -273,6 +273,20 @@ public class RayCast_Aim : MonoBehaviour
 
         button_anim.SetTrigger("ClickButton");
         button_anim.SetBool("On", true);
+
+        SchoolUIManager schoolUIManager = CommonUIManager.instance.uiManager as SchoolUIManager;
+
+        if (obj.name.Contains("Elevator_ButtonClose"))
+        {
+            schoolUIManager.FinishFinalChase();
+        }
+        else
+        {
+            schoolUIManager.activeObjs[25].GetComponent<Animator>().SetTrigger("StartTrigger");
+            schoolUIManager.activeObjs[26].GetComponent<Animator>().SetTrigger("StartTrigger");
+            schoolUIManager.activeObjs[25].GetComponent<Animator>().SetTrigger("OpenTrigger");
+            schoolUIManager.activeObjs[26].GetComponent<Animator>().SetTrigger("OpenTrigger");
+        }
     }
 
     public void Chapter1_Maze(GameObject obj) //챕터 1 미로맵 탈출용 버튼 클릭

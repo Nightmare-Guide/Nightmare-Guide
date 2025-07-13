@@ -410,11 +410,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 {
                     SchoolUIManager schoolUIManager = CommonUIManager.instance.uiManager as SchoolUIManager;
                     AudioSource ehtanLockerAudio = schoolUIManager.activeObjs[7].GetComponent<AudioSource>();
-
-                    if (ehtanLockerAudio.enabled)
-                    {
-                        ehtanLockerAudio.Play();
-                    }
+                    ehtanLockerAudio.enabled = true;
+                    ehtanLockerAudio.Play();
                 }
                 else if (other.gameObject.name == "EnemyFirstMeet Wall")
                 {
@@ -458,6 +455,12 @@ namespace UnityStandardAssets.Characters.FirstPerson
                     SchoolUIManager schoolUIManager = CommonUIManager.instance.uiManager as SchoolUIManager;
 
                     schoolUIManager.StartFinalChase();
+                }
+                else if (other.gameObject.name.Contains("Last TimeLine Tirrger"))
+                {
+                    SchoolUIManager schoolUIManager = CommonUIManager.instance.uiManager as SchoolUIManager;
+
+                    schoolUIManager.StartLastTimeLine();
                 }
             }
         }

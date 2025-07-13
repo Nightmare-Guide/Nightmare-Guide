@@ -48,6 +48,7 @@ public class ProgressManager : MonoBehaviour
         ClearLockerRoom,
         StartFinalChase,
         FinishFinalChase,
+        EnterLastLounge,
         TalkWarmlyToEthan,
         BackToHospital,
         FinishFirstWork,
@@ -274,6 +275,13 @@ public class ProgressManager : MonoBehaviour
                 SchoolUIManager schoolUIManager = CommonUIManager.instance.uiManager as SchoolUIManager;
                 existingData.tr = schoolUIManager.playerRespawnPoints[2].position;
                 existingData.rt = schoolUIManager.playerRespawnPoints[2].rotation.eulerAngles;
+            }
+            else if (IsActionCompleted(ActionType.FinishFinalChase))
+            {
+                SchoolUIManager schoolUIManager = CommonUIManager.instance.uiManager as SchoolUIManager;
+                existingData.tr = schoolUIManager.playerRespawnPoints[3].position;
+                existingData.rt = schoolUIManager.playerRespawnPoints[3].rotation.eulerAngles;
+                schoolUIManager.activeObjs[23].GetComponent<Collider>().enabled = true; // 엘리베이터 열기 버튼
             }
 
             Debug.Log($"[{sceneName}] Update 플레이어 위치/회전 정보 업데이트: {position}, {rotation}");
