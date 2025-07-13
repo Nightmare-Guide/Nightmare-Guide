@@ -7,6 +7,7 @@ public class NextScene : MonoBehaviour
     public static NextScene instance{get; private set;}
     public string scene_Name;
     public string storyprogress;
+    public MainUIManager mainUIManager;
 
     private void Start()
     {
@@ -24,5 +25,12 @@ public class NextScene : MonoBehaviour
         //    CommonUIManager.instance.MoveScene(scene_Name);
         //}
     }
-
+    public void GoNightMareTimeLine()
+    {
+        mainUIManager.GoNightMare();
+    }
+    public void NextNightmare()
+    {
+        CommonUIManager.instance.MoveScene("School_Scene");
+    }
 }

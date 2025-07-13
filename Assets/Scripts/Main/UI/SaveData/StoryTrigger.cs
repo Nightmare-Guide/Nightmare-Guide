@@ -14,6 +14,11 @@ public class StoryTrigger : MonoBehaviour
     {
         CSVRoad_Story.instance.OnSelectChapter(chapter);
     }
+    
+    public void StopTimeLine()
+    {
+
+    }
 
     private void OnTriggerEnter(Collider other)
     {

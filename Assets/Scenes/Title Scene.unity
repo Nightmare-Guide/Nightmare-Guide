@@ -592,10 +592,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1a8a3cd4ab88d84d9adc1d1a381ec64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doorID: 
   lockerIndex: 0
   doorState: 1
   boxcollider: {fileID: 1241510863}
   navMeshObstacle: {fileID: 0}
+  inplayerTimeLine: 0
   startRotation: {x: 0, y: 0, z: 0, w: 0}
   endRotation: {x: 0, y: 0, z: 0, w: 0}
   isRotation: 0
@@ -19093,7 +19095,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 89002627787ee2d49bfcb8f2dd672a56, type: 2}
   - {fileID: 11400000, guid: df61abfe2c201ca418d5e1e0460896b7, type: 2}
   - {fileID: 11400000, guid: 50f9b8c4bc165f8478dcff255d7f8117, type: 2}
-  - {fileID: 11400000, guid: 83e5902233491f047a86138c1392068d, type: 2}
+  - {fileID: 11400000, guid: 950304e48bf300e47929915c979137dd, type: 2}
+  - {fileID: 11400000, guid: e789ec833f1ddd54aa1ce272e1d83471, type: 2}
+  - {fileID: 11400000, guid: b0b3a3d3312ac15468e35d1e283051e5, type: 2}
+  director: {fileID: 0}
 --- !u!4 &444086497
 Transform:
   m_ObjectHideFlags: 0
@@ -50935,10 +50940,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1a8a3cd4ab88d84d9adc1d1a381ec64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doorID: 
   lockerIndex: 0
   doorState: 1
   boxcollider: {fileID: 1171352853}
   navMeshObstacle: {fileID: 0}
+  inplayerTimeLine: 0
   startRotation: {x: 0, y: 0, z: 0, w: 0}
   endRotation: {x: 0, y: 0, z: 0, w: 0}
   isRotation: 0
@@ -53315,10 +53322,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1a8a3cd4ab88d84d9adc1d1a381ec64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doorID: 
   lockerIndex: 0
   doorState: 1
   boxcollider: {fileID: 1241510863}
   navMeshObstacle: {fileID: 0}
+  inplayerTimeLine: 0
   startRotation: {x: 0, y: 0, z: 0, w: 0}
   endRotation: {x: 0, y: 0, z: 0, w: 0}
   isRotation: 0
@@ -60133,10 +60142,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1a8a3cd4ab88d84d9adc1d1a381ec64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doorID: 
   lockerIndex: 0
   doorState: 1
   boxcollider: {fileID: 1241510863}
   navMeshObstacle: {fileID: 0}
+  inplayerTimeLine: 0
   startRotation: {x: 0, y: 0, z: 0, w: 0}
   endRotation: {x: 0, y: 0, z: 0, w: 0}
   isRotation: 0
@@ -60447,10 +60458,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1a8a3cd4ab88d84d9adc1d1a381ec64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doorID: 
   lockerIndex: 0
   doorState: 1
   boxcollider: {fileID: 1241510863}
   navMeshObstacle: {fileID: 0}
+  inplayerTimeLine: 0
   startRotation: {x: 0, y: 0, z: 0, w: 0}
   endRotation: {x: 0, y: 0, z: 0, w: 0}
   isRotation: 0
@@ -71276,10 +71289,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1a8a3cd4ab88d84d9adc1d1a381ec64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doorID: 
   lockerIndex: 0
   doorState: 1
   boxcollider: {fileID: 1241510863}
   navMeshObstacle: {fileID: 0}
+  inplayerTimeLine: 0
   startRotation: {x: 0, y: 0, z: 0, w: 0}
   endRotation: {x: 0, y: 0, z: 0, w: 0}
   isRotation: 0
@@ -79840,10 +79855,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1a8a3cd4ab88d84d9adc1d1a381ec64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doorID: 
   lockerIndex: 0
   doorState: 1
   boxcollider: {fileID: 1241510863}
   navMeshObstacle: {fileID: 0}
+  inplayerTimeLine: 0
   startRotation: {x: 0, y: 0, z: 0, w: 0}
   endRotation: {x: 0, y: 0, z: 0, w: 0}
   isRotation: 0
@@ -86453,10 +86470,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1a8a3cd4ab88d84d9adc1d1a381ec64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doorID: 
   lockerIndex: 0
   doorState: 1
   boxcollider: {fileID: 2033239615}
   navMeshObstacle: {fileID: 0}
+  inplayerTimeLine: 0
   startRotation: {x: 0, y: 0, z: 0, w: 0}
   endRotation: {x: 0, y: 0, z: 0, w: 0}
   isRotation: 0
@@ -91482,10 +91501,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1a8a3cd4ab88d84d9adc1d1a381ec64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doorID: 
   lockerIndex: 0
   doorState: 1
   boxcollider: {fileID: 1241510863}
   navMeshObstacle: {fileID: 0}
+  inplayerTimeLine: 0
   startRotation: {x: 0, y: 0, z: 0, w: 0}
   endRotation: {x: 0, y: 0, z: 0, w: 0}
   isRotation: 0
@@ -92892,10 +92913,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1a8a3cd4ab88d84d9adc1d1a381ec64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doorID: 
   lockerIndex: 0
   doorState: 1
   boxcollider: {fileID: 1241510863}
   navMeshObstacle: {fileID: 0}
+  inplayerTimeLine: 0
   startRotation: {x: 0, y: 0, z: 0, w: 0}
   endRotation: {x: 0, y: 0, z: 0, w: 0}
   isRotation: 0
