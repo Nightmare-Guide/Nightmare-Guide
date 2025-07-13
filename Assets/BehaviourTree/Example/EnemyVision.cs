@@ -7,10 +7,10 @@ using UnityStandardAssets.Characters.FirstPerson;
 public class EnemyVision : MonoBehaviour
 {
     [Header("탐지 설정")]
-    public float detectionRadius = 10f; // 시야 감지 거리
+    public float detectionRadius = 20f; // 시야 감지 거리
     [Range(0, 360)] public float detectionAngle = 120f; // 시야각
-    public float closeRangeRadius = 3f; // 근거리 전방위 감지
-    public float longRangeThreshold = 25f; // 🔸 추가: 너무 멀리 도망간 경우 감지
+    public float closeRangeRadius = 12f; // 근거리 전방위 감지
+    public float longRangeThreshold = 40f; // 추가: 너무 멀리 도망간 경우 감지
 
 
     [Header("레이어 설정")]
@@ -42,6 +42,7 @@ public class EnemyVision : MonoBehaviour
             isDetected = CheckPlayerInView();
             lockerDetected = CheckLockerInView();
 
+            blackboard.isDetected = this.isDetected;
             blackboard.Set("isDetected", isDetected);
             blackboard.Set("lockerDetected", lockerDetected);
 
@@ -56,16 +57,18 @@ public class EnemyVision : MonoBehaviour
             StartCoroutine(HandleDetectionCooldown());
         }
     }
+
+
     private bool CheckPlayerInView()
     {
         if (player == null) return false;
 
         float distance = Vector3.Distance(transform.position, player.transform.position);
 
-        // 🔸 일정 거리 이상 벗어나면 강제로 감지
+        // 일정 거리 이상 벗어나면 강제로 감지
         if (distance > longRangeThreshold)
         {
-            return true;
+            return ForceGetPlayerPos();
         }
 
         // 기존 감지 로직
@@ -75,7 +78,21 @@ public class EnemyVision : MonoBehaviour
         return inView || inCloseRange;
     }
 
+    private bool ForceGetPlayerPos()
+    {
+        if (player == null) return false;
 
+        float distance = Vector3.Distance(transform.position, player.transform.position);
+
+        if (distance < longRangeThreshold)
+            return false;
+
+        blackboard.moveToPosition = player.transform.position;
+        return true;
+    }
+
+
+    // 근거리 Ray
     private bool CheckObjectInCloseRange(GameObject obj)
     {
         if (obj == null) return false;
@@ -92,6 +109,7 @@ public class EnemyVision : MonoBehaviour
 
         return true;
     }
+
 
     private bool CheckLockerInView()
     {
@@ -118,7 +136,7 @@ public class EnemyVision : MonoBehaviour
     }
 
 
-
+    // 시야각 Ray
     private bool CheckObjectInView(GameObject obj)
     {
         if (obj == null) return false;
@@ -160,12 +178,12 @@ public class EnemyVision : MonoBehaviour
         Gizmos.DrawLine(transform.position, transform.position + leftBoundary * detectionRadius);
         Gizmos.DrawLine(transform.position, transform.position + rightBoundary * detectionRadius);
 
-        // 🔹 추가: 전방위 근거리 감지 반경
+        //  추가: 전방위 근거리 감지 반경
         Gizmos.color = new Color(1f, 0.5f, 0f, 0.5f); // 주황색
         Gizmos.DrawWireSphere(transform.position, closeRangeRadius);
 
 
-        // 🔸 장거리 감지 한계 표시 (회색 실선)
+        //  장거리 감지 한계 표시 (회색 실선)
         Gizmos.color = Color.gray;
         Gizmos.DrawWireSphere(transform.position, longRangeThreshold);
 

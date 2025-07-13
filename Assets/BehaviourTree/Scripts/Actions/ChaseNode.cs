@@ -20,8 +20,9 @@ public class ChaseNode : ActionNode
 
     protected override void OnStop()
     {
-        if (agent != null)
+        if (agent == null)
         {
+            Debug.Log("agent is null");
             agent.velocity = Vector3.zero;
             agent.ResetPath();
         }
