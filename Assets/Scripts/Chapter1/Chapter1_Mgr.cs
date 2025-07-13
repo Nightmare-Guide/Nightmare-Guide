@@ -105,6 +105,7 @@ public class Chapter1_Mgr : MonoBehaviour
 
     public void ActiveTriggerAnimator(Animator gameobject)
     {
+        gameobject.SetBool("ReturnTrigger", false);
         gameobject.SetTrigger("StartTrigger");
     }
 
