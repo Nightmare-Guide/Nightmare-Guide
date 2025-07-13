@@ -388,7 +388,7 @@ public class CommonUIManager : MonoBehaviour
 
         yield return new WaitForSeconds(blinkDuration);
 
-        blinkObj.SetActive(false);
+        // blinkObj.SetActive(false);
     }
 
     public void SetBGVolume(float value)

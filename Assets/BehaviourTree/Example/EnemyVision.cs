@@ -10,7 +10,7 @@ public class EnemyVision : MonoBehaviour
     public float detectionRadius = 20f; // 시야 감지 거리
     [Range(0, 360)] public float detectionAngle = 120f; // 시야각
     public float closeRangeRadius = 12f; // 근거리 전방위 감지
-    public float longRangeThreshold = 40f; // 추가: 너무 멀리 도망간 경우 감지
+    public float longRangeThreshold = 30f; // 추가: 너무 멀리 도망간 경우 감지
 
 
     [Header("레이어 설정")]
@@ -29,6 +29,13 @@ public class EnemyVision : MonoBehaviour
 
     private float detectionCooldown = 1f;
     private bool canDetect = true;
+
+    AudioSource sfxAudio;
+
+    private void Awake()
+    {
+        sfxAudio = GetComponent<AudioSource>();
+    }
 
     void Start()
     {
@@ -61,13 +68,14 @@ public class EnemyVision : MonoBehaviour
 
     private bool CheckPlayerInView()
     {
-        if (player == null) return false;
+        if (player == null) { if (sfxAudio.isPlaying) { sfxAudio.Stop(); } return false; }
 
         float distance = Vector3.Distance(transform.position, player.transform.position);
 
         // 일정 거리 이상 벗어나면 강제로 감지
         if (distance > longRangeThreshold)
         {
+            if (sfxAudio.isPlaying) { sfxAudio.Stop(); }
             return ForceGetPlayerPos();
         }
 
@@ -80,12 +88,12 @@ public class EnemyVision : MonoBehaviour
 
     private bool ForceGetPlayerPos()
     {
-        if (player == null) return false;
+        if (player == null) { if (sfxAudio.isPlaying) { sfxAudio.Stop(); } return false; }
 
         float distance = Vector3.Distance(transform.position, player.transform.position);
 
         if (distance < longRangeThreshold)
-            return false;
+        { if (sfxAudio.isPlaying) { sfxAudio.Stop(); } return false; }
 
         blackboard.moveToPosition = player.transform.position;
         return true;
@@ -95,18 +103,20 @@ public class EnemyVision : MonoBehaviour
     // 근거리 Ray
     private bool CheckObjectInCloseRange(GameObject obj)
     {
-        if (obj == null) return false;
+        if (obj == null) { if (sfxAudio.isPlaying) { sfxAudio.Stop(); } return false; }
 
         float distance = Vector3.Distance(transform.position, obj.transform.position);
-        if (distance > closeRangeRadius) return false;
+        if (distance > closeRangeRadius) { if (sfxAudio.isPlaying) { sfxAudio.Stop(); } return false; }
 
         // 장애물 체크 (레이캐스트)
         Vector3 directionToObj = (obj.transform.position - transform.position).normalized;
         if (Physics.Raycast(transform.position, directionToObj, distance, obstacleLayer))
         {
-            return false;
+            if (sfxAudio.isPlaying) { sfxAudio.Stop(); }
+                return false;
         }
 
+        if (!sfxAudio.isPlaying) { sfxAudio.Play(); }
         return true;
     }
 
