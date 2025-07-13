@@ -22,6 +22,7 @@ public class MainUIManager : UIUtility
     public List<Item> inventory; // 플레이어 인벤토리 데이터
     public List<Item> items; // 인게임 아이템 데이터
     public List<ItemSlot> inventorySlots; // 실제 UI Slot 들
+    public GameObject report;
 
     [Header("# SaveData")]
     public List<String> inventoryDatas;
@@ -75,6 +76,17 @@ public class MainUIManager : UIUtility
 
             playableDirector.playableAsset = null;
         }
+    }
+    public void ShowReport()
+    {
+        timeLineManager.PauseTimeline();
+        report.SetActive(true);
+        Invoke(nameof(HideReport), 3f);
+    }
+    public void HideReport()
+    {
+        timeLineManager.ResumeTimeline();
+        report.SetActive(false);
     }
     public void DayHospitalTimeLine()
     {
@@ -209,5 +221,14 @@ public class MainUIManager : UIUtility
                 SetUIOpacity(text, true, 0f, 0f);
             }
         }
+    }
+
+    public void FirstSupervisorMeet()
+    {
+        StartTimeLine(TimeLineManager.instance.playableAssets[0]);
+    }
+    public void FirstEthanMotherMeet()
+    {
+        StartTimeLine(TimeLineManager.instance.playableAssets[1]);
     }
 }

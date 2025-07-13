@@ -8,13 +8,20 @@ public class AutoDoor : MonoBehaviour
 {
     public Door door;
     public bool firstStart = false; // 첫실행 판단용
-    public PlayableDirector director;
     public BoxCollider col;
     public MainUIManager mainUIManager;
-
+    public Supervisor supervisor;
+    private void Start()
+    {
+        door.enabled = false;
+    }
     private void Update()
     {
         DoorTrigger();
+        if (supervisor.firstmeet)
+        {
+            door.enabled = true;
+        }
     }
 
     public void DoorTrigger()

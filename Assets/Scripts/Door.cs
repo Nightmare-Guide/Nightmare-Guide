@@ -6,10 +6,12 @@ using UnityEngine.AI;
 
 public class Door : MonoBehaviour
 {
+    public string doorID;
     public int lockerIndex;
     public bool doorState; // true = ¿­¸², false = ´ÝÈû
     public BoxCollider boxcollider;
     public NavMeshObstacle navMeshObstacle;
+    public bool inplayerTimeLine;
 
     [SerializeField] private Quaternion startRotation;
     [SerializeField] private Quaternion endRotation;

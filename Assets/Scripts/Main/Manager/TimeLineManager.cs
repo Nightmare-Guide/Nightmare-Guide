@@ -9,6 +9,7 @@ public class TimeLineManager : MonoBehaviour
     public static TimeLineManager instance { get; private set; }
 
     public List<PlayableAsset> playableAssets;
+    public PlayableDirector director;
 
     private void Awake()
     {
@@ -34,6 +35,20 @@ public class TimeLineManager : MonoBehaviour
         foreach (PlayableAsset playableAsset in playableAssets)
         {
             ProgressManager.Instance.defaultData.timelineWatchedList.Add(new TimelineEntry { key = playableAsset.name, value = false});
+        }
+    }
+    public void PauseTimeline()
+    {
+        if (director != null && director.state == PlayState.Playing)
+        {
+            director.Pause();
+        }
+    }
+    public void ResumeTimeline()
+    {
+        if (director != null && director.state == PlayState.Paused)
+        {
+            director.Play();
         }
     }
 

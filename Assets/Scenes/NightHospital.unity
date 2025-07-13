@@ -31527,11 +31527,45 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerNH
       objectReference: {fileID: 0}
+    - target: {fileID: 2118947914879359623, guid: 01063c60adbcf174fb3a160c645658f5, type: 3}
+      propertyPath: agent
+      value: 
+      objectReference: {fileID: 772366383}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1625500551900363272, guid: 01063c60adbcf174fb3a160c645658f5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 772366383}
   m_SourcePrefab: {fileID: 100100000, guid: 01063c60adbcf174fb3a160c645658f5, type: 3}
+--- !u!1 &772366382 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1625500551900363272, guid: 01063c60adbcf174fb3a160c645658f5, type: 3}
+  m_PrefabInstance: {fileID: 772366381}
+  m_PrefabAsset: {fileID: 0}
+--- !u!195 &772366383
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 772366382}
+  m_Enabled: 0
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1001 &773954805
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -63397,6 +63431,7 @@ MonoBehaviour:
   playableDirector: {fileID: 1437906348}
   commonUIManager: {fileID: 0}
   timeLineManager: {fileID: 0}
+  progressManager: {fileID: 0}
   soundManager: {fileID: 0}
   textBoxLayouts:
   - {fileID: 1033595258}
@@ -63421,6 +63456,7 @@ MonoBehaviour:
   - {fileID: 1776684024}
   - {fileID: 318982272}
   - {fileID: 1981990513}
+  report: {fileID: 0}
   inventoryDatas: []
 --- !u!114 &1629335991
 MonoBehaviour:
@@ -80979,6 +81015,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playableAssets:
   - {fileID: 11400000, guid: 7b92d5d0140aa964d848587042cc1f8a, type: 2}
+  director: {fileID: 0}
 --- !u!4 &2121130197
 Transform:
   m_ObjectHideFlags: 0
@@ -82612,6 +82649,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2742072653432300335, guid: 37491a294c4c009499bdf23c35799009, type: 3}
       insertIndex: -1
       addedObject: {fileID: 0}
+    - targetCorrespondingSourceObject: {fileID: 2063553873782944919, guid: 37491a294c4c009499bdf23c35799009, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
+    - targetCorrespondingSourceObject: {fileID: 7374022123638423746, guid: 37491a294c4c009499bdf23c35799009, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
     - targetCorrespondingSourceObject: {fileID: 3466025830451229380, guid: 37491a294c4c009499bdf23c35799009, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6797730569358270104}
@@ -82635,6 +82678,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scene_Name: Main_Map_Night
   storyprogress: 
+  mainUIManager: {fileID: 0}
 --- !u!4 &6797730569358270105 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4170792036300408362, guid: 37491a294c4c009499bdf23c35799009, type: 3}
