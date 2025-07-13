@@ -335,7 +335,7 @@ public class UIUtility : MonoBehaviour
         Debug.Log("Finish TimeLine");
 
         // 데이터 key 값으로 찾아서 저장
-        ProgressManager.Instance.progressData.timelineWatchedList.Find(e => e.key == playableDirector.playableAsset.name).value = true;
+        // ProgressManager.Instance.progressData.timelineWatchedList.Find(e => e.key == playableDirector.playableAsset.name).value = true;
 
         playableDirector.Stop();
         playableDirector.playableAsset = null;

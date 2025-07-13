@@ -26,8 +26,8 @@ public class SchoolUIManager : UIUtility
     public List<PhoneInfos> phoneInfos; // 각각 휴대폰 정보를 담는 list
     public List<VerticalLayoutGroup> textBoxLayouts;
     [SerializeField] public Enemy schoolEnemy;
-    [SerializeField] private Enemy backroomEnemy;
-    [SerializeField] private Enemy lastEnemy;
+    [SerializeField] public Enemy backroomEnemy;
+    [SerializeField] public Enemy lastEnemy;
     [SerializeField] private List<GameObject> timeLineEnemys;
     public GameObject playerObj;
     public Transform[] playerRespawnPoints;
@@ -40,6 +40,7 @@ public class SchoolUIManager : UIUtility
     public GameObject enemyFirstMeetWall;
     public List<GameObject> activeObjs;
     public List<GameObject> schoolMaps;
+    public List<Chapter1Trigger> lastAreaTriggerObjs;
     public float monsterTimer = 0f;
     public float monsterWaitTime = 60f;
     public bool enterLounge = false;
@@ -309,6 +310,7 @@ public class SchoolUIManager : UIUtility
             activeObjs[14].SetActive(progressManager.IsActionCompleted(ActionType.ClearBackRoom));  // Ethan House 입장 Trigger
             activeObjs[15].SetActive(progressManager.IsActionCompleted(ActionType.EnteredEthanHouse) && !phoneInfos[0].hasPhone); // Locker Room 입장 벽
             activeObjs[16].GetComponent<Light>().color = progressManager.IsActionCompleted(ActionType.ClearLockerRoom) ? UnityEngine.Color.red : UnityEngine.Color.white; // Locker Room Light
+            activeObjs[16].GetComponent<Light>().intensity = progressManager.IsActionCompleted(ActionType.ClearLockerRoom) ? 4f : 2f; // Locker Room Light
             activeObjs[17].GetComponent<Door>().enabled = progressManager.IsActionCompleted(ActionType.ClearLockerRoom); // Locker Room Left 문
             activeObjs[18].GetComponent<Door>().enabled = progressManager.IsActionCompleted(ActionType.ClearLockerRoom); // Locker Room Right 문
             activeObjs[19].SetActive(progressManager.IsActionCompleted(ActionType.ClearLockerRoom) && progressManager.IsActionCompleted(ActionType.FinishFinalChase)); // Start Final Chase Tirgger
@@ -365,6 +367,10 @@ public class SchoolUIManager : UIUtility
             {
                 RespawnDuringBackroom();
             }
+            else if (progressManager.IsActionCompleted(ActionType.ClearLockerRoom) && !progressManager.IsActionCompleted(ActionType.FinishFinalChase))
+            {
+                RespawnDuringFinalChase();
+            }
         }
         else
         {
@@ -391,26 +397,19 @@ public class SchoolUIManager : UIUtility
             playerCamera.jumpscareObj.transform.localPosition = new Vector3(0, -1.77f, 1);
             playerCamera.jumpscareObj.transform.localRotation = Quaternion.Euler(0, 180, 0);
 
-            int respawnPointIndex = 0;
-
             // Action Type 에 따라서 리스폰 위치 설정
             switch (actionType)
             {
                 case ProgressManager.ActionType.FirstMeetMonster:
-                    respawnPointIndex = 0;
                     RespawnDuringSchoolChase();
                     break;
                 case ProgressManager.ActionType.EnteredBackRoom:
-                    respawnPointIndex = 1;
                     RespawnDuringBackroom();
                     break;
                 case ProgressManager.ActionType.ClearLockerRoom:
-                    respawnPointIndex = 2;
-                    lastEnemy.InitEnemy(enemyRespawnPoints[respawnPointIndex]);
+                    RespawnDuringFinalChase();
                     break;
             }
-
-            InitPlayer(playerRespawnPoints[respawnPointIndex]);
 
             yield return null;
 
@@ -458,6 +457,47 @@ public class SchoolUIManager : UIUtility
         backroomEnemy.InitEnemy(enemyRespawnPoints[1]);
         InitPlayer(playerRespawnPoints[1]);
         Maze_Mgr.instance.Btn_Clear();
+    }
+
+    void RespawnDuringFinalChase()
+    {
+        Debug.Log("RespawnDuringFinalChase");
+        backroomEnemy.InitEnemy(enemyRespawnPoints[2]);
+        InitPlayer(playerRespawnPoints[2]);
+        activeObjs[16].GetComponent<Light>().color = UnityEngine.Color.red; // Locker Room Light
+        activeObjs[17].GetComponent<Door>().enabled = true; // Locker Room Left 문
+        activeObjs[18].GetComponent<Door>().enabled = true; // Locker Room Right 문
+        activeObjs[19].SetActive(true); // Start Final Chase Trigger
+
+        activeObjs[20].GetComponent<Door>().enabled = true; // 마지막 추격 맵 fake Door
+        activeObjs[21].GetComponent<Door>().enabled = true;
+        ForceCloseDoor(activeObjs[20].GetComponent<Door>()); 
+        ForceCloseDoor(activeObjs[21].GetComponent<Door>()); 
+
+        // PostProcessing 및 Fog 변경
+        commonUIManager.ApplyFog(commonUIManager.fogSettings[0]);
+        Camera_Rt.instance.ApplyPostProcessing("Nightmare");
+
+        InitTimelineEnemy(timeLineEnemys[2].transform, timelineEnemyPoints[2]);
+
+        // 트리거 오브젝트들 위치 초기화
+        foreach(Chapter1Trigger obj in lastAreaTriggerObjs)
+        {
+            obj.gameObject.SetActive(true);
+            obj.triggerObject.SetActive(true);
+
+            Animator objAnim;
+
+            if (obj.triggerObject.TryGetComponent<Animator>(out objAnim))
+            {
+                Debug.Log("ReturnTrigger");
+                objAnim.SetBool("ReturnTrigger", true);
+            }
+            else
+            {
+                Debug.Log("Don't have Animator");
+            }
+        }
     }
 
     void InitTimelineEnemy(Transform timelineEnemy, Transform respawnTransform)
@@ -699,6 +739,7 @@ public class SchoolUIManager : UIUtility
     public void ClearLockerRoom()
     {
         activeObjs[16].GetComponent<Light>().color = UnityEngine.Color.red; // Locker Room Light
+        activeObjs[16].GetComponent<Light>().intensity = 4;
         activeObjs[17].GetComponent<Door>().enabled = true; // Locker Room Left 문
         activeObjs[18].GetComponent<Door>().enabled = true; // Locker Room Right 문
         activeObjs[19].SetActive(true); // Start Final Chase Trigger
@@ -714,6 +755,9 @@ public class SchoolUIManager : UIUtility
 
     public void StartFinalChase()
     {
+        activeObjs[19].SetActive(false);  // Start Final Chase Trigger
+        Camera_Rt.instance.postProecessingBehaviour.gameObject.GetComponent<RayCast_Aim>().flashlight.SetActive(true);
+        StartTimeLine(TimeLineManager.instance.playableAssets[4]);
         progressManager.CompletedAction(ActionType.StartFinalChase);
     }
 

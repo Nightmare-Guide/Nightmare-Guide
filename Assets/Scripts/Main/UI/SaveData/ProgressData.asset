@@ -55,13 +55,13 @@ MonoBehaviour:
   - actionType: 18
     isCompleted: 1
   - actionType: 19
-    isCompleted: 0
+    isCompleted: 1
   - actionType: 20
     isCompleted: 0
   - actionType: 21
-    isCompleted: 0
+    isCompleted: 1
   - actionType: 22
-    isCompleted: 0
+    isCompleted: 1
   - actionType: 23
     isCompleted: 0
   - actionType: 24
@@ -76,8 +76,8 @@ MonoBehaviour:
     isCompleted: 0
   - actionType: 29
     isCompleted: 0
-  playerPosition: {x: -142.95354, y: 4.727921, z: -152.70135}
-  playerEulerAngles: {x: 0, y: 214.99998, z: 0}
+  playerPosition: {x: -63.55463, y: 8.086, z: -152.97159}
+  playerEulerAngles: {x: -0, y: 5.500013, z: -0}
   playerTr:
   - scene_Name: DayHouse
     tr: {x: -488, y: 72, z: 140}
@@ -92,8 +92,8 @@ MonoBehaviour:
     tr: {x: -205.08, y: 28.22, z: -899.39}
     rt: {x: 0, y: 180, z: 0}
   - scene_Name: School_Scene
-    tr: {x: -142.95354, y: 4.727921, z: -152.70135}
-    rt: {x: 0, y: 288.00012, z: 0}
+    tr: {x: -76.67, y: 8.05, z: -153}
+    rt: {x: -0, y: 90, z: -0}
   - scene_Name: Main_Map
     tr: {x: -376, y: 5, z: -355}
     rt: {x: 0, y: 90, z: 0}
@@ -101,20 +101,21 @@ MonoBehaviour:
     tr: {x: -180, y: 5, z: -723}
     rt: {x: 0, y: 90, z: 0}
   sanchi: 0
-  postProcessingName: Warm
-  fogName: Warm
+  postProcessingName: Nightmare
+  fogName: Nightmare
   hideInLocker: 0
   mainInventoryDatas:
   - 
   schoolInventoryDatas:
   - Locker Key
   - David CellPhone
+  - Ethan CellPhone
   phoneDatas:
   - name: Steven
     hasPhone: 0
     isUnlocked: 0
   - name: Ethan
-    hasPhone: 0
+    hasPhone: 1
     isUnlocked: 0
   - name: David
     hasPhone: 1

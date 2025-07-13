@@ -269,6 +269,12 @@ public class ProgressManager : MonoBehaviour
                 existingData.tr = schoolUIManager.playerRespawnPoints[1].position;
                 existingData.rt = schoolUIManager.playerRespawnPoints[1].rotation.eulerAngles;
             }
+            else if (IsActionCompleted(ActionType.ClearLockerRoom) && !IsActionCompleted(ActionType.FinishFinalChase))
+            {
+                SchoolUIManager schoolUIManager = CommonUIManager.instance.uiManager as SchoolUIManager;
+                existingData.tr = schoolUIManager.playerRespawnPoints[2].position;
+                existingData.rt = schoolUIManager.playerRespawnPoints[2].rotation.eulerAngles;
+            }
 
             Debug.Log($"[{sceneName}] Update 플레이어 위치/회전 정보 업데이트: {position}, {rotation}");
         }
