@@ -23,7 +23,7 @@ public class Supervisor : NPC
     private LookTarget look;
 
     //임시
-    public PlayableDirector director;
+    public bool firstmeet = false;
 
     private void Start()
     {
@@ -89,7 +89,7 @@ public class Supervisor : NPC
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && !firstmeet)
         {
             playerTransform = other.transform;
             FirstMeet();
@@ -109,6 +109,7 @@ public class Supervisor : NPC
     public void FirstMeet()
     {
         //임시
+        firstmeet = true;
         MainUIManager.DayHospitalTimeLine();
     }
 
