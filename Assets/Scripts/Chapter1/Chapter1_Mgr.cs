@@ -68,6 +68,8 @@ public class Chapter1_Mgr : MonoBehaviour
         {
             LockerRoomNextDoor();
             nextdoorPassword = 0;
+            SchoolUIManager schoolUIManager = CommonUIManager.instance.uiManager as SchoolUIManager;
+            schoolUIManager.ClearLockerRoom();
             Debug.Log("다음지역이 열렸습니다.");
         }
 

@@ -47,13 +47,13 @@ MonoBehaviour:
   - actionType: 14
     isCompleted: 1
   - actionType: 15
-    isCompleted: 0
+    isCompleted: 1
   - actionType: 16
-    isCompleted: 0
+    isCompleted: 1
   - actionType: 17
-    isCompleted: 0
+    isCompleted: 1
   - actionType: 18
-    isCompleted: 0
+    isCompleted: 1
   - actionType: 19
     isCompleted: 0
   - actionType: 20
@@ -74,8 +74,10 @@ MonoBehaviour:
     isCompleted: 0
   - actionType: 28
     isCompleted: 0
-  playerPosition: {x: 21.836283, y: 3.8559995, z: -65.26149}
-  playerEulerAngles: {x: 0, y: 261.50006, z: 0}
+  - actionType: 29
+    isCompleted: 0
+  playerPosition: {x: -142.95354, y: 4.727921, z: -152.70135}
+  playerEulerAngles: {x: 0, y: 214.99998, z: 0}
   playerTr:
   - scene_Name: DayHouse
     tr: {x: -488, y: 72, z: 140}
@@ -87,11 +89,11 @@ MonoBehaviour:
     tr: {x: -261, y: 6, z: -689}
     rt: {x: 0, y: -90, z: 0}
   - scene_Name: NightHospital
-    tr: {x: -205, y: 30, z: -900}
+    tr: {x: -205.08, y: 28.22, z: -899.39}
     rt: {x: 0, y: 180, z: 0}
   - scene_Name: School_Scene
-    tr: {x: 21.836283, y: 3.8559995, z: -65.26149}
-    rt: {x: 0, y: 298, z: 0}
+    tr: {x: -142.95354, y: 4.727921, z: -152.70135}
+    rt: {x: 0, y: 288.00012, z: 0}
   - scene_Name: Main_Map
     tr: {x: -376, y: 5, z: -355}
     rt: {x: 0, y: 90, z: 0}
@@ -99,8 +101,8 @@ MonoBehaviour:
     tr: {x: -180, y: 5, z: -723}
     rt: {x: 0, y: 90, z: 0}
   sanchi: 0
-  postProcessingName: Nightmare
-  fogName: Nightmare
+  postProcessingName: Warm
+  fogName: Warm
   hideInLocker: 0
   mainInventoryDatas:
   - 

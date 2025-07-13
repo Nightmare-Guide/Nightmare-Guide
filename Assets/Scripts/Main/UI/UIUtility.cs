@@ -427,7 +427,6 @@ public class UIUtility : MonoBehaviour
         if (doorLogic.doorState) { doorLogic.Select_Door(); }
 
         doorLogic.enabled = false;
-
         return true;
     }
 

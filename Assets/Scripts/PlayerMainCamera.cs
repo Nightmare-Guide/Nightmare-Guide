@@ -155,7 +155,7 @@ public class PlayerMainCamera : MonoBehaviour
             }
             else if (!ProgressManager.Instance.IsActionCompleted(ProgressManager.ActionType.FinishFinalChase))
             {
-                StartCoroutine(schoolUIManager.RevivalPlayer(ProgressManager.ActionType.SolvedLockerRoom));
+                StartCoroutine(schoolUIManager.RevivalPlayer(ProgressManager.ActionType.ClearLockerRoom));;
             }
         }
     }
