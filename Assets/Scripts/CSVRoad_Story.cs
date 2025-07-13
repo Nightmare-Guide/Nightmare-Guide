@@ -373,7 +373,11 @@ public class CSVRoad_Story : MonoBehaviour
                 break;
             case "2_2_0":
                 ProgressManager.Instance.CompletedAction(ActionType.FirstMeetAlex);
+                dialogueBox.SetActive(false);
                 if (currentNPC != null) { Alex alex = currentNPC as Alex; alex.WalkToOutSide(); }
+                CommonUIManager.instance.uiManager.StartPlayerController();
+                CommonUIManager.instance.uiManager.CursorLocked();
+                CommonUIManager.instance.isTalkingWithNPC = false;
                 break;
         }
     }
