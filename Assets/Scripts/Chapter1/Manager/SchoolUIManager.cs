@@ -308,6 +308,10 @@ public class SchoolUIManager : UIUtility
             activeObjs[13].SetActive(progressManager.IsActionCompleted(ActionType.ClearBackRoom));  // Backroom 퇴장 Trigger
             activeObjs[14].SetActive(progressManager.IsActionCompleted(ActionType.ClearBackRoom));  // Ethan House 입장 Trigger
             activeObjs[15].SetActive(progressManager.IsActionCompleted(ActionType.EnteredEthanHouse) && !phoneInfos[0].hasPhone); // Locker Room 입장 벽
+            activeObjs[16].GetComponent<Light>().color = progressManager.IsActionCompleted(ActionType.ClearLockerRoom) ? UnityEngine.Color.red : UnityEngine.Color.white; // Locker Room Light
+            activeObjs[17].GetComponent<Door>().enabled = progressManager.IsActionCompleted(ActionType.ClearLockerRoom); // Locker Room Left 문
+            activeObjs[18].GetComponent<Door>().enabled = progressManager.IsActionCompleted(ActionType.ClearLockerRoom); // Locker Room Right 문
+            activeObjs[19].SetActive(progressManager.IsActionCompleted(ActionType.ClearLockerRoom) && progressManager.IsActionCompleted(ActionType.FinishFinalChase)); // Start Final Chase Tirgger
 
             bool isFirstMeetEthan = progressManager.IsActionCompleted(ActionType.FirstMeetEthan);
             bool startMonsterTimer = !activeObjs[5].GetComponent<Door>().doorState && enterLounge;
@@ -694,6 +698,11 @@ public class SchoolUIManager : UIUtility
 
     public void ClearLockerRoom()
     {
+        activeObjs[16].GetComponent<Light>().color = UnityEngine.Color.red; // Locker Room Light
+        activeObjs[17].GetComponent<Door>().enabled = true; // Locker Room Left 문
+        activeObjs[18].GetComponent<Door>().enabled = true; // Locker Room Right 문
+        activeObjs[19].SetActive(true); // Start Final Chase Trigger
+
         // PostProcessing 및 Fog 변경
         commonUIManager.ApplyFog(commonUIManager.fogSettings[0]);
         Camera_Rt.instance.ApplyPostProcessing("Nightmare");
@@ -701,6 +710,16 @@ public class SchoolUIManager : UIUtility
         soundManager.LockerFallSound();
 
         progressManager.CompletedAction(ActionType.ClearLockerRoom);
+    }
+
+    public void StartFinalChase()
+    {
+        progressManager.CompletedAction(ActionType.StartFinalChase);
+    }
+
+    public void FinishFinalChase()
+    {
+        progressManager.CompletedAction(ActionType.FinishFinalChase);
     }
 
     public void FinishSchoolScene()

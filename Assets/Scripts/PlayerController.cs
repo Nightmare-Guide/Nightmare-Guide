@@ -464,6 +464,12 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
                     schoolUIManager.EnterEthanHouse();
                 }
+                else if (other.gameObject.name.Contains("Start Last Chase Trigger"))
+                {
+                    SchoolUIManager schoolUIManager = CommonUIManager.instance.uiManager as SchoolUIManager;
+
+                    schoolUIManager.StartFinalChase();
+                }
             }
         }
 

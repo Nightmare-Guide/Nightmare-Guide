@@ -38,6 +38,8 @@ public class LockerRoomDoor : Door
             Chapter1_Mgr.instance.nextdoorPassword += 1;
             Debug.Log("틀린문을 닫았습니다");
         }
+
+        SoundManager.instance.PlayDoorOpen();
         Debug.Log(text);
         Debug.Log(doorState);
     }
