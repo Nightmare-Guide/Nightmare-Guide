@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Palmmedia.ReportGenerator.Core.Reporting.Builders;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,6 +18,9 @@ public class Chapter1Trigger : MonoBehaviour
         if (gameObject.CompareTag("Trigger"))
         {
             Chapter1_Mgr.instance.ActiveTriggerAnimator(triggerObjectAnimator);
+
+            if(triggerObject.name.Contains("Locker")) { SoundManager.instance.LockerFallSound(); }
+            else if (triggerObject.name.Contains("Wall")) { SoundManager.instance.WallMoveSound(); }
         }
         if (gameObject.CompareTag("StrangeRoom1"))
         {
