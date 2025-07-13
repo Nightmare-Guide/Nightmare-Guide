@@ -15,7 +15,6 @@ public class Alex : NPC
 
     [Header("# ETC")]
     public Transform[] targetTransform; // 걷고 싶은 목표 지점
-    public NavMeshAgent agent;
     bool isWalking = false;
 
     private void Awake()
