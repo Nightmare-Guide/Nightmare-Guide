@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: ProgressData
   m_EditorClassIdentifier: 
   newGame: 0
-  scene: School_Scene
-  storyProgress: 0_0_0
+  scene: NightHouse
+  storyProgress: clear
   actionStatuses:
   - actionType: 0
-    isCompleted: 0
+    isCompleted: 1
   - actionType: 1
     isCompleted: 0
   - actionType: 2
@@ -25,47 +25,47 @@ MonoBehaviour:
   - actionType: 3
     isCompleted: 0
   - actionType: 4
-    isCompleted: 1
+    isCompleted: 0
   - actionType: 5
-    isCompleted: 1
+    isCompleted: 0
   - actionType: 6
-    isCompleted: 1
+    isCompleted: 0
   - actionType: 7
-    isCompleted: 1
+    isCompleted: 0
   - actionType: 8
-    isCompleted: 1
+    isCompleted: 0
   - actionType: 9
-    isCompleted: 1
+    isCompleted: 0
   - actionType: 10
-    isCompleted: 1
+    isCompleted: 0
   - actionType: 11
-    isCompleted: 1
+    isCompleted: 0
   - actionType: 12
-    isCompleted: 1
+    isCompleted: 0
   - actionType: 13
-    isCompleted: 1
+    isCompleted: 0
   - actionType: 14
-    isCompleted: 1
+    isCompleted: 0
   - actionType: 15
-    isCompleted: 1
+    isCompleted: 0
   - actionType: 16
-    isCompleted: 1
+    isCompleted: 0
   - actionType: 17
-    isCompleted: 1
+    isCompleted: 0
   - actionType: 18
-    isCompleted: 1
+    isCompleted: 0
   - actionType: 19
-    isCompleted: 1
+    isCompleted: 0
   - actionType: 20
     isCompleted: 0
   - actionType: 21
-    isCompleted: 1
+    isCompleted: 0
   - actionType: 22
-    isCompleted: 1
+    isCompleted: 0
   - actionType: 23
-    isCompleted: 1
+    isCompleted: 0
   - actionType: 24
-    isCompleted: 1
+    isCompleted: 0
   - actionType: 25
     isCompleted: 0
   - actionType: 26
@@ -73,18 +73,18 @@ MonoBehaviour:
   - actionType: 27
     isCompleted: 0
   - actionType: 28
-    isCompleted: 0
+    isCompleted: 1
   - actionType: 29
     isCompleted: 0
-  playerPosition: {x: -60.33569, y: 18.597, z: -246.51836}
-  playerEulerAngles: {x: -0, y: 90, z: -0}
+  playerPosition: {x: -501.94824, y: 71.920006, z: 129.23979}
+  playerEulerAngles: {x: 0, y: 121.945145, z: 0}
   playerTr:
   - scene_Name: DayHouse
-    tr: {x: -488, y: 72, z: 140}
-    rt: {x: 0, y: 0, z: 0}
+    tr: {x: -489.6121, y: 71.920006, z: 136.2723}
+    rt: {x: 0, y: 317, z: 0}
   - scene_Name: NightHouse
-    tr: {x: -605, y: 72, z: 173}
-    rt: {x: 0, y: -90, z: 0}
+    tr: {x: -501.94824, y: 71.920006, z: 129.23979}
+    rt: {x: -0, y: 143.44086, z: 0}
   - scene_Name: DayHospital
     tr: {x: -261, y: 6, z: -689}
     rt: {x: 0, y: -90, z: 0}
@@ -92,36 +92,33 @@ MonoBehaviour:
     tr: {x: -205.08, y: 28.22, z: -899.39}
     rt: {x: 0, y: 180, z: 0}
   - scene_Name: School_Scene
-    tr: {x: -60.13, y: 19.71, z: -252.985}
-    rt: {x: -0, y: 0, z: 0}
+    tr: {x: 0, y: 0, z: 0}
+    rt: {x: 0, y: 0, z: 0}
   - scene_Name: Main_Map
     tr: {x: -376, y: 5, z: -355}
     rt: {x: 0, y: 90, z: 0}
   - scene_Name: Main_Map_Night
-    tr: {x: -180, y: 5, z: -723}
-    rt: {x: 0, y: 90, z: 0}
+    tr: {x: -180, y: 5.52, z: -723}
+    rt: {x: 0, y: 90.1, z: 0}
   sanchi: 0
   postProcessingName: Warm
   fogName: Warm
   hideInLocker: 0
   mainInventoryDatas:
   - 
-  schoolInventoryDatas:
-  - Locker Key
-  - David CellPhone
-  - Ethan CellPhone
+  schoolInventoryDatas: []
   phoneDatas:
   - name: Steven
-    hasPhone: 0
+    hasPhone: 1
     isUnlocked: 0
   - name: Ethan
-    hasPhone: 1
+    hasPhone: 0
     isUnlocked: 0
   - name: David
-    hasPhone: 1
+    hasPhone: 0
     isUnlocked: 0
-  bgVolume: 0.23702398
-  effectVolume: 0.33257246
+  bgVolume: 50
+  effectVolume: 50
   characterVolume: 50
   isFullScreen: 1
   language: 
@@ -135,5 +132,9 @@ MonoBehaviour:
     value: 0
   - key: LastSchoolEvent
     value: 0
-  - key: StartFinalChase
+  - key: DayHospital
+    value: 0
+  - key: FirstMeetEthanMother
+    value: 0
+  - key: InNightmare
     value: 0
