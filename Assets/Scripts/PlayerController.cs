@@ -77,7 +77,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
             }
             if (agent == null)
             {
-                agent = GetComponent<NavMeshAgent>();
+                TryGetComponent(out NavMeshAgent agent);
+                // agent = GetComponent<NavMeshAgent>();
             }
 
             playerTransform = GetComponent<Transform>();
@@ -341,6 +342,10 @@ namespace UnityStandardAssets.Characters.FirstPerson
         public void Open_PlayerController()
         {
             m_CharacterController.enabled = true;
+
+            if (agent == null)
+                return;
+
             agent.enabled = false;
         }
         public void Close_PlayerController()
@@ -356,12 +361,19 @@ namespace UnityStandardAssets.Characters.FirstPerson
         public void GoNavposition(Transform nav)
         {
             Close_PlayerController();
+
+            if (agent == null)
+                return;
+
             agent.enabled = true;
             agent.SetDestination(nav.position);
         }
 
         public void StopAutoMove()
         {
+            if (agent == null)
+                return;
+
             agent.enabled = false;
             agent.ResetPath();
         }
