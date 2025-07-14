@@ -18,7 +18,8 @@ public class AutoDoor : MonoBehaviour
     private void Update()
     {
         DoorTrigger();
-        if (supervisor.firstmeet)
+
+        if (supervisor != null && supervisor.firstmeet)
         {
             door.enabled = true;
         }
@@ -29,8 +30,8 @@ public class AutoDoor : MonoBehaviour
         if (door.doorState && !firstStart)
         {
             firstStart = true; // 한번이라도 실행되면 변경
-            mainUIManager.FirstMeetEthanMother();
-            col.enabled = false;
+            if(ProgressManager.Instance.IsActionCompleted(ProgressManager.ActionType.TalkWithEthanMom)) { mainUIManager.FirstMeetEthanMother(); }
+            if(col != null) { col.enabled = false; }
         }
     }
 }

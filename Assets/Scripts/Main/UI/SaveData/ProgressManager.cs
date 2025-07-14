@@ -258,30 +258,33 @@ public class ProgressManager : MonoBehaviour
             existingData.rt = rotation;
             existingData.tr = position;
 
-            if(IsActionCompleted(ActionType.GetLockerKey) && !IsActionCompleted(ActionType.GetOutOfLocker))
+            if(CommonUIManager.instance.uiManager is SchoolUIManager)
             {
-                SchoolUIManager schoolUIManager = CommonUIManager.instance.uiManager as SchoolUIManager;
-                existingData.tr = schoolUIManager.playerRespawnPoints[0].position;
-                existingData.rt = schoolUIManager.playerRespawnPoints[0].rotation.eulerAngles;
-            }
-            else if (IsActionCompleted(ActionType.EnteredBackRoom) && !IsActionCompleted(ActionType.ClearBackRoom))
-            {
-                SchoolUIManager schoolUIManager = CommonUIManager.instance.uiManager as SchoolUIManager;
-                existingData.tr = schoolUIManager.playerRespawnPoints[1].position;
-                existingData.rt = schoolUIManager.playerRespawnPoints[1].rotation.eulerAngles;
-            }
-            else if (IsActionCompleted(ActionType.ClearLockerRoom) && !IsActionCompleted(ActionType.FinishFinalChase))
-            {
-                SchoolUIManager schoolUIManager = CommonUIManager.instance.uiManager as SchoolUIManager;
-                existingData.tr = schoolUIManager.playerRespawnPoints[2].position;
-                existingData.rt = schoolUIManager.playerRespawnPoints[2].rotation.eulerAngles;
-            }
-            else if (IsActionCompleted(ActionType.FinishFinalChase))
-            {
-                SchoolUIManager schoolUIManager = CommonUIManager.instance.uiManager as SchoolUIManager;
-                existingData.tr = schoolUIManager.playerRespawnPoints[3].position;
-                existingData.rt = schoolUIManager.playerRespawnPoints[3].rotation.eulerAngles;
-                schoolUIManager.activeObjs[23].GetComponent<Collider>().enabled = true; // 엘리베이터 열기 버튼
+                if (IsActionCompleted(ActionType.GetLockerKey) && !IsActionCompleted(ActionType.GetOutOfLocker))
+                {
+                    SchoolUIManager schoolUIManager = CommonUIManager.instance.uiManager as SchoolUIManager;
+                    existingData.tr = schoolUIManager.playerRespawnPoints[0].position;
+                    existingData.rt = schoolUIManager.playerRespawnPoints[0].rotation.eulerAngles;
+                }
+                else if (IsActionCompleted(ActionType.EnteredBackRoom) && !IsActionCompleted(ActionType.ClearBackRoom))
+                {
+                    SchoolUIManager schoolUIManager = CommonUIManager.instance.uiManager as SchoolUIManager;
+                    existingData.tr = schoolUIManager.playerRespawnPoints[1].position;
+                    existingData.rt = schoolUIManager.playerRespawnPoints[1].rotation.eulerAngles;
+                }
+                else if (IsActionCompleted(ActionType.ClearLockerRoom) && !IsActionCompleted(ActionType.FinishFinalChase))
+                {
+                    SchoolUIManager schoolUIManager = CommonUIManager.instance.uiManager as SchoolUIManager;
+                    existingData.tr = schoolUIManager.playerRespawnPoints[2].position;
+                    existingData.rt = schoolUIManager.playerRespawnPoints[2].rotation.eulerAngles;
+                }
+                else if (IsActionCompleted(ActionType.FinishFinalChase))
+                {
+                    SchoolUIManager schoolUIManager = CommonUIManager.instance.uiManager as SchoolUIManager;
+                    existingData.tr = schoolUIManager.playerRespawnPoints[3].position;
+                    existingData.rt = schoolUIManager.playerRespawnPoints[3].rotation.eulerAngles;
+                    schoolUIManager.activeObjs[23].GetComponent<Collider>().enabled = true; // 엘리베이터 열기 버튼
+                }
             }
 
             Debug.Log($"[{sceneName}] Update 플레이어 위치/회전 정보 업데이트: {position}, {rotation}");

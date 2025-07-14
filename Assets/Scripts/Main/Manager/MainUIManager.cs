@@ -109,6 +109,7 @@ public class MainUIManager : UIUtility
     }
     public void FirstMeetEthanMother()
     {
+        ProgressManager.Instance.CompletedAction(ActionType.TalkWithEthanMom);
         StartTimeLine(timeLineManager.playableAssets[5]);
     }
     public void GoNightMare()

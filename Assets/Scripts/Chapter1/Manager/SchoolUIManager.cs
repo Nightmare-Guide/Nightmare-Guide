@@ -785,7 +785,7 @@ public class SchoolUIManager : UIUtility
     {
         activeObjs[19].SetActive(false);  // Start Final Chase Trigger
         Camera_Rt.instance.postProecessingBehaviour.gameObject.GetComponent<RayCast_Aim>().flashlight.SetActive(true);
-        StartTimeLine(TimeLineManager.instance.playableAssets[4]);
+        StartTimeLine(TimeLineManager.instance.playableAssets[7]);
         progressManager.CompletedAction(ActionType.StartFinalChase);
     }
 
