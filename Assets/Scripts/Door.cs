@@ -52,15 +52,21 @@ public class Door : MonoBehaviour
         // ¹® ´Ý±â
         if (doorState)
         {
-            if(this.gameObject.name.Contains("Janitor's office") || this.gameObject.name.Contains("LockerRoomDoor(Left)")) { endRotation = Quaternion.Euler(0, startRotation.eulerAngles.y - 90, 0); }
+            if (this.gameObject.name.Contains("Janitor's office")
+                || this.gameObject.name.Contains("Lounge Door")
+                || this.gameObject.name.Contains("LockerRoomDoor(Left)"))
+            { endRotation = Quaternion.Euler(0, startRotation.eulerAngles.y - 90, 0); }
             else { endRotation = Quaternion.Euler(0, startRotation.eulerAngles.y + 90, 0); }
             doorState = false;
             EnableObstacle(); // ¹® ´ÝÈ÷¸é NavMeshObstacle ÄÑÁü
-            if(SoundManager.instance != null) { SoundManager.instance.PlayDoorClose(); }
+            if (SoundManager.instance != null) { SoundManager.instance.PlayDoorClose(); }
         }
         else // ¹® ¿­±â
         {
-            if (this.gameObject.name.Contains("Janitor's office") || this.gameObject.name.Contains("LockerRoomDoor(Left)")) { endRotation = Quaternion.Euler(0, startRotation.eulerAngles.y + 90, 0); }
+            if (this.gameObject.name.Contains("Janitor's office")
+                || this.gameObject.name.Contains("Lounge Door")
+                || this.gameObject.name.Contains("LockerRoomDoor(Left)"))
+            { endRotation = Quaternion.Euler(0, startRotation.eulerAngles.y + 90, 0); }
             else { endRotation = Quaternion.Euler(0, startRotation.eulerAngles.y - 90, 0); }
             doorState = true;
             DisableObstacle(); // ¹® ¿­¸®¸é NavMeshObstacle ²¨Áü
