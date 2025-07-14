@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEditor;
+/*using UnityEditor;*/
 
 public class Maze_Button : MonoBehaviour
 {
@@ -83,7 +83,7 @@ public class Maze_Button : MonoBehaviour
 
 }
 
-[CustomEditor(typeof(Maze_Button))]
+/*[CustomEditor(typeof(Maze_Button))]
 public class Maze_ButtonEditor : Editor
 {
     private Maze_Button colorSelector;
@@ -123,3 +123,4 @@ public class Maze_ButtonEditor : Editor
         DrawDefaultInspector();
     }
 }
+*/
