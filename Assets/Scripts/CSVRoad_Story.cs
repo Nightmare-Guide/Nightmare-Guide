@@ -2,14 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Localization.Settings;
 using UnityEngine.SceneManagement;
 using UnityStandardAssets.Characters.FirstPerson;
-using Unity.VisualScripting;
-using static System.Net.Mime.MediaTypeNames;
 using static ProgressManager;
 
 public class CSVRoad_Story : MonoBehaviour

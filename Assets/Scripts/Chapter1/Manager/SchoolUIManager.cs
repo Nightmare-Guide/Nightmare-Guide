@@ -17,7 +17,6 @@ using System.IO;
 using static CommonUIManager;
 using UnityEngine.Playables;
 using static ProgressManager;
-using UnityEditor.Localization.Plugins.XLIFF.V20;
 using UnityEngine.AI;
 
 public class SchoolUIManager : UIUtility

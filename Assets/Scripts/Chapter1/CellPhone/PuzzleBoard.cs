@@ -7,7 +7,6 @@ using UnityEngine.Rendering.HighDefinition;
 using UnityEngine.UI;
 using static CommonUIManager;
 using static SchoolUIManager;
-using static UnityEditor.PlayerSettings;
 
 public class PuzzleBoard : MonoBehaviour
 {

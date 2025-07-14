@@ -4,9 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Video;
 using TMPro;
-using static UnityEditor.Progress;
-using UnityStandardAssets.ImageEffects;
-using UnityEngine.SocialPlatforms;
 
 public class NarrationManager : MonoBehaviour
 {

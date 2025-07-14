@@ -9,7 +9,6 @@ using UnityStandardAssets.Characters.FirstPerson;
 using static CommonUIManager;
 using static ProgressManager;
 using static SchoolUIManager;
-using static UnityEditor.FilePathAttribute;
 
 
 //게임 진행도 관리

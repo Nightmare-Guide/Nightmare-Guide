@@ -6,9 +6,7 @@ using TMPro;
 using System.Linq;
 using System.Runtime.InteropServices;
 using UnityStandardAssets.Characters.FirstPerson;
-using Unity.VisualScripting;
 using UnityEngine.Playables;
-using UnityEditor.VersionControl;
 
 public class UIUtility : MonoBehaviour
 {
