@@ -147,7 +147,7 @@ public class SchoolUIManager : UIUtility
 
 
         // Tab 키 -> 인벤토리
-        if (Input.GetKeyDown(KeyCode.Tab))
+        if (Input.GetKeyDown(KeyCode.Tab) && PlayerController.instance.stat.Equals(PlayerController.PlayerState.Idle))
         {
             if (AreAllObjectsDisabled(uiObjects))
             {
