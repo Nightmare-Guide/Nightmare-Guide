@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.PostProcessing;
 using UnityStandardAssets.Characters.FirstPerson;
-using static UnityEditor.AddressableAssets.Build.Layout.BuildLayout;
+
 public class Camera_Rt : MonoBehaviour
 {
     public static Camera_Rt instance;
