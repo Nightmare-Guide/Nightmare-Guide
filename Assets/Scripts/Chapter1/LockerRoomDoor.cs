@@ -39,7 +39,8 @@ public class LockerRoomDoor : Door
             Debug.Log("틀린문을 닫았습니다");
         }
 
-        SoundManager.instance.PlayDoorOpen();
+        if (SoundManager.instance != null) { SoundManager.instance.PlayDoorOpen(); }
+        
         Debug.Log(text);
         Debug.Log(doorState);
     }

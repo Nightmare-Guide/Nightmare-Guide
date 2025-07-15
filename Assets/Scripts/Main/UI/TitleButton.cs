@@ -21,7 +21,8 @@ public class TitleButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     {
         bgImg.gameObject.SetActive(true);
         text.color = Color.black;
-        SoundManager.instance.ButtonHover();
+        if (SoundManager.instance != null) { SoundManager.instance.ButtonHover(); }
+        
     }
 
     public void OnPointerExit(PointerEventData eventData)

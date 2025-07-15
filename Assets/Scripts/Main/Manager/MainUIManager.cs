@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityStandardAssets.Characters.FirstPerson;
 using static CommonUIManager;
 using static ProgressManager;
 using static SchoolUIManager;
@@ -40,9 +41,13 @@ public class MainUIManager : UIUtility
         if (TimeLineManager.instance != null)
             timeLineManager = TimeLineManager.instance;
 
+        PlayerController.instance.Open_PlayerController();
+        Camera_Rt.instance.Open_Camera();
+
 
         if (commonUIManager != null)
         {
+            commonUIManager.SmartPhoneData(); // Steven 휴대폰 데이터
             commonUIManager.uiManager = this;
             optionUI = commonUIManager.optionUI;
             uiObjects.Add(optionUI);
@@ -80,7 +85,8 @@ public class MainUIManager : UIUtility
         }
         if (SceneManager.GetActiveScene().name == "DayHospital")
         {
-            SoundManager.instance.PlayBGM(SoundManager.instance.hospitalSound);
+            if (SoundManager.instance != null) { SoundManager.instance.PlayBGM(SoundManager.instance.hospitalSound); }
+            
             Debug.Log(SliderController.instance.bgmMaxVolume);
         }
         else if (SceneManager.GetActiveScene().name == "School_Scene")

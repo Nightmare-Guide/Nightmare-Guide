@@ -74,30 +74,33 @@ public class SchoolUIManager : UIUtility
 
     private void Start()
     {
+        InitItemDatas(); // 아이템 데이터 초기화
+
         if (CommonUIManager.instance != null)
-            commonUIManager = CommonUIManager.instance;
-        if (TimeLineManager.instance != null)
-            timeLineManager = TimeLineManager.instance;
-        if (ProgressManager.Instance != null)
-            progressManager = ProgressManager.Instance;
-        if (SoundManager.instance != null)
-            soundManager = SoundManager.instance;
-
-        soundManager.PlayBGM(soundManager.windSound);
-
-        if (commonUIManager != null)
         {
+            commonUIManager = CommonUIManager.instance;
             optionUI = commonUIManager.optionUI;
             uiObjects.Add(optionUI);
             commonUIManager.uiManager = this;
         }
-
-        InitItemDatas(); // 아이템 데이터 초기화
+ 
+        if (TimeLineManager.instance != null)
+            timeLineManager = TimeLineManager.instance;
 
         if (ProgressManager.Instance != null)
         {
+            progressManager = ProgressManager.Instance;
             GetProgressData(); // 저장된 데이터 가져오기
         }
+
+        if (SoundManager.instance != null)
+        {
+            soundManager = SoundManager.instance;
+            soundManager.PlayBGM(soundManager.windSound);
+        }
+
+        PlayerController.instance.Open_PlayerController();
+        Camera_Rt.instance.Open_Camera();
     }
 
     private void Update()
@@ -251,7 +254,8 @@ public class SchoolUIManager : UIUtility
         }
 
         // 사운드
-        soundManager.GetItemSound();
+        if (soundManager != null) { soundManager.GetItemSound(); }
+        
     }
 
     // 아이템 사용 함수
@@ -412,13 +416,14 @@ public class SchoolUIManager : UIUtility
         if (CommonUIManager.instance != null)
         {
             CommonUIManager.instance.Blink(false);
-            soundManager.sfxSource.clip = null;
+            if (soundManager != null) { soundManager.sfxSource.clip = null; }
+            
 
             yield return new WaitForSeconds(CommonUIManager.instance.blinkDuration);
 
             PlayerMainCamera playerCamera = PlayerMainCamera.camera_single;
 
-            soundManager.sfxSource.Stop();
+            if (soundManager != null) { soundManager.sfxSource.Stop(); }
             playerCamera.jumpscareObj.SetActive(false);
             playerCamera.InitCameraRotation();
             playerCamera.jumpscareObj.transform.localPosition = new Vector3(0, -1.77f, 1);
@@ -577,7 +582,8 @@ public class SchoolUIManager : UIUtility
         activeObjs[4].SetActive(true);
 
         // 사운드
-        soundManager.LockerFallSound();
+        if (soundManager != null) { soundManager.LockerFallSound(); }
+        
 
         CompletedAction(ActionType.GetLockerKey);
     }
@@ -615,7 +621,7 @@ public class SchoolUIManager : UIUtility
 
         schoolEnemy.GetComponent<AudioSource>().Stop();
         schoolEnemy.GetComponent<AudioSource>().clip = null;
-        schoolEnemy.GetComponent<AudioSource>().clip = soundManager.doorBangSound;
+        if (soundManager != null) { schoolEnemy.GetComponent<AudioSource>().clip = soundManager.doorBangSound; }
         schoolEnemy.GetComponent<AudioSource>().Play();
 
         // waitTime 시간 동안 기다리기
@@ -645,7 +651,7 @@ public class SchoolUIManager : UIUtility
 
         schoolEnemy.GetComponent<AudioSource>().Stop();
         schoolEnemy.GetComponent<AudioSource>().clip = null;
-        schoolEnemy.GetComponent<AudioSource>().clip = soundManager.enemyRunSound;
+        if (soundManager != null) { schoolEnemy.GetComponent<AudioSource>().clip = soundManager.enemyRunSound; }
         schoolEnemy.GetComponent<AudioSource>().Play();
     }
 
@@ -659,7 +665,8 @@ public class SchoolUIManager : UIUtility
         PlayerController.instance.Close_PlayerController();
         Camera_Rt.instance.Close_Camera();
         CompletedAction(ActionType.UseLockerKey);
-        soundManager.KeyFailSound();
+        if (soundManager != null) { soundManager.KeyFailSound(); }
+        
     }
 
     public void StartLoungeTimeLine()
@@ -744,7 +751,8 @@ public class SchoolUIManager : UIUtility
         commonUIManager.ApplyFog(commonUIManager.fogSettings[1]);
         Camera_Rt.instance.ApplyPostProcessing("Warm");
         Camera_Rt.instance.postProecessingBehaviour.gameObject.GetComponent<RayCast_Aim>().flashlight.SetActive(false);
-        soundManager.FlashlightSound();
+        if (soundManager != null) { soundManager.FlashlightSound(); }
+        
 
         CompletedAction(ActionType.OutOfBackRoom);
     }
@@ -782,7 +790,8 @@ public class SchoolUIManager : UIUtility
         activeObjs[15].SetActive(false); // 락커룸 가는 fake wall 비활성화
         schoolMaps[5].SetActive(true); // 락커룸 및 마지막 추격 맵
 
-        soundManager.WallMoveSound();
+        if (soundManager != null) { soundManager.WallMoveSound(); }
+        
     }
 
     public void ClearLockerRoom()
@@ -797,7 +806,8 @@ public class SchoolUIManager : UIUtility
         commonUIManager.ApplyFog(commonUIManager.fogSettings[0]);
         Camera_Rt.instance.ApplyPostProcessing("Nightmare");
 
-        soundManager.LockerFallSound();
+        if (soundManager != null) { soundManager.LockerFallSound(); }
+        
 
         CompletedAction(ActionType.ClearLockerRoom);
     }
@@ -818,15 +828,21 @@ public class SchoolUIManager : UIUtility
 
     IEnumerator EnterElevator()
     {
-        soundManager.ClickButton();
+        if (soundManager != null) { soundManager.ClickButton(); }
+        
         CompletedAction(ActionType.FinishFinalChase);
 
         yield return new WaitForSeconds(2f);
 
         lastEnemy.gameObject.SetActive(false);
-        soundManager.sfxSource.Stop();
-        soundManager.sfxSource.clip = null;
-        soundManager.ElevatorMoveSound();
+
+        if (soundManager != null) 
+        {
+            soundManager.sfxSource.Stop();
+            soundManager.sfxSource.clip = null;
+            soundManager.ElevatorMoveSound();
+        }
+        
 
         yield return new WaitForSeconds(2f);
 

@@ -33,9 +33,12 @@ public class TitleUIManager : UIUtility
         uiObjects.Add(optionUI);
 
         commonUIManager.uiManager = this;
-        SoundManager.instance.PlayBGM(titlebgm);
-        SoundManager.instance.sfxSource.Stop();
-        SoundManager.instance.sfxSource.clip = null;
+        if (SoundManager.instance != null)
+        {
+            SoundManager.instance.PlayBGM(titlebgm);
+            SoundManager.instance.sfxSource.Stop();
+            SoundManager.instance.sfxSource.clip = null;
+        }
     }
 
     private void Update()
@@ -69,7 +72,8 @@ public class TitleUIManager : UIUtility
         else
         {
             StartNewGame();
-            SoundManager.instance.StopBGM();
+            if (SoundManager.instance != null) { SoundManager.instance.StopBGM(); }
+            
         }
     }
 
@@ -100,7 +104,8 @@ public class TitleUIManager : UIUtility
                 ProgressManager.Instance.progressData.scene = currentScene;
             }
 
-            SoundManager.instance.StopBGM();
+            if (SoundManager.instance != null) { SoundManager.instance.StopBGM(); }
+            
 
             //플레이어 하우스
             commonUIManager.MoveScene(currentScene);

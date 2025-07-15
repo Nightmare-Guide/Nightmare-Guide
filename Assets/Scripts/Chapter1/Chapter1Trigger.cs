@@ -19,19 +19,21 @@ public class Chapter1Trigger : MonoBehaviour
         {
             Chapter1_Mgr.instance.ActiveTriggerAnimator(triggerObjectAnimator);
 
-            if(triggerObject.name.Contains("Locker")) { SoundManager.instance.LockerFallSound(); }
+            if(triggerObject.name.Contains("Locker") && SoundManager.instance != null) { SoundManager.instance.LockerFallSound(); }
             else if (triggerObject.name.Contains("Wall") || triggerObject.name.Contains("MovePillar")) { SoundManager.instance.WallMoveSound(); }
             else if (triggerObject.name.Contains("OpenElevatorDoor Trigger")) { SoundManager.instance.ElevatorOpenSound(); }
         }
         if (gameObject.CompareTag("StrangeRoom1"))
         {
             Chapter1_Mgr.instance.MoveStrangeClass(Chapter1_Mgr.instance.strangeRoom1);
-            SoundManager.instance.LockerFallSound();
+            if (SoundManager.instance != null) { SoundManager.instance.LockerFallSound(); }
+            
         }
         if (gameObject.CompareTag("StrangeRoom2"))
         {
             Chapter1_Mgr.instance.MoveStrangeClass(Chapter1_Mgr.instance.strangeRoom2);
-            SoundManager.instance.LockerFallSound();
+            if (SoundManager.instance != null) { SoundManager.instance.LockerFallSound(); }
+            
         }
         if (other.gameObject.CompareTag("Player") && this.gameObject.CompareTag("Teleport"))
         {

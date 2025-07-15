@@ -8,6 +8,7 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
 using UnityEngine.Video;
+using UnityStandardAssets.Characters.FirstPerson;
 
 public class LoadingSceneManager : UIUtility
 {

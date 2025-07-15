@@ -96,7 +96,7 @@ public class CommonUIManager : MonoBehaviour
 
     private void Start()
     {
-        fogSettings.Add(new FogSettings { name = "Nightmare", fogDensity = 0.7f });
+        fogSettings.Add(new FogSettings { name = "Nightmare", fogDensity = 0.25f });
         fogSettings.Add(new FogSettings { name = "Warm", fogColor = new Color(1f, 0.525f, 0f), fogDensity = 0.002f });
     }
 
@@ -316,8 +316,14 @@ public class CommonUIManager : MonoBehaviour
     // ¾À ÀÌµ¿ ÇÔ¼ö
     public void MoveScene(string sceneName)
     {
-        SoundManager.instance.bgmSource.Stop();
-        SoundManager.instance.sfxSource.Stop();
+        if(SoundManager.instance != null)
+        {
+            SoundManager.instance.bgmSource.Stop();
+            SoundManager.instance.sfxSource.Stop();
+        }
+
+        PlayerController.instance.Close_PlayerController();
+        Camera_Rt.instance.Close_Camera();
 
         if (ProgressManager.Instance != null && !sceneName.Equals("Title Scene"))
         {

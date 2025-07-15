@@ -13,11 +13,13 @@ public class ElevatorEvent : MonoBehaviour
     public void Close_Elevator()
     {
         elevatorTrigger.Close_Elevator();
-        SoundManager.instance.ElevatorCloseSound();
+        if (SoundManager.instance != null) { SoundManager.instance.ElevatorCloseSound(); }
+        
     }
     public void Open_Elevator()
     {
         elevatorTrigger.Open_Elevator();
-        SoundManager.instance.ElevatorOpenSound();
+        if (SoundManager.instance != null) { SoundManager.instance.ElevatorOpenSound(); }
+        
     }
 }

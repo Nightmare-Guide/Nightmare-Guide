@@ -98,7 +98,7 @@ public class RayCast_Aim : MonoBehaviour
                     {
                         Locker(click_object);
 
-                        SoundManager.instance.PlayDoorOpen();
+                        if(SoundManager.instance != null) { SoundManager.instance.PlayDoorOpen(); }
                     }
 
                     if (click_object.CompareTag("Door"))
@@ -109,7 +109,8 @@ public class RayCast_Aim : MonoBehaviour
 
                         if (doorLogic.enabled == false)
                         {
-                            SoundManager.instance.KeyFailSound();
+                            if (SoundManager.instance != null) { SoundManager.instance.KeyFailSound(); }
+                            
                             return;
                         }
 
@@ -127,7 +128,8 @@ public class RayCast_Aim : MonoBehaviour
 
                         if (doorLogic.enabled == false)
                         {
-                            SoundManager.instance.KeyFailSound();
+                            if (SoundManager.instance != null) { SoundManager.instance.KeyFailSound(); }
+                            
                             return;
                         }
 
@@ -137,7 +139,8 @@ public class RayCast_Aim : MonoBehaviour
                         {
                             if (schoolUIManager.CheckItem(schoolUIManager.items[1].name)) // 열쇠가 있으면 실행
                             {
-                                SoundManager.instance.KeySuccessSound();
+                                if (SoundManager.instance != null) { SoundManager.instance.KeySuccessSound(); }
+                                
                                 DoorCheck(click_object);
                                 click_object.tag = "Door";
                                 schoolUIManager.UseItem(schoolUIManager.items[1]);
@@ -153,7 +156,8 @@ public class RayCast_Aim : MonoBehaviour
                             }
                             else
                             {
-                                SoundManager.instance.KeyFailSound();
+                                if (SoundManager.instance != null) { SoundManager.instance.KeyFailSound(); }
+                                
                             }
                         }
                         else if (click_object.name.Contains("Lounge Door"))
@@ -237,8 +241,12 @@ public class RayCast_Aim : MonoBehaviour
                         }
 
                         click_object.SetActive(false);
-                        if (CommonUIManager.instance.uiManager is SchoolUIManager schoolUIManager) { schoolUIManager.flashlightWall.SetActive(false); }
-                        SoundManager.instance.GetItemSound();
+
+                        SchoolUIManager schoolUIManager = CommonUIManager.instance.uiManager as SchoolUIManager;
+
+                        schoolUIManager.flashlightWall.SetActive(false);
+                        
+                        if(SoundManager.instance != null) { SoundManager.instance.GetItemSound(); }
                     }
 
                     if (click_object.CompareTag("Ending"))
@@ -276,14 +284,15 @@ public class RayCast_Aim : MonoBehaviour
             if (ProgressManager.Instance == null)
                 return;
 
-            if (ProgressManager.Instance.progressData.hideInLocker)
+            if (ProgressManager.Instance.progressData.hideInLocker) // 락커 안에서는 사용 불가
                 return;
 
             if (ProgressManager.Instance.IsActionCompleted(ActionType.GetFlashlight))
             {
                 flashlight.SetActive(!flashlight.activeInHierarchy);
-                SoundManager.instance.FlashlightSound();
             }
+
+            if(SoundManager.instance != null) { SoundManager.instance.FlashlightSound(); }
         }
     }
 
