@@ -29,11 +29,21 @@ public class MovePath : MonoBehaviour {
     [SerializeField]
     public GameObject walkPath;
 
+    Animator anim;
+
     [HideInInspector] public float randXFinish;
     [HideInInspector] public float randZFinish;
     [SerializeField] [Tooltip("Set your animation speed / Установить свою скорость анимации?")] private bool _overrideDefaultAnimationMultiplier;
     [SerializeField] [Tooltip("Speed animation walking / Скорость анимации ходьбы")] private float _customWalkAnimationMultiplier = 1.0f;
     [SerializeField] [Tooltip("Running animation speed / Скорость анимации бега")] private float _customRunAnimationMultiplier = 1.0f;
+
+    private void Awake()
+    {
+        if(TryGetComponent<Animator>(out anim))
+        {
+            anim.applyRootMotion = true;
+        }
+    }
 
     public void InitializeAnimation(bool overrideAnimation, float walk, float run)
     {

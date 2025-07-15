@@ -67,19 +67,22 @@ public class UIUtility : MonoBehaviour
     {
         ui.SetActive(false);
 
-        if (SoundManager.instance.bgmSource.clip != null && !SoundManager.instance.bgmSource.isPlaying)
+        if (SoundManager.instance != null)
         {
-            SoundManager.instance.bgmSource.Play();
+            if (SoundManager.instance.bgmSource.clip != null && !SoundManager.instance.bgmSource.isPlaying)
+            {
+                SoundManager.instance.bgmSource.Play();
+            }
+
+            if (SoundManager.instance.sfxSource.clip != null && !SoundManager.instance.sfxSource.isPlaying)
+            {
+                SoundManager.instance.sfxSource.Play();
+            }
         }
 
-        if (SoundManager.instance.sfxSource.clip != null && !SoundManager.instance.sfxSource.isPlaying)
+        if (audioSources.Count > 0)
         {
-            SoundManager.instance.sfxSource.Play();
-        }
-
-        if(audioSources.Count > 0)
-        {
-            foreach(AudioSource audioSource in audioSources)
+            foreach (AudioSource audioSource in audioSources)
             {
                 if (audioSource.enabled && audioSource.gameObject.activeSelf && audioSource.clip != null && !audioSource.isPlaying)
                 {
@@ -109,8 +112,11 @@ public class UIUtility : MonoBehaviour
         optionUI.SetActive(true);
 
         // 사운드 정지
-        SoundManager.instance.bgmSource.Stop();
-        SoundManager.instance.sfxSource.Stop();
+        if (SoundManager.instance != null)
+        {
+            SoundManager.instance.bgmSource.Stop();
+            SoundManager.instance.sfxSource.Stop();
+        }
 
         if (audioSources.Count > 0)
         {
@@ -388,32 +394,25 @@ public class UIUtility : MonoBehaviour
     public void GetPostFogData()
     {
         CommonUIManager commonUIManager = CommonUIManager.instance;
-        string fogName = ProgressManager.Instance.progressData.fogName;
-        string postName = ProgressManager.Instance.progressData.postProcessingName;
 
-        commonUIManager.ApplyFog(commonUIManager.fogSettings.Find(info => info.name.Equals(fogName)));
-        Camera_Rt.instance.ApplyPostProcessing(postName);
+        if (ProgressManager.Instance != null)
+        {
+            string fogName = ProgressManager.Instance.progressData.fogName;
+            string postName = ProgressManager.Instance.progressData.postProcessingName;
+
+            commonUIManager.ApplyFog(commonUIManager.fogSettings.Find(info => info.name.Equals(fogName)));
+            Camera_Rt.instance.ApplyPostProcessing(postName);
+        }
     }
 
     // 데이터에 맞게 오브젝트 활성화/비활성화
     public void CheckObjData(ProgressManager.ActionType action, GameObject obj)
     {
-        if (ProgressManager.Instance != null)
-        {
-            ProgressManager progress = ProgressManager.Instance;
-
-            // Debug.Log($"obj : {obj.name}, active : {!progress.IsActionCompleted(action)}");
-            obj.SetActive(!progress.IsActionCompleted(action));
-        }
+        obj.SetActive(!IsActionCompleted(action));
     }
     public void CheckObjData(ProgressManager.ActionType action, Collider collider)
     {
-        if (ProgressManager.Instance != null)
-        {
-            ProgressManager progress = ProgressManager.Instance;
-
-            collider.enabled = !progress.IsActionCompleted(action);
-        }
+        collider.enabled = !IsActionCompleted(action);
     }
 
     public bool ForceCloseDoor(Door doorLogic)
@@ -445,5 +444,22 @@ public class UIUtility : MonoBehaviour
     public void StopSfxSound()
     {
         soundManager.StopSfxSound();
+    }
+
+    // Action 이 실행되었는 지 안되었는 지 확인하는 함수
+    public bool IsActionCompleted(ProgressManager.ActionType type)
+    {
+        if (ProgressManager.Instance == null)
+            return false;
+
+        return ProgressManager.Instance.progressData.actionStatuses.Find(a => a.actionType == type).isCompleted;
+    }
+
+    public void CompletedAction(ProgressManager.ActionType type)
+    {
+        if (ProgressManager.Instance == null)
+            return;
+
+        ProgressManager.Instance.progressData.actionStatuses.Find(a => a.actionType == type).isCompleted = true;
     }
 }

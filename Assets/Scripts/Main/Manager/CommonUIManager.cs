@@ -103,7 +103,7 @@ public class CommonUIManager : MonoBehaviour
 
     private void Update()
     {
-        /*if (Input.GetKeyDown(KeyCode.Keypad1))
+        if (Input.GetKeyDown(KeyCode.Keypad1))
         {
             MoveScene("Title Scene");
         }
@@ -138,13 +138,16 @@ public class CommonUIManager : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.Keypad9))
         {
             MoveScene("NightHouse");
-        }*/
+        }
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        if (ProgressManager.Instance == null)
+            return;
+
         // 특정 씬이 로드되면 플레이어 생성 요청
-        if (!scene.name.Equals("LoadingScene")&& !ProgressManager.Instance.progressData.newGame && !scene.name.Equals("Title Scene"))
+        if (!scene.name.Equals("LoadingScene") && !ProgressManager.Instance.progressData.newGame && !scene.name.Equals("Title Scene"))
         {
             StartCoroutine(DelaySpawnPlayer());
         }
@@ -157,11 +160,11 @@ public class CommonUIManager : MonoBehaviour
 
     void SpawnPlayer()
     {
-        if (PlayerController.instance!=null&&ProgressManager.Instance != null && ProgressManager.Instance.progressData != null)
+        if (PlayerController.instance != null && ProgressManager.Instance != null && ProgressManager.Instance.progressData != null)
         {
             if (!ProgressManager.Instance.progressData.newGame)
             {
-                Debug.Log(ProgressManager.Instance.progressData.scene+"씬 위치값 : "+ ProgressManager.Instance.progressData.playerPosition +"로테이션 : "+ ProgressManager.Instance.progressData.playerEulerAngles);
+                Debug.Log(ProgressManager.Instance.progressData.scene + "씬 위치값 : " + ProgressManager.Instance.progressData.playerPosition + "로테이션 : " + ProgressManager.Instance.progressData.playerEulerAngles);
                 PlayerController.instance.Close_PlayerController();
                 PlayerController.instance.transform.eulerAngles = ProgressManager.Instance.progressData.playerEulerAngles;
                 PlayerController.instance.transform.position = ProgressManager.Instance.progressData.playerPosition;
@@ -182,10 +185,11 @@ public class CommonUIManager : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        if (GameDataManager.instance != null && PlayerController.instance!=null) {
+        if (GameDataManager.instance != null && PlayerController.instance != null)
+        {
             ProgressManager.Instance.progressData.playerPosition = PlayerController.instance.transform.position;
             ProgressManager.Instance.progressData.newGame = false;
-            GameDataManager.instance.SaveGame(); 
+            GameDataManager.instance.SaveGame();
         }
     }
 
@@ -212,11 +216,13 @@ public class CommonUIManager : MonoBehaviour
                 return;
             }
             Time.timeScale = 1;
-            if (GameDataManager.instance != null && PlayerController.instance!=null && ProgressManager.Instance!=null) {
+            if (GameDataManager.instance != null && PlayerController.instance != null && ProgressManager.Instance != null)
+            {
                 Vector3 playerTr = PlayerController.instance.transform.position;
 
                 ProgressManager.Instance.progressData.playerPosition = playerTr;
                 ProgressManager.Instance.progressData.newGame = false;
+
                 GameDataManager.instance.SaveGame();
             }
             MoveScene("Title Scene");
@@ -231,8 +237,7 @@ public class CommonUIManager : MonoBehaviour
 
         isFullScreen = true;
 
-        Screen.fullScreenMode = FullScreenMode.ExclusiveFullScreen;
-        Screen.fullScreen = true;
+        Screen.SetResolution(1920, 1080, FullScreenMode.ExclusiveFullScreen);
     }
 
     public void WindowedBtn()
@@ -242,7 +247,7 @@ public class CommonUIManager : MonoBehaviour
 
         isFullScreen = false;
 
-        Screen.SetResolution(1280, 720, FullScreenMode.Windowed);
+        Screen.SetResolution(1920, 1080, FullScreenMode.Windowed);
     }
 
     // DropDown 에 들어가는 값 변경 함수
@@ -283,8 +288,8 @@ public class CommonUIManager : MonoBehaviour
         }
 
         // UI Manager 가 null 값이 아닐 경우 실행
-        if(uiManager is SchoolUIManager schoolUIManager) { schoolUIManager.RebuildVerticalLayout(schoolUIManager.textBoxLayouts); }
-        if(uiManager is MainUIManager mainUIManager) { mainUIManager.RebuildVerticalLayout(mainUIManager.textBoxLayouts); }
+        if (uiManager is SchoolUIManager schoolUIManager) { schoolUIManager.RebuildVerticalLayout(schoolUIManager.textBoxLayouts); }
+        if (uiManager is MainUIManager mainUIManager) { mainUIManager.RebuildVerticalLayout(mainUIManager.textBoxLayouts); }
 
         changingLanguage = false;
     }
@@ -301,6 +306,9 @@ public class CommonUIManager : MonoBehaviour
 
     public void SmartPhoneData()
     {
+        if (ProgressManager.Instance == null)
+            return;
+
         stevenPhone.hasPhone = ProgressManager.Instance.progressData.phoneDatas[0].hasPhone;
         stevenPhone.isUnlocked = ProgressManager.Instance.progressData.phoneDatas[0].isUnlocked;
     }
@@ -311,11 +319,12 @@ public class CommonUIManager : MonoBehaviour
         SoundManager.instance.bgmSource.Stop();
         SoundManager.instance.sfxSource.Stop();
 
-        if (ProgressManager.Instance != null && !sceneName.Equals("Title Scene")) {
+        if (ProgressManager.Instance != null && !sceneName.Equals("Title Scene"))
+        {
             PlayerSpawnPoint(sceneName);
             ProgressManager.Instance.progressData.scene = sceneName;
         }
-        
+
         // 씬 저장
         interactionUI.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
@@ -328,11 +337,14 @@ public class CommonUIManager : MonoBehaviour
 
     public void PlayerSpawnPoint(string scene)//MoveScene이 실행되면서 새게임이 아닐때 플레이어 스폰 장소 설정 
     {
+        if (ProgressManager.Instance == null)
+            return;
+
         ProgressManager.Instance.SavePlayerTr();
         ProgressManager.Instance.LoadPlayerPositionForScene(scene);
 
     }
- 
+
 
     IEnumerator MoveSceneRoutine(string sceneName)
     {
@@ -467,8 +479,10 @@ public class CommonUIManager : MonoBehaviour
                 break;
         }
 
-        Debug.Log($"[FogManager] Applied fog preset: {settings.name}");
-        ProgressManager.Instance.progressData.fogName = settings.name; // 데이터 저장
+        if (ProgressManager.Instance != null)
+        {
+            ProgressManager.Instance.progressData.fogName = settings.name; // 데이터 저장
+        }
     }
 
     // 휴대폰 정보 Class

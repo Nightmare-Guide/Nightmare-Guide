@@ -52,17 +52,19 @@ public class MainUIManager : UIUtility
                 commonUIManager.stevenPhone.cellPhoneObj = cellPhoneObjs;
             }
 
-            commonUIManager.stevenPhone.cellPhoneUI = uiObjects[2];
-            //Debug.Log(commonUIManager.phoneInfos.cellPhoneUI.name);
+            if (commonUIManager.stevenPhone != null)
+            {
+                commonUIManager.stevenPhone.cellPhoneUI = uiObjects[2];
+            }
 
-            if (commonUIManager.stevenPhone.hasPhone && cellPhoneObjs != null)
+            if (commonUIManager.stevenPhone != null && commonUIManager.stevenPhone.hasPhone && cellPhoneObjs != null)
             {
                 cellPhoneObjs.SetActive(false);
             }
         }
 
         // Start New Day 타임라인 실행 여부 확인
-        if (!ProgressManager.Instance.IsActionCompleted(ActionType.StartNewDay))
+        if (ProgressManager.Instance != null && !ProgressManager.Instance.IsActionCompleted(ActionType.StartNewDay))
         {
             // 타임라인 실행
             StartTimeLine(timeLineManager.playableAssets[0]);
@@ -87,7 +89,10 @@ public class MainUIManager : UIUtility
         }
         else
         {
-            SoundManager.instance.bgmSource.clip = null;
+            if (SoundManager.instance != null)
+            {
+                SoundManager.instance.bgmSource.clip = null;
+            }
         }
     }
     public void ShowReport()
@@ -120,12 +125,7 @@ public class MainUIManager : UIUtility
         // ESC 키
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            //if (AreAllObjectsDisabled(uiObjects) && commonUIManager != null)               // -> 테스트 때문에 비활성화
-            //{
-            //    // 일시정지 UI 활성화
-            //    PauseGame(uiObjects[0]);
-            //}
-            if (AreAllObjectsDisabled(uiObjects))
+            if (AreAllObjectsDisabled(uiObjects) && commonUIManager != null)
             {
                 // 일시정지 UI 활성화
                 PauseGame(uiObjects[0]);
@@ -202,7 +202,7 @@ public class MainUIManager : UIUtility
     {
         uiObjects[0].SetActive(false);
         aimUI.SetActive(true);
-        
+
         CursorLocked(); // 마우스 커서 중앙에 고정
     }
 

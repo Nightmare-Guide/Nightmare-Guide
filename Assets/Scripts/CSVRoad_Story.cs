@@ -115,7 +115,7 @@ public class CSVRoad_Story : MonoBehaviour
     private IEnumerator DisplayChapterDialogue(int start, int end)
     {
         dialogueBox.SetActive(true);
-       
+
         for (int i = start; i <= end; i++)
         {
             // CSV 데이터의 현재 대사를 가져옴
@@ -124,7 +124,7 @@ public class CSVRoad_Story : MonoBehaviour
 
             dialogueBox.SetActive(string.IsNullOrEmpty(text) ? false : true); // text 내용이 없을 때에는 대화창 비활성화
 
-            if(!string.IsNullOrEmpty(FormatDialogue(data[i][$"{LocalizationSettings.SelectedLocale.Identifier.Code}_name"].ToString())))
+            if (!string.IsNullOrEmpty(FormatDialogue(data[i][$"{LocalizationSettings.SelectedLocale.Identifier.Code}_name"].ToString())))
             {
                 string name = FormatDialogue(data[i][$"{LocalizationSettings.SelectedLocale.Identifier.Code}_name"].ToString());
                 dialogueName.text = name + " : ";
@@ -180,7 +180,7 @@ public class CSVRoad_Story : MonoBehaviour
                 // break;
             }
         }
-        dialogueBox.SetActive(false); 
+        dialogueBox.SetActive(false);
     }
 
     private void ActivateSelection(int optionStartIndex)
@@ -213,8 +213,8 @@ public class CSVRoad_Story : MonoBehaviour
             {
                 Debug.Log("선택지 1 선택: ReturnPoint로 이동");
                 StartCoroutine(DisplayChapterDialogue(returnPoint, data.Count - 1)); // ReturnPoint부터 다시 출력
-                
-                Debug.Log("현재 챕터 : "+ data[progress]["Chapter"].ToString());
+
+                Debug.Log("현재 챕터 : " + data[progress]["Chapter"].ToString());
             }
             else
             {
@@ -284,18 +284,27 @@ public class CSVRoad_Story : MonoBehaviour
     {
         questUI.SetActive(true);
         questText.text = text;
-        ProgressManager.Instance.progressData.quest = text;
+
+        if (ProgressManager.Instance != null)
+        {
+            ProgressManager.Instance.progressData.quest = text;
+        }
+
     }
 
     public void CloseQuestUI()
     {
-        if(questUI != null)
+        if (questUI != null)
         {
             questUI.SetActive(false);
             questText.text = "";
         }
 
-        ProgressManager.Instance.progressData.quest = "";
+        if (ProgressManager.Instance != null)
+        {
+            ProgressManager.Instance.progressData.quest = "";
+        }
+
     }
 
     void NextAction(string chapter)
@@ -306,11 +315,19 @@ public class CSVRoad_Story : MonoBehaviour
                 StartCoroutine(FinishNarration());
                 break;
             case "0_1_0":
-                ProgressManager.Instance.CompletedAction(ActionType.StartNewDay);
+                if (ProgressManager.Instance != null)
+                {
+                    ProgressManager.Instance.CompletedAction(ActionType.StartNewDay);
+                }
+
                 // OpenQuestUI(GetQuest("0_1_0_0"));
                 break;
             case "0_2_0":
-                ProgressManager.Instance.CompletedAction(ActionType.FirstMeetMichael);
+                if (ProgressManager.Instance != null)
+                {
+                    ProgressManager.Instance.CompletedAction(ActionType.FirstMeetMichael);
+                }
+
                 if (currentNPC != null) { Michael michael = currentNPC as Michael; michael.DoSweepBroom(); }
                 break;
             //case "0_3_0":
@@ -353,7 +370,11 @@ public class CSVRoad_Story : MonoBehaviour
             //    }
             //    break;
             case "1_0_0":
-                ProgressManager.Instance.CompletedAction(ActionType.FirstMeetEthan);
+                if (ProgressManager.Instance != null)
+                {
+                    ProgressManager.Instance.CompletedAction(ActionType.FirstMeetEthan);
+                }
+
                 SoundManager.instance.WallMoveSound();
                 if (CommonUIManager.instance.uiManager is SchoolUIManager schoolUIManager) { schoolUIManager.StartPlayerController(); }
                 break;
@@ -361,7 +382,11 @@ public class CSVRoad_Story : MonoBehaviour
                 if (CommonUIManager.instance.uiManager is SchoolUIManager) { CommonUIManager.instance.uiManager.StartPlayerController(); }
                 break;
             case "1_0_3":
-                ProgressManager.Instance.CompletedAction(ActionType.FirstMeetMonster);
+                if (ProgressManager.Instance != null)
+                {
+                    ProgressManager.Instance.CompletedAction(ActionType.FirstMeetMonster);
+                }
+
                 if (CommonUIManager.instance.uiManager is SchoolUIManager) { CommonUIManager.instance.uiManager.StartPlayerController(); }
                 break;
             case "1_0_4":
@@ -369,7 +394,11 @@ public class CSVRoad_Story : MonoBehaviour
                 if (CommonUIManager.instance.uiManager is SchoolUIManager) { CommonUIManager.instance.uiManager.StartPlayerController(); }
                 break;
             case "2_2_0":
-                ProgressManager.Instance.CompletedAction(ActionType.FirstMeetAlex);
+                if (ProgressManager.Instance != null)
+                {
+                    ProgressManager.Instance.CompletedAction(ActionType.FirstMeetAlex);
+                }
+
                 dialogueBox.SetActive(false);
                 if (currentNPC != null) { Alex alex = currentNPC as Alex; alex.WalkToOutSide(); }
                 CommonUIManager.instance.uiManager.StartPlayerController();

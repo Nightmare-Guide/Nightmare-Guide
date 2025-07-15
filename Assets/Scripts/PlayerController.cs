@@ -515,6 +515,12 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 }
             }
         }
+
+        private void OnCollisionEnter(Collision collision)
+        {
+            Debug.Log("Hit : " + collision.gameObject.name);
+        }
+
         public void AutoMove(Transform destination)
         {
             agent.enabled = true;

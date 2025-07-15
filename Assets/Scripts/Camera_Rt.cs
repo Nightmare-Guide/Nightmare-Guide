@@ -68,6 +68,10 @@ public class Camera_Rt : MonoBehaviour
                 break;
         }
 
-        ProgressManager.Instance.progressData.postProcessingName = name; // 데이터 저장
+        if (ProgressManager.Instance != null)
+        {
+            ProgressManager.Instance.progressData.postProcessingName = name; // 데이터 저장
+        }
+
     }
 }

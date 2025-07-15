@@ -96,7 +96,7 @@ public class CellPhone : MonoBehaviour
                                 .Find(info => this.gameObject.name.Contains(info.name));
 
         if (targetPhone.isUnlocked)
-                return;
+            return;
 
         var uiManager = this.gameObject.name.Contains("Steven") ? (UIUtility)mainUIManager : (UIUtility)schoolUIManager;
 
@@ -212,7 +212,12 @@ public class CellPhone : MonoBehaviour
             {
                 // 스티븐 휴대폰은 슬라이더로 잠금 해제 후, 바로 잠금해제
                 CommonUIManager.instance.stevenPhone.isUnlocked = true;
-                ProgressManager.Instance.progressData.phoneDatas[0].isUnlocked = true;
+
+                if (ProgressManager.Instance != null)
+                {
+                    ProgressManager.Instance.progressData.phoneDatas[0].isUnlocked = true;
+                }
+
 
                 // App Screen UI 활성화
                 appScreenUI.SetActive(true);

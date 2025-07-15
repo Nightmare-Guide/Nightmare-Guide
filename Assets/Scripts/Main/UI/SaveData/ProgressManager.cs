@@ -229,10 +229,10 @@ public class ProgressManager : MonoBehaviour
         {     
             progressData.playerEulerAngles = playerData.rt;
 
-            if (ProgressManager.Instance.progressData.hideInLocker)
+            if (progressData.hideInLocker)
             {
                 progressData.playerPosition = playerData.tr + (Quaternion.Euler(playerData.rt) * Vector3.forward); // 게임 시작 시 플레이어가 락커에 숨어있었던 상태라면 락커 밖으로 리스폰
-                ProgressManager.Instance.progressData.hideInLocker = false;
+                progressData.hideInLocker = false;
             }
             else
             {

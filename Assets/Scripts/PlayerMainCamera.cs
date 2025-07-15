@@ -13,7 +13,7 @@ public class PlayerMainCamera : MonoBehaviour
     public GameObject jumpscareObj;
 
 
-    public static PlayerMainCamera camera_single {  get; private set; }
+    public static PlayerMainCamera camera_single { get; private set; }
     private Transform death_Camera_Target;
     public float rotationDuration = 1f;
     private Coroutine rotationCoroutine;
@@ -145,18 +145,38 @@ public class PlayerMainCamera : MonoBehaviour
         {
             Debug.Log("»ç¸Á ÈÄ ¾×¼Ç");
 
-            if (!ProgressManager.Instance.IsActionCompleted(ProgressManager.ActionType.GetOutOfLocker))
+            if (ProgressManager.Instance != null)
             {
-                StartCoroutine(schoolUIManager.RevivalPlayer(ProgressManager.ActionType.FirstMeetMonster));
-            }   
-            else if (!ProgressManager.Instance.IsActionCompleted(ProgressManager.ActionType.EnteredEthanHouse))
-            {
-                StartCoroutine(schoolUIManager.RevivalPlayer(ProgressManager.ActionType.EnteredBackRoom));
+                if (!ProgressManager.Instance.IsActionCompleted(ProgressManager.ActionType.GetOutOfLocker))
+                {
+                    StartCoroutine(schoolUIManager.RevivalPlayer(ProgressManager.ActionType.FirstMeetMonster));
+                }
+                else if (!ProgressManager.Instance.IsActionCompleted(ProgressManager.ActionType.EnteredEthanHouse))
+                {
+                    StartCoroutine(schoolUIManager.RevivalPlayer(ProgressManager.ActionType.EnteredBackRoom));
+                }
+                else if (!ProgressManager.Instance.IsActionCompleted(ProgressManager.ActionType.FinishFinalChase))
+                {
+                    StartCoroutine(schoolUIManager.RevivalPlayer(ProgressManager.ActionType.ClearLockerRoom));
+                }
             }
-            else if (!ProgressManager.Instance.IsActionCompleted(ProgressManager.ActionType.FinishFinalChase))
+            else
             {
-                StartCoroutine(schoolUIManager.RevivalPlayer(ProgressManager.ActionType.ClearLockerRoom));;
+                if (schoolUIManager.schoolMaps[5].activeInHierarchy)
+                {
+                    StartCoroutine(schoolUIManager.RevivalPlayer(ProgressManager.ActionType.ClearLockerRoom));
+                }
+                else if (schoolUIManager.schoolMaps[3].activeInHierarchy)
+                {
+                    StartCoroutine(schoolUIManager.RevivalPlayer(ProgressManager.ActionType.EnteredBackRoom));
+                }
+                else if (schoolUIManager.schoolMaps[0].activeInHierarchy)
+                {
+                    StartCoroutine(schoolUIManager.RevivalPlayer(ProgressManager.ActionType.FirstMeetMonster));
+                }
             }
+
+
         }
     }
 }

@@ -23,7 +23,7 @@ public class Michael : NPC
         AnimHelper.TryPlay(broomAnim, "Sweep", 0);
         audioSource.Play();
 
-        if (!ProgressManager.Instance.IsActionCompleted(ProgressManager.ActionType.FirstMeetMichael))
+        if (ProgressManager.Instance != null && !ProgressManager.Instance.IsActionCompleted(ProgressManager.ActionType.FirstMeetMichael))
         {
             StartCoroutine(EnableCollider(col, 2f));
         }
