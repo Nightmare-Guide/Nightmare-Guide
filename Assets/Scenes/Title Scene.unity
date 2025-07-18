@@ -20182,7 +20182,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 32.8
+  m_fontSize: 38
   m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -20840,7 +20840,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 34.55
+  m_fontSize: 38
   m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -23817,7 +23817,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50.25
+  m_fontSize: 60
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -52590,7 +52590,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 28.55
+  m_fontSize: 30
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -78652,10 +78652,10 @@ MonoBehaviour:
   mixer: {fileID: 24100000, guid: f4f179141ef7360419352248dc4a3eb8, type: 2}
   bgmSlider: {fileID: 1939306521}
   sfxSlider: {fileID: 1439319731}
-  bgmMaxVolume: -20
-  bgmMinVolume: -80
-  sfxMaxVolume: -10
-  sfxMinVolume: -80
+  bgmMaxVolume: 20
+  bgmMinVolume: -30
+  sfxMaxVolume: 20
+  sfxMinVolume: -30
 --- !u!1 &1873465548
 GameObject:
   m_ObjectHideFlags: 0
