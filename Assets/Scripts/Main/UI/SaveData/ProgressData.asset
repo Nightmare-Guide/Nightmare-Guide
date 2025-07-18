@@ -13,43 +13,43 @@ MonoBehaviour:
   m_Name: ProgressData
   m_EditorClassIdentifier: 
   newGame: 0
-  scene: NightHouse
+  scene: School_Scene
   storyProgress: clear
   actionStatuses:
   - actionType: 0
     isCompleted: 1
   - actionType: 1
-    isCompleted: 0
+    isCompleted: 1
   - actionType: 2
     isCompleted: 0
   - actionType: 3
     isCompleted: 0
   - actionType: 4
-    isCompleted: 0
+    isCompleted: 1
   - actionType: 5
-    isCompleted: 0
+    isCompleted: 1
   - actionType: 6
-    isCompleted: 0
+    isCompleted: 1
   - actionType: 7
-    isCompleted: 0
+    isCompleted: 1
   - actionType: 8
-    isCompleted: 0
+    isCompleted: 1
   - actionType: 9
-    isCompleted: 0
+    isCompleted: 1
   - actionType: 10
-    isCompleted: 0
+    isCompleted: 1
   - actionType: 11
-    isCompleted: 0
+    isCompleted: 1
   - actionType: 12
-    isCompleted: 0
+    isCompleted: 1
   - actionType: 13
-    isCompleted: 0
+    isCompleted: 1
   - actionType: 14
-    isCompleted: 0
+    isCompleted: 1
   - actionType: 15
-    isCompleted: 0
+    isCompleted: 1
   - actionType: 16
-    isCompleted: 0
+    isCompleted: 1
   - actionType: 17
     isCompleted: 0
   - actionType: 18
@@ -73,18 +73,18 @@ MonoBehaviour:
   - actionType: 27
     isCompleted: 0
   - actionType: 28
-    isCompleted: 1
+    isCompleted: 0
   - actionType: 29
     isCompleted: 0
-  playerPosition: {x: -501.94824, y: 71.920006, z: 129.23979}
-  playerEulerAngles: {x: 0, y: 121.945145, z: 0}
+  playerPosition: {x: -42.71684, y: 4.2392178, z: -156.29631}
+  playerEulerAngles: {x: 0, y: 0, z: 0}
   playerTr:
   - scene_Name: DayHouse
-    tr: {x: -489.6121, y: 71.920006, z: 136.2723}
-    rt: {x: 0, y: 317, z: 0}
+    tr: {x: -606.3328, y: 71.80008, z: 190.34225}
+    rt: {x: 0, y: 261.29996, z: 0}
   - scene_Name: NightHouse
-    tr: {x: -501.94824, y: 71.920006, z: 129.23979}
-    rt: {x: -0, y: 143.44086, z: 0}
+    tr: {x: -605, y: 72, z: 173}
+    rt: {x: 0, y: -90, z: 0}
   - scene_Name: DayHospital
     tr: {x: -261, y: 6, z: -689}
     rt: {x: 0, y: -90, z: 0}
@@ -92,21 +92,23 @@ MonoBehaviour:
     tr: {x: -205.08, y: 28.22, z: -899.39}
     rt: {x: 0, y: 180, z: 0}
   - scene_Name: School_Scene
-    tr: {x: 0, y: 0, z: 0}
-    rt: {x: 0, y: 0, z: 0}
+    tr: {x: 17, y: 3.78, z: -63.6}
+    rt: {x: 0, y: 214.99998, z: 0}
   - scene_Name: Main_Map
-    tr: {x: -376, y: 5, z: -355}
-    rt: {x: 0, y: 90, z: 0}
+    tr: {x: -70.759895, y: 9.877497, z: -710.14795}
+    rt: {x: 0, y: 277.5565, z: 0}
   - scene_Name: Main_Map_Night
-    tr: {x: -180, y: 5.52, z: -723}
-    rt: {x: 0, y: 90.1, z: 0}
+    tr: {x: -180, y: 5, z: -723}
+    rt: {x: 0, y: 90, z: 0}
   sanchi: 0
-  postProcessingName: Warm
-  fogName: Warm
+  postProcessingName: Nightmare
+  fogName: Nightmare
   hideInLocker: 0
   mainInventoryDatas:
   - 
-  schoolInventoryDatas: []
+  schoolInventoryDatas:
+  - Locker Key
+  - David CellPhone
   phoneDatas:
   - name: Steven
     hasPhone: 1
@@ -115,13 +117,13 @@ MonoBehaviour:
     hasPhone: 0
     isUnlocked: 0
   - name: David
-    hasPhone: 0
+    hasPhone: 1
     isUnlocked: 0
-  bgVolume: 50
-  effectVolume: 50
+  bgVolume: 0.735802
+  effectVolume: 0.6096552
   characterVolume: 50
   isFullScreen: 1
-  language: 
+  language: en
   quest: 
   timelineWatchedList:
   - key: StartFirstDay
@@ -137,4 +139,6 @@ MonoBehaviour:
   - key: FirstMeetEthanMother
     value: 0
   - key: InNightmare
+    value: 0
+  - key: StartFinalChase
     value: 0

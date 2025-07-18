@@ -35,9 +35,9 @@ public class ProgressData : ScriptableObject
     public List<String> schoolInventoryDatas;
     [Header("CommonUIManager")]
     public List<SavePhoneData> phoneDatas;
-    public float bgVolume = 50.0f;
-    public float effectVolume = 50.0f;
-    public float characterVolume=50.0f;
+    public float bgVolume = 0.5f;
+    public float effectVolume = 0.5f;
+    public float characterVolume= 0.5f;
     public bool isFullScreen = true;
     public string language = "en";
     [Header("CSVRoad_Story")]

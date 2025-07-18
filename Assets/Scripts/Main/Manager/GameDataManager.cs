@@ -59,12 +59,10 @@ public class GameDataManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-    }
 
-    private void Start()
-    {
         LoadGame(); // 게임 시작 시 불러오기
     }
+
     //테스트용 저장 기능
     private void Update()
     {
@@ -154,7 +152,7 @@ public class GameDataManager : MonoBehaviour
                 ProgressManager.Instance.progressData.characterVolume = loadData.characterVolume;
                 ProgressManager.Instance.progressData.isFullScreen = loadData.isFullScreen;
                 ProgressManager.Instance.progressData.language = loadData.language;
-                ProgressManager.Instance.progressData.language = loadData.quest;
+                ProgressManager.Instance.progressData.quest = loadData.quest;
 
                 if (loadData.timelineWatchedList.Count != 0)
                 {

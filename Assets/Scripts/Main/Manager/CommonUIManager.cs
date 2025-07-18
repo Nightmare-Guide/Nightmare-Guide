@@ -13,6 +13,8 @@ using System.Runtime.InteropServices;
 using UnityStandardAssets.Characters.FirstPerson;
 using static UnityEngine.Rendering.DebugUI;
 using UnityEngine.Audio;
+using static ProgressManager;
+using UnityEngine.Localization.SmartFormat.Utilities;
 
 public class CommonUIManager : MonoBehaviour
 {
@@ -86,18 +88,12 @@ public class CommonUIManager : MonoBehaviour
             Destroy(gameObject); // 중복 생성 방지
             Destroy(commonUICanvas);
         }
-
-        FirstSet();
-
-        // 첫 언어 설정
-        StartCoroutine(ChangeLocalization(0));
-        LanguageDropdown.value = 0;
     }
 
     private void Start()
     {
-        fogSettings.Add(new FogSettings { name = "Nightmare", fogDensity = 0.25f });
-        fogSettings.Add(new FogSettings { name = "Warm", fogColor = new Color(1f, 0.525f, 0f), fogDensity = 0.002f });
+        FirstSet();
+        GetProgressData();
     }
 
 
@@ -200,6 +196,39 @@ public class CommonUIManager : MonoBehaviour
         stevenPhone = new PhoneInfos();
 
         FullScreenBtn();
+
+        // 첫 언어 설정
+        StartCoroutine(ChangeLocalization(0));
+        LanguageDropdown.value = 0;
+
+        fogSettings.Add(new FogSettings { name = "Nightmare", fogDensity = 0.25f });
+        fogSettings.Add(new FogSettings { name = "Warm", fogColor = new Color(1f, 0.525f, 0f), fogDensity = 0.002f });
+    }
+
+    void GetProgressData()
+    {
+        string path = Path.Combine(Application.persistentDataPath, "save.json");
+        if (File.Exists(path))
+        {
+            string json = File.ReadAllText(path);
+
+            // 언어
+            if(ProgressManager.Instance.progressData.language == "en") { StartCoroutine(ChangeLocalization(0)); }
+            else if(ProgressManager.Instance.progressData.language == "ja") { StartCoroutine(ChangeLocalization(1)); }
+            else if (ProgressManager.Instance.progressData.language == "ko") { StartCoroutine(ChangeLocalization(2)); }
+
+            // 사운드
+            SetBGVolume(ProgressManager.Instance.progressData.bgVolume);
+            SetEffectVolume(ProgressManager.Instance.progressData.effectVolume);
+
+            // 전체화면/창모드
+            if(ProgressManager.Instance.progressData.isFullScreen) { FullScreenBtn(); }
+            else { WindowedBtn(); }
+        }
+        else
+        {
+            //Debug.Log("파일이 존재하지 않습니다.");
+        }
     }
 
     public void BackToTitleBtn()
@@ -238,6 +267,8 @@ public class CommonUIManager : MonoBehaviour
         isFullScreen = true;
 
         Screen.SetResolution(1920, 1080, FullScreenMode.ExclusiveFullScreen);
+
+        if(ProgressManager.Instance != null) { ProgressManager.Instance.progressData.isFullScreen = true; }
     }
 
     public void WindowedBtn()
@@ -248,6 +279,8 @@ public class CommonUIManager : MonoBehaviour
         isFullScreen = false;
 
         Screen.SetResolution(1920, 1080, FullScreenMode.Windowed);
+
+        if (ProgressManager.Instance != null) { ProgressManager.Instance.progressData.isFullScreen = false; }
     }
 
     // DropDown 에 들어가는 값 변경 함수
@@ -265,6 +298,8 @@ public class CommonUIManager : MonoBehaviour
         language = LocalizationSettings.AvailableLocales.Locales[index].Identifier.Code;
 
         StartCoroutine(ChangeLocalization(index));
+
+        if(ProgressManager.Instance != null) { ProgressManager.Instance.progressData.language = language; }
     }
 
     IEnumerator ChangeLocalization(int index)
@@ -322,8 +357,8 @@ public class CommonUIManager : MonoBehaviour
             SoundManager.instance.sfxSource.Stop();
         }
 
-        PlayerController.instance.Close_PlayerController();
-        Camera_Rt.instance.Close_Camera();
+        if (PlayerController.instance != null) { PlayerController.instance.Close_PlayerController(); }
+        if (Camera_Rt.instance != null) { Camera_Rt.instance.Close_Camera(); }
 
         if (ProgressManager.Instance != null && !sceneName.Equals("Title Scene"))
         {

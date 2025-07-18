@@ -72,6 +72,10 @@ MonoBehaviour:
     isCompleted: 0
   - actionType: 27
     isCompleted: 0
+  - actionType: 28
+    isCompleted: 0
+  - actionType: 29
+    isCompleted: 0
   playerPosition: {x: -487, y: 71, z: 138}
   playerEulerAngles: {x: 0, y: 0, z: 0}
   playerTr:
@@ -113,9 +117,9 @@ MonoBehaviour:
   - name: David
     hasPhone: 0
     isUnlocked: 0
-  bgVolume: 50
-  effectVolume: 50
-  characterVolume: 50
+  bgVolume: 0.5
+  effectVolume: 0.5
+  characterVolume: 0.5
   isFullScreen: 1
   language: en
   quest: 
@@ -127,4 +131,12 @@ MonoBehaviour:
   - key: FirstLounge
     value: 0
   - key: LastSchoolEvent
+    value: 0
+  - key: DayHospital
+    value: 0
+  - key: FirstMeetEthanMother
+    value: 0
+  - key: InNightmare
+    value: 0
+  - key: StartFinalChase
     value: 0
