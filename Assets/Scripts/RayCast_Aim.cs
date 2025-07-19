@@ -290,9 +290,16 @@ public class RayCast_Aim : MonoBehaviour
             if (ProgressManager.Instance.IsActionCompleted(ActionType.GetFlashlight))
             {
                 flashlight.SetActive(!flashlight.activeInHierarchy);
-            }
 
-            if(SoundManager.instance != null) { SoundManager.instance.FlashlightSound(); }
+                if (SoundManager.instance != null) { SoundManager.instance.FlashlightSound(); }
+
+                // 어두울 때, 손전등 켜면 fog Density 값 낮춤
+                if(RenderSettings.fog == true && ProgressManager.Instance.progressData.fogName == "Nightmare") 
+                {
+                    if (flashlight.activeInHierarchy) { RenderSettings.fogDensity = 0.25f; }
+                    else { RenderSettings.fogDensity = 0.55f; }
+                }
+            }
         }
     }
 

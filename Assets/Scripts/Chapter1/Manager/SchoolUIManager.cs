@@ -319,6 +319,7 @@ public class SchoolUIManager : UIUtility
             if (phoneInfos[1].hasPhone) { cellPhoneObjs[1].SetActive(false); } // 데이비드 휴대폰
             CheckObjData(ActionType.FirstMeetEthan, ethanLocker);
             CheckObjData(ActionType.GetFlashlight, activeObjs[0]); // 손전등
+            flashlightWall.SetActive(IsActionCompleted(ActionType.FirstMeetEthan) && !IsActionCompleted(ActionType.GetFlashlight)); // 손전등 획득 Trigger 벽
             fakeWall.SetActive(!IsActionCompleted(ActionType.FirstMeetEthan) && !IsActionCompleted(ActionType.GetFlashlight));
             CheckObjData(ActionType.GetJanitorsOfficeKey, activeObjs[1]); // 관리실 열쇠
             CheckObjData(ActionType.GetLockerKey, activeObjs[2]); // 락커 열쇠
@@ -561,7 +562,6 @@ public class SchoolUIManager : UIUtility
         PlayerController.instance.Close_PlayerController();
         Camera_Rt.instance.Close_Camera();
         commonUIManager.isTalkingWithNPC = true;
-        CompletedAction(ActionType.FirstMeetEthan);
     }
 
     public void GetLockerKey()

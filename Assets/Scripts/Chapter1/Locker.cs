@@ -80,6 +80,7 @@ public class Locker : MonoBehaviour
         {
             // 손전등 비활성화
             Camera_Rt.instance.postProecessingBehaviour.gameObject.GetComponent<RayCast_Aim>().flashlight.SetActive(false);
+            RenderSettings.fogDensity = 0.55f; // Fog fogDensity 값 변경
 
             if (this.gameObject.name.Contains("Lounge Locker")
                 && schoolUIManager.useLockerKey

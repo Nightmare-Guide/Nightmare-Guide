@@ -145,8 +145,8 @@ public class ProgressManager : MonoBehaviour
             progressData.bgVolume = defaultData.bgVolume;
             progressData.effectVolume = defaultData.effectVolume;
             progressData.characterVolume = defaultData.characterVolume;
-            progressData.isFullScreen = defaultData.isFullScreen;
-            progressData.language = defaultData.language;
+            // progressData.isFullScreen = defaultData.isFullScreen;
+            // progressData.language = defaultData.language;
             progressData.quest = "";
 
             // 타임라인

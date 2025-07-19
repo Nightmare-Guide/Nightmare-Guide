@@ -195,13 +195,11 @@ public class CommonUIManager : MonoBehaviour
         optionUI.SetActive(false);
         stevenPhone = new PhoneInfos();
 
-        FullScreenBtn();
-
         // 첫 언어 설정
         StartCoroutine(ChangeLocalization(0));
         LanguageDropdown.value = 0;
 
-        fogSettings.Add(new FogSettings { name = "Nightmare", fogDensity = 0.25f });
+        fogSettings.Add(new FogSettings { name = "Nightmare", fogDensity = 0.55f });
         fogSettings.Add(new FogSettings { name = "Warm", fogColor = new Color(1f, 0.525f, 0f), fogDensity = 0.002f });
     }
 
@@ -213,9 +211,9 @@ public class CommonUIManager : MonoBehaviour
             string json = File.ReadAllText(path);
 
             // 언어
-            if(ProgressManager.Instance.progressData.language == "en") { StartCoroutine(ChangeLocalization(0)); }
-            else if(ProgressManager.Instance.progressData.language == "ja") { StartCoroutine(ChangeLocalization(1)); }
-            else if (ProgressManager.Instance.progressData.language == "ko") { StartCoroutine(ChangeLocalization(2)); }
+            if(ProgressManager.Instance.progressData.language == "en") { StartCoroutine(ChangeLocalization(0)); LanguageDropdown.value = 0; }
+            else if(ProgressManager.Instance.progressData.language == "ja") { StartCoroutine(ChangeLocalization(1)); LanguageDropdown.value = 1; }
+            else if (ProgressManager.Instance.progressData.language == "ko") { StartCoroutine(ChangeLocalization(2)); LanguageDropdown.value = 2; }
 
             // 사운드
             SetBGVolume(ProgressManager.Instance.progressData.bgVolume);
@@ -228,6 +226,7 @@ public class CommonUIManager : MonoBehaviour
         else
         {
             //Debug.Log("파일이 존재하지 않습니다.");
+            FullScreenBtn();
         }
     }
 
@@ -278,7 +277,7 @@ public class CommonUIManager : MonoBehaviour
 
         isFullScreen = false;
 
-        Screen.SetResolution(1920, 1080, FullScreenMode.Windowed);
+        Screen.SetResolution(1280, 720, FullScreenMode.Windowed);
 
         if (ProgressManager.Instance != null) { ProgressManager.Instance.progressData.isFullScreen = false; }
     }
@@ -299,7 +298,7 @@ public class CommonUIManager : MonoBehaviour
 
         StartCoroutine(ChangeLocalization(index));
 
-        if(ProgressManager.Instance != null) { ProgressManager.Instance.progressData.language = language; }
+        if(ProgressManager.Instance != null) { ProgressManager.Instance.progressData.language = language;}
     }
 
     IEnumerator ChangeLocalization(int index)
@@ -449,7 +448,6 @@ public class CommonUIManager : MonoBehaviour
 
     public void SetBGVolume(float value)
     {
-        //bgAudioSource.volume = value;
         bgVolume = value;
         bgVolumeSlider.value = value;
 
@@ -461,7 +459,6 @@ public class CommonUIManager : MonoBehaviour
 
     public void SetEffectVolume(float value)
     {
-        //effectAudioSource.volume = value;
         effectVolume = value;
         effectVolumeSlider.value = value;
         if (ProgressManager.Instance != null)
@@ -523,6 +520,12 @@ public class CommonUIManager : MonoBehaviour
         if (ProgressManager.Instance != null)
         {
             ProgressManager.Instance.progressData.fogName = settings.name; // 데이터 저장
+        }
+
+        // 어두울 때, 손전등 켜져있으면 fog Density 값 낮춤
+        if (settings.name == "Nightmare" && Camera_Rt.instance.postProecessingBehaviour.gameObject.GetComponent<RayCast_Aim>().flashlight.activeInHierarchy)
+        {
+            RenderSettings.fogDensity = 0.25f;
         }
     }
 

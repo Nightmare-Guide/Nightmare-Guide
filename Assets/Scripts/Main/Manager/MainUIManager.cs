@@ -41,16 +41,13 @@ public class MainUIManager : UIUtility
         if (TimeLineManager.instance != null)
             timeLineManager = TimeLineManager.instance;
 
-        PlayerController.instance.Open_PlayerController();
-        Camera_Rt.instance.Open_Camera();
-
-
         if (commonUIManager != null)
         {
-            commonUIManager.SmartPhoneData(); // Steven 휴대폰 데이터
-            commonUIManager.uiManager = this;
             optionUI = commonUIManager.optionUI;
             uiObjects.Add(optionUI);
+            commonUIManager.uiManager = this;
+            commonUIManager.SmartPhoneData(); // Steven 휴대폰 데이터
+
 
             if (cellPhoneObjs != null)
             {
@@ -100,6 +97,9 @@ public class MainUIManager : UIUtility
                 SoundManager.instance.bgmSource.clip = null;
             }
         }
+
+        PlayerController.instance.Open_PlayerController();
+        Camera_Rt.instance.Open_Camera();
     }
     public void ShowReport()
     {

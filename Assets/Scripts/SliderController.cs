@@ -31,8 +31,8 @@ public class SliderController : MonoBehaviour
         mixer.SetFloat("BGMVolume", initialBGM);
         mixer.SetFloat("SFXVolume", initialSFX);
 
-        bgmSlider.value = DbToSlider(initialBGM, bgmMinVolume, bgmMaxVolume);
-        sfxSlider.value = DbToSlider(initialSFX, sfxMinVolume, sfxMaxVolume);
+        //bgmSlider.value = DbToSlider(initialBGM, bgmMinVolume, bgmMaxVolume);
+        //sfxSlider.value = DbToSlider(initialSFX, sfxMinVolume, sfxMaxVolume);
 
         bgmSlider.onValueChanged.AddListener(SetBGMVolume);
         sfxSlider.onValueChanged.AddListener(SetSFXVolume);

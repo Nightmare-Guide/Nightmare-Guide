@@ -68,10 +68,10 @@ public class CSVRoad_Story : MonoBehaviour
         currentNPC = npc;
 
         int start = -1, end = -1;
-
         for (int i = 0; i < data.Count; i++)
         {
             string chapter = data[i]["Chapter"].ToString();
+
             if (chapter.Equals(subChapterKey))
             {
                 if (start == -1) start = i;
@@ -165,6 +165,9 @@ public class CSVRoad_Story : MonoBehaviour
             }
 
             progress = i + 1;
+
+            if (!string.IsNullOrEmpty(FormatDialogue(data[i][$"{LocalizationSettings.SelectedLocale.Identifier.Code}_name"].ToString()))) { dialogueName.text = ""; }
+            dialogue.text = "";
 
             if (i == end)
             {

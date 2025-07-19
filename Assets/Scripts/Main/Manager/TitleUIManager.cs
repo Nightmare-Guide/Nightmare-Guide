@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityStandardAssets.Characters.FirstPerson;
 
 public class TitleUIManager : UIUtility
 {
@@ -125,6 +126,11 @@ public class TitleUIManager : UIUtility
 
     public void ExitGameBtn()
     {
+        if (GameDataManager.instance != null)
+        {
+            ProgressManager.Instance.progressData.newGame = false;
+            GameDataManager.instance.SaveGame();
+        }
         Application.Quit();
     }
 

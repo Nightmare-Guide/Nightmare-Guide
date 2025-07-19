@@ -31531,6 +31531,10 @@ PrefabInstance:
       propertyPath: agent
       value: 
       objectReference: {fileID: 772366383}
+    - target: {fileID: 8785096347271276365, guid: 01063c60adbcf174fb3a160c645658f5, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 5041561535721757493, guid: f4f179141ef7360419352248dc4a3eb8, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
