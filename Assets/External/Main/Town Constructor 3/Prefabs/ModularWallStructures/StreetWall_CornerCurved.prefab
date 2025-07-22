@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 33000011741901810}
   - component: {fileID: 23000010137594590}
   - component: {fileID: 95000012465806370}
-  - component: {fileID: 2172532589027631562}
+  - component: {fileID: 7704340028897126086}
+  - component: {fileID: 8880521373421874630}
   m_Layer: 0
   m_Name: StreetWall_CornerCurved
   m_TagString: Untagged
@@ -106,8 +107,8 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!64 &2172532589027631562
-MeshCollider:
+--- !u!65 &7704340028897126086
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -124,7 +125,27 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: 948ad7d2ee84da44e8c5c17f3dfbe00f, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 0.95067453, y: 3.0717843, z: 4.3574495}
+  m_Center: {x: -0.11823821, y: 1.5358921, z: 2.1787248}
+--- !u!65 &8880521373421874630
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000010238422968}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3.4530668, y: 3.0866752, z: 0.95320606}
+  m_Center: {x: -2.3056264, y: 1.5408094, z: 3.8808465}

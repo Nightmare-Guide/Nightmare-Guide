@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 33000013183960954}
   - component: {fileID: 23000010330981302}
   - component: {fileID: 95000012357790032}
-  - component: {fileID: 4931648699805443407}
+  - component: {fileID: 703757965761880863}
   m_Layer: 0
   m_Name: StreetWall_Curved
   m_TagString: Untagged
@@ -106,8 +106,8 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!64 &4931648699805443407
-MeshCollider:
+--- !u!65 &703757965761880863
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -124,7 +124,6 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: 547474d494d02164a9b5e91da11dfc7d, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 0.69200003, y: 2.9597557, z: 4}
+  m_Center: {x: -0.25, y: 1.4798781, z: 2}
