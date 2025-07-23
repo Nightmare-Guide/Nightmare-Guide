@@ -3,8 +3,8 @@ using UnityEngine;
 public class StoryInteractable : MonoBehaviour
 {
     [Header("이 오브젝트가 작동 가능한 스토리 진행도")]
-    public string requiredStoryProgress; 
-
+    public string requiredStoryProgress;
+    public string requiredStoryProgress2;
     [Header("정상 대사")]
     public string successDialogue;
 
@@ -34,7 +34,7 @@ public class StoryInteractable : MonoBehaviour
         if (progressType)
         {
             //현재 진행도와 세팅한 진행도가 같은지 판별
-            if (currentProgress.Equals(requiredStoryProgress))
+            if (currentProgress.Equals(requiredStoryProgress) || currentProgress.Equals(requiredStoryProgress2))
             {
                 //진행도가 갱신될때 스크립트 출력 여부
                 if (onScript)
