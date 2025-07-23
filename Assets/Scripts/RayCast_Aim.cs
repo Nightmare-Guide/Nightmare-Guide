@@ -253,6 +253,8 @@ public class RayCast_Aim : MonoBehaviour
                     {
                         Chap1Ending ending = click_object.GetComponent<Chap1Ending>();
                         ending.StartEndingSequence();
+                        PlayerController.instance.Close_PlayerController();
+                        Camera_Rt.instance.Close_Camera();
                     }
                 }
             }
