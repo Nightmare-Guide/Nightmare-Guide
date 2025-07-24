@@ -210,18 +210,21 @@ public class CommonUIManager : MonoBehaviour
         {
             string json = File.ReadAllText(path);
 
-            // 언어
-            if(ProgressManager.Instance.progressData.language == "en") { StartCoroutine(ChangeLocalization(0)); LanguageDropdown.value = 0; }
-            else if(ProgressManager.Instance.progressData.language == "ja") { StartCoroutine(ChangeLocalization(1)); LanguageDropdown.value = 1; }
-            else if (ProgressManager.Instance.progressData.language == "ko") { StartCoroutine(ChangeLocalization(2)); LanguageDropdown.value = 2; }
+            if(ProgressManager.Instance != null)
+            {
+                // 언어
+                if (ProgressManager.Instance.progressData.language == "en") { StartCoroutine(ChangeLocalization(0)); LanguageDropdown.value = 0; }
+                else if (ProgressManager.Instance.progressData.language == "ja") { StartCoroutine(ChangeLocalization(1)); LanguageDropdown.value = 1; }
+                else if (ProgressManager.Instance.progressData.language == "ko") { StartCoroutine(ChangeLocalization(2)); LanguageDropdown.value = 2; }
 
-            // 사운드
-            SetBGVolume(ProgressManager.Instance.progressData.bgVolume);
-            SetEffectVolume(ProgressManager.Instance.progressData.effectVolume);
+                // 사운드
+                SetBGVolume(ProgressManager.Instance.progressData.bgVolume);
+                SetEffectVolume(ProgressManager.Instance.progressData.effectVolume);
 
-            // 전체화면/창모드
-            if(ProgressManager.Instance.progressData.isFullScreen) { FullScreenBtn(); }
-            else { WindowedBtn(); }
+                // 전체화면/창모드
+                if (ProgressManager.Instance.progressData.isFullScreen) { FullScreenBtn(); }
+                else { WindowedBtn(); }
+            }
         }
         else
         {
