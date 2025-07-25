@@ -1,18 +1,23 @@
+using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor.Localization.Plugins.XLIFF.V20;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class VehicleAI : MonoBehaviour
 {
-    public float speed ; // 기본 속도
+    public float speed; // 기본 속도
     public float slowSpeed = 10f; // 마지막 Waypoint로 갈 때 속도
     public float decelerationDistance = 3f; // 속도를 줄이기 시작할 거리
+    [SerializeField] GameObject nextCar;
+    [SerializeField] int nextCarAppearanceTime = 0;
 
     [Header("WayPointNav")]
-    [SerializeField] private List<Transform> waypoint = new List<Transform>(); // 자동차가 이동할 라인
+    [SerializeField] private List<Transform> waypoint; // 자동차가 이동할 라인
     [SerializeField] private NavMeshAgent agent;
     private int currentNode = 0;
+    bool isTurning = false;
 
     [Header("WheelAnim")]
     [SerializeField] private Animator[] anim_Wheel;
@@ -22,7 +27,7 @@ public class VehicleAI : MonoBehaviour
 
     public bool offline = false; // 주차용 차량 판별
     public bool loopCar = true;
-  
+
     void Start()
     {
         if (offline)
@@ -34,27 +39,32 @@ public class VehicleAI : MonoBehaviour
 
         // NavMeshAgent 및 Waypoint 초기화 검증
         agent = GetComponent<NavMeshAgent>();
-      
+
 
         if (agent == null || waypoint == null || waypoint.Count == 0)
         {
             //Debug.LogError(" Waypoint가 제대로 설정되지 않았습니다."); 
-             
+
             enabled = false; // 스크립트 비활성화
             return;
         }
-        
+
 
         agent.autoBraking = false;
         agent.speed = speed;
         //Debug.Log(this.name+ " => 차량 현재 속도 : " + speed);
         GotoNext(); // 첫 Waypoint로 이동
         SetWheelAnimation("Idle"); // 기본 애니메이션
+
+        if (nextCar != null)
+        {
+            StartCoroutine(ActivateNextCar()); // 다음 차 활성화
+        }
     }
 
     void Update()
     {
-       
+
         if (offline || isPlayerInRange) return;
 
         HandleDeceleration();
@@ -96,13 +106,11 @@ public class VehicleAI : MonoBehaviour
     {
         if (waypoint.Count == 0) return;
 
-        if (currentNode >= waypoint.Count&& loopCar)
+        if (currentNode >= waypoint.Count && loopCar)
         {
-            
-                currentNode = 0;
-                //Debug.Log("차량이 배회합니다.");
-            
-            
+
+            currentNode = 0;
+            //Debug.Log("차량이 배회합니다.");
         }
         agent.destination = waypoint[currentNode].position;
         currentNode++;
@@ -116,7 +124,7 @@ public class VehicleAI : MonoBehaviour
         if (currentNode == waypoint.Count - 1 && agent.remainingDistance <= decelerationDistance && !loopCar)
         {
             agent.speed = Mathf.Lerp(agent.speed, slowSpeed, Time.deltaTime);
-           
+
         }
     }
 
@@ -133,29 +141,39 @@ public class VehicleAI : MonoBehaviour
     {
         if (offline) return;
 
-        if (other.CompareTag("Player") || other.CompareTag("Shinho"))
+        //if (other.CompareTag("Player") || other.CompareTag("Shinho"))
+        if (other.CompareTag("Player") || other.CompareTag("CarBehind"))
         {
-            isPlayerInRange = true;
+            // 에이전트 이동 중지
+            agent.speed = 0;
             agent.isStopped = true;
+            agent.ResetPath(); // 현재 경로 초기화
+            agent.velocity = Vector3.zero; // 즉시 멈추도록 속도 0으로 설정
+            agent.angularSpeed = 0f; // 회전 속도 0
+
+            isPlayerInRange = true;
             SetWheelAnimation("Stop");
         }
         else if (other.CompareTag("LeftPoint") || other.CompareTag("RightPoint"))
         {
             HandleTurnAnimation(other.tag);
         }
-        if (other.CompareTag("decelerationRange"))
+        else if (other.CompareTag("decelerationRange"))
         {
             if (!other.transform.parent.gameObject.name.Equals(waypoint[currentNode].transform.parent.name))
                 return;
-            agent.speed = 10f;
+
+            isTurning = true;
+            agent.speed = slowSpeed;
             //Debug.Log("감속중");
         }
-        if (other.CompareTag("accelerationRange"))
+        else if (other.CompareTag("accelerationRange"))
         {
+            isTurning = false;
             agent.speed = speed;
             //Debug.Log("가속중");
         }
-        if (other.CompareTag("ResetPoint"))
+        else if (other.CompareTag("ResetPoint"))
         {
             ResetPosition();
         }
@@ -165,13 +183,24 @@ public class VehicleAI : MonoBehaviour
     {
         if (offline) return;
 
-        
-
-        if (other.CompareTag("Player") || other.CompareTag("Shinho"))
+        //if (other.CompareTag("Player") || other.CompareTag("Shinho"))
+        if (other.CompareTag("Player") || other.CompareTag("CarBehind"))
         {
             isPlayerInRange = false;
             agent.isStopped = false;
-            agent.speed = speed; // 기본 속도로 복구
+            agent.SetDestination(waypoint[currentNode].position); // 다음 경로 다시 복구
+
+            if (other.CompareTag("CarBehind")) 
+            {
+                if (isTurning) { agent.speed = slowSpeed; }
+                else { StartCoroutine(MoveAgain()); }
+            }
+            else
+            {
+                agent.speed = isTurning ? slowSpeed : speed;
+            }
+
+            agent.angularSpeed = 120f; // 회전 속도 복구
             SetWheelAnimation("Idle");
         }
     }
@@ -207,7 +236,7 @@ public class VehicleAI : MonoBehaviour
 
     void OffCar()//오프라인 자동차는 하위 바퀴 애니메이션 종료
     {
-        for(int i= 0; i < transform.childCount; i++)
+        for (int i = 0; i < transform.childCount; i++)
         {
             bool wheel = transform.GetChild(i).name.ToLower().Contains("wheel");
             if (wheel)
@@ -223,5 +252,21 @@ public class VehicleAI : MonoBehaviour
                 }
             }
         }
+    }
+
+    IEnumerator ActivateNextCar()
+    {
+        yield return new WaitForSeconds(nextCarAppearanceTime);
+
+        nextCar.SetActive(true);
+    }
+
+    IEnumerator MoveAgain()
+    {
+        agent.speed = slowSpeed;
+
+        yield return new WaitForSeconds(nextCarAppearanceTime / 2);
+
+        agent.speed = speed;
     }
 }
