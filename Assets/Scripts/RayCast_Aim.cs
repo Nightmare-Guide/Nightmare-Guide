@@ -14,7 +14,7 @@ public class RayCast_Aim : MonoBehaviour
     public float maxRayDistance = 5f; // 레이 길이 설정
     private OutlineObject previousOutline;
     public GameObject flashlight;
-    private bool isProcessingInteraction = false;
+    public bool isProcessingInteraction = false;
 
 
     private void Start()
@@ -56,8 +56,8 @@ public class RayCast_Aim : MonoBehaviour
             // 상호작용 E 키
             if (Input.GetKeyDown(KeyCode.E))
             {
-           /*     if (isProcessingInteraction) return; // 이미 처리 중이면 무시
-                isProcessingInteraction = true;*/
+             
+
 
                 if (Physics.Raycast(ray, out hit, maxRayDistance, LayerMask.GetMask("ActiveObject")))
                 {
@@ -74,9 +74,10 @@ public class RayCast_Aim : MonoBehaviour
                         click_object.GetComponent<Collider>().enabled = true;
                         return;
                     }
-
-                    if (click_object.CompareTag("NextScene"))
+              
+                    if (click_object.CompareTag("NextScene")&& !isProcessingInteraction)
                     {
+                        isProcessingInteraction = true;
                         // 플레이어 못 움직이게
                         PlayerController.instance.Close_PlayerController();
                         Camera_Rt.instance.Close_Camera();
@@ -263,7 +264,7 @@ public class RayCast_Aim : MonoBehaviour
 
                     
                 }
-                isProcessingInteraction = false;
+                
             }
         }
         else
