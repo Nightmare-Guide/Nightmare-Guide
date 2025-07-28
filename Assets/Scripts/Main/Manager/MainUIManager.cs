@@ -34,6 +34,7 @@ public class MainUIManager : UIUtility
         FirstSetUP();
     }
 
+
     private void Start()
     {
         if (CommonUIManager.instance != null)
@@ -125,6 +126,11 @@ public class MainUIManager : UIUtility
     public void GoNightMare()
     {
         StartTimeLine(timeLineManager.playableAssets[6]);
+    }
+
+    public void NHospitalAnim()
+    {
+        StartTimeLine(timeLineManager.playableAssets[7]);
     }
     private void Update()
     {
