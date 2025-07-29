@@ -16,8 +16,13 @@ public class PlayerEventAction : MonoBehaviour
 
 
     [SerializeField] GameObject obj;
+
+    [SerializeField] MainUIManager mainUi;
+
     private void Start()
     {
+        mainUi.GoNightHospital();
+
         Invoke("RotatePlayer", rtPl);// 카메라 회전 
         Invoke("MovePlayer", moPl); // 플레이어 움직임
         PlayerController.instance.Close_PlayerController();

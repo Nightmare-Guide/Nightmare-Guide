@@ -126,6 +126,10 @@ public class MainUIManager : UIUtility
     {
         StartTimeLine(timeLineManager.playableAssets[6]);
     }
+    public void GoNightHospital()
+    {
+        StartTimeLine(timeLineManager.playableAssets[8]);
+    }
     private void Update()
     {
         // ESC Ű
