@@ -93,7 +93,9 @@ public class StandingPeopleStreet : MonoBehaviour {
 		parGo.name = "people";
 
 		spawnPoints.Clear();
-		SpawnPeople(peopleCount);
+        // SpawnPeople(peopleCount); -> peopleCount 값이 2 일 경우, talk 애니메이션 실행되게 변경
+        if (peopleCount == 2) { SpawnTwoPeople(peopleCount); }
+		else { SpawnPeople(peopleCount); }
 	}
 
 	void SpawnPeople (int _peopleCount)
@@ -409,6 +411,54 @@ public class StandingPeopleStreet : MonoBehaviour {
                     }
                 }
             }
+        }
+    }
+    void SpawnTwoPeople(int _peopleCount) // peopleCount 값이 2 일 경우, talk 애니메이션 실행하는 함수
+    {
+        if (_peopleCount != 2)
+        {
+            Debug.LogWarning("이 함수는 peopleCount가 2일 때만 사용됩니다.");
+            return;
+        }
+
+        Vector3 randomPosition = isCircle ? RandomCirclePosition() : RandomRectanglePosition();
+
+        if (randomPosition == Vector3.zero)
+            return;
+
+        Vector3 offset1 = randomPosition + new Vector3(Random.Range(-0.5f, 0.5f), 0, Random.Range(-0.5f, 0.5f));
+        Vector3 offset2 = randomPosition + new Vector3(Random.Range(-0.5f, 0.5f), 0, Random.Range(-0.5f, 0.5f));
+
+        // 첫 번째 사람
+        if (Physics.Raycast(offset1 + Vector3.up * highToSpawn, Vector3.down, out RaycastHit hit1, Mathf.Infinity))
+        {
+            GameObject obj1 = Instantiate(
+                peoplePrefabs[Random.Range(0, peoplePrefabs.Length)],
+                new Vector3(offset1.x, hit1.point.y, offset1.z),
+                Quaternion.identity
+            );
+
+            obj1.AddComponent<PeopleController>().animNames = new string[3] { "talk1", "talk2", "listen" };
+            obj1.GetComponent<PeopleController>().SetTarget(offset2);
+            obj1.transform.parent = par.transform;
+
+            spawnPoints.Add(offset1);
+        }
+
+        // 두 번째 사람
+        if (Physics.Raycast(offset2 + Vector3.up * highToSpawn, Vector3.down, out RaycastHit hit2, Mathf.Infinity))
+        {
+            GameObject obj2 = Instantiate(
+                peoplePrefabs[Random.Range(0, peoplePrefabs.Length)],
+                new Vector3(offset2.x, hit2.point.y, offset2.z),
+                Quaternion.identity
+            );
+
+            obj2.AddComponent<PeopleController>().animNames = new string[3] { "talk1", "talk2", "listen" };
+            obj2.GetComponent<PeopleController>().SetTarget(offset1);
+            obj2.transform.parent = par.transform;
+
+            spawnPoints.Add(offset2);
         }
     }
 
