@@ -128,7 +128,16 @@ public class MainUIManager : UIUtility
     }
     public void GoNightHospital()
     {
-        StartTimeLine(timeLineManager.playableAssets[8]);
+        if (ProgressManager.Instance != null 
+            && ProgressManager.Instance.IsActionCompleted(ActionType.TalkWarmlyToEthan)
+            && !ProgressManager.Instance.IsActionCompleted(ActionType.BackToHospital))
+        {
+            StartTimeLine(timeLineManager.playableAssets[8]);
+            ProgressManager.Instance.CompletedAction(ActionType.BackToHospital);
+            Debug.Log("저녁병원 타임라인");
+        }
+          
+
     }
     private void Update()
     {
