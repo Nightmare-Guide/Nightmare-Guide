@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.Characters.FirstPerson;
+using static ProgressManager;
 
 public class PlayerEventAction : MonoBehaviour
 {
@@ -17,17 +18,17 @@ public class PlayerEventAction : MonoBehaviour
 
     [SerializeField] GameObject obj;
 
-    [SerializeField] MainUIManager mainUi;
+   
 
-    private void Start()
+   /* private void Start()
     {
-        mainUi.GoNightHospital();
+    
 
-        Invoke("RotatePlayer", rtPl);// 카메라 회전 
+     *//*   Invoke("RotatePlayer", rtPl);// 카메라 회전 
         Invoke("MovePlayer", moPl); // 플레이어 움직임
         PlayerController.instance.Close_PlayerController();
         Camera_Rt.instance.Close_Camera(); // 카메라 회전 잠금
-        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.lockState = CursorLockMode.Locked;*//*
     }
 
     public void RotatePlayer()
@@ -59,7 +60,7 @@ public class PlayerEventAction : MonoBehaviour
         playerTransform.rotation = endRot;
 
       
-    }
+    }*/
 
     private void OnTriggerEnter(Collider other)
     {
@@ -67,7 +68,12 @@ public class PlayerEventAction : MonoBehaviour
         {
             if(NHSupervisor.instance != null)
             {
-                NHSupervisor.instance.TalkToPlayer();
+                if (ProgressManager.Instance != null &&
+                        ProgressManager.Instance.progressData.storyProgress.Equals("2_0_2"))
+                { 
+                    NHSupervisor.instance.TalkToPlayer();
+                }
+                    
             }
             else
             {
@@ -101,12 +107,12 @@ public class PlayerEventAction : MonoBehaviour
         Camera_Rt.instance.Open_Camera();
     }*/
 
-    public void EnableAllMeshColliders()
+    /*public void EnableAllMeshColliders()
     {
         MeshCollider[] colliders = obj.GetComponentsInChildren<MeshCollider>();
         foreach (var col in colliders)
         {
             col.enabled = true;
         }
-    }
+    }*/
 }

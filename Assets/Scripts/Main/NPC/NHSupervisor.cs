@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections; // 코루틴 사용을 위한 네임스페이스
 using UnityStandardAssets.Characters.FirstPerson; // PlayerController 접근을 위한 네임스페이스
-
+using static ProgressManager;
 public class NHSupervisor : MonoBehaviour
 {
 
@@ -15,6 +15,9 @@ public class NHSupervisor : MonoBehaviour
     private Transform playerTr; // 플레이어의 Transform 컴포넌트 (플레이어 정지 기능에만 사용)
 
     bool talkPl = false;
+
+    [SerializeField] GameObject changetTr;//타임라인 종료후 이동 포인트
+    [SerializeField] GameObject officeTr;//씬재진입시 타임라인 진행이 완료 했으면 사무실로 위치 초기화
     void Start()
     {
         if (instance == null)
@@ -31,16 +34,20 @@ public class NHSupervisor : MonoBehaviour
         {
             Debug.LogError("Animator 컴포넌트가 NHSupervisor 오브젝트에 없습니다.");
         }
-
-        // PlayerController 인스턴스가 존재하고 Transform을 가져올 수 있는지 확인합니다.
-        if (PlayerController.instance != null)
+        if (ProgressManager.Instance != null && ProgressManager.Instance.IsActionCompleted(ActionType.BackToHospital))
         {
-            playerTr = PlayerController.instance.transform;
+            this.transform.position = officeTr.transform.position;
+            Debug.Log("타임라인 진행도 스토리1_1_5");
         }
-        else
-        {
-            Debug.LogError("PlayerController 인스턴스를 찾을 수 없습니다. 플레이어 정지 기능이 작동하지 않을 수 있습니다.");
-        }
+        /* // PlayerController 인스턴스가 존재하고 Transform을 가져올 수 있는지 확인합니다.
+         if (PlayerController.instance != null)
+         {
+             playerTr = PlayerController.instance.transform;
+         }
+         else
+         {
+             Debug.LogError("PlayerController 인스턴스를 찾을 수 없습니다. 플레이어 정지 기능이 작동하지 않을 수 있습니다.");
+         }*/
     }
 
 
@@ -49,6 +56,11 @@ public class NHSupervisor : MonoBehaviour
       
     }
 
+    public void ChangeTr()
+    {
+        this.transform.position = changetTr.transform.position;
+        this.transform.rotation = Quaternion.Euler(0, 180f, 0);
+    }
 
     /*private void OnTriggerEnter(Collider other)
     {
@@ -81,7 +93,15 @@ public class NHSupervisor : MonoBehaviour
 
     public void TalkToPlayer()
     {
-
+        // PlayerController 인스턴스가 존재하고 Transform을 가져올 수 있는지 확인합니다.
+        if (PlayerController.instance != null)
+        {
+            playerTr = PlayerController.instance.transform;
+        }
+        else
+        {
+            Debug.LogError("PlayerController 인스턴스를 찾을 수 없습니다. 플레이어 정지 기능이 작동하지 않을 수 있습니다.");
+        }
         if (talkPl)
         {
             return;
