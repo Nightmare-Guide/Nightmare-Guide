@@ -12,18 +12,17 @@ public class EnemyVision : MonoBehaviour
     public float closeRangeRadius = 12f; // 근거리 전방위 감지
     public float longRangeThreshold = 30f; // 추가: 너무 멀리 도망간 경우 감지
 
-
     [Header("레이어 설정")]
     public LayerMask obstacleLayer; // 장애물 레이어
-    public LayerMask lockerLayer;   // 락커 레이어 추가
+//public LayerMask lockerLayer;   // 락커 레이어 추가
 
     [Header("플레이어 및 오브젝트 정보")]
     [SerializeField] private GameObject player;
-    [SerializeField] private GameObject detectedLocker; // 감지된 락커 저장
+    //[SerializeField] private GameObject detectedLocker; // 감지된 락커 저장
 
     [Header("탐지 상태")]
     private bool isDetected = false;
-    private bool lockerDetected = false;
+   // private bool lockerDetected = false;
     public BehaviourTree behaviourTree;
     private Blackboard blackboard;
 
@@ -47,16 +46,16 @@ public class EnemyVision : MonoBehaviour
         if (canDetect)
         {
             isDetected = CheckPlayerInView();
-            lockerDetected = CheckLockerInView();
+           // lockerDetected = CheckLockerInView();
 
             blackboard.isDetected = this.isDetected;
             blackboard.Set("isDetected", isDetected);
-            blackboard.Set("lockerDetected", lockerDetected);
+           // blackboard.Set("lockerDetected", lockerDetected);
 
-            if (lockerDetected && detectedLocker != null)
+/*          if (lockerDetected && detectedLocker != null)
             {
                 blackboard.Set("detectedLocker", detectedLocker);
-            }
+            }*/
         }
 
         if (!canDetect)
@@ -121,7 +120,7 @@ public class EnemyVision : MonoBehaviour
     }
 
 
-    private bool CheckLockerInView()
+/*    private bool CheckLockerInView()
     {
         Collider[] lockers = Physics.OverlapSphere(transform.position, detectionRadius, lockerLayer);
 
@@ -143,7 +142,7 @@ public class EnemyVision : MonoBehaviour
         detectedLocker = null;
         blackboard.UpdateLockerDetectionStatus(false); // 🔹 락커가 탐지되지 않으면 false
         return false;
-    }
+    }*/
 
 
     // 시야각 Ray
@@ -202,11 +201,11 @@ public class EnemyVision : MonoBehaviour
             Gizmos.color = Color.red;
             Gizmos.DrawLine(transform.position, player.transform.position);
         }
-
+/*
         if (lockerDetected && detectedLocker != null)
         {
             Gizmos.color = Color.green;
             Gizmos.DrawLine(transform.position, detectedLocker.transform.position);
-        }
+        }*/
     }
 }
