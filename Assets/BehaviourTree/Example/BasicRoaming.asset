@@ -62,7 +62,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: 2cd36815c3e6e8b4cad02e287195cd6b
-  position: {x: 597.591, y: 447.99997}
+  position: {x: 262.36365, y: 276.50406}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     isDetected: 0
@@ -191,7 +191,7 @@ MonoBehaviour:
   - {fileID: -5871075346543685677}
   - {fileID: -413136896331184212}
   blackboard:
-    moveToPosition: {x: 17.788425, y: 3.8560002, z: -67.71895}
+    moveToPosition: {x: -11, y: 0.5, z: -7.38}
     isDetected: 1
 --- !u!114 &126179549495469473
 MonoBehaviour:
@@ -282,8 +282,8 @@ MonoBehaviour:
   description: 
   drawGizmos: 0
   children:
-  - {fileID: 2416129358109696888}
   - {fileID: -5871075346543685677}
+  - {fileID: 2416129358109696888}
   - {fileID: -413136896331184212}
 --- !u!114 &8417622060116891960
 MonoBehaviour:
