@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Unity.VisualScripting;
 
 [System.Serializable]
-public class MovePath : MonoBehaviour {
+public class MovePath : MonoBehaviour
+{
 
     [SerializeField]
     public Vector3 startPos;
@@ -10,7 +12,7 @@ public class MovePath : MonoBehaviour {
     public Vector3 finishPos;
     [SerializeField]
     public int w;
-    
+
     [SerializeField]
     public int targetPoint;
     [SerializeField]
@@ -33,16 +35,14 @@ public class MovePath : MonoBehaviour {
 
     [HideInInspector] public float randXFinish;
     [HideInInspector] public float randZFinish;
-    [SerializeField] [Tooltip("Set your animation speed / Установить свою скорость анимации?")] private bool _overrideDefaultAnimationMultiplier;
-    [SerializeField] [Tooltip("Speed animation walking / Скорость анимации ходьбы")] private float _customWalkAnimationMultiplier = 1.0f;
-    [SerializeField] [Tooltip("Running animation speed / Скорость анимации бега")] private float _customRunAnimationMultiplier = 1.0f;
+    [SerializeField][Tooltip("Set your animation speed / Установить свою скорость анимации?")] private bool _overrideDefaultAnimationMultiplier;
+    [SerializeField][Tooltip("Speed animation walking / Скорость анимации ходьбы")] private float _customWalkAnimationMultiplier = 1.0f;
+    [SerializeField][Tooltip("Running animation speed / Скорость анимации бега")] private float _customRunAnimationMultiplier = 1.0f;
 
     private void Awake()
     {
-        if(TryGetComponent<Animator>(out anim))
-        {
-            anim.applyRootMotion = true;
-        }
+        anim = GetComponent<Animator>();
+        anim.applyRootMotion = true;
     }
 
     public void InitializeAnimation(bool overrideAnimation, float walk, float run)
@@ -64,16 +64,16 @@ public class MovePath : MonoBehaviour {
         loop = _loop;
         animName = anim;
 
-        if(loop)
+        if (loop)
         {
-            if(_i < targetPointsTotal && _i > 0)
+            if (_i < targetPointsTotal && _i > 0)
             {
-                if(forward)
+                if (forward)
                 {
                     targetPoint = _i + 1;
-                    finishPos = _WalkPath.getNextPoint(w, _i+1);
+                    finishPos = _WalkPath.getNextPoint(w, _i + 1);
                 }
-                else 
+                else
                 {
                     targetPoint = _i;
                     finishPos = _WalkPath.getNextPoint(w, _i);
@@ -81,12 +81,12 @@ public class MovePath : MonoBehaviour {
             }
             else
             {
-                if(forward)
+                if (forward)
                 {
                     targetPoint = 1;
                     finishPos = _WalkPath.getNextPoint(w, 1);
                 }
-                else 
+                else
                 {
                     targetPoint = targetPointsTotal;
                     finishPos = _WalkPath.getNextPoint(w, targetPointsTotal);
@@ -96,12 +96,12 @@ public class MovePath : MonoBehaviour {
 
         else
         {
-            if(forward)
+            if (forward)
             {
                 targetPoint = _i + 1;
-                finishPos = _WalkPath.getNextPoint(w, _i+1);
+                finishPos = _WalkPath.getNextPoint(w, _i + 1);
             }
-            else 
+            else
             {
                 targetPoint = _i;
                 finishPos = _WalkPath.getNextPoint(w, _i);
@@ -117,41 +117,54 @@ public class MovePath : MonoBehaviour {
 
     void Start()
     {
-        Animator animator = GetComponent<Animator>();
-
-        animator.CrossFade(animName, 0.1f, 0, Random.Range(0.0f, 1.0f));
+        anim.CrossFade(animName, 0.1f, 0, Random.Range(0.0f, 1.0f));
         if (animName == "walk")
         {
             if (_overrideDefaultAnimationMultiplier)
             {
-                animator.speed = walkSpeed * _customWalkAnimationMultiplier;
+                anim.speed = walkSpeed * _customWalkAnimationMultiplier;
             }
             else
             {
-                animator.speed = walkSpeed * 1.2f;
+                anim.speed = walkSpeed * 1.2f;
             }
         }
         else if (animName == "run")
         {
             if (_overrideDefaultAnimationMultiplier)
             {
-                animator.speed = runSpeed * _customRunAnimationMultiplier;
+                anim.speed = runSpeed * _customRunAnimationMultiplier;
             }
             else
             {
-                animator.speed = runSpeed / 3;
+                anim.speed = runSpeed / 3;
             }
         }
     }
-    void Update ()
-    {   
-        RaycastHit hit;
-
-        if(Physics.Raycast(transform.position + new Vector3(0, 2, 0), -transform.up, out hit))
+    void Update()
+    {
+        // 플레이어 카메라에 안들어왔을 때, 불필요한 애니메이션 실행X
+        if (IsVisibleFromCamera(Camera.main))
         {
-            finishPos.y = hit.point.y;
-            transform.position = new Vector3(transform.position.x, hit.point.y, transform.position.z);
+            Animator animator = GetComponent<Animator>();
+
+            if (!animator.enabled) { anim.enabled = true; }
         }
+        else
+        {
+            Animator animator = GetComponent<Animator>();
+
+            if (animator.enabled) { anim.enabled = false; }
+        }
+
+        // 높이 맞추는 ray 비활성화
+        //RaycastHit hit;
+
+        //if (Physics.Raycast(transform.position + new Vector3(0, 2, 0), -transform.up, out hit))
+        //{
+        //    finishPos.y = hit.point.y;
+        //    transform.position = new Vector3(transform.position.x, hit.point.y, transform.position.z);
+        //}
 
         //Vector3 targetPos = new Vector3(finishPos.x, transform.position.y, finishPos.z);
 
@@ -166,9 +179,9 @@ public class MovePath : MonoBehaviour {
         if (richPointDistance < 0.2f && animName == "walk" && ((loop) || (!loop && targetPoint > 0 && targetPoint < targetPointsTotal)))
         {
 
-            if(forward)
+            if (forward)
             {
-                if(targetPoint < targetPointsTotal)
+                if (targetPoint < targetPointsTotal)
                     targetPos = _WalkPath.getNextPoint(w, targetPoint + 1);
                 else
                     targetPos = _WalkPath.getNextPoint(w, 0);
@@ -177,7 +190,7 @@ public class MovePath : MonoBehaviour {
 
             else
             {
-                if(targetPoint > 0)
+                if (targetPoint > 0)
                     targetPos = _WalkPath.getNextPoint(w, targetPoint - 1);
                 else
                     targetPos = _WalkPath.getNextPoint(w, targetPointsTotal);
@@ -185,12 +198,12 @@ public class MovePath : MonoBehaviour {
             }
         }
 
-        if(richPointDistance < 0.5f && animName == "run" && ((loop) || (!loop && targetPoint > 0 && targetPoint < targetPointsTotal)))
+        if (richPointDistance < 0.5f && animName == "run" && ((loop) || (!loop && targetPoint > 0 && targetPoint < targetPointsTotal)))
         {
 
-            if(forward)
+            if (forward)
             {
-                if(targetPoint < targetPointsTotal)
+                if (targetPoint < targetPointsTotal)
                     targetPos = _WalkPath.getNextPoint(w, targetPoint + 1);
                 else
                     targetPos = _WalkPath.getNextPoint(w, 0);
@@ -199,7 +212,7 @@ public class MovePath : MonoBehaviour {
 
             else
             {
-                if(targetPoint > 0)
+                if (targetPoint > 0)
                     targetPos = _WalkPath.getNextPoint(w, targetPoint - 1);
                 else
                     targetPos = _WalkPath.getNextPoint(w, targetPointsTotal);
@@ -209,7 +222,7 @@ public class MovePath : MonoBehaviour {
 
         Vector3 targetVector = targetPos - transform.position;
 
-        if(targetVector != Vector3.zero)
+        if (targetVector != Vector3.zero)
         {
             /*Quaternion look = Quaternion.identity;
             if(animName == "walk")
@@ -231,56 +244,71 @@ public class MovePath : MonoBehaviour {
                 transform.position = Vector3.MoveTowards(transform.position, finishPos, Time.deltaTime * 1.0f * (animName == "walk" ? walkSpeed : runSpeed));
             }
         }
-        else if (richPointDistance <= 1 && forward){
+        else if (richPointDistance <= 1 && forward)
+        {
 
-            if(targetPoint != targetPointsTotal)
-            {   
-                    targetPoint++;
+            if (targetPoint != targetPointsTotal)
+            {
+                targetPoint++;
 
                 finishPos = _WalkPath.getNextPoint(w, targetPoint);
             }
-            else if(targetPoint == targetPointsTotal)
+            else if (targetPoint == targetPointsTotal)
             {
-                if(loop)
+                if (loop)
                 {
                     finishPos = _WalkPath.getStartPoint(w);
 
-                        targetPoint = 0;
+                    targetPoint = 0;
                 }
 
                 else
                 {
+                    gameObject.SetActive(false);
                     _WalkPath.SpawnOnePeople(w, forward, walkSpeed, runSpeed);
-                    Destroy(gameObject);
+                    // Destroy(gameObject);
                 }
             }
 
         }
-        else if (richPointDistance <= 1 && !forward){
+        else if (richPointDistance <= 1 && !forward)
+        {
 
-            if(targetPoint > 0)
-            {   
-                    targetPoint--;
+            if (targetPoint > 0)
+            {
+                targetPoint--;
 
                 finishPos = _WalkPath.getNextPoint(w, targetPoint);
             }
-            else if(targetPoint == 0)
+            else if (targetPoint == 0)
             {
-                if(loop)
+                if (loop)
                 {
                     finishPos = _WalkPath.getNextPoint(w, targetPointsTotal);
 
-                        targetPoint = targetPointsTotal;
+                    targetPoint = targetPointsTotal;
                 }
 
                 else
                 {
+                    gameObject.SetActive(false);
                     _WalkPath.SpawnOnePeople(w, forward, walkSpeed, runSpeed);
-                    Destroy(gameObject);
+                    // Destroy(gameObject);
                 }
             }
 
         }
 
+    }
+
+    // 카메라에 인식되었는 지 확인하는 함수
+    bool IsVisibleFromCamera(Camera cam)
+    {
+        Vector3 viewPos = cam.WorldToViewportPoint(transform.position);
+
+        // 카메라 시야 안에 있으면 true
+        return viewPos.z > 0 &&
+               viewPos.x >= 0 && viewPos.x <= 1 &&
+               viewPos.y >= 0 && viewPos.y <= 1;
     }
 }

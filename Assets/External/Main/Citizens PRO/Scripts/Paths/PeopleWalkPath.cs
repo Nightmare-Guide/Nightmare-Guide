@@ -1,32 +1,35 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 
 public class PeopleWalkPath : WalkPath
 {
     public enum EnumMove { Walk, Run };
     public enum EnumDir { Forward, Backward, HugLeft, HugRight, WeaveLeft, WeaveRight };
 
-    [HideInInspector] [Tooltip("Type of movement / Тип движения")] [SerializeField] private EnumMove _moveType;
-    [Tooltip("Direction of movement / Направление движения. Левостороннее, правостороннее, итд.")] [SerializeField] private EnumDir direction;
-    [HideInInspector] [Tooltip("Speed of walk / Скорость ходьбы")] [SerializeField] private float walkSpeed = 1;
-    [HideInInspector] [Tooltip("Speed of run / Скорость бега")] [SerializeField] private float runSpeed = 4; 
+    [HideInInspector][Tooltip("Type of movement / Тип движения")][SerializeField] private EnumMove _moveType;
+    [Tooltip("Direction of movement / Направление движения. Левостороннее, правостороннее, итд.")][SerializeField] private EnumDir direction;
+    [HideInInspector][Tooltip("Speed of walk / Скорость ходьбы")][SerializeField] private float walkSpeed = 1;
+    [HideInInspector][Tooltip("Speed of run / Скорость бега")][SerializeField] private float runSpeed = 4;
 
     [HideInInspector] public bool isWalk;
 
-    [HideInInspector] [SerializeField] [Tooltip("Set your animation speed? / Установить свою скорость анимации?")] private bool _overrideDefaultAnimationMultiplier = true;
-    [HideInInspector] [SerializeField] [Tooltip("Speed animation of walking / Скорость анимации ходьбы")] private float _customWalkAnimationMultiplier = 1.1f;
-    [HideInInspector] [SerializeField] [Tooltip("Running animation speed / Скорость анимации бега")] private float _customRunAnimationMultiplier = 0.3f;
+    [HideInInspector][SerializeField][Tooltip("Set your animation speed? / Установить свою скорость анимации?")] private bool _overrideDefaultAnimationMultiplier = true;
+    [HideInInspector][SerializeField][Tooltip("Speed animation of walking / Скорость анимации ходьбы")] private float _customWalkAnimationMultiplier = 1.1f;
+    [HideInInspector][SerializeField][Tooltip("Running animation speed / Скорость анимации бега")] private float _customRunAnimationMultiplier = 0.3f;
+
+    public List<GameObject> npcObjs = new List<GameObject>(); // 오브젝트 풀링을 위해 추가
 
     public override void DrawCurved(bool withDraw)
     {
-        if (numberOfWays< 1) numberOfWays = 1;
-        if (lineSpacing< 0.6f) lineSpacing = 0.6f;
+        if (numberOfWays < 1) numberOfWays = 1;
+        if (lineSpacing < 0.6f) lineSpacing = 0.6f;
         _forward = new bool[numberOfWays];
 
         isWalk = (_moveType.ToString() == "Walk") ? true : false;
 
-        for (int w = 0; w<numberOfWays; w++)
+        for (int w = 0; w < numberOfWays; w++)
         {
 
             if (direction.ToString() == "Forward")
@@ -72,12 +75,12 @@ public class PeopleWalkPath : WalkPath
         }
 
 
-        if (pathPoint.Count< 2) return;
+        if (pathPoint.Count < 2) return;
         points = new Vector3[numberOfWays, pathPoint.Count + 2];
 
         pointLength[0] = pathPoint.Count + 2;
 
-        for (int i = 0; i<pathPointTransform.Count; i++)
+        for (int i = 0; i < pathPointTransform.Count; i++)
         {
             Vector3 vectorStart;
             Vector3 vectorEnd;
@@ -113,29 +116,29 @@ public class PeopleWalkPath : WalkPath
 
             Vector3 vectorShift = Vector3.Normalize((Quaternion.Euler(0, 90, 0) * (vectorStart + vectorEnd)));
 
-            points[0, i + 1] = numberOfWays % 2 == 1 ? pathPointTransform[i].transform.position : pathPointTransform[i].transform.position + vectorShift* lineSpacing / 2;
-            if (numberOfWays > 1) points[1, i + 1] = points[0, i + 1] - vectorShift* lineSpacing;
+            points[0, i + 1] = numberOfWays % 2 == 1 ? pathPointTransform[i].transform.position : pathPointTransform[i].transform.position + vectorShift * lineSpacing / 2;
+            if (numberOfWays > 1) points[1, i + 1] = points[0, i + 1] - vectorShift * lineSpacing;
 
-            for (int w = 1; w<numberOfWays; w++)
+            for (int w = 1; w < numberOfWays; w++)
             {
-                points[w, i + 1] = points[0, i + 1] + vectorShift* lineSpacing * (float) (Math.Pow(-1, w)) * ((w + 1) / 2);
+                points[w, i + 1] = points[0, i + 1] + vectorShift * lineSpacing * (float)(Math.Pow(-1, w)) * ((w + 1) / 2);
             }
         }
-        for (int w = 0; w<numberOfWays; w++)
+        for (int w = 0; w < numberOfWays; w++)
         {
             points[w, 0] = points[w, 1];
             points[w, pointLength[0] - 1] = points[w, pointLength[0] - 2];
         }
         if (withDraw)
         {
-            for (int w = 0; w<numberOfWays; w++)
+            for (int w = 0; w < numberOfWays; w++)
             {
                 if (loopPath)
                 {
                     Gizmos.color = (_forward[w] ? Color.green : Color.red);
                     Gizmos.DrawLine(points[w, 0], points[w, pathPoint.Count]);
                 }
-                for (int i = 1; i<pathPoint.Count; i++)
+                for (int i = 1; i < pathPoint.Count; i++)
                 {
                     Gizmos.color = (_forward[w] ? Color.green : Color.red);
                     Gizmos.DrawLine(points[w, i + 1], points[w, i]);
@@ -146,19 +149,51 @@ public class PeopleWalkPath : WalkPath
     public override void SpawnOnePeople(int w, bool forward, float walkSpeed, float runSpeed)
     {
         int prefabNum = UnityEngine.Random.Range(0, peoplePrefabs.Length);
-        var people = gameObject;
+        GameObject people = null;
 
         if (!forward)
-            people = Instantiate(peoplePrefabs[prefabNum], points[w, pointLength[0] - 2], Quaternion.identity) as GameObject;
+        {
+            // 오브젝트 풀링
+            foreach (GameObject npc in npcObjs)
+            {
+                if (!npc.activeInHierarchy)
+                {
+                    people = npc;
+                    npc.SetActive(true);
+                    npc.transform.position = points[w, pointLength[0] - 2];
+                    npc.transform.rotation = Quaternion.identity;
+                    break;
+                }
+            }
+        }
+        // people = Instantiate(peoplePrefabs[prefabNum], points[w, pointLength[0] - 2], Quaternion.identity) as GameObject;
         else
-            people = Instantiate(peoplePrefabs[prefabNum], points[w, 1], Quaternion.identity) as GameObject;
-        var _movePath = people.AddComponent<MovePath>();
+        {
+            // 오브젝트 풀링
+            foreach (GameObject npc in npcObjs)
+            {
+                if (!npc.activeInHierarchy)
+                {
+                    people = npc;
+                    npc.SetActive(true);
+                    npc.transform.position = points[w, 1];
+                    npc.transform.rotation = Quaternion.identity;
+                    break;
+                }
+            }
+        }
+
+        if (people == null)
+            return;
+
+        //people = Instantiate(peoplePrefabs[prefabNum], points[w, 1], Quaternion.identity) as GameObject;
+        var _movePath = people.GetComponent<MovePath>();
 
         _movePath.randXFinish = UnityEngine.Random.Range(-randXPos, randXPos);
         _movePath.randZFinish = UnityEngine.Random.Range(-randZPos, randZPos);
 
         people.transform.parent = par.transform;
-        _movePath.walkPath = gameObject;
+        //_movePath.walkPath = gameObject;
 
         string animName;
         if (isWalk)
@@ -183,6 +218,7 @@ public class PeopleWalkPath : WalkPath
     public override void SpawnPeople()
     {
         List<GameObject> pfb = new List<GameObject>(peoplePrefabs);
+        npcObjs.Clear(); // 오브젝트 풀링 List 초기화
 
         for (int i = pfb.Count - 1; i >= 0; i--)
         {
@@ -314,6 +350,8 @@ public class PeopleWalkPath : WalkPath
                 }
 
                 people = Instantiate(peoplePrefabs[pickList[peopleIndex]], routePosition, Quaternion.identity) as GameObject;
+
+                npcObjs.Add(people); // 오브젝트 풀링을 위해 생성된 npc 프리팹 추가
 
                 var movePath = people.AddComponent<MovePath>();
 

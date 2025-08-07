@@ -21,6 +21,7 @@ public class VehicleAI : MonoBehaviour
 
     [Header("WheelAnim")]
     [SerializeField] private Animator[] anim_Wheel;
+    [SerializeField] private Camera playerCamera;
 
     private bool isPlayerInRange = false;
     private bool isShinho = false;
@@ -62,23 +63,11 @@ public class VehicleAI : MonoBehaviour
         }
     }
 
-    void Update()
+    private void Update()
     {
-
-        if (offline || isPlayerInRange) return;
-
-        HandleDeceleration();
+        CheckVehicleAI();
     }
 
-    void FixedUpdate()
-    {
-        if (offline || isPlayerInRange || isShinho || agent.pathPending) return;
-
-        if (agent.remainingDistance < 2f)
-        {
-            GotoNext();
-        }
-    }
     private void OnDrawGizmos()
     {
         for (int i = 0; i < waypoint.Count; i++)
@@ -102,29 +91,64 @@ public class VehicleAI : MonoBehaviour
             }
         }
     }
+
+
+    // 메인 AI 함수
+    void CheckVehicleAI()
+    {
+        if (offline || isPlayerInRange) return;
+
+        // 플레이어 카메라에 안들어왔을 때, 불필요한 애니메이션 실행X
+        if (IsVisibleFromCamera(playerCamera)) // 들어와 있을 때
+        {
+            foreach (Animator wheelAnim in anim_Wheel)
+            {
+                if (wheelAnim == null) continue;
+
+                if (!wheelAnim.enabled) { wheelAnim.enabled = true; }
+            }
+        }
+        else // 안 들어와 있을 때
+        {
+            foreach (Animator wheelAnim in anim_Wheel)
+            {
+                if (wheelAnim == null) continue;
+
+                if (wheelAnim.enabled) { wheelAnim.enabled = false; }
+            }
+        }
+
+        HandleDeceleration();
+
+        if (isShinho || agent.pathPending) return;
+
+        if (agent.remainingDistance < 2f)
+        {
+            GotoNext();
+        }
+    }
+
+    // 다음 Point 설정
     private void GotoNext()
     {
         if (waypoint.Count == 0) return;
 
         if (currentNode >= waypoint.Count && loopCar)
         {
-
             currentNode = 0;
-            //Debug.Log("차량이 배회합니다.");
         }
+
         agent.destination = waypoint[currentNode].position;
         currentNode++;
     }
 
 
-
-
+    // 이동 함수
     private void HandleDeceleration()
     {
         if (currentNode == waypoint.Count - 1 && agent.remainingDistance <= decelerationDistance && !loopCar)
         {
             agent.speed = Mathf.Lerp(agent.speed, slowSpeed, Time.deltaTime);
-
         }
     }
 
@@ -223,6 +247,7 @@ public class VehicleAI : MonoBehaviour
     {
         foreach (var anim in anim_Wheel)
         {
+            if(anim.enabled == false) continue;
             anim.SetBool("Left", state == "Left");
             anim.SetBool("Right", state == "Right");
             anim.SetBool("Stop", state == "Stop");
@@ -268,5 +293,18 @@ public class VehicleAI : MonoBehaviour
         yield return new WaitForSeconds(nextCarAppearanceTime / 2);
 
         agent.speed = speed;
+    }
+
+    // 카메라에 인식되었는 지 확인하는 함수
+    bool IsVisibleFromCamera(Camera cam, float maxDistance = 50f)
+    {
+        Vector3 viewPos = cam.WorldToViewportPoint(transform.position);
+
+        // 카메라 시야 안에 있고,
+        // 카메라와의 거리가 maxDistance 이하일 경우에만 true
+        return viewPos.z > 0 &&
+               viewPos.x >= 0 && viewPos.x <= 1 &&
+               viewPos.y >= 0 && viewPos.y <= 1 &&
+               Vector3.Distance(cam.transform.position, transform.position) <= maxDistance;
     }
 }
