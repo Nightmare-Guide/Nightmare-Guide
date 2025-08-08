@@ -85,6 +85,7 @@ public class EnemyVision : MonoBehaviour
         return inView || inCloseRange;
     }
 
+    // 제일 큰 범위 벗어날 시, 플레이어 위치 값 획득
     private bool ForceGetPlayerPos()
     {
         if (player == null) { if (sfxAudio.isPlaying) { sfxAudio.Stop(); } return false; }

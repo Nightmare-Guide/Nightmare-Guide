@@ -93,7 +93,7 @@ public class Maze_Mgr : MonoBehaviour
             Renderer renderer = num_Obj[i].GetComponent<Renderer>();
             if (renderer != null)
             {
-                // [RED=1, ORANGE=2, YELLOW=3, GREEN=4, BLUE=5, PURPLE=6, BLACK=7, WHITE=8, GRAY=9]
+                // [RED=1, ORANGE=2, YELLOW=3, GREEN=4, BLUE=5, PURPLE=6, BLACK=7, WHITE=8, Pink=9]
                 int color = num_Answer[i];
                 switch (color) {
                     case 1:
@@ -121,7 +121,7 @@ public class Maze_Mgr : MonoBehaviour
                         renderer.material.color = Color.white;
                         break;
                     case 9:
-                        renderer.material.color = Color.gray;
+                        renderer.material.color = new Color(1.0f, 0.0f, 0.949f);
                         break;
                 }
 
