@@ -98,8 +98,8 @@ public class MainUIManager : UIUtility
             }
         }
 
-        PlayerController.instance.Open_PlayerController();
-        Camera_Rt.instance.Open_Camera();
+        if(PlayerController.instance != null) { PlayerController.instance.Open_PlayerController(); }
+        if (Camera_Rt.instance != null) { Camera_Rt.instance.Open_Camera(); }
     }
     public void ShowReport()
     {
