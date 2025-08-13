@@ -130,6 +130,11 @@ public class UIUtility : MonoBehaviour
         }
     }
 
+    public void CloseHint()
+    {
+
+    }
+
     // 오브젝트 상호작용 시 플레이어 움직임 멈춤 함수
     public void StopPlayerController()
     {

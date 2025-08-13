@@ -21,10 +21,10 @@ public class NHManager : MonoBehaviour
             {
                 string stroyPr = ProgressManager.Instance.progressData.storyProgress;
 
-                if (stroyPr.Equals("1_1_5"))//챕터1 저녁병원 씬 대화
+                if (ProgressManager.Instance != null &&
+                        !ProgressManager.Instance.IsActionCompleted(ActionType.BackToHospital))//챕터1 저녁병원 씬 대화
                 {
-                    if (ProgressManager.Instance != null &&
-                        !ProgressManager.Instance.IsActionCompleted(ActionType.BackToHospital))
+                    if (stroyPr.Equals("1_1_5"))
                     {
                         mainUi.GoNightHospital();
                         Cursor.lockState = CursorLockMode.Locked;
@@ -32,6 +32,8 @@ public class NHManager : MonoBehaviour
                     }
                     else
                     {
+                        cam.SetActive(false);
+                        player.SetActive(true);
                         OpenPlayer();
                         Debug.Log("병원 타임라인 진행 완료");
                     }
