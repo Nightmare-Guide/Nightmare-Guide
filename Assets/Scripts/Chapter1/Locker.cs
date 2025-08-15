@@ -80,11 +80,14 @@ public class Locker : MonoBehaviour
         {
             // 손전등 비활성화
             Camera_Rt.instance.postProecessingBehaviour.gameObject.GetComponent<RayCast_Aim>().flashlight.SetActive(false);
-            RenderSettings.fogDensity = 0.55f; // Fog fogDensity 값 변경
+            if (ProgressManager.Instance != null && ProgressManager.Instance.progressData.fogName == "Nightmare")
+            {
+                RenderSettings.fogDensity = 0.55f; // Fog fogDensity 값 변경
+            }
 
             if (this.gameObject.name.Contains("Lounge Locker")
-                && schoolUIManager.useLockerKey
-                && !ProgressManager.Instance.IsActionCompleted(ProgressManager.ActionType.GetOutOfLocker))
+            && schoolUIManager.useLockerKey
+            && !ProgressManager.Instance.IsActionCompleted(ProgressManager.ActionType.GetOutOfLocker))
             {
                 schoolUIManager.StartLoungeTimeLine();
             }
@@ -112,7 +115,7 @@ public class Locker : MonoBehaviour
 
         if (CommonUIManager.instance.uiManager is SchoolUIManager schoolUIManager)
         {
-            if (this.gameObject.name.Contains("Lounge Locker")  
+            if (this.gameObject.name.Contains("Lounge Locker")
                 && ProgressManager.Instance.IsActionCompleted(ProgressManager.ActionType.UseLockerKey)
                 && !ProgressManager.Instance.IsActionCompleted(ProgressManager.ActionType.GetOutOfLocker))
             {
