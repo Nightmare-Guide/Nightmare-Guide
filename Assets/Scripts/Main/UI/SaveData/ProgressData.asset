@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   newGame: 0
   scene: DayHospital
-  storyProgress: 0_3_2
+  storyProgress: 0_2_0
   actionStatuses:
   - actionType: 0
     isCompleted: 1
@@ -76,18 +76,18 @@ MonoBehaviour:
     isCompleted: 0
   - actionType: 29
     isCompleted: 0
-  playerPosition: {x: -220.63416, y: 28.02, z: -878.8444}
-  playerEulerAngles: {x: 0, y: 201.17194, z: 0}
+  playerPosition: {x: -278.69806, y: 28.019999, z: -861.4902}
+  playerEulerAngles: {x: 0, y: -90, z: 0}
   playerTr:
   - scene_Name: DayHouse
-    tr: {x: -606.2347, y: 71.80007, z: 189.62248}
-    rt: {x: 0, y: 271.39996, z: 0}
+    tr: {x: -508.2922, y: 50.400085, z: -306.99832}
+    rt: {x: -0, y: 277.29996, z: 0}
   - scene_Name: NightHouse
     tr: {x: -605, y: 72, z: 173}
     rt: {x: 0, y: -90, z: 0}
   - scene_Name: DayHospital
-    tr: {x: -220.63416, y: 28.02, z: -878.8444}
-    rt: {x: -0, y: 233.03734, z: 0}
+    tr: {x: -278.69806, y: 28.019999, z: -861.4902}
+    rt: {x: 0, y: 206.19992, z: 0}
   - scene_Name: NightHospital
     tr: {x: -205.08, y: 28.22, z: -899.39}
     rt: {x: 0, y: 180, z: 0}
@@ -95,8 +95,8 @@ MonoBehaviour:
     tr: {x: -11, y: 0.5, z: -7.38}
     rt: {x: 0, y: 90, z: 0}
   - scene_Name: Main_Map
-    tr: {x: -186.90451, y: 5.5199995, z: -670.8145}
-    rt: {x: 0, y: 261.72528, z: 0}
+    tr: {x: -186.93842, y: 6.215159, z: -669.0922}
+    rt: {x: 0, y: 246.86522, z: 0}
   - scene_Name: Main_Map_Night
     tr: {x: -180, y: 5, z: -723}
     rt: {x: 0, y: 90, z: 0}
