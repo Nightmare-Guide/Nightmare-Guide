@@ -497,5 +497,7 @@ public class RayCast_Aim : MonoBehaviour
     {
         OpenHint hint_Event = obj.GetComponent<OpenHint>();
         hint_Event.HintEvent();
+        Collider objCollider = obj.GetComponent<Collider>();
+        objCollider.enabled = true;
     }
 }
