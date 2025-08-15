@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
-using UnityEditor.Localization.Plugins.XLIFF.V20;
 using UnityEngine;
 using UnityEngine.AI;
+
+#if UNITY_EDITOR
+using UnityEditor.Localization.Plugins.XLIFF.V20;
+#endif
 
 public class VehicleAI : MonoBehaviour
 {
