@@ -13,7 +13,7 @@ public class OpenHint : MonoBehaviour
     [SerializeField] GameObject event_Obj;//대신 켜지는거
 
     [SerializeField] GameObject backGround;
-
+   
     public void HintEvent()
     {
         Time.timeScale = 0;
@@ -29,6 +29,7 @@ public class OpenHint : MonoBehaviour
         Cursor.visible = false;
         backGround.SetActive(false);
         hint.SetActive(false);
+        this.GetComponent<BoxCollider>().enabled = true;
     }
 
     void ClearObj()
