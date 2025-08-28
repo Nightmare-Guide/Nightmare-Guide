@@ -24,7 +24,7 @@ public class Alex : NPC
 
     private void Start()
     {
-        if (ProgressManager.Instance.IsActionCompleted(ProgressManager.ActionType.FirstMeetAlex))
+        if (ProgressManager.Instance != null && ProgressManager.Instance.IsActionCompleted(ProgressManager.ActionType.FirstMeetAlex))
         {
             npcTransform.gameObject.SetActive(false);
         }
@@ -32,7 +32,7 @@ public class Alex : NPC
         col.enabled = false;
         agent.SetDestination(targetTransform[0].position);
         isWalking = true;
-        StartCoroutine(EnableCollider(col, 2f));
+        StartCoroutine(EnableCollider(col, 3f));
         AnimHelper.TryPlay(myAnim, "walk", 0);
     }
 
