@@ -72,9 +72,8 @@ public class TitleUIManager : UIUtility
         }
         else
         {
-            StartNewGame();
             if (SoundManager.instance != null) { SoundManager.instance.StopBGM(); }
-            
+            StartNewGame();
         }
     }
 
