@@ -1794,6 +1794,14 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 621177022196120815, guid: 37491a294c4c009499bdf23c35799009, type: 3}
+      propertyPath: m_Name
+      value: Ethan's Hospital Room Door
+      objectReference: {fileID: 0}
+    - target: {fileID: 621177022196120815, guid: 37491a294c4c009499bdf23c35799009, type: 3}
+      propertyPath: m_TagString
+      value: SpecialDoor
+      objectReference: {fileID: 0}
+    - target: {fileID: 621177022196120815, guid: 37491a294c4c009499bdf23c35799009, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
@@ -20353,9 +20361,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 621177022196120815, guid: 37491a294c4c009499bdf23c35799009, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1696414492}
-    - targetCorrespondingSourceObject: {fileID: 621177022196120815, guid: 37491a294c4c009499bdf23c35799009, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1696414493}
     - targetCorrespondingSourceObject: {fileID: 5516121890348442556, guid: 37491a294c4c009499bdf23c35799009, type: 3}
       insertIndex: -1
       addedObject: {fileID: 32562145}
@@ -37983,24 +37988,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.7744174, y: 2.1375706, z: 0.06628398}
   m_Center: {x: 0.3841195, y: 1.0763825, z: -0.025101654}
---- !u!114 &1696414493
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1696414491}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1426b01782487694bba79c74dd1f728c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  requiredStoryProgress: 0_3_2
-  requiredStoryProgress2: 0_3_1
-  successDialogue: 
-  onScript: 0
-  failDialogue: 0_3_0_0
-  progressType: 1
 --- !u!1 &1727037014
 GameObject:
   m_ObjectHideFlags: 0

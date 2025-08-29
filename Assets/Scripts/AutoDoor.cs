@@ -19,7 +19,7 @@ public class AutoDoor : MonoBehaviour
     {
         DoorTrigger();
 
-        if (supervisor != null && supervisor.firstmeet)
+        if (supervisor != null && ProgressManager.Instance != null && ProgressManager.Instance.IsActionCompleted(ProgressManager.ActionType.FirstMeetJames))
         {
             door.enabled = true;
         }

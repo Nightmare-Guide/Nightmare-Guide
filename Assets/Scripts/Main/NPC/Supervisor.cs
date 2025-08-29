@@ -22,9 +22,6 @@ public class Supervisor : NPC
 
     private LookTarget look;
 
-    //임시
-    public bool firstmeet = false;
-
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -89,7 +86,7 @@ public class Supervisor : NPC
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && !firstmeet)
+        if (other.CompareTag("Player") && ProgressManager.Instance != null && !ProgressManager.Instance.IsActionCompleted(ProgressManager.ActionType.FirstMeetJames))
         {
             playerTransform = other.transform;
             FirstMeet();
@@ -108,8 +105,11 @@ public class Supervisor : NPC
 
     public void FirstMeet()
     {
-        //임시
-        firstmeet = true;
+        if(ProgressManager.Instance != null)
+        {
+            ProgressManager.Instance.CompletedAction(ProgressManager.ActionType.FirstMeetJames);
+        }
+
         MainUIManager.DayHospitalTimeLine();
     }
 

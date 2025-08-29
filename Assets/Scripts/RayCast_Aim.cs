@@ -188,7 +188,21 @@ public class RayCast_Aim : MonoBehaviour
                                 DoorCheck(click_object);
                             }
                         }
+                        else if(click_object.name.Contains("Ethan's Hospital Room Door"))
+                        {
+                            if (ProgressManager.Instance != null && ProgressManager.Instance.IsActionCompleted(ActionType.FirstMeetJames))
+                            {
+                                DoorCheck(click_object);
 
+                                MainUIManager mainUIManager = CommonUIManager.instance.uiManager as MainUIManager;
+
+                                mainUIManager.StartTimeLine(TimeLineManager.instance.playableAssets[5]);
+                            }
+                            else
+                            {
+                                DoorCheck(click_object);
+                            }
+                        }
 
                     }
 

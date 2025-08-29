@@ -54,7 +54,8 @@ public class Door : MonoBehaviour
         {
             if (this.gameObject.name.Contains("Janitor's office")
                 || this.gameObject.name.Contains("Lounge Door")
-                || this.gameObject.name.Contains("LockerRoomDoor(Left)"))
+                || this.gameObject.name.Contains("LockerRoomDoor(Left)")
+                || this.gameObject.name.Contains("Ethan's Hospital Room Door"))
             { endRotation = Quaternion.Euler(0, startRotation.eulerAngles.y - 90, 0); }
             else { endRotation = Quaternion.Euler(0, startRotation.eulerAngles.y + 90, 0); }
             doorState = false;
@@ -65,7 +66,8 @@ public class Door : MonoBehaviour
         {
             if (this.gameObject.name.Contains("Janitor's office")
                 || this.gameObject.name.Contains("Lounge Door")
-                || this.gameObject.name.Contains("LockerRoomDoor(Left)"))
+                || this.gameObject.name.Contains("LockerRoomDoor(Left)")
+                || this.gameObject.name.Contains("Ethan's Hospital Room Door"))
             { endRotation = Quaternion.Euler(0, startRotation.eulerAngles.y + 90, 0); }
             else { endRotation = Quaternion.Euler(0, startRotation.eulerAngles.y - 90, 0); }
             doorState = true;
